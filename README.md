@@ -14,18 +14,20 @@ public/                 webroot (Apache-alias /settlers4b)
     nature.js           getekende bomen, struiken, rotsen, dieren (reserve-sprites)
     units.js            inwoners
     buildings.js        gebouwtypes (BTYPES), getekende gebouwen, spelerkleuren
-    terrain.js          seeded random, ruis, mapgenerator
-    render.js           canvas, camera, chunks
+    terrain.js          seeded random, ruis, mapgenerator (incl. mijnen, paden)
+    render.js           canvas, camera, chunks (renderChunk met resolutie cres)
     colonists.js        kolonisten en dieren
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
+    textures.js         grondtexturen: loadTextures(), renderTexTiles()
     custom.js           geschilderde sprites laden, galerij en werkbank
     ui.js               bediening en opstarten
   assets/
     manifest.json       metadata van alle geschilderde sprites
-    buildings/*.webp    14 gebouwen
+    buildings/*.webp    20 gebouwen
     nature/*.webp       21 bomen, struiken, rotsen
+    textures/*.webp     6 naadloze grondtexturen, 512×512
   api/
     maps.php            maps (generator-instelling, later editor-data)
     saves.php           savegames
@@ -33,10 +35,10 @@ lib/api.php             gedeelde API-code (buiten de webroot)
 data/                   NIET publiek: config.php (token) en kolonie.sqlite
 tools/
   build-images.php      webp's opnieuw maken uit bron/
-  extract-embedded.php  eenmalig: afbeeldingen uit het oude HTML-bestand gehaald
-  split-html.py         eenmalig: oude HTML gesplitst in index/css/js
-bron/                   NIET publiek: originele PNG's (niet in git) en het
-                        oorspronkelijke kolonie-fase1.html
+  extract-embedded.php  afbeeldingen uit een ingebakken kolonie-fase1.html halen
+  split-html.py         eenmalig: eerste HTML gesplitst in index/css/js
+bron/                   NIET publiek: originele PNG's (niet in git) en de
+                        laatst verwerkte kolonie-fase1.html (referentie)
 ```
 
 Apache-config: repo `server-beheer`, `apache/doc-dgol-projects.conf`
@@ -44,10 +46,11 @@ Apache-config: repo `server-beheer`, `apache/doc-dgol-projects.conf`
 
 ## Afbeeldingen
 
-Het spel tekent eerst alle sprites zelf (reserve-sprites). Daarna haalt het
+Het spel tekent eerst alle sprites en de grond zelf (reserve). Daarna haalt het
 `assets/manifest.json` op en vervangt het per afbeelding de getekende versie.
 Ontbreekt een webp of mislukt het laden, dan blijft op die plek de getekende
-sprite staan. Een eigen afbeelding die een speler in de werkbank kiest
+sprite staan. De grondtexturen gaan alleen aan als alle zes geladen zijn;
+anders blijft de getekende grond. Een eigen afbeelding die een speler in de werkbank kiest
 (IndexedDB) gaat voor op de ingebouwde.
 
 Een regel in het manifest:
@@ -72,7 +75,15 @@ Een regel in het manifest:
 | `src` | bron-PNG in `bron/` |
 | `px` | doelmaat bij genereren: breedte in pixels (gebouwen) of hoogte (natuur) |
 | `v` | inhoudshash; wordt door `build-images.php` gezet, voor cache-busting |
+| `keep` | webp is met de hand bewerkt; `build-images.php` slaat hem over (reden als tekst) |
 
+Texturen (`textures`) hebben alleen `file`, `src`, `px` (512) en `v`. De
+sleutels deep, shallow, sand, grass, rock en aarde (paden) zijn alle zes nodig.
+
+**Bewerkte webp's:** bij burcht, kazerne en wachttoren zijn de rode wimpels
+uit de webp geknipt (het spel tekent de vlag zelf in spelerkleur). Ze hebben
+daarom `keep` en worden niet opnieuw uit `bron/` gemaakt. Lever je een nieuwe
+PNG zonder wimpel aan, haal dan `keep` weg of gebruik `--force`.
 Gebouwsleutels moeten bestaan in `BTYPES` (`js/buildings.js`). Voor natuur
 gebruikt `loadNature()` in `js/custom.js` vaste sleutels (eik0/1, berk0/1,
 den0/1, beuk0/1, appel0/1, bes, hazel, varen, bloesem, rots0–3, kiem, jong,
@@ -90,15 +101,30 @@ stronk).
    php tools/build-images.php --quality=85 --dry-run
    ```
 
-   Opties: `--quality=80` (WebP 0–100), `--alpha=8` (alfadrempel voor het
-   bijsnijden), `--out=map` (proefbuild, manifest blijft ongewijzigd),
-   `--dry-run`. Het script snijdt bij op de zichtbare pixels, schaalt naar `px`,
-   schrijft de webp en zet de nieuwe hash `v` in het manifest.
+   Opties: `--quality=N` (WebP 0–100; standaard 80, texturen 78), `--alpha=8`
+   (alfadrempel voor het bijsnijden), `--out=map` (proefbuild, manifest blijft
+   ongewijzigd), `--dry-run`, `--force` (ook `keep`-afbeeldingen).
+   Gebouwen en natuur: bijsnijden op de zichtbare pixels en schalen naar `px`
+   (gebouwen standaard 420 breed, natuur 4× `h` hoog). Texturen: vierkant naar
+   `px` (512) zonder bijsnijden, naadloos (3×3 getegeld geschaald). Daarna
+   schrijft het de webp en zet de nieuwe hash `v` in het manifest.
 4. Controleer in het spel of het ankerpunt klopt (werkbank "Geschilderde
    gebouwen" toont dit live) en neem de waarden over in het manifest.
 
 Let op: `ax`, `ay`, `flag` en `hub` zijn relatief aan het bijgesneden beeld.
 Wordt de PNG anders bijgesneden (andere marge), controleer ze dan opnieuw.
+
+### Een nieuwe kolonie-fase1.html verwerken
+
+1. Vergelijk het script met de vorige versie in `bron/` (zonder de base64-regels)
+   en neem de verschillen over in de modules in `public/js/`. Laat de laadcode
+   (`assets.js`, `loadNature`, `loadTextures`, `loadCustom`, opstartregel in
+   `ui.js`) staan: die haalt de afbeeldingen uit het manifest i.p.v. base64.
+2. `php tools/extract-embedded.php pad/naar/kolonie-fase1.html` schrijft alle
+   ingebakken webp's naar `public/assets/` en werkt het manifest bij (metadata
+   uit de HTML; `src`, `px` en `keep` blijven behouden). Nieuwe sleutels krijgen
+   hun bron-PNG via de tabel bovenin het script.
+3. Zet de HTML in `bron/` als nieuwe referentie.
 
 ## API
 
