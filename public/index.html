@@ -1,17 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Settlers 4B</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kolonie – middeleeuws dorp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vollkorn:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/kolonie.css">
 </head>
 <body>
+<aside>
+  <h1>Kolonie</h1>
+  <p class="sub">Fase 1c: middeleeuws dorp, met ruimte voor eigen geschilderde gebouwen</p>
+
+  <div class="seed">
+    <label>Seed<input type="text" id="seed" value="vathorst"></label>
+    <button id="dice" title="Willekeurige seed" aria-label="Willekeurige seed">🎲</button>
+  </div>
+  <label style="margin-top:10px">Grootte
+    <select id="size"><option>128</option><option>192</option><option selected>256</option><option>320</option><option>384</option></select>
+  </label>
+  <label>Landvorm
+    <select id="shape"><option value="continent">Continent</option><option value="eilanden">Eilanden</option><option value="binnenland">Binnenland met meren</option></select>
+  </label>
+  <label><span class="row">Spelers <span class="val" id="playersV"></span></span><input type="range" id="players" min="2" max="8" value="4"></label>
+  <label><span class="row">Waterniveau <span class="val" id="waterV"></span></span><input type="range" id="water" min="0.08" max="0.6" step="0.01" value="0.3"></label>
+  <label><span class="row">Gebergte <span class="val" id="mountV"></span></span><input type="range" id="mount" min="0" max="1" step="0.05" value="0.5"></label>
+  <label><span class="row">Bosdichtheid <span class="val" id="treesV"></span></span><input type="range" id="trees" min="0" max="1" step="0.05" value="0.6"></label>
+  <button class="primary" id="gen">Genereer wereld</button>
+
+  <h2>Stresstest</h2>
+  <label><span class="row">Kolonisten <span class="val" id="countV"></span></span><input type="range" id="count" min="500" max="20000" step="500" value="2000"></label>
+  <label>Snelheid
+    <select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select>
+  </label>
+  <div class="btns"><button id="start">Start</button><button id="pause">Pauze</button></div>
+  <label class="check"><input type="checkbox" id="ores"> Toon ertsen in bergen</label>
+
+  <h2>Meting</h2>
+  <dl>
+    <dt>Beelden per seconde</dt><dd id="fps">–</dd>
+    <dt>Simulatie per tick</dt><dd id="simms">–</dd>
+    <dt>Tekenen per beeld</dt><dd id="drawms">–</dd>
+    <dt>Kolonisten</dt><dd id="nset">0</dd>
+    <dt>Dieren</dt><dd id="nanim">0</dd>
+    <dt>Gebouwen bewoond</dt><dd id="nocc">–</dd>
+    <dt>Generatietijd</dt><dd id="genms">–</dd>
+  </dl>
+  <div id="hover">Beweeg over de kaart voor details per tegel.</div>
+
+  <h2>Inwoners</h2>
+  <div class="gallery people" id="people"></div>
+  <h2>Gebouwen</h2>
+  <div class="gallery" id="buildings"></div>
+
+  <h2>Geschilderde gebouwen</h2>
+  <p class="note">Klik een gebouw hierboven aan of sleep er een PNG met transparante achtergrond op. De afbeelding blijft bewaard in deze browser.</p>
+  <label>Gebouw<select id="cbType"></select></label>
+  <label>Afbeelding<input type="file" id="cbFile" accept="image/png,image/webp"></label>
+  <label><span class="row">Breedte op de kaart <span class="val" id="cbWV"></span></span><input type="range" id="cbW" min="20" max="240" step="1" value="60"></label>
+  <label><span class="row">Ankerpunt horizontaal <span class="val" id="cbAxV"></span></span><input type="range" id="cbAx" min="0" max="1" step="0.01" value="0.5"></label>
+  <label><span class="row">Ankerpunt verticaal <span class="val" id="cbAyV"></span></span><input type="range" id="cbAy" min="0" max="1" step="0.01" value="0.9"></label>
+  <div class="btns"><button id="cbGo">Bekijk op de kaart</button><button id="cbDel">Verwijder afbeelding</button></div>
+  <p class="note" id="cbMsg"></p>
+
+  <h2>Overzichtskaart</h2>
+  <canvas id="mini" width="256" height="256"></canvas>
+</aside>
 <main>
-  <img src="favicon.svg" alt="" class="logo">
-  <h1>Settlers 4B</h1>
-  <p>Hier komt de website van het spel. Binnenkort meer.</p>
+  <canvas id="view"></canvas>
+  <div class="hint">Slepen om te schuiven · scrollen of +/− om te zoomen · WASD/pijltjes</div>
+  <div class="zoom"><button id="zin" aria-label="Inzoomen">+</button><button id="zout" aria-label="Uitzoomen">−</button></div>
 </main>
+
+<script src="js/core.js"></script>
+<script src="js/nature.js"></script>
+<script src="js/units.js"></script>
+<script src="js/buildings.js"></script>
+<script src="js/terrain.js"></script>
+<script src="js/render.js"></script>
+<script src="js/colonists.js"></script>
+<script src="js/loop.js"></script>
+<script src="js/input.js"></script>
+<script src="js/assets.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

@@ -1,0 +1,339 @@
+{
+    "version": 1,
+    "buildings": {
+        "bakkerij": {
+            "file": "buildings/bakkerij.webp",
+            "w": 68,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Bakkerij.png",
+            "px": 420,
+            "v": "ffbed90d"
+        },
+        "burcht": {
+            "file": "buildings/burcht.webp",
+            "w": 112,
+            "ax": 0.53,
+            "ay": 0.9,
+            "flag": [
+                0.551,
+                0.012
+            ],
+            "src": "Burcht.png",
+            "px": 480,
+            "v": "72b87273"
+        },
+        "woonhuis": {
+            "file": "buildings/woonhuis.webp",
+            "w": 50,
+            "ax": 0.47,
+            "ay": 0.9,
+            "src": "Woonhuis.png",
+            "px": 320,
+            "v": "4f68097c"
+        },
+        "houthakker": {
+            "file": "buildings/houthakker.webp",
+            "w": 62,
+            "ax": 0.44,
+            "ay": 0.9,
+            "src": "Houthakker.png",
+            "px": 400,
+            "v": "396d6102"
+        },
+        "bosbouwer": {
+            "file": "buildings/bosbouwer.webp",
+            "w": 62,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Bosbouwer.png",
+            "px": 400,
+            "v": "1773c16f"
+        },
+        "zagerij": {
+            "file": "buildings/zagerij.webp",
+            "w": 74,
+            "ax": 0.52,
+            "ay": 0.9,
+            "src": "Houtzagerij.png",
+            "px": 420,
+            "v": "c5c40978"
+        },
+        "kazerne": {
+            "file": "buildings/kazerne.webp",
+            "w": 74,
+            "ax": 0.47,
+            "ay": 0.9,
+            "flag": [
+                0.786,
+                0.039
+            ],
+            "src": "Kazerne.png",
+            "px": 420,
+            "v": "15cad5e7"
+        },
+        "kruidenhuis": {
+            "file": "buildings/kruidenhuis.webp",
+            "w": 58,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Kruidenhuis.png",
+            "px": 400,
+            "v": "5a7f7402"
+        },
+        "pakhuis": {
+            "file": "buildings/pakhuis.webp",
+            "w": 80,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Pakhuis.png",
+            "px": 440,
+            "v": "7f34fb2d"
+        },
+        "steenhouwer": {
+            "file": "buildings/steenhouwer.webp",
+            "w": 62,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Steenhouwer.png",
+            "px": 400,
+            "v": "64f399f0"
+        },
+        "smidse": {
+            "file": "buildings/smidse.webp",
+            "w": 66,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Smidse.png",
+            "px": 420,
+            "v": "ad230957"
+        },
+        "wachttoren": {
+            "file": "buildings/wachttoren.webp",
+            "w": 40,
+            "ax": 0.5,
+            "ay": 0.92,
+            "flag": [
+                0.519,
+                0.008
+            ],
+            "src": "Wachttoren.png",
+            "px": 300,
+            "v": "e4456eaf"
+        },
+        "molen": {
+            "file": "buildings/molen.webp",
+            "w": 48,
+            "ax": 0.48,
+            "ay": 0.92,
+            "hub": [
+                0.464,
+                0.37
+            ],
+            "sail": 1.45,
+            "src": "Molen.png",
+            "px": 320,
+            "v": "ae543821"
+        },
+        "boerderij": {
+            "file": "buildings/boerderij.webp",
+            "w": 82,
+            "ax": 0.47,
+            "ay": 0.9,
+            "src": "Boerderij.png",
+            "px": 440,
+            "v": "96371f7c"
+        }
+    },
+    "nature": {
+        "bloesem": {
+            "file": "nature/bloesem.webp",
+            "h": 14,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Struikbloesem.png",
+            "px": 56,
+            "v": "4fcfa13e"
+        },
+        "eik0": {
+            "file": "nature/eik0.webp",
+            "h": 44,
+            "ax": 0.551,
+            "ay": 0.97,
+            "src": "Boom1.png",
+            "px": 176,
+            "v": "affb7bb0"
+        },
+        "eik1": {
+            "file": "nature/eik1.webp",
+            "h": 42,
+            "ax": 0.53,
+            "ay": 0.97,
+            "src": "Boom4.png",
+            "px": 168,
+            "v": "305f0cd2"
+        },
+        "berk0": {
+            "file": "nature/berk0.webp",
+            "h": 44,
+            "ax": 0.519,
+            "ay": 0.97,
+            "src": "Boom5.png",
+            "px": 176,
+            "v": "b3d782cd"
+        },
+        "berk1": {
+            "file": "nature/berk1.webp",
+            "h": 42,
+            "ax": 0.525,
+            "ay": 0.97,
+            "src": "Boom6.png",
+            "px": 168,
+            "v": "c4899ae1"
+        },
+        "den0": {
+            "file": "nature/den0.webp",
+            "h": 46,
+            "ax": 0.548,
+            "ay": 0.97,
+            "src": "Boom7.png",
+            "px": 184,
+            "v": "c9add8ce"
+        },
+        "den1": {
+            "file": "nature/den1.webp",
+            "h": 48,
+            "ax": 0.534,
+            "ay": 0.97,
+            "src": "Boom9.png",
+            "px": 192,
+            "v": "da886583"
+        },
+        "beuk0": {
+            "file": "nature/beuk0.webp",
+            "h": 44,
+            "ax": 0.525,
+            "ay": 0.97,
+            "src": "Boom2.png",
+            "px": 176,
+            "v": "13ebccc9"
+        },
+        "beuk1": {
+            "file": "nature/beuk1.webp",
+            "h": 44,
+            "ax": 0.561,
+            "ay": 0.97,
+            "src": "Boom3.png",
+            "px": 176,
+            "v": "5ba8166f"
+        },
+        "appel0": {
+            "file": "nature/appel0.webp",
+            "h": 36,
+            "ax": 0.519,
+            "ay": 0.97,
+            "src": "Boom8.png",
+            "px": 144,
+            "v": "1c3d7ff8"
+        },
+        "appel1": {
+            "file": "nature/appel1.webp",
+            "h": 36,
+            "ax": 0.582,
+            "ay": 0.97,
+            "src": "Boom10.png",
+            "px": 144,
+            "v": "ac9e3806"
+        },
+        "jong": {
+            "file": "nature/jong.webp",
+            "h": 26,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Boomjong.png",
+            "px": 104,
+            "v": "7644630e"
+        },
+        "kiem": {
+            "file": "nature/kiem.webp",
+            "h": 13,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Boomkiem.png",
+            "px": 52,
+            "v": "1de9e73b"
+        },
+        "stronk": {
+            "file": "nature/stronk.webp",
+            "h": 9,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Boomstronk.png",
+            "px": 36,
+            "v": "9637c484"
+        },
+        "bes": {
+            "file": "nature/bes.webp",
+            "h": 14,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Struikbes.png",
+            "px": 56,
+            "v": "2419ce61"
+        },
+        "hazel": {
+            "file": "nature/hazel.webp",
+            "h": 14,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Struikhazelnoot.png",
+            "px": 56,
+            "v": "5ed526ee"
+        },
+        "varen": {
+            "file": "nature/varen.webp",
+            "h": 12,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Varen.png",
+            "px": 48,
+            "v": "bbe829cf"
+        },
+        "rots0": {
+            "file": "nature/rots0.webp",
+            "h": 11,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Rots1.png",
+            "px": 44,
+            "v": "f5850de6"
+        },
+        "rots1": {
+            "file": "nature/rots1.webp",
+            "h": 9,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Rots4.png",
+            "px": 36,
+            "v": "c3a56caf"
+        },
+        "rots2": {
+            "file": "nature/rots2.webp",
+            "h": 10,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Rots3.png",
+            "px": 40,
+            "v": "dd3dd0bf"
+        },
+        "rots3": {
+            "file": "nature/rots3.webp",
+            "h": 15,
+            "ax": 0.5,
+            "ay": 0.97,
+            "src": "Rots2.png",
+            "px": 60,
+            "v": "b34a11cc"
+        }
+    }
+}
