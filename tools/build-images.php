@@ -3,7 +3,9 @@
 // op basis van public/assets/manifest.json:
 //   src  bron-PNG in bron/
 //   file doelbestand onder public/assets/
-//   px   doelmaat in pixels: breedte voor gebouwen, hoogte voor natuur
+//   px   doelmaat in pixels: breedte voor gebouwen (standaard 420),
+//        hoogte voor natuur (standaard 4× h)
+//   keep handmatig bewerkte webp (bv. wimpel eruit geknipt): wordt overgeslagen
 // Bijsnijden gebeurt op de zichtbare inhoud (alfa boven de drempel).
 // Na afloop wordt v (inhoudshash) in het manifest bijgewerkt.
 //
@@ -12,10 +14,11 @@
 //     --alpha=8      alfadrempel 0–255 voor het bijsnijden
 //     --out=map      schrijf naar een andere map, manifest blijft ongewijzigd
 //     --dry-run      alleen tonen wat er zou gebeuren
+//     --force        ook afbeeldingen met keep opnieuw maken (overschrijft de bewerking)
 //   Zonder sleutels worden alle afbeeldingen gemaakt.
 
 $root = dirname(__DIR__);
-$opt = ['quality' => 80, 'alpha' => 8, 'out' => null, 'dry-run' => false];
+$opt = ['quality' => 80, 'alpha' => 8, 'out' => null, 'dry-run' => false, 'force' => false];
 $only = [];
 foreach (array_slice($argv, 1) as $a) {
     if (preg_match('/^--([a-z-]+)(?:=(.*))?$/', $a, $m)) {
@@ -33,17 +36,23 @@ $manifestFile = "$root/public/assets/manifest.json";
 $manifest = json_decode(file_get_contents($manifestFile), true) ?? exit("manifest.json is geen geldige JSON\n");
 
 $done = 0;
+$skipped = 0;
 $errors = 0;
 foreach (['buildings', 'nature'] as $group) {
     foreach ($manifest[$group] as $key => &$d) {
         if ($only && !in_array($key, $only, true)) continue;
+        if (!empty($d['keep']) && !$opt['force']) {
+            echo "$key: overgeslagen ({$d['keep']}; --force om toch te maken)\n";
+            $skipped++;
+            continue;
+        }
         $src = "$root/bron/" . basename($d['src'] ?? '');
         if (empty($d['src']) || !is_file($src)) {
             echo "$key: bron ontbreekt ($src)\n";
             $errors++;
             continue;
         }
-        $px = (int) ($d['px'] ?? ($group === 'buildings' ? 400 : 4 * ($d['h'] ?? 40)));
+        $px = (int) ($d['px'] ?? ($group === 'buildings' ? 420 : 4 * ($d['h'] ?? 10)));
 
         $img = new Imagick($src);
         $img->setImageAlphaChannel(Imagick::ALPHACHANNEL_ACTIVATE);
@@ -84,5 +93,5 @@ foreach (['buildings', 'nature'] as $group) {
 if (!$opt['dry-run'] && !$opt['out'] && $done) {
     file_put_contents($manifestFile, json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
 }
-echo "$done gemaakt, $errors fouten\n";
+echo "$done gemaakt, $skipped overgeslagen, $errors fouten\n";
 exit($errors ? 1 : 0);

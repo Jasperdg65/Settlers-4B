@@ -1,6 +1,60 @@
 {
     "version": 1,
     "buildings": {
+        "wapensmid": {
+            "file": "buildings/wapensmid.webp",
+            "w": 70,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Wapensmidse.png",
+            "px": 420,
+            "v": "db247bff"
+        },
+        "ijzersmelterij": {
+            "file": "buildings/ijzersmelterij.webp",
+            "w": 76,
+            "ax": 0.52,
+            "ay": 0.9,
+            "src": "Staalsmelterij.png",
+            "px": 420,
+            "v": "54e734c3"
+        },
+        "goudsmelterij": {
+            "file": "buildings/goudsmelterij.webp",
+            "w": 70,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Goudsmelterij.png",
+            "px": 420,
+            "v": "91f84429"
+        },
+        "kolenmijn": {
+            "file": "buildings/kolenmijn.webp",
+            "w": 68,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Kolenmijn.png",
+            "px": 420,
+            "v": "ad40fbfd"
+        },
+        "ijzermijn": {
+            "file": "buildings/ijzermijn.webp",
+            "w": 72,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Ijzerertsmijn.png",
+            "px": 420,
+            "v": "78385378"
+        },
+        "goudmijn": {
+            "file": "buildings/goudmijn.webp",
+            "w": 72,
+            "ax": 0.52,
+            "ay": 0.9,
+            "src": "Goudertsmijn.png",
+            "px": 420,
+            "v": "b9223f4b"
+        },
         "bakkerij": {
             "file": "buildings/bakkerij.webp",
             "w": 68,
@@ -21,6 +75,7 @@
             ],
             "src": "Burcht.png",
             "px": 480,
+            "keep": "wimpel uit de webp geknipt",
             "v": "72b87273"
         },
         "woonhuis": {
@@ -70,6 +125,7 @@
             ],
             "src": "Kazerne.png",
             "px": 420,
+            "keep": "wimpel uit de webp geknipt",
             "v": "15cad5e7"
         },
         "kruidenhuis": {
@@ -119,6 +175,7 @@
             ],
             "src": "Wachttoren.png",
             "px": 300,
+            "keep": "wimpel uit de webp geknipt",
             "v": "e4456eaf"
         },
         "molen": {
