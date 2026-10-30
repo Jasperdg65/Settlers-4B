@@ -392,5 +392,43 @@
             "px": 60,
             "v": "b34a11cc"
         }
+    },
+    "textures": {
+        "aarde": {
+            "file": "textures/aarde.webp",
+            "src": "Aarde.png",
+            "px": 512,
+            "v": "a504979e"
+        },
+        "grass": {
+            "file": "textures/grass.webp",
+            "src": "gras.png",
+            "px": 512,
+            "v": "b612b3d4"
+        },
+        "deep": {
+            "file": "textures/deep.webp",
+            "src": "Diepwater.png",
+            "px": 512,
+            "v": "89dd14e8"
+        },
+        "shallow": {
+            "file": "textures/shallow.webp",
+            "src": "Ondiepwater.png",
+            "px": 512,
+            "v": "a7ac0dfe"
+        },
+        "rock": {
+            "file": "textures/rock.webp",
+            "src": "Rotsgrond.png",
+            "px": 512,
+            "v": "4778a2d2"
+        },
+        "sand": {
+            "file": "textures/sand.webp",
+            "src": "Zand.png",
+            "px": 512,
+            "v": "f059e1fa"
+        }
     }
 }

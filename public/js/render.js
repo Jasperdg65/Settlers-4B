@@ -13,11 +13,14 @@ function chunkBounds(cx,cy){
   const {W,H}=world;const x0=cx*CH,y0=cy*CH,x1=Math.min(W-1,x0+CH),y1=Math.min(H-1,y0+CH);
   return {x0,y0,x1,y1,left:SX(x0,y1)-TW,right:SX(x1,y0)+TW,top:y0*TH-HP-10,bottom:y1*TH+6};
 }
-function renderChunk(cx,cy){
+function renderChunk(cx,cy,cres=1){
   const b=chunkBounds(cx,cy),{W,hp,ter,e,wl,bldAt,path}=world;
   const c=document.createElement('canvas');
-  c.width=Math.ceil(b.right-b.left);c.height=Math.ceil(b.bottom-b.top);
-  const g=c.getContext('2d');g.translate(-b.left,-b.top);g.lineWidth=0.7;g.lineJoin='round';
+  c.width=Math.ceil((b.right-b.left)*cres);c.height=Math.ceil((b.bottom-b.top)*cres);
+  const g=c.getContext('2d');g.scale(cres,cres);g.translate(-b.left,-b.top);g.lineWidth=0.7;g.lineJoin='round';
+  const pats=TEX.ready?{}:null;
+  if(pats)for(const k in TEX.bmp){const bm=TEX.bmp[k],p=g.createPattern(bm,'repeat'),S=bm.width;p.setTransform(new DOMMatrix([TEXW/S,0,-TEXW/2/S,TEXW/2/S,world.H*TW/2,0]));pats[k]=p}
+  if(pats){renderTexTiles(g,b,pats);}else
   for(let y=b.y0;y<b.y1;y++)for(let x=b.x0;x<b.x1;x++){
     const a=y*W+x,bb=a+1,cc=a+W,dd=cc+1;
     const ax=SX(x,y),ay=y*TH-hp[a],by=y*TH-hp[bb],cy2=(y+1)*TH-hp[cc],dy=(y+1)*TH-hp[dd];
@@ -35,7 +38,7 @@ function renderChunk(cx,cy){
   }
   /* platte aankleding: graspollen, bloemen, riet, kiezels */
   for(let y=b.y0;y<b.y1;y++)for(let x=b.x0;x<b.x1;x++){
-    const i=y*W+x,t=ter[i];if(bldAt[i]||path[i])continue;
+    const i=y*W+x,t=ter[i];if(bldAt[i]||path[i])continue;if(TEX.ready&&t!==T.SAND&&t!==T.ROCKY&&t!==T.MOUNTAIN)continue;
     const h=hash2(x*3+1,y*5+2);
     for(let k=0;k<2;k++){
       const hh=hash2(h,k),fx=(hh&255)/255,fy=(hh>>>8&255)/255;
@@ -60,5 +63,5 @@ function renderChunk(cx,cy){
       }
     }
   }
-  return {c,left:b.left,top:b.top,used:frameNo};
+  return {c,left:b.left,top:b.top,used:frameNo,cres};
 }

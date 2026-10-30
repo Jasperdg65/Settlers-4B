@@ -186,10 +186,11 @@ function generate(o){
         if(!near)continue;const d=r-near*2;if(d<bd){bd=d;best=[ax,ay]}}
       if(best)place(type,best[0],best[1],p)}
   });
+  const pathLines=[];
   for(const b of blds){if(b.type==='burcht')continue;const s=starts[b.p];
-    const x=b.x+0.5,y=b.y+1.5,tx=s.cx+0.5,ty=s.cy+1.5,d=Math.hypot(tx-x,ty-y),n=Math.ceil(d*2);
+    const x=b.x+0.5,y=b.y+1.5,tx=s.cx+0.5,ty=s.cy+1.5,d=Math.hypot(tx-x,ty-y),n=Math.ceil(d*2);const pl=[];pathLines.push(pl);
     for(let k=0;k<=n;k++){const t=k/n,wob=Math.sin(t*Math.PI)*Math.sin(b.seed*20)*2.2;
-      const px=x+(tx-x)*t+wob*0.5,py=y+(ty-y)*t-wob*0.3,i=(py|0)*W+(px|0);
+      const px=x+(tx-x)*t+wob*0.5,py=y+(ty-y)*t-wob*0.3,i=(py|0)*W+(px|0);pl.push(px,py);
       if(i>=0&&i<N&&ter[i]>=T.SAND&&!bldAt[i]){path[i]=1;obj[i]=0}}}
   for(const b of blds){if(b.type!=='houthakker'&&b.type!=='bosbouwer')continue;
     for(let k=0;k<(b.type==='bosbouwer'?16:10);k++){const a=rand()*6.283,r=3+rand()*6,x=Math.round(b.x+Math.cos(a)*r),y=Math.round(b.y+Math.sin(a)*r),i=y*W+x;
@@ -199,5 +200,5 @@ function generate(o){
   /* deuren per speler per rol */
   const doors=starts.map(()=>ROLES.map(()=>[]));
   for(const b of blds)ROLES.forEach((r,ri)=>{if(r.bld.includes(b.type))doors[b.p][ri].push([b.x+0.5,b.y+1.5,blds.indexOf(b)])});
-  return {W,H,e,hp,ter,obj,ore,walk,ms,wl,starts,tree,bldAt,bldAnchor,blds,doors,path,genMs:performance.now()-t0,seed:o.seed};
+  return {W,H,e,hp,ter,obj,ore,walk,ms,wl,starts,tree,bldAt,bldAnchor,blds,doors,path,pathLines,genMs:performance.now()-t0,seed:o.seed};
 }

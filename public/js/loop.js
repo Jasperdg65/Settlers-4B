@@ -39,18 +39,18 @@ function draw(){
   ctx.fillStyle='#24476f';ctx.fillRect(0,0,cv.width,cv.height);
   const z=cam.z*dpr;
   ctx.setTransform(z,0,0,z,cv.width/2-cam.x*z,cv.height/2-cam.y*z);
-  ctx.imageSmoothingEnabled=cam.z<1;
+  ctx.imageSmoothingEnabled=TEX.ready||cam.z<1;const zd=cam.z*dpr,cres=!TEX.ready||zd<1.6?1:1.5;
   const v=viewRect(),{W,H,hp,ter,obj,tree,bldAnchor,blds}=world;
   const ncx=Math.ceil((W-1)/CH),ncy=Math.ceil((H-1)/CH);
   let built=0;
   for(let cy=0;cy<ncy;cy++)for(let cx=0;cx<ncx;cx++){
     const b=chunkBounds(cx,cy);
     if(b.right<v.l||b.left>v.r||b.bottom<v.t||b.top>v.b)continue;
-    const key=cy*1000+cx;let ch=chunks.get(key);
-    if(!ch){if(built>=6&&chunks.size>0)continue;ch=renderChunk(cx,cy);chunks.set(key,ch);built++}
-    ch.used=frameNo;ctx.drawImage(ch.c,ch.left,ch.top);
+    const key=cy*1000+cx+cres*1e6;let ch=chunks.get(key);
+    if(!ch){if(built>=(TEX.ready?3:6)&&chunks.size>0)continue;ch=renderChunk(cx,cy,cres);chunks.set(key,ch);built++}
+    ch.used=frameNo;ctx.drawImage(ch.c,ch.left,ch.top,ch.c.width/ch.cres,ch.c.height/ch.cres);
   }
-  if(chunks.size>90&&frameNo%60===0)for(const [k,c] of chunks)if(frameNo-c.used>600)chunks.delete(k);
+  if(chunks.size>40&&frameNo%30===0)for(const [k,c] of chunks)if(frameNo-c.used>(c.cres>1?90:600))chunks.delete(k);
   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
 
   const yMin=Math.max(0,Math.floor(v.t/TH)-1),yMax=Math.min(H-1,Math.ceil((v.b+HP+90)/TH)+1);

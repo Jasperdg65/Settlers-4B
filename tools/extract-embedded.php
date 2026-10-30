@@ -1,5 +1,5 @@
 <?php
-// Haalt DEFAULT_IMGS en NATURE_IMGS uit een ingebakken kolonie-fase1.html en
+// Haalt DEFAULT_IMGS, NATURE_IMGS en TEX_IMGS uit een ingebakken kolonie-fase1.html en
 // schrijft losse webp's plus manifest.json. Metadata (w, h, ax, ay, flag, hub,
 // sail) komt uit de HTML; src, px en keep uit een bestaand manifest blijven staan.
 //
@@ -31,6 +31,9 @@ $src = [
     'eik0' => 'Boom1.png', 'eik1' => 'Boom4.png', 'berk0' => 'Boom5.png', 'berk1' => 'Boom6.png',
     'den0' => 'Boom7.png', 'den1' => 'Boom9.png', 'beuk0' => 'Boom2.png', 'beuk1' => 'Boom3.png',
     'appel0' => 'Boom8.png', 'appel1' => 'Boom10.png',
+    // Grondtexturen
+    'aarde' => 'Aarde.png', 'grass' => 'gras.png', 'deep' => 'Diepwater.png',
+    'shallow' => 'Ondiepwater.png', 'rock' => 'Rotsgrond.png', 'sand' => 'Zand.png',
 ];
 
 // Bewerkte webp's (rode wimpels eruit geknipt): wijken af van de PNG in bron/,
@@ -42,9 +45,9 @@ $keep = [
 
 $manifestFile = "$assets/manifest.json";
 $prev = is_file($manifestFile) ? json_decode(file_get_contents($manifestFile), true) : [];
-$manifest = ['version' => 1, 'buildings' => [], 'nature' => []];
+$manifest = ['version' => 1, 'buildings' => [], 'nature' => [], 'textures' => []];
 
-foreach (['DEFAULT_IMGS' => 'buildings', 'NATURE_IMGS' => 'nature'] as $var => $group) {
+foreach (['DEFAULT_IMGS' => 'buildings', 'NATURE_IMGS' => 'nature', 'TEX_IMGS' => 'textures'] as $var => $group) {
     // Object staat op één regel; geen regex over de hele regel (PCRE-backtracklimiet bij >1 MB)
     $start = strpos($html, "const $var=") ?: fail("$var niet gevonden");
     $start += strlen("const $var=");
@@ -53,6 +56,7 @@ foreach (['DEFAULT_IMGS' => 'buildings', 'NATURE_IMGS' => 'nature'] as $var => $
     $json = preg_replace('/([{,])\s*([A-Za-z_]\w*)\s*:/', '$1"$2":', $line);
     $obj = json_decode($json, true) ?? fail("$var: JSON-fout " . json_last_error_msg());
     foreach ($obj as $key => $d) {
+        if (is_string($d)) $d = ['data' => $d];   // TEX_IMGS: alleen base64
         $bin = base64_decode($d['data'], true);
         if ($bin === false || substr($bin, 8, 4) !== 'WEBP') fail("$key: geen webp");
         $file = "$group/$key.webp";
@@ -64,7 +68,7 @@ foreach (['DEFAULT_IMGS' => 'buildings', 'NATURE_IMGS' => 'nature'] as $var => $
         $old = $prev[$group][$key] ?? [];
         $e = ['file' => $file] + $d + [
             'src' => $old['src'] ?? $src[$key] ?? null,
-            'px' => $old['px'] ?? ($group === 'buildings' ? $pw : $ph),
+            'px' => $old['px'] ?? ($group === 'buildings' ? $pw : $ph),   // textures: vierkant
         ];
         if ($k = $old['keep'] ?? $keep[$key] ?? null) $e['keep'] = $k;
         $manifest[$group][$key] = $e + ['v' => substr(md5($bin), 0, 8)];
@@ -74,4 +78,5 @@ foreach (['DEFAULT_IMGS' => 'buildings', 'NATURE_IMGS' => 'nature'] as $var => $
 
 file_put_contents($manifestFile,
     json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
-echo "manifest.json: ", count($manifest['buildings']), " gebouwen, ", count($manifest['nature']), " natuur\n";
+echo "manifest.json: ", count($manifest['buildings']), " gebouwen, ", count($manifest['nature']), " natuur, ",
+    count($manifest['textures']), " texturen\n";
