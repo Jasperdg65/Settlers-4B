@@ -1,0 +1,7 @@
+# Originele PNG's: groot, staan alleen op de server
+/bron/*.png
+
+# Database en echte config
+/data/*
+!/data/config.example.php
+!/data/README.md
