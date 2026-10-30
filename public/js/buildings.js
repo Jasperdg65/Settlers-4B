@@ -163,6 +163,24 @@ const BTYPES={
     door(g,0,2.8,4.8,'#5e3920');win(g,0,-12,1.8,2.4);
     for(let k=0;k<3;k++)sack(g,-8+k*1.8,1.2);
   }},
+  kolenmijn:{name:'Kolenmijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:1,draw:(g)=>{
+    ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
+    for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][1-1])}},
+  ijzermijn:{name:'Ijzermijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:2,draw:(g)=>{
+    ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
+    for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][2-1])}},
+  goudmijn:{name:'Goudmijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:3,draw:(g)=>{
+    ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
+    for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][3-1])}},
+  ijzersmelterij:{name:'Ijzersmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
+    ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#c9bfae',roof:'slate',stone:true});chimney(g,5.4,-16,6);
+    poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<3;k++)box(g,8+k*2.2,10+k*2.2,0.6,1,1.4,'#8d8f94')}},
+  goudsmelterij:{name:'Goudsmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
+    ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#c9bfae',roof:'slate',stone:true});chimney(g,5.4,-16,6);
+    poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<3;k++)box(g,8+k*2.2,10+k*2.2,0.6,1,1.4,'#e6b422')}},
+  wapensmid:{name:'Wapensmid',fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[-2.6,-3],draw:(g)=>{
+    ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#e6d6b4',roof:'slate',timber:true});chimney(g,5.4,-16,5);
+    poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<4;k++)line(g,[9+k*1.3,0.4,9.4+k*1.3,-6],'#c8c8c4',0.5)}},
   boerderij:{name:'Boerderij',fp:[-2,2,-2,0],sc:1.7,box:[52,34,30,29],smoke:[6.2,-18],draw:(g)=>{
     ground(g,22,11);wheat(g,-27,-12,1.6,5);
     line(g,[-22,-2.5,-22,-8.6],'#6b4a2b',0.5);line(g,[-23.6,-7,-20.4,-7],'#6b4a2b',0.5);circ(g,-22,-9.4,0.9,'#d9b06a');poly(g,[-23.4,-9.6,-20.6,-9.6,-22,-10.8],'#8a5a34');

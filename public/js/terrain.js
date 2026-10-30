@@ -29,7 +29,7 @@ const ORECOL=['','#222','#b8622f','#f2c230','#e8e05a'];
 const PCOL=['#d33b3b','#2f6fd6','#e6b422','#3aa457','#9b4fc9','#e07a26','#22b0ad','#e05aa0'];
 const TREE_NAMES=['eik','berk','den','beuk','appelboom'];
 const TW=16,TH=8,HP=96,CH=32;
-const VILLAGE=['pakhuis','woonhuis','houthakker','bakkerij','molen','boerderij','smidse','woonhuis','zagerij','houthakker','bosbouwer','steenhouwer','kazerne','kruidenhuis','woonhuis','wachttoren','wachttoren'];
+const VILLAGE=['ijzersmelterij','goudsmelterij','wapensmid','pakhuis','woonhuis','houthakker','bakkerij','molen','boerderij','smidse','woonhuis','zagerij','houthakker','bosbouwer','steenhouwer','kazerne','kruidenhuis','woonhuis','wachttoren','wachttoren'];
 
 function quantile(arr,q){const c=Float32Array.from(arr).sort();return c[Math.min(c.length-1,Math.floor(q*c.length))]}
 
@@ -177,6 +177,14 @@ function generate(o){
         if(fits(type,ax,ay,false)){place(type,ax,ay,p);break}
       }
     }
+    for(const type of ['kolenmijn','ijzermijn','goudmijn']){const want=BTYPES[type].ore,fp=BTYPES[type].fp;let best=null,bd=1e9;
+      for(let t=0;t<2500;t++){const a=rand()*6.283,r=7+rand()*32,ax=Math.round(s.cx+Math.cos(a)*r),ay=Math.round(s.cy+Math.sin(a)*r);
+        if(ax<3||ay<4||ax>=W-3||ay>=H-3)continue;let ok=true,hit=0;const ae=e[ay*W+ax];
+        for(let dy=fp[2]-1;dy<=fp[3]+1&&ok;dy++)for(let dx=fp[0]-1;dx<=fp[1]+1;dx++){const i=(ay+dy)*W+ax+dx;
+          if(bldAt[i]||ter[i]<=T.SAND||ter[i]===T.SNOW||Math.abs(e[i]-ae)>0.14){ok=false;break}if(ore[i]===want)hit++}
+        if(!ok)continue;let near=hit;if(!near)for(let k=0;k<24;k++){const i=(ay-4+(k/6|0)*2)*W+ax-5+(k%6)*2;if(i>=0&&i<N&&ore[i]===want)near+=0.3}
+        if(!near)continue;const d=r-near*2;if(d<bd){bd=d;best=[ax,ay]}}
+      if(best)place(type,best[0],best[1],p)}
   });
   for(const b of blds){if(b.type==='burcht')continue;const s=starts[b.p];
     const x=b.x+0.5,y=b.y+1.5,tx=s.cx+0.5,ty=s.cy+1.5,d=Math.hypot(tx-x,ty-y),n=Math.ceil(d*2);

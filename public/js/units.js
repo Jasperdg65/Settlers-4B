@@ -2,8 +2,8 @@
 /* ---------- Inwoners (middeleeuws, eigen ontwerp) ----------
    varianten: 0 = man met baard, 1 = man zonder baard, 2 = vrouw          */
 const ROLES=[
-  {name:'Drager',bld:['pakhuis','houthakker','zagerij','steenhouwer','bakkerij','molen','boerderij','burcht'],share:0.6,vars:3},
-  {name:'Bouwer',bld:['woonhuis','pakhuis','zagerij','smidse','bosbouwer','houthakker','kazerne'],share:0.14,vars:2},
+  {name:'Drager',bld:['pakhuis','houthakker','zagerij','steenhouwer','bakkerij','molen','boerderij','burcht','kolenmijn','ijzermijn','goudmijn','ijzersmelterij','goudsmelterij'],share:0.6,vars:3},
+  {name:'Bouwer',bld:['woonhuis','pakhuis','zagerij','smidse','wapensmid','bosbouwer','houthakker','kazerne'],share:0.14,vars:2},
   {name:'Soldaat',bld:['kazerne','wachttoren','burcht'],share:0.12,vars:1},
   {name:'Boogschutter',bld:['wachttoren','kazerne'],share:0.08,vars:1},
   {name:'Heler',bld:['kruidenhuis','burcht','woonhuis'],share:0.06,vars:3}];
