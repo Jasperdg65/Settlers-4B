@@ -1,0 +1,24 @@
+LIEVE DIEREN - ACHT DRAAIBARE 3D MODELLEN
+
+Hertje: staand en geknield/liggend met gevouwen poten.
+Konijn: opgericht op de achterpoten en laag zittend.
+Vos: op vier poten en zittend met gekrulde staart.
+Vogeltje (roodborstje): staand en rustend met ingetrokken pootjes.
+
+Open dieren_3D_openen.html lokaal in een moderne browser.
+Slepen = draaien; muiswiel = zoomen. Kies een dier/houding of alle acht.
+Download GLB slaat het gekozen dier op. De viewer heeft geen internet nodig.
+
+Iedere variant is een eigen GLB-bestand met echte 3D-geometrie.
+De bijbehorende PNG is een render met transparante achtergrond.
+dieren_bron.blend is de bewerkbare Blender 4.5 bron met alle dieren.
+build_dieren.py en animal_helpers.py zijn de reproduceerbare modelbron.
+dieren_overzicht.png toont de acht modellen per soort naast elkaar.
+
+Materiaalvlakken voor vacht/veren, lichte delen, ogen, oren, hoeven en snavel
+zijn afzonderlijk aanpasbaar. Er zijn geen volkskleuren op deze wilde dieren.
+GLB glTF 2.0 gebruikt Y omhoog; de dieren kijken naar +Z.
+Houdingen zijn aparte statische modellen; nog geen skeleton, skinning,
+loopanimaties of vloeiende overgang tussen de twee houdingen.
+Geen handgeschilderde UV-texturen of geoptimaliseerde LODs.
+De offline viewer bevat Three.js r160 (MIT), zie THREE_LICENSE.txt.

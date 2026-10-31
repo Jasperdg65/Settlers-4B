@@ -1,0 +1,24 @@
+{
+  "status": "ontwerpvoorstel; nog geen spelregels geimplementeerd",
+  "range_units": null,
+  "levels": [
+    {
+      "level": 1,
+      "instrument": "fluit",
+      "support_range_rank": 1,
+      "support_range_label": "kort"
+    },
+    {
+      "level": 2,
+      "instrument": "harp",
+      "support_range_rank": 2,
+      "support_range_label": "middel"
+    },
+    {
+      "level": 3,
+      "instrument": "doedelzak",
+      "support_range_rank": 3,
+      "support_range_label": "groot"
+    }
+  ]
+}

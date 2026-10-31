@@ -47,20 +47,19 @@ function spawn(total,eco){
   if(eco)initTransport();
   $('nset').textContent=n.toLocaleString('nl-NL');
 }
-function animalOk(type,i){const t=world.ter[i];return type===2?t<=T.SHALLOW:(t>=T.SAND&&t<=T.DRY&&!world.bldAt[i])}
+function animalOk(type,i){const t=world.ter[i];return CFG.animals[type].water?t<=T.SHALLOW:(t>=T.SAND&&t<=T.DRY&&!world.bldAt[i])}
 function spawnAnimals(){
-  const {W,H,ter,starts}=world,r=mulberry32(hashStr(world.seed+'#dieren'));
+  const {W,H,ter,starts}=world,r=mulberry32(hashStr(world.seed+'#dieren')),C=CFG.animals;
   let landN=0,waterN=0;for(const t of ter){if(t<=T.SHALLOW)waterN++;else if(t<=T.DRY)landN++}
-  const want=[Math.min(260,landN/700|0),Math.min(400,landN/450|0),Math.min(260,waterN/600|0)];
-  const n=want[0]+want[1]+want[2];
+  const want=C.map(a=>Math.min(a.max,(a.water?waterN:landN)/a.per|0)),n=want.reduce((s,v)=>s+v,0);
   for(const k of ['x','y','px','py','tx','ty','hx','hy'])A[k]=new Float32Array(n);
-  A.type=new Uint8Array(n);A.wait=new Uint16Array(n);A.dir=new Uint8Array(n);A.next=new Int32Array(n);A.n=0;
-  for(let type=0;type<3;type++)for(let k=0;k<want[type];k++){
+  A.type=new Uint8Array(n);A.wait=new Uint16Array(n);A.dir=new Uint8Array(n);A.d8=new Uint8Array(n);A.lie=new Uint8Array(n);A.next=new Int32Array(n);A.n=0;
+  for(let type=0;type<C.length;type++)for(let k=0;k<want[type];k++){
     for(let t=0;t<60;t++){
       const x=1+r()*(W-3),y=1+r()*(H-3),i=(y|0)*W+(x|0);
       if(!animalOk(type,i))continue;
-      if(type!==2&&starts.some(s=>Math.hypot(s.x-x,s.y-y)<(type===0?22:15)))continue;
-      const j=A.n++;A.x[j]=A.px[j]=A.hx[j]=A.tx[j]=x;A.y[j]=A.py[j]=A.hy[j]=A.ty[j]=y;A.type[j]=type;A.wait[j]=r()*100|0;A.dir[j]=r()<0.5?1:0;break;
+      if(C[type].keep&&starts.some(s=>Math.hypot(s.x-x,s.y-y)<C[type].keep))continue;
+      const j=A.n++;A.x[j]=A.px[j]=A.hx[j]=A.tx[j]=x;A.y[j]=A.py[j]=A.hy[j]=A.ty[j]=y;A.type[j]=type;A.wait[j]=r()*100|0;A.dir[j]=r()<0.5?1:0;A.d8[j]=r()*8|0;break;
     }
   }
   $('nanim').textContent=A.n.toLocaleString('nl-NL');
@@ -86,15 +85,15 @@ function tick(){
   for(let i=0;i<A.n;i++){
     A.px[i]=A.x[i];A.py[i]=A.y[i];
     if(A.wait[i]>0){A.wait[i]--;continue}
-    const type=A.type[i],dx=A.tx[i]-A.x[i],dy=A.ty[i]-A.y[i],d=Math.hypot(dx,dy);
+    const type=A.type[i],c=CFG.animals[type],dx=A.tx[i]-A.x[i],dy=A.ty[i]-A.y[i],d=Math.hypot(dx,dy);
     if(d<0.2){
-      A.wait[i]=type===1?(srand()*50|0):40+(srand()*160|0);
-      const R=type===0?10:type===1?4:6;
-      for(let t=0;t<6;t++){const a=srand()*6.283,rr=srand()*R,X=A.hx[i]+Math.cos(a)*rr,Y=A.hy[i]+Math.sin(a)*rr;
+      /* aangekomen: even stilstaan, of soms een tijd gaan liggen of zitten; daarna een nieuw doel rond de thuisplek */
+      A.lie[i]=srand()<c.rest?1:0;const w=A.lie[i]?c.restWait:c.wait;A.wait[i]=w[0]+srand()*(w[1]-w[0])|0;
+      for(let t=0;t<6;t++){const a=srand()*6.283,rr=srand()*c.range,X=A.hx[i]+Math.cos(a)*rr,Y=A.hy[i]+Math.sin(a)*rr;
         if(X>1&&Y>1&&X<world.W-2&&Y<world.H-2&&animalOk(type,(Y|0)*W+(X|0))){A.tx[i]=X;A.ty[i]=Y;break}}
       continue;
     }
-    const s=Math.min(d,[0.06,0.09,0.025][type]),nx=A.x[i]+dx/d*s,ny=A.y[i]+dy/d*s;
+    A.lie[i]=0;const s=Math.min(d,c.speed),nx=A.x[i]+dx/d*s,ny=A.y[i]+dy/d*s;
     const sdx=dx*2-dy;if(Math.abs(sdx)>0.05)A.dir[i]=sdx<0?1:0;
     if(animalOk(type,(ny|0)*W+(nx|0))){A.x[i]=nx;A.y[i]=ny}else{A.tx[i]=A.x[i];A.ty[i]=A.y[i]}
   }

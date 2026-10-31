@@ -451,12 +451,58 @@
         "drager_kist": {
             "json": "units/drager_kist.json",
             "v": "dae33b842c"
+        },
+        "heler_1": {
+            "json": "units/heler_junior.json",
+            "v": "c1b0c198ce"
+        },
+        "heler_2": {
+            "json": "units/heler_medior.json",
+            "v": "78ba1d1294"
+        },
+        "heler_3": {
+            "json": "units/heler_senior.json",
+            "v": "7baf678fea"
+        },
+        "muzikant_1": {
+            "json": "units/muzikant_junior.json",
+            "v": "b0064750aa"
+        },
+        "muzikant_2": {
+            "json": "units/muzikant_medior.json",
+            "v": "9057d7de22"
+        },
+        "muzikant_3": {
+            "json": "units/muzikant_senior.json",
+            "v": "fad17b0110"
         }
     },
     "duels": {
         "armdrukken": {
             "json": "units/armdrukken.json",
             "v": "6ac9e8e5c3"
+        }
+    },
+    "animals": {
+        "hert": {
+            "json": "dieren/hert.json",
+            "v": "86d4b03949"
+        },
+        "konijn": {
+            "json": "dieren/konijn.json",
+            "v": "35c653bff5"
+        },
+        "vos": {
+            "json": "dieren/vos.json",
+            "v": "c0c602afeb"
+        },
+        "vogel": {
+            "json": "dieren/vogel.json",
+            "v": "835ca9e4bf"
+        },
+        "eend": {
+            "json": "dieren/eend.json",
+            "v": "d580c2cd11"
         }
     }
 }

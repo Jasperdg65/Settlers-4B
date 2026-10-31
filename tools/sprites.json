@@ -30,10 +30,24 @@
   "duels": {
     "armdrukken": {"glb": "bron/modellen/duels/armpje_drukken_L{l}_R{r}.glb", "out": "units/armdrukken", "levels": [1, 2, 3], "standen": 9, "rotate": 90}
   },
+  "animalRig": {"gait": "quad", "scale": 1.0, "legTop": 0.95, "swing": 24, "bob": 0.02, "hop": 0.12, "tilt": 10, "roll": 3},
+  "animals": {
+    "hert":   {"out": "dieren/hert",   "anims": {"idle": "bron/modellen/hert_staand.glb",   "walk": "bron/modellen/hert_staand.glb",   "rest": "bron/modellen/hert_rustend.glb"}},
+    "vos":    {"out": "dieren/vos",    "anims": {"idle": "bron/modellen/vos_staand.glb",    "walk": "bron/modellen/vos_staand.glb",    "rest": "bron/modellen/vos_rustend.glb"}, "rig": {"swing": 28}},
+    "konijn": {"out": "dieren/konijn", "anims": {"idle": "bron/modellen/konijn_staand.glb", "walk": "bron/modellen/konijn_rustend.glb", "rest": "bron/modellen/konijn_rustend.glb"}, "rig": {"gait": "hop", "hop": 0.16}},
+    "vogel":  {"out": "dieren/vogel",  "anims": {"idle": "bron/modellen/vogel_staand.glb",  "walk": "bron/modellen/vogel_staand.glb",  "rest": "bron/modellen/vogel_rustend.glb"}, "rig": {"gait": "hop", "scale": 1.5, "hop": 0.07, "tilt": 6}},
+    "eend":   {"out": "dieren/eend",   "anims": {"idle": "bron/modellen/eend_zwemmend.glb", "walk": "bron/modellen/eend_zwemmend.glb"}, "rig": {"gait": "swim", "scale": 1.5, "bob": 0.015}}
+  },
   "models": {
     "krachtpatser_1": {"glb": "bron/modellen/krachtpatser_junior.glb", "out": "units/krachtpatser_junior", "anims": ["idle", "walk"]},
     "krachtpatser_2": {"glb": "bron/modellen/krachtpatser_medior.glb", "out": "units/krachtpatser_medior", "anims": ["idle", "walk"]},
     "krachtpatser_3": {"glb": "bron/modellen/krachtpatser_senior.glb", "out": "units/krachtpatser_senior", "anims": ["idle", "walk"]},
+    "heler_1": {"glb": "bron/modellen/heler_junior.glb", "out": "units/heler_junior", "anims": ["idle", "walk"], "rig": {"hip": 0.92, "armSwing": 6}},
+    "heler_2": {"glb": "bron/modellen/heler_medior.glb", "out": "units/heler_medior", "anims": ["idle", "walk"], "rig": {"hip": 0.92, "armSwing": 6}},
+    "heler_3": {"glb": "bron/modellen/heler_senior.glb", "out": "units/heler_senior", "anims": ["idle", "walk"], "rig": {"hip": 0.92, "armSwing": 6}},
+    "muzikant_1": {"glb": "bron/modellen/muzikant_junior.glb", "out": "units/muzikant_junior", "anims": ["idle", "walk"], "rig": {"hip": 0.92, "armSwing": 0}},
+    "muzikant_2": {"glb": "bron/modellen/muzikant_medior.glb", "out": "units/muzikant_medior", "anims": ["idle", "walk"], "rig": {"hip": 0.92, "armSwing": 0}},
+    "muzikant_3": {"glb": "bron/modellen/muzikant_senior.glb", "out": "units/muzikant_senior", "anims": ["idle", "walk"], "rig": {"hip": 0.92, "armSwing": 0}},
     "drager_leeg": {"glb": "bron/modellen/drager.glb", "out": "units/drager_leeg", "anims": ["idle", "walk"], "hide": ["Cargo"],
       "rig": {"hip": 0.92, "shoulder": [0.36, 0.0, 1.43], "armRest": 52, "armSwing": 18}},
     "drager_kist": {"glb": "bron/modellen/drager.glb", "out": "units/drager_kist", "anims": ["idle", "walk"], "body": ["Cargo"], "hide": ["Cargo_sack"],

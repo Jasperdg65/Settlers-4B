@@ -10,7 +10,9 @@
 # Rijen = richtingen (0 = oost/schermrechts, daarna met de klok mee per 45°), kolommen = beelden: idle, walk, fight.
 # Animatie zonder skelet: onderdelen worden gegroepeerd (benen = Boot/Trouser per kant, armen = alles verder
 # dan rig.armMinX van het midden per kant, rest = romp) en scharnieren rond heup en schouder.
-import bpy, sys, os, json, math, hashlib, shutil
+# Dieren (CFG['animals']): per animatie een eigen GLB (staand, rustend); lopen wordt nagebootst per gang
+# (quad: poten diagonaal zwaaien, hop: huppen, swim: deinen). Wilde dieren hebben geen spelerkleur, dus geen masker.
+import bpy, sys, os, json, math, hashlib, shutil, re
 import numpy as np
 from mathutils import Vector, Matrix, Euler
 
@@ -19,7 +21,7 @@ CFG = json.load(open(os.path.join(ROOT, 'tools', 'sprites.json')))
 ASSETS = os.path.join(ROOT, 'public', 'assets')
 argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 TEST = '--test' in argv
-KEYS = [a for a in argv if not a.startswith('--')] or list(CFG['models']) + list(CFG.get('duels', {}))
+KEYS = [a for a in argv if not a.startswith('--')] or list(CFG['models']) + list(CFG.get('duels', {})) + list(CFG.get('animals', {}))
 TMP = os.path.join(ROOT, 'tools', '.render-tmp')
 MIN_FREE = 3 * 1024 ** 3  # stoppen onder 3 GB vrij
 
@@ -367,10 +369,10 @@ def render_model(key, m):
     return os.path.relpath(jpath, ASSETS), file_hash(written)
 
 
-def register(entries, duels={}):
+def register(entries, duels={}, animals={}):
     mf = os.path.join(ASSETS, 'manifest.json')
     man = json.load(open(mf))
-    for section, ents in (('units', entries), ('duels', duels)):
+    for section, ents in (('units', entries), ('duels', duels), ('animals', animals)):
         if not ents:
             continue
         sec = man.setdefault(section, {})
@@ -470,14 +472,140 @@ def render_duel(key, m):
     return os.path.relpath(jpath, ASSETS), file_hash(written)
 
 
-done, duels = {}, {}
+# ---------- dieren ----------
+LEG = re.compile('leg|knee|hoof|sock|paw|thigh|ankle|foot', re.I)
+
+
+def animal_rig(objs, A):
+    """Root (richting, schaal) → Lijf (huppen, deinen) → onderdelen; bij gang quad per poot een scharnier bovenaan"""
+    root = empty('Root', (0, 0, 0))
+    root.scale = (A['scale'],) * 3
+    body = empty('Lijf', (0, 0, 0), root)
+    bpy.context.view_layer.update()
+    legs = {}
+    if A['gait'] == 'quad':
+        L = [o for o in objs if LEG.search(o.name)]
+        my = sum(center(o).y for o in L) / max(1, len(L))
+        groups = {}
+        for o in L:
+            c = center(o)
+            groups.setdefault((1 if c.x > 0 else -1, 1 if c.y > my else -1), []).append(o)
+        for k, part in groups.items():
+            top = max((o.matrix_world @ Vector(c)).z for o in part for c in o.bound_box)
+            cx = sum(center(o).x for o in part) / len(part)
+            cy = sum(center(o).y for o in part) / len(part)
+            legs[k] = empty('Poot', (cx, cy, top * A['legTop']), body)
+        bpy.context.view_layer.update()
+        for k, part in groups.items():
+            for o in part:
+                attach(o, legs[k])
+    for o in objs:
+        if o.parent is None:
+            attach(o, body)
+    return root, body, legs
+
+
+def animal_pose(rig, anim, i, A):
+    root, body, legs = rig
+    body.location = (0, 0, 0)
+    body.rotation_euler = (0, 0, 0)
+    for e in legs.values():
+        e.rotation_euler = (0, 0, 0)
+    if anim != 'walk':
+        return
+    ph = i / CFG['anims']['walk'] * 2 * math.pi
+    g = A['gait']
+    if g == 'quad':  # linksvoor en rechtsachter samen, dan de andere twee
+        a = math.radians(A['swing']) * math.sin(ph)
+        for (sx, sy), e in legs.items():
+            e.rotation_euler.x = a if sx * sy > 0 else -a
+        body.location.z = A['bob'] * math.cos(2 * ph)
+    elif g == 'hop':  # één sprong per cyclus, de helft van de tijd op de grond
+        h = max(0.0, math.sin(ph))
+        body.location.z = A['hop'] * h
+        body.rotation_euler.x = math.radians(A['tilt']) * math.cos(ph) * h
+    elif g == 'swim':
+        body.location.z = A['bob'] * math.sin(ph)
+        body.rotation_euler.y = math.radians(A['roll']) * math.sin(ph)
+
+
+def render_animal(key, m):
+    """dier: per animatie uit m['anims'] (naam → GLB) idle 1 beeld, walk CFG.anims.walk beelden, rest 1 beeld; 8 richtingen"""
+    check_disk()
+    A = {**CFG['animalRig'], **m.get('rig', {})}
+    from bpy_extras.object_utils import world_to_camera_view
+    os.makedirs(TMP, exist_ok=True)
+    tmp = os.path.join(TMP, key + '.png')
+    dirs = list(range(CFG['dirs']))
+    col, frames = {}, []
+    for anim, glb in m['anims'].items():
+        sc, cam, ppu, res = setup_scene()
+        objs = load_model(os.path.join(ROOT, glb))
+        rig = animal_rig(objs, A)
+        orig, _ = prep_materials(objs)
+        set_pass(sc, False); apply_mats(objs, orig)
+        n = CFG['anims'].get(anim, 1) if anim == 'walk' else 1
+        fr = [(anim, i) for i in range(n)][:1 if TEST else n]
+        frames += fr
+        for d in dirs:
+            set_dir(rig[0], d)
+            for (a, i) in fr:
+                animal_pose(rig, a, i, A)
+                bpy.context.view_layer.update()
+                col[d, a, i] = render_rgba(sc, tmp)
+            check_disk()
+        print(f'  {key}: {anim} klaar ({glb}, poten {len(rig[2])})', flush=True)
+    os.remove(tmp)
+    al = np.max(np.stack([c[..., 3] for c in col.values()]), axis=0)
+    ys, xs = np.nonzero(al > CFG['cropAlpha'])
+    F = CFG['supersample'] * max(CFG['sizes']) // min(CFG['sizes'])
+    x0, y0 = int(xs.min()) // F * F, int(ys.min()) // F * F
+    x1, y1 = -(-(int(xs.max()) + 1) // F) * F, -(-(int(ys.max()) + 1) // F) * F
+    cw, ch = x1 - x0, y1 - y0
+    v = world_to_camera_view(sc, cam, Vector((0, 0, 0)))
+    ax, ay = v.x * res - x0, (1 - v.y) * res - y0
+    out = {'model': key, 'key': key, 'dirs': CFG['dirs'],
+           'dirNote': '0 = oost (schermrechts), met de klok mee per 45 graden; 2 = zuid (naar de kijker)',
+           'anims': {a: sum(1 for f in frames if f[0] == a) for a in m['anims']}, 'scale': A['scale'],
+           'refHeight': CFG['refHeight'], 'sizes': []}
+    written = []
+    for size in CFG['sizes']:
+        f = CFG['supersample'] * max(CFG['sizes']) // size
+        w, h = cw // f, ch // f
+        atlas = np.zeros((h * len(dirs), w * len(frames), 4), np.float32)
+        fl = []
+        for r, d in enumerate(dirs):
+            for c, (a, i) in enumerate(frames):
+                atlas[r * h:(r + 1) * h, c * w:(c + 1) * w] = shrink(col[d, a, i][y0:y1, x0:x1], f)
+                fl.append({'anim': a, 'dir': d, 'i': i, 'x': c * w, 'y': r * h, 'w': w, 'h': h,
+                           'ax': round(ax / f, 2), 'ay': round(ay / f, 2)})
+        base = os.path.join(TMP if TEST else ASSETS, m['out'] + f'_{size}')
+        os.makedirs(os.path.dirname(base), exist_ok=True)
+        save_webp(atlas, base + '.webp', CFG['quality'])
+        if TEST:
+            bg = np.full_like(atlas, 0.45); bg[..., 3] = 1
+            pv = bg.copy(); pv[..., :3] = atlas[..., :3] * atlas[..., 3:4] + bg[..., :3] * (1 - atlas[..., 3:4])
+            save_png(pv, base + '_voorbeeld.png')
+        written.append(base + '.webp')
+        rel = os.path.relpath(base, TMP if TEST else ASSETS)
+        out['sizes'].append({'px': size, 'file': rel + '.webp', 'w': w * len(frames), 'h': h * len(dirs), 'frames': fl})
+    jpath = os.path.join(TMP if TEST else ASSETS, m['out'] + '.json')
+    json.dump(out, open(jpath, 'w'), indent=1)
+    written.append(jpath)
+    print(f'{key}: kader {cw}x{ch} render-px, anker {ax:.0f},{ay:.0f}, {len(frames)} beelden per richting', flush=True)
+    return os.path.relpath(jpath, ASSETS), file_hash(written)
+
+
+done, duels, animals = {}, {}, {}
 for k in KEYS:
     if k in CFG['models']:
         done[k] = render_model(k, CFG['models'][k])
     elif k in CFG.get('duels', {}):
         duels[k] = render_duel(k, CFG['duels'][k])
+    elif k in CFG.get('animals', {}):
+        animals[k] = render_animal(k, CFG['animals'][k])
     else:
-        raise SystemExit(f'Onbekende sleutel {k}: niet in models of duels van tools/sprites.json')
+        raise SystemExit(f'Onbekende sleutel {k}: niet in models, duels of animals van tools/sprites.json')
 if not TEST:
-    register(done, duels)
-print('KLAAR', ', '.join(done))
+    register(done, duels, animals)
+print('KLAAR', ', '.join(list(done) + list(duels) + list(animals)))

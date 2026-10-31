@@ -39,6 +39,7 @@ public/                 webroot (Apache-alias /settlers4b)
     nature/*.webp       21 bomen, struiken, rotsen
     textures/*.webp     6 naadloze grondtexturen, 512×512
     units/*             3D-poppetjes: per model een JSON en per maat atlas + masker (webp)
+    dieren/*            3D-dieren: per dier een JSON en per maat een atlas (webp, geen masker)
   api/
     maps.php            maps (generator-instelling, later editor-data)
     saves.php           savegames
@@ -202,7 +203,9 @@ Wat het script doet (instellingen in `tools/sprites.json`):
    dus zo'n 10 minuten per model). Lokaal renderen kan ook, zie hieronder.
 5. Koppel het in het spel: `ROLE3D` in `js/units3d.js` wijst per rol (index in `ROLES`) de
    modelsleutels per niveau aan, nu `2: ['krachtpatser_1','krachtpatser_2','krachtpatser_3']`
-   (rol Krachtpatser, junior/medior/senior) en `0: drager_leeg` (rol Drager in de stresstest).
+   (rol Krachtpatser, junior/medior/senior), `4: heler_1..3`, `5: muzikant_1..3` en `0: drager_leeg`
+   (rol Drager in de stresstest). Heler en muzikant (`bron/modellen/build_rollen.py`) houden staf,
+   kruiden en instrument vast: hun armen zwaaien niet (muzikant) of nauwelijks (heler, `armSwing` 6).
    In de economie gebruiken vrije dragers `drager_leeg` en dragers met een goed `drager_kist`,
    met het goed op punt `hold` (`CARRY3D`). De galerij *Inwoners* toont ze, met een
    controlestrook op spelgrootte (zoom 1 en 2) in rood en blauw.
@@ -230,6 +233,27 @@ Wat het script doet (instellingen in `tools/sprites.json`):
   In het manifest onder `duels`.
 - `nice tools/blender/blender -b -P tools/render_sprites.py -- armdrukken` (~8 min);
   met `--test` alleen niveau 1 tegen 1, standen 1, 5 en 9.
+
+**Dieren** (`animals` en `animalRig` in `tools/sprites.json`)
+
+- Bron: `bron/modellen/build_dieren.py` (hert, konijn, vos, vogeltje; elk staand en rustend als losse
+  statische GLB, zonder skelet) en de eend (`eend_lopend.glb`, `eend_zwemmend.glb`). Voorkant naar −y,
+  net als de poppetjes.
+- Per dier noemt `anims` per animatie de GLB: `idle` (staand, 1 beeld), `walk` (8 beelden),
+  `rest` (liggen of zitten, 1 beeld). Lopen wordt nagebootst per gang (`rig.gait`):
+  `quad` (hert, vos: de poten worden gevonden op naam, leg/knee/hoof/sock/paw/…, per hoek gegroepeerd
+  en zwaaien diagonaal rond hun bovenkant, `swing`), `hop` (konijn: laag huppen met het rustende model,
+  vogel: met het staande; `hop`, `tilt`) en `swim` (eend: deinen en wiegen, `bob`, `roll`; de
+  schaduwvanger op waterhoogte snijdt het deel onder water weg).
+- `rig.scale`: zelfde maat als de poppetjes (refHeight), alleen vogel en eend ×1,5 zodat ze op zoom 1
+  nog te zien zijn. Geen masker (wilde dieren hebben geen spelerkleur).
+- Uitvoer `public/assets/dieren/<dier>_<px>.webp` + `<dier>.json`, in het manifest onder `animals`.
+  `nice tools/blender/blender -b -P tools/render_sprites.py -- hert konijn vos vogel eend` (~30 min);
+  met `--test` per animatie alleen het eerste beeld.
+- In het spel (`CFG.animals`, `js/colonists.js`): aantallen, snelheid, straal, wachttijden en de kans
+  dat een dier na aankomst gaat liggen of zitten (`rest`, `restWait`). De eend deint altijd. Hert,
+  konijn en eend hebben nog een getekende reserve; vos en vogel bestaan alleen in 3D. De lopende eend
+  is nog niet in gebruik (eenden blijven op het water).
 
 **Oorspronkelijke ontwerpnotitie duel-sprite**
 
@@ -325,7 +349,8 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 **Duel-test (krachtpatsers, mijlpaal 4)**
 
 Knop *Duel-test* (of modus Duel-test): op een open veld bij burcht 1 staan per speler 1 en 2 zes
-krachtpatsers (`CFG.duel.test.levels`) en één heler. *Spelen als* kiest welke kant je bestuurt;
+krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doedelzak, blauw: fluit;
+`CFG.duel.test.healers`, `musicians`). *Spelen als* kiest welke kant je bestuurt;
 *Start* zet de opstelling opnieuw neer.
 
 - Bediening: links slepen = selectierechthoek (max `CFG.army.maxSelect`, 100); klik = één;
@@ -351,8 +376,12 @@ krachtpatsers (`CFG.duel.test.levels`) en één heler. *Spelen als* kiest welke 
   spelerkleur op de grond.
 - **Tijdelijk**: de harmoniemeter is vast (`CFG.duel.harmonyStart`, tot mijlpaal 7), iedereen in
   de test is gevoed, eenheden van de tegenstander doen niets uit zichzelf (geen terugvechten of
-  uitdagen), een eenheid onderweg naar een duel neemt geen loopopdracht aan, muzikanten ontbreken
-  nog en de heler is nog een getekende figuur.
+  uitdagen) en een eenheid onderweg naar een duel neemt geen loopopdracht aan.
+- Heler en muzikant (rol 4 en 5, 3D per niveau): ook te selecteren en te verplaatsen, niet om te duelleren.
+  **Muzikantensteun** (`CFG.duel.music`): een eigen muzikant binnen `range[niveau]` tegels (fluit 3,
+  harp 5, doedelzak 8) maakt een krachtpatser `bonus` (15%) sterker; meerdere muzikanten tellen niet
+  op. Een geselecteerde muzikant toont zijn bereik als stippellijn; de tooltip van een krachtpatser
+  zegt 'muziek' als hij steun krijgt.
 
 **Volgende stap: torens veroveren en gebied bij verovering (nog niet bouwen)**
 

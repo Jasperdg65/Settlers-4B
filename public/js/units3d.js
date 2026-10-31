@@ -4,10 +4,11 @@
    en per beeld {anim, dir, i, x, y, w, h, ax, ay}. Richting 0 = oost (schermrechts), met de klok mee per 45°.
    Omkleuren: het masker (grijswaarde) zegt hoeveel spelerkleur een pixel krijgt; per speler en maat één keer
    uitgerekend, pas als het nodig is. ROLE3D koppelt een rol en niveau aan een model; zonder atlas blijft de tekening. */
-let UNIT3D_IMGS={},DUEL3D_IMGS={};const U3D={},D3D={};
+let UNIT3D_IMGS={},DUEL3D_IMGS={},ANIMAL3D_IMGS={};const U3D={},D3D={},A3D={};
 const UNIT3D_H=18;                 // hoogte van het poppetje (px-maat) in wereldeenheden, gelijk aan de getekende figuren
 const ROLE3D={0:['drager_leeg','drager_leeg','drager_leeg'],          // rol Drager (stresstest): één model
-  2:['krachtpatser_1','krachtpatser_2','krachtpatser_3']};             // rol Krachtpatser, niveau 1–3 (junior, medior, senior)
+  2:['krachtpatser_1','krachtpatser_2','krachtpatser_3'],              // rol Krachtpatser, niveau 1–3 (junior, medior, senior)
+  4:['heler_1','heler_2','heler_3'],5:['muzikant_1','muzikant_2','muzikant_3']};   // heler en muzikant (fluit, harp, doedelzak)
 /* economie: vrije drager zonder kist, drager met een goed met kist (het goed zelf tekent loop.js op punt 'hold') */
 const CARRY3D={free:'drager_leeg',carry:'drager_kist'};
 /* duel-sprites (manifest.duels): per maat F[niveau links][niveau rechts][stand 1–9]; zelfde schaal als de poppetjes */
@@ -16,7 +17,7 @@ async function loadSheets(imgs,out,index,what){
     const r=await fetch('assets/'+d.json+'?v='+d.v);if(!r.ok)throw new Error(d.json+': HTTP '+r.status);
     const meta=await r.json(),sizes=[];
     for(const s of meta.sizes){
-      const [b,m]=await Promise.all([s.file,s.mask].map(f=>assetBlob({file:f,v:d.v}).then(createImageBitmap)));
+      const [b,m]=await Promise.all([s.file,s.mask].map(f=>f?assetBlob({file:f,v:d.v}).then(createImageBitmap):null));   // dieren: geen masker
       const F={};for(const f of s.frames)index(F,f);
       sizes.push({px:s.px,base:b,mask:m,F,pc:[]});
     }
@@ -26,12 +27,13 @@ async function loadSheets(imgs,out,index,what){
 const put3=(F,a,b,c,f)=>(((F[a]||(F[a]=[]))[b]||(F[a][b]=[]))[c]=f);
 async function loadUnits3D(){
   await Promise.all([loadSheets(UNIT3D_IMGS,U3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-poppetje'),
-    loadSheets(DUEL3D_IMGS,D3D,(F,f)=>put3(F,f.lvlL,f.lvlR,f.stand,f),'duel-sprite')]);
+    loadSheets(DUEL3D_IMGS,D3D,(F,f)=>put3(F,f.lvlL,f.lvlR,f.stand,f),'duel-sprite'),
+    loadSheets(ANIMAL3D_IMGS,A3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-dier')]);
   if(Object.keys(U3D).length&&typeof buildGallery==='function'&&$('people').children.length)buildGallery();
 }
 /* atlas in de kleur van speler p */
 function unit3DAtlas(sz,p){
-  if(sz.pc[p])return sz.pc[p];
+  if(!sz.mask)return sz.base;if(sz.pc[p])return sz.pc[p];
   const w=sz.base.width,h=sz.base.height,c=document.createElement('canvas');c.width=w;c.height=h;
   const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(sz.mask,0,0);const mk=g.getImageData(0,0,w,h).data;
   g.clearRect(0,0,w,h);g.drawImage(sz.base,0,0);const im=g.getImageData(0,0,w,h),d=im.data;
@@ -59,8 +61,8 @@ function drawDuel3D(key,lvlL,lvlR,stand,pL,pR,x,y,zd,g=ctx){
   const u=D3D[key];if(!u)return false;const sz=unit3DSize(u,zd),fr=sz.F[lvlL]&&sz.F[lvlL][lvlR]&&sz.F[lvlL][lvlR][stand];if(!fr)return false;
   const k=UNIT3D_H/sz.px;g.drawImage(duel3DAtlas(sz,pL,pR),fr.x,fr.y,fr.w,fr.h,x-fr.ax*k,y-fr.ay*k,fr.w*k,fr.h*k);return true;
 }
-function drawUnit3D(key,anim,dir,i,p,x,y,zd,g=ctx){
-  const u=U3D[key];if(!u)return null;const sz=unit3DSize(u,zd),a=sz.F[anim]||sz.F.idle,fr=a[dir][i%a[dir].length],k=UNIT3D_H/sz.px;
+function drawUnit3D(key,anim,dir,i,p,x,y,zd,g=ctx,src=U3D){
+  const u=src[key];if(!u)return null;const sz=unit3DSize(u,zd),a=sz.F[anim]||sz.F.idle,fr=a[dir][i%a[dir].length],k=UNIT3D_H/sz.px;
   g.drawImage(unit3DAtlas(sz,p),fr.x,fr.y,fr.w,fr.h,x-fr.ax*k,y-fr.ay*k,fr.w*k,fr.h*k);return {fr,k};
 }
 /* richting 0–7 uit een stap (dx, dy) in tegels: schermrichting, met de diepte terug naar de grond (camera 30° → ×2) */

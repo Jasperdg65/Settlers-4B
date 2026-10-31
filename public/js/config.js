@@ -69,6 +69,16 @@ const CFG={
     digShare:0.3,                  // deel van de voortgangsmeter voor het egaliseren
     refund:0.5,                    // afbreken geeft dit deel van het verwerkte materiaal terug (naar beneden afgerond)
   },
+  /* wilde dieren (colonists.js); sleutel = 3D-model in manifest.animals. Aantal = min(max, beloopbaar land (of water) / per).
+     keep: afstand tot een startplek bij het neerzetten; range: straal rond hun thuisplek; wait: [min, max] ticks stilstaan;
+     rest: kans dat het daarbij gaat liggen of zitten, dan restWait ticks; rate: loopbeelden per 120 ms (huppen sneller) */
+  animals:[
+    {k:'hert',  per:700, max:260,keep:22,speed:0.06, range:10,wait:[40,200],rest:0.35,restWait:[200,500],rate:1},
+    {k:'konijn',per:450, max:400,keep:15,speed:0.09, range:4, wait:[0,50],  rest:0.25,restWait:[100,300],rate:2},
+    {k:'eend',  per:600, max:260,keep:0, speed:0.025,range:6, wait:[40,200],rest:0,   restWait:[0,0],    rate:0.5,water:1},
+    {k:'vos',   per:1800,max:90, keep:22,speed:0.07, range:12,wait:[40,240],rest:0.4, restWait:[200,600],rate:1.2},
+    {k:'vogel', per:900, max:200,keep:10,speed:0.05, range:3, wait:[20,120],rest:0.3, restWait:[100,300],rate:2},
+  ],
   /* krachtpatsers in het veld (nu alleen in de duel-testmodus) */
   army:{
     speed:0.075,                   // tegels per tick lopen
@@ -93,10 +103,13 @@ const CFG={
     meetTicks:600,                 // zo lang mogen beide over het lopen naar de tafel doen
     seat:0.34,                     // halve afstand tussen de deelnemers in tegels (past bij de duel-sprite)
     outTicks:600,                  // verliezer is zo lang uitgeschakeld, bij zijn heler
+    /* muzikantensteun: een eigen muzikant binnen range[niveau] tegels (fluit, harp, doedelzak) maakt een krachtpatser
+       bonus sterker; meerdere muzikanten tellen niet op. Uitgeschakelde of duelleerde muzikanten bestaan niet (ze duelleren niet). */
+    music:{range:[0,3,5,8],bonus:0.15},
     afterOut:0.3,                  // vermoeidheid als hij weer meedoet
-    /* testmodus 'Duel-test': per speler (1 en 2) krachtpatsers met deze niveaus en één heler, op een open veld bij burcht 1;
-       gap = afstand tussen de twee groepen in tegels */
-    test:{levels:[1,2,3,1,2,3],gap:7},
+    /* testmodus 'Duel-test': per speler (1 en 2) krachtpatsers met deze niveaus, één heler en muzikanten (niveau per speler),
+       op een open veld bij burcht 1; gap = afstand tussen de twee groepen in tegels */
+    test:{levels:[1,2,3,1,2,3],gap:7,healers:[1,2],musicians:[[3],[1]]},
   },
   /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en elke voltooide wachttoren (nog zonder bemanning) */
   territory:{burcht:20,wachttoren:20},

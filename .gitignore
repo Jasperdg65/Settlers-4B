@@ -161,3 +161,6 @@ vite.config.ts.timestamp-*
 tools/blender
 tools/.render-tmp
 *.blend1
+# offline 3D-bekijkpagina's (5–10 MB elk, met Three.js); blijven lokaal
+/bron/modellen/*_3D_openen.html
+/bron/modellen/THREE_LICENSE.txt

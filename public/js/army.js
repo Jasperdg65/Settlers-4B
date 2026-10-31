@@ -8,7 +8,7 @@
    De selectie zelf is alleen weergave en hoort niet bij de simulatie. */
 const AS={IDLE:0,PATH:1,WALK:2,SEAT:3,DUEL:4,OUT:5};
 const AIM={IDLE:0,SEAT:1,HEAL:2};
-const LVLNAME=['','junior','medior','senior'];
+const LVLNAME=['','junior','medior','senior'],INSTR=['','fluit','harp','doedelzak'];
 const ARMY={p:0,sel:[],groups:[],cmd:[],last:'',won:[],tap:{k:-1,t:0},ping:null};
 const SEL={box:null};
 let drand=mulberry32(1);   // eigen toeval voor duels, los van de dieren (die gebruiken srand)    // sleeprechthoek in schermpixels [x0, y0, x1, y1]
@@ -45,7 +45,8 @@ function spawnDuelTest(){
   const [cx,cy]=openArea(world.starts[0],Math.ceil(t.gap/2+5),3),list=[];ARMY.at=[cx,cy];
   for(let p=0;p<2;p++){const side=p?1:-1;
     t.levels.forEach((l,k)=>list.push([p,2,l,cx+side*(t.gap/2+(k%2)*1.1),cy+((k>>1)-1)*1.3]));
-    list.push([p,4,1,cx+side*(t.gap/2+3.4),cy])}
+    list.push([p,4,t.healers[p],cx+side*(t.gap/2+3.4),cy]);
+    t.musicians[p].forEach((l,k)=>list.push([p,5,l,cx+side*(t.gap/2+2.3),cy-1.9-k*1.1]))}
   allocUnits(list.length);
   for(const k of ['fat'])S[k]=new Float32Array(S.n);
   for(const k of ['ast','aim','ko','fed'])S[k]=new Uint8Array(S.n);
@@ -91,13 +92,14 @@ function tickArmy(){
 }
 /* opdrachten: {t:'move', ids, x, y} in een opstelling rond (x, y); {t:'duel', ids, j}: de dichtstbijzijnde vrije uit ids daagt j uit */
 function runCmd(c){
-  const ids=c.ids.filter(i=>S.role[i]===2&&!S.ko[i]&&!S.du[i]&&S.ast[i]!==AS.OUT);if(!ids.length)return;
+  const ids=c.ids.filter(i=>!S.ko[i]&&!S.du[i]&&S.ast[i]!==AS.OUT);if(!ids.length)return;
   if(c.t==='move'){
     const n=ids.length,cols=Math.ceil(Math.sqrt(n)),rows=Math.ceil(n/cols),sp=CFG.army.spacing;
     ids.forEach((i,k)=>{const [x,y]=freeSpot(c.x+(k%cols-(cols-1)/2)*sp,c.y+((k/cols|0)-(rows-1)/2)*sp);armyGo(i,x,y,AIM.IDLE)});
   }else if(c.t==='duel'){
-    const j=c.j,cand=ids.filter(i=>S.pl[i]!==S.pl[j]).sort((a,b)=>Math.hypot(S.x[a]-S.x[j],S.y[a]-S.y[j])-Math.hypot(S.x[b]-S.x[j],S.y[b]-S.y[j]));
+    const j=c.j,cand=ids.filter(i=>S.role[i]===2&&S.pl[i]!==S.pl[j]).sort((a,b)=>Math.hypot(S.x[a]-S.x[j],S.y[a]-S.y[j])-Math.hypot(S.x[b]-S.x[j],S.y[b]-S.y[j]));
     if(!duelFree(j)){ARMY.last='Die krachtpatser is nu niet uit te dagen.';return}
+    if(!cand.length){ARMY.last='Alleen krachtpatsers kunnen uitdagen.';return}
     for(const i of cand)if(challenge(i,j))return;
     ARMY.last='Geen plek voor een duel-tafel gevonden.';
   }
@@ -113,13 +115,14 @@ function pickUnit(mx,my){
     if(Math.abs(mx-sx)>5*z||my<sy-19*z||my>sy+2*z)continue;const d=Math.hypot(mx-sx,my-sy+9*z);if(d<bd){bd=d;best=i}}
   return best;
 }
-const ownKP=i=>S.role[i]===2&&S.pl[i]===ARMY.p;
+/* selecteerbaar: eigen krachtpatsers, helers en muzikanten (het leger trekt samen op) */
+const ownKP=i=>S.role[i]>=2&&S.role[i]!==3&&S.pl[i]===ARMY.p;
 const onScreen=([x,y])=>x>=0&&y>=0&&x<=vw&&y<=vh;
 function armyClick(mx,my,shift){
   const u=pickUnit(mx,my);
   if(u<0||!ownKP(u)){if(!shift)ARMY.sel=[];return}
-  /* Shift: alle eigen krachtpatsers van dit niveau in beeld */
-  if(shift){const l=S.lvl[u];ARMY.sel=[];for(let i=0;i<S.n&&ARMY.sel.length<CFG.army.maxSelect;i++)if(ownKP(i)&&S.lvl[i]===l&&S.ast[i]!==AS.DUEL&&onScreen(unitScreen(i)))ARMY.sel.push(i)}
+  /* Shift: alle eigen eenheden van dit type (rol en niveau) in beeld */
+  if(shift){const l=S.lvl[u],ro=S.role[u];ARMY.sel=[];for(let i=0;i<S.n&&ARMY.sel.length<CFG.army.maxSelect;i++)if(ownKP(i)&&S.role[i]===ro&&S.lvl[i]===l&&S.ast[i]!==AS.DUEL&&onScreen(unitScreen(i)))ARMY.sel.push(i)}
   else ARMY.sel=[u];
 }
 function selectRect(b){
@@ -148,9 +151,10 @@ addEventListener('keydown',ev=>{
 });
 /* tooltip bij een eenheid */
 function unitLabel(i){
-  const r=ROLES[S.role[i]].name+(S.role[i]===2?' '+LVLNAME[S.lvl[i]]:'')+` · speler ${S.pl[i]+1}`;
-  if(S.role[i]!==2)return r;
-  return r+` · kracht ${strength(i).toFixed(2).replace('.',',')} · vermoeidheid ${Math.round(S.fat[i]*100)}%`+(S.fed[i]?' · gevoed':' · honger')+
+  const ro=S.role[i],r=ROLES[ro].name+(ro>=2?' '+LVLNAME[S.lvl[i]]:'')+` · speler ${S.pl[i]+1}`;
+  if(ro===5)return r+` · ${INSTR[S.lvl[i]]}, steunt eigen krachtpatsers binnen ${CFG.duel.music.range[S.lvl[i]]} tegels (+${Math.round(CFG.duel.music.bonus*100)}%)`;
+  if(ro!==2)return r;
+  return r+` · kracht ${strength(i).toFixed(2).replace('.',',')} · vermoeidheid ${Math.round(S.fat[i]*100)}%`+(S.fed[i]?' · gevoed':' · honger')+(musicFor(i)>=0?' · muziek':'')+
     (S.ko[i]?S.ast[i]===AS.OUT?` · uitgeschakeld, nog ${Math.ceil(S.out[i]/CFG.ticksPerSec)} s`:' · uitgeschakeld, op weg naar de heler':S.du[i]?' · op weg naar een duel':'');
 }
 
@@ -160,7 +164,13 @@ const fitColor=i=>S.ko[i]?FITCOL[0]:FITCOL[Math.min(3,((1-S.fat[i])*4)|0)];
 const unitXY=(i,al)=>{const X=S.px[i]+(S.x[i]-S.px[i])*al,Y=S.py[i]+(S.y[i]-S.py[i])*al;return [X*TW-Y*TW/2+world.H*TW/2,Y*TH-hAt(X,Y)]};
 /* onder de geselecteerden: een ovaal op de grond in de spelerkleur */
 function drawArmyGround(al){
-  if(!ARMY.sel.length)return;ctx.lineWidth=0.7;ctx.strokeStyle=PCOL[ARMY.p];ctx.fillStyle='rgba(255,255,255,.18)';
+  if(!ARMY.sel.length)return;
+  /* bereik van geselecteerde muzikanten: cirkel in tegels, op het scherm een ruit-ovaal */
+  ctx.setLineDash([1.5,1.5]);ctx.lineWidth=0.6;ctx.strokeStyle='rgba(255,236,170,.75)';
+  for(const i of ARMY.sel){if(S.role[i]!==5)continue;const R=CFG.duel.music.range[S.lvl[i]],X=S.px[i]+(S.x[i]-S.px[i])*al,Y=S.py[i]+(S.y[i]-S.py[i])*al;
+    ctx.beginPath();for(let k=0;k<=48;k++){const a=k/48*6.2832,x=X+Math.cos(a)*R,y=Y+Math.sin(a)*R;
+      const sx=x*TW-y*TW/2+world.H*TW/2,sy=y*TH-hAt(Math.min(world.W-2,Math.max(0,x)),Math.min(world.H-2,Math.max(0,y)));k?ctx.lineTo(sx,sy):ctx.moveTo(sx,sy)}ctx.stroke()}
+  ctx.setLineDash([]);ctx.lineWidth=0.7;ctx.strokeStyle=PCOL[ARMY.p];ctx.fillStyle='rgba(255,255,255,.18)';
   for(const i of ARMY.sel){if(S.ast[i]===AS.DUEL)continue;const [x,y]=unitXY(i,al);ctx.beginPath();ctx.ellipse(x,y,4.6,2.1,0,0,6.2832);ctx.fill();ctx.stroke()}
 }
 /* duels in tegelrij y: de duel-sprite op de tafelplek (zonder atlas: de twee losse figuren) */

@@ -1,0 +1,36 @@
+HELER EN MUZIKANT - ZES ECHTE 3D MODELLEN
+
+HELER
+Niveau 1: eenvoudige vilten kap, zonder versiering.
+Niveau 2: dezelfde kap, met een messing ring op het voorhoofd.
+Niveau 3: dezelfde kap, met een bladerkrans en een groot lint in spelerkleur.
+De heler draagt een vilten gewaad en een draagtas, en houdt kruiden en een
+houten wandelstaf vast. De staf heeft een blad als herkenningsteken.
+
+MUZIKANT
+Niveau 1: eenvoudige vilten baret, zonder versiering; een kleine houten fluit.
+Niveau 2: dezelfde baret, met messing speld en knop; een open driehoekige harp.
+Niveau 3: dezelfde baret, met grote veer in spelerkleur; een doedelzak met
+een gekleurde vilten zak, drie grote bourdonpijpen, blaaspijp en speelbuis.
+Ieder instrument heeft een eigen speelhouding en duidelijk ander silhouet.
+
+MUZIKALE ONDERSTEUNING - ONTWERPVOORSTEL
+Fluit: kort bereik; harp: middelgroot bereik; doedelzak: groot bereik.
+De GLB-root heeft instrument, level en support_range_rank (1, 2 of 3).
+spelwaarden_muzikant.json bevat dezelfde relatieve rangorde. Dit zijn hints
+voor spelbalans: er zijn geen afstanden, buffsterktes of spelregels ingevoerd
+in een game-engine. Concrete waarden kun je later afstellen tijdens het spelen.
+
+Open heler_muzikant_3D_openen.html lokaal in een moderne browser.
+Slepen = draaien, muiswiel = zoomen. Kies een rol/niveau of alle zes.
+Volkskleur verandert alle TEAM_-materialen: de grote kledingvlakken,
+het hoofddeksel en de veer of het lint. Huid, hout, metaal en kruiden blijven
+onafhankelijk. Download GLB bewaart de gekozen rol met de gekozen kleur.
+
+Alle zes varianten hebben een eigen GLB en een PNG met transparante achtergrond.
+heler_muzikant_bron.blend is de bewerkbare Blender 4.5 bron met alle figuren.
+build_rollen.py + role_helpers.py zijn de reproduceerbare modelbron.
+GLB glTF 2.0: Y omhoog, voorzijde +Z. Het zijn statische houdingen,
+nog zonder skeleton, skinning, loop-, speel- of genezingsanimaties.
+Geen handgeschilderde UV-texturen of geoptimaliseerde LODs.
+De offline viewer bevat Three.js r160 (MIT), zie THREE_LICENSE.txt.

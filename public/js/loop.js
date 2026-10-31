@@ -171,9 +171,15 @@ function draw(){
     if(PROF){pt('tegels',tr);tr=performance.now()}
     for(let k=rowA[y];k>=0;k=A.next[k]){
       const Y=A.py[k]+(A.y[k]-A.py[k])*al,X=A.px[k]+(A.x[k]-A.px[k])*al,type=A.type[k];
-      const moving=A.x[k]!==A.px[k]||A.y[k]!==A.py[k];
+      const moving=A.x[k]!==A.px[k]||A.y[k]!==A.py[k],ax=X*TW-Y*TW/2+off,ay=Y*TH-hAt(X,Y),c=CFG.animals[type];
+      /* 3D-dier: lopen, liggen/zitten (A.lie) of staan; de eend deint altijd (loopbeelden langzaam) */
+      if(A3D[c.k]){if(moving)A.d8[k]=dir8(A.x[k]-A.px[k],A.y[k]-A.py[k]);const sw=c.water;
+        if(sw){ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=0.35;ctx.beginPath();ctx.ellipse(ax,ay+0.2,4.4,1.3,0,0,6.2832);ctx.stroke()}
+        const an=moving||sw?'walk':A.lie[k]&&A3D[c.k].sizes[0].F.rest?'rest':'idle';
+        drawUnit3D(c.k,an,A.d8[k],(tNow/120*c.rate|0)+k,0,ax,ay,zd,ctx,A3D);q='';continue}
+      if(!ANIM[type])continue; // vos en vogel bestaan alleen in 3D
       const f=type===2?((tNow/700+k)|0)&1:moving?((animF>>(type===1?0:1))+k)&1:0;
-      blit(ANIM[type][f*2+A.dir[k]],X*TW-Y*TW/2+off,Y*TH-hAt(X,Y));
+      blit(ANIM[type][f*2+A.dir[k]],ax,ay);
     }
     if(PROF){pt('dieren',tr);tr=performance.now()}
     if(S.army&&DUELS.length&&drawDuelsRow(y,zd))q='';

@@ -7,10 +7,16 @@
    verliezer loopt naar zijn eigen heler en is CFG.duel.outTicks uitgeschakeld. Alle getallen: CFG.duel. */
 const DUELS=[];          // vrije plekken worden hergebruikt (null); S.du[i] = index + 1
 function duelFree(i){return S.role[i]===2&&!S.ko[i]&&!S.du[i]&&S.ast[i]!==AS.OUT}
-/* kracht van eenheid i: niveau, gevoed zijn, harmoniemeter van zijn volk, vermoeidheid */
+/* kracht van eenheid i: niveau, gevoed zijn, harmoniemeter van zijn volk, vermoeidheid, steun van een muzikant */
 function strength(i){
   const c=CFG.duel;
-  return c.level[S.lvl[i]]*(S.fed[i]?1:c.hungry)*(1+c.harmony*(2*world.harm[S.pl[i]]-1))*(1-c.fatigue*S.fat[i]);
+  return c.level[S.lvl[i]]*(S.fed[i]?1:c.hungry)*(1+c.harmony*(2*world.harm[S.pl[i]]-1))*(1-c.fatigue*S.fat[i])*(musicFor(i)>=0?1+c.music.bonus:1);
+}
+/* eigen muzikant binnen zijn bereik (tegels) van eenheid i, of −1 */
+function musicFor(i){
+  const R=CFG.duel.music.range;
+  for(let j=0;j<S.n;j++)if(S.role[j]===5&&S.pl[j]===S.pl[i]&&Math.hypot(S.x[j]-S.x[i],S.y[j]-S.y[i])<=R[S.lvl[j]])return j;
+  return -1;
 }
 /* één tick van een lopend duel: kracht vergelijken, met wat toeval, en de stand bijwerken.
    Geeft −1 (links wint), +1 (rechts wint) of 0 (gaat door). */
