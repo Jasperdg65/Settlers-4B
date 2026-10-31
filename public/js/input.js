@@ -47,7 +47,7 @@ cv.addEventListener('pointermove',ev=>{
       (world.stk&&world.stk[i]?' · stapel: '+stackLabel(world.stk[i]-1):'');
     /* tooltip bij een stapel of gebouw; een stapel steekt boven zijn tegel uit, dus ook de tegel eronder telt */
     const st=world.stk,i2=i+world.W,s=st?(st[i]||(y+1<world.H?st[i2]:0))-1:-1;
-    showTip(s>=0?stackLabel(s):b?`${BTYPES[world.blds[b-1].type].name} · speler ${world.blds[b-1].p+1}`:'',ev.clientX-r.left,ev.clientY-r.top);
+    showTip(s>=0?stackLabel(s):b?`${BTYPES[world.blds[b-1].type].name} · speler ${world.blds[b-1].p+1}`+(S.eco?wantLabel(b-1):''):'',ev.clientX-r.left,ev.clientY-r.top);
   }else{hoverTile=null;showTip('')}
 });
 function showTip(t,x,y){const el=$('tip');if(!t){el.hidden=true;return}el.textContent=t;el.hidden=false;el.style.left=(x+14)+'px';el.style.top=(y+16)+'px'}

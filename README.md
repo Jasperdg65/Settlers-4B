@@ -20,6 +20,8 @@ public/                 webroot (Apache-alias /settlers4b)
     render.js           canvas, camera, chunks (renderChunk met resolutie cres)
     colonists.js        kolonisten en dieren
     stock.js            stapels op de grond, stapelplekken per gebouw, paneel Voorraad
+    path.js             A* over het tegelraster, wachtrij met knopenbudget per tick, routecache
+    transport.js        planner vraag/aanbod en dragers
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
@@ -142,7 +144,19 @@ los van het tekenen.
   `G.pl`, `G.bld`). Ook de voorraad van burcht en pakhuis ligt zo, op hun stapelplekken
   (`bldSlots`: vrije tegels rond het gebouw, dichtst bij de deur; ingang en paden blijven vrij).
 - **Startvoorraad** in de burcht: `CFG.startStock`, keuze Weinig/Normaal/Veel in het paneel.
-- **Paneel Voorraad**: totaal per goed per speler.
+- **Paneel Voorraad**: totaal per goed per speler, inclusief wat dragers onderweg vasthouden.
+- **Dragers** (`js/transport.js`): in economiemodus zijn alle kolonisten vrije dragers zonder beroep;
+  zonder opdracht lopen ze rond hun laatste plek. Een centrale planner (elke `CFG.carry.plannerEvery`
+  ticks) kijkt per gebouw wat ontbreekt (`b.want − b.has − b.coming`), kiest de dichtstbijzijnde stapel
+  met een vrij stuk (bij een gebouw dat dat goed zelf niet vraagt), reserveert het (`G.res`) en geeft
+  de opdracht aan de dichtstbijzijnde vrije drager. Die haalt het, draagt het zichtbaar in zijn handen
+  en legt het bij de deur neer; past het daar niet, dan gaat het naar de dichtstbijzijnde opslag.
+- **Routes** (`js/path.js`): A* over de tegels in 8 richtingen, met kosten voor terrein, bomen,
+  stenen, voetpaden en hoogteverschil (`CFG.path`). Zoekopdrachten staan in een wachtrij met een
+  vast knopenbudget per tick, dus geen Web Worker nodig en de simulatie blijft deterministisch.
+  Routes en 'onbereikbaar' gaan in een LRU-cache; `world.walkVer` verhogen maakt die leeg.
+- **Tijdelijk** (`CFG.temp`): zolang er geen productie en bouw is, vragen gebouwen een vaste
+  hoeveelheid goederen en verbruiken ze elke 30 s één stuk voedsel, water of boomstam.
 
 ## Prestaties
 

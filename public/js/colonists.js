@@ -21,8 +21,9 @@ function pickTarget(i){
   }
   S.tx[i]=S.hx[i];S.ty[i]=S.hy[i];
 }
-function spawn(total){
-  const P=world.starts.length;if(!P){S.n=0;return}
+/* eco: economiemodus, iedereen is een vrije drager zonder beroep (zie transport.js); anders de stresstest */
+function spawn(total,eco){
+  const P=world.starts.length;S.eco=0;S.carry=null;if(!P){S.n=0;return}
   const per=Math.floor(total/P),n=per*P,{W,walk}=world;
   srand=mulberry32(hashStr(world.seed+'#settlers'));
   for(const k of ['x','y','px','py','tx','ty','hx','hy','sp'])S[k]=new Float32Array(n);
@@ -31,13 +32,15 @@ function spawn(total){
   let i=0;
   for(let p=0;p<P;p++){const s=world.starts[p];const hx=s.cx+0.5,hy=s.cy+1.6;
     for(let j=0;j<per;j++,i++){
-      let rr=srand(),role=0;for(let k=0;k<ROLES.length;k++){if(rr<ROLES[k].share){role=k;break}rr-=ROLES[k].share}
+      let role=0;if(!eco){let rr=srand();for(let k=0;k<ROLES.length;k++){if(rr<ROLES[k].share){role=k;break}rr-=ROLES[k].share}}
       let X=hx,Y=hy;
       for(let t=0;t<30;t++){const a=srand()*6.283,d=2+srand()*11,xx=hx+Math.cos(a)*d,yy=hy+Math.sin(a)*d;if(walk[(yy|0)*W+(xx|0)]){X=xx;Y=yy;break}}
       S.x[i]=S.px[i]=X;S.y[i]=S.py[i]=Y;S.hx[i]=hx;S.hy[i]=hy;S.pl[i]=p;S.role[i]=role;S.vr[i]=srand()*ROLES[role].vars|0;S.dir[i]=srand()<0.5?1:0;
-      S.sp[i]=0.07+srand()*0.05;S.wait[i]=srand()*60|0;pickTarget(i);
+      S.sp[i]=0.07+srand()*0.05;S.wait[i]=srand()*60|0;
+      if(eco){S.hx[i]=X;S.hy[i]=Y;S.tx[i]=X;S.ty[i]=Y}else pickTarget(i);
     }
   }
+  if(eco)initTransport();
   $('nset').textContent=n.toLocaleString('nl-NL');
 }
 function animalOk(type,i){const t=world.ter[i];return type===2?t<=T.SHALLOW:(t>=T.SAND&&t<=T.DRY&&!world.bldAt[i])}
@@ -61,7 +64,8 @@ function spawnAnimals(){
 function tick(){
   tickNo++;
   const {W,walk,ter}=world,{x,y,px,py,tx,ty,sp,wait,dir}=S,n=S.n;
-  for(let i=0;i<n;i++){
+  if(S.eco)tickCarriers();
+  else for(let i=0;i<n;i++){
     px[i]=x[i];py[i]=y[i];
     if(wait[i]>0){wait[i]--;continue}
     const dx=tx[i]-x[i],dy=ty[i]-y[i],d=Math.hypot(dx,dy);

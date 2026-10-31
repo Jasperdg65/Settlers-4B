@@ -1,20 +1,21 @@
 "use strict";
 /* ---------- Voorraad: alle goederen liggen als stapels op de grond ----------
    Ook de voorraad van burcht en pakhuis: die ligt op hun stapelplekken. Eén stapel per tegel,
-   world.stk[tegel] = stapelindex+1. Stapels in compacte arrays (G), max CFG.stackMax per stapel. */
+   world.stk[tegel] = stapelindex+1. Stapels in compacte arrays (G), max CFG.stackMax per stapel.
+   G.res = stuks die een drager al komt halen; b.has[goed] = wat bij gebouw b op de grond ligt. */
 const G={n:0};let stockVer=0;
 function initGoods(){
   const {W,H}=world;world.stk=new Int32Array(W*H);
-  const cap=1024;G.n=0;G.free=[];G.tile=new Int32Array(cap);G.good=new Uint8Array(cap);G.cnt=new Uint8Array(cap);G.pl=new Uint8Array(cap);G.bld=new Int16Array(cap);
-  for(const b of world.blds)b.slots=null;
+  const cap=1024;G.n=0;G.free=[];G.tile=new Int32Array(cap);G.good=new Uint8Array(cap);G.cnt=new Uint8Array(cap);G.pl=new Uint8Array(cap);G.bld=new Int16Array(cap);G.res=new Uint8Array(cap);
+  for(const b of world.blds){b.slots=null;b.has=new Uint16Array(GOODS.length)}
   const f=CFG.startFactor[$('stock').value]||1;
   world.blds.forEach((b,bi)=>{if(b.type==='burcht')for(const k in CFG.startStock)addGoods(bi,GI[k],Math.round(CFG.startStock[k]*f))});
   stockVer++;
 }
 function newStack(tile,gd,pl,bi){
   let s=G.free.length?G.free.pop():G.n++;
-  if(s>=G.tile.length)for(const k of ['tile','good','cnt','pl','bld']){const a=new G[k].constructor(G[k].length*2);a.set(G[k]);G[k]=a}
-  G.tile[s]=tile;G.good[s]=gd;G.cnt[s]=0;G.pl[s]=pl;G.bld[s]=bi;world.stk[tile]=s+1;return s;
+  if(s>=G.tile.length)for(const k of ['tile','good','cnt','pl','bld','res']){const a=new G[k].constructor(G[k].length*2);a.set(G[k]);G[k]=a}
+  G.tile[s]=tile;G.good[s]=gd;G.cnt[s]=0;G.res[s]=0;G.pl[s]=pl;G.bld[s]=bi;world.stk[tile]=s+1;return s;
 }
 /* stapelplekken: vrije, beloopbare tegels vóór en naast het gebouw (rijen erachter vallen weg achter het plaatje),
    dichtst bij de deur eerst; ingang en paden blijven vrij */
@@ -34,12 +35,21 @@ function bldSlots(bi){
 /* legt n stuks bij gebouw bi neer: eerst bij onvolle stapels van hetzelfde goed, dan op lege plekken; geeft terug wat niet paste */
 function addGoods(bi,gd,n){
   const b=world.blds[bi],M=CFG.stackMax,st=world.stk,sl=bldSlots(bi);
-  for(const i of sl){if(n<=0)break;const s=st[i]-1;if(s>=0&&G.bld[s]===bi&&G.good[s]===gd&&G.cnt[s]<M){const a=Math.min(M-G.cnt[s],n);G.cnt[s]+=a;n-=a}}
-  for(const i of sl){if(n<=0)break;if(st[i])continue;const s=newStack(i,gd,b.p,bi),a=Math.min(M,n);G.cnt[s]=a;n-=a}
+  for(const i of sl){if(n<=0)break;const s=st[i]-1;if(s>=0&&G.bld[s]===bi&&G.good[s]===gd&&G.cnt[s]<M){const a=Math.min(M-G.cnt[s],n);G.cnt[s]+=a;b.has[gd]+=a;n-=a}}
+  for(const i of sl){if(n<=0)break;if(st[i])continue;const s=newStack(i,gd,b.p,bi),a=Math.min(M,n);G.cnt[s]=a;b.has[gd]+=a;n-=a}
   stockVer++;return n;
 }
+/* één stuk van stapel s wegnemen; een lege stapel geeft zijn tegel vrij */
+function takeOne(s){
+  const b=world.blds[G.bld[s]];G.cnt[s]--;b.has[G.good[s]]--;stockVer++;
+  if(!G.cnt[s]){world.stk[G.tile[s]]=0;G.res[s]=0;G.free.push(s)}
+}
+/* een stuk van goed gd bij gebouw bi dat niemand komt halen, of -1 */
+function freeUnitAt(bi,gd){const st=world.stk;for(const i of bldSlots(bi)){const s=st[i]-1;if(s>=0&&G.bld[s]===bi&&G.good[s]===gd&&G.cnt[s]>G.res[s])return s}return -1}
 function stackLabel(s){return `${G.cnt[s]}× ${GOODS[G.good[s]].n} · ${BTYPES[world.blds[G.bld[s]].type].name.replace(/ \(.*\)/,'')}, speler ${G.pl[s]+1}`}
-function stockTotals(p){const t=new Uint32Array(GOODS.length);for(let s=0;s<G.n;s++)if(G.cnt[s]&&G.pl[s]===p)t[G.good[s]]+=G.cnt[s];return t}
+/* totaal per goed voor speler p: stapels plus wat dragers onderweg vasthouden */
+function stockTotals(p){const t=new Uint32Array(GOODS.length);for(let s=0;s<G.n;s++)if(G.cnt[s]&&G.pl[s]===p)t[G.good[s]]+=G.cnt[s];
+  if(S.carry)for(let i=0;i<S.n;i++)if(S.carry[i]&&S.pl[i]===p)t[S.carry[i]-1]++;return t}
 
 /* ---------- Paneel 'Voorraad' ---------- */
 let stockShown=-1,stockCells=null;

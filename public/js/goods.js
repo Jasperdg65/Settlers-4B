@@ -49,3 +49,6 @@ const GSPR=[];
 function goodSprite(gd,n){const k=gd*9+n;
   return GSPR[k]||(GSPR[k]=spr(13,10,6.5,7,g=>{ell(g,0,1.2,5.4,1.7,'rgba(40,30,10,.22)');const d=GDRAW[GOODS[gd].k];
     for(let j=0;j<n;j++){const [x,y]=GSLOT[j&3];g.save();g.translate(x*(j>3?0.8:1),y-(j>3?2.1:0));d(g);g.restore()}},n?GSC:1))}
+/* één goed in de handen van een drager (zelfde schaal als de kolonist) */
+const GCAR=[];
+function carrySprite(gd){return GCAR[gd]||(GCAR[gd]=spr(8,6,4,3.5,g=>GDRAW[GOODS[gd].k](g),1.2))}

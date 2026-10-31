@@ -44,6 +44,8 @@ function frame(now){
     $('fps').textContent=fpsAvg.toFixed(0);
     $('simms').textContent=running?simAvg.toFixed(2)+' ms':'–';
     $('drawms').textContent=drawAvg.toFixed(1)+' ms';{const bl=world.blds;$('nocc').textContent=bl.filter(b=>b.occ).length+' van '+bl.length}
+    if(S.eco){$('ncarry').textContent=carrierStats()+' van '+S.n;$('ndone').textContent=TR.done+' · '+TR.used;
+      $('npath').textContent=`${pathQueued()} · ${PF.cache.size}, ${Math.round(100*PF.hits/Math.max(1,PF.hits+PF.miss))}% hit`}
     drawMini();refreshStock();
   }
 }
@@ -167,7 +169,9 @@ function draw(){
       const Y=S.py[k]+(S.y[k]-S.py[k])*al,X=S.px[k]+(S.x[k]-S.px[k])*al;
       const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]);
       const f=moving?(animF+k)&3:0;
-      blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][f*2+S.dir[k]],X*TW-Y*TW/2+off,Y*TH-hAt(X,Y));
+      const ux=X*TW-Y*TW/2+off,uy=Y*TH-hAt(X,Y),fr=f*2+S.dir[k];
+      if(S.carry){const c=S.carry[k];blit(UNITC[c?1:0][S.vr[k]][S.pl[k]][fr],ux,uy);if(c)blit(carrySprite(c-1),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}
+      else blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy);
     }
     if(PROF)pt('kolonisten',tr);
   }
