@@ -667,9 +667,8 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   kenmerkend goed in de hand; sprites worden pas gemaakt als ze nodig zijn (`jobSprite`).
 - **Tijdelijk** (`CFG.territory`): eigen gebied is een straal rond de burcht en elke voltooide wachttoren
   (vrij land, wie eerst komt; afbreken neemt geen gebied weg); de grens is alleen als stippen te zien tijdens bouwen of afbreken.
-- **Tijdelijk** (`CFG.temp`): zolang er geen productie en bouw is, vragen gebouwen een vaste
-  hoeveelheid goederen en verbruiken ze elke 30 s één stuk voedsel, water of boomstam
-  (de mijnen alvast hun lievelingskost: brood, stoofpot of fruit-notenmix).
+- **Vraag**: alleen werkplaatsen en mijnen vragen goederen (hun invoer, `CFG.prod`); het tijdelijke
+  verbruik (`CFG.temp`) is in mijlpaal 5c vervallen.
 
 ## Prestaties
 
