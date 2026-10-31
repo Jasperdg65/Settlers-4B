@@ -126,6 +126,15 @@ Wordt de PNG anders bijgesneden (andere marge), controleer ze dan opnieuw.
    hun bron-PNG via de tabel bovenin het script.
 3. Zet de HTML in `bron/` als nieuwe referentie.
 
+## Prestaties
+
+- `?prof=1` achter de URL toont rechtsboven fps, frametijd en ms per tekenonderdeel;
+  toetsen 1, 2, 3 zetten de zoom. De ms zijn CPU-tijd: GPU-werk zie je alleen in fps/frametijd.
+- Sprites krijgen bij het eerste tekenen vooraf verkleinde ImageBitmaps (1×, 2×, 4× de
+  wereldgrootte plus origineel, `spriteMips` in `js/core.js`); `blit` kiest per frame de kleinste
+  die nog scherp is voor `cam.z * dpr`.
+- Grondchunks: maximaal 2 bouwen per frame, cache als LRU met een pixelbudget (`CHUNK_PX`).
+
 ## API
 
 Alle antwoorden zijn JSON; fouten als `{"error": {"code": "...", "message": "..."}}`.
