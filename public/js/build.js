@@ -8,11 +8,14 @@ const JOBS=[{n:'Drager'},{n:'Graver',tool:'schop'},{n:'Bouwer',tool:'hamer'}];
 const canBuild=t=>t!=='burcht'&&!!CFG.build.cost[t];
 function initBuild(){
   const {W,H}=world,own=world.own=new Uint8Array(W*H);world.sites=[];
-  /* TIJDELIJK (CFG.territory): eigen gebied rond de burcht en de wachttorens van de start; wie eerst komt */
-  for(const b of world.blds){const r=CFG.territory[b.type];if(!r||b.dead)continue;
-    for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
-      if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1}
-  for(const b of world.blds){b.wk=0;b.prog=1}
+  for(const b of world.blds){claimLand(b);b.wk=0;b.prog=1}
+}
+/* TIJDELIJK tot mijlpaal 6 (CFG.territory): burcht en wachttorens claimen vrij land in hun straal, wie eerst komt.
+   Land van een ander blijft van die ander, en afbreken neemt niets weg: gebied gaat alleen verloren bij verovering. */
+function claimLand(b){
+  const r=CFG.territory[b.type];if(!r||b.dead||b.st)return;const {W,H,own}=world;
+  for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
+    if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1;
 }
 /* tegels van de bouwplaats die geëgaliseerd worden (hoekpunten rond de voetafdruk, zoals de mapgenerator doet) */
 function siteRegion(fp,ax,ay,fn){for(let dy=fp[2]-1;dy<=fp[3]+1;dy++)for(let dx=fp[0]-1;dx<=fp[1]+1;dx++)fn(ax+dx,ay+dy,dx>=fp[0]&&dx<=fp[1]&&dy>=fp[2]&&dy<=fp[3])}
@@ -64,7 +67,7 @@ function buildStep(b,bi){
   for(const [k,gd] of [[0,GI.plank],[1,GI.steen]]){
     if(b.used[k]>=c[k])continue;const s=freeUnitAt(bi,gd);if(s<0)continue;
     takeOne(s);b.used[k]++;b.want[gd]--;b.prog=(b.used[0]+b.used[1])/(c[0]+c[1]);
-    if(b.prog>=1){b.st=0;b.prog=1;setTempWant(b);world.sites.splice(world.sites.indexOf(bi),1);invalidateTiles(b.reg);stockVer++}
+    if(b.prog>=1){b.st=0;b.prog=1;setTempWant(b);claimLand(b);world.sites.splice(world.sites.indexOf(bi),1);invalidateTiles(b.reg);stockVer++}
     return true;
   }
   return false;

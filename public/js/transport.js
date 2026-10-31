@@ -38,7 +38,7 @@ function nearestIdle(p,t,job=0){
 function nearestStore(p,x,y){let best=-1,bd=Infinity;world.blds.forEach((o,oi)=>{if(o.p===p&&isStore(o)){const d=Math.hypot(o.x-x,o.y-y);if(d<bd){bd=d;best=oi}}});return best}
 const tileOf=i=>(S.y[i]|0)*world.W+(S.x[i]|0);
 function goPath(c,st,to){S.st[c]=st;findPath(tileOf(c),to,p=>gotPath(c,p))}
-function fetch(c,s,bi,gd,counted){G.res[s]++;if(counted)world.blds[bi].coming[gd]++;S.cm[c]=counted;S.gd[c]=gd;S.src[c]=s;S.dst[c]=bi;S.wait[c]=0;goPath(c,ST.PATH_SRC,G.tile[s])}
+function fetchGood(c,s,bi,gd,counted){G.res[s]++;if(counted)world.blds[bi].coming[gd]++;S.cm[c]=counted;S.gd[c]=gd;S.src[c]=s;S.dst[c]=bi;S.wait[c]=0;goPath(c,ST.PATH_SRC,G.tile[s])}
 function planTransport(){
   const bl=world.blds,nb=bl.length,P=world.starts.length,M=CFG.carry.maxAssignPerRun,noIdle=new Uint8Array(P);
   let made=planWorkers(M);
@@ -49,7 +49,7 @@ function planTransport(){
       while(need>0&&made<M){
         const s=nearestSource(b.p,gd,bi,b.x,b.y+1);if(s<0)break;
         const c=nearestIdle(b.p,G.tile[s]);if(c<0){noIdle[b.p]=1;break}
-        fetch(c,s,bi,gd,1);need--;made++;
+        fetchGood(c,s,bi,gd,1);need--;made++;
       }
       if(noIdle[b.p])break;
     }
@@ -59,7 +59,7 @@ function planTransport(){
     if(G.cnt[s]<=G.res[s]||!bl[G.bld[s]].dead||noIdle[G.pl[s]])continue;
     const t=G.tile[s],W=world.W,o=nearestStore(G.pl[s],t%W,t/W|0);if(o<0)continue;
     const c=nearestIdle(G.pl[s],t);if(c<0){noIdle[G.pl[s]]=1;continue}
-    fetch(c,s,o,G.good[s],0);made++;
+    fetchGood(c,s,o,G.good[s],0);made++;
   }
   TR.rr=(TR.rr+1)%Math.max(1,nb);
 }

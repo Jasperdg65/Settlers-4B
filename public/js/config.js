@@ -49,7 +49,7 @@ const CFG={
     digShare:0.3,                  // deel van de voortgangsmeter voor het egaliseren
     refund:0.5,                    // afbreken geeft dit deel van het verwerkte materiaal terug (naar beneden afgerond)
   },
-  /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en de wachttorens van de start */
+  /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en elke voltooide wachttoren (nog zonder bemanning) */
   territory:{burcht:20,wachttoren:12},
   /* TIJDELIJK tot mijlpaal 3–5: vraag per gebouwtype, zodat er al vervoerd wordt zonder productie.
      Elk gebouw verbruikt elke useEvery ticks één stuk van de goederen in 'use'. */

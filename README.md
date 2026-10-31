@@ -165,8 +165,8 @@ los van het tekenen.
   of hamer uit de voorraad halen. Afbreken geeft de helft van het verwerkte materiaal terug; dat en wat er
   nog lag, brengen dragers naar de opslag. De burcht kan niet gebouwd of afgebroken worden.
   Afgebroken gebouwen blijven in `world.blds` staan met `dead`, zodat indexen geldig blijven.
-- **Tijdelijk** (`CFG.territory`): eigen gebied is een straal rond de burcht en de wachttorens van de
-  start; de grens is alleen als stippen te zien tijdens bouwen of afbreken.
+- **Tijdelijk** (`CFG.territory`): eigen gebied is een straal rond de burcht en elke voltooide wachttoren
+  (vrij land, wie eerst komt; afbreken neemt geen gebied weg); de grens is alleen als stippen te zien tijdens bouwen of afbreken.
 - **Tijdelijk** (`CFG.temp`): zolang er geen productie en bouw is, vragen gebouwen een vaste
   hoeveelheid goederen en verbruiken ze elke 30 s één stuk voedsel, water of boomstam.
 
