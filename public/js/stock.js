@@ -5,7 +5,7 @@
    G.res = stuks die een drager al komt halen; b.has[goed] = wat bij gebouw b op de grond ligt. */
 const G={n:0};let stockVer=0;
 function initGoods(){
-  const {W,H}=world;world.stk=new Int32Array(W*H);
+  const {W,H}=world;world.stk=new Int32Array(W*H);world.slotAt=new Uint8Array(W*H);
   const cap=1024;G.n=0;G.free=[];G.tile=new Int32Array(cap);G.good=new Uint8Array(cap);G.cnt=new Uint8Array(cap);G.pl=new Uint8Array(cap);G.bld=new Int16Array(cap);G.res=new Uint8Array(cap);
   for(const b of world.blds){b.slots=null;b.has=new Uint16Array(GOODS.length)}
   const f=CFG.startFactor[$('stock').value]||1;
@@ -22,15 +22,17 @@ function newStack(tile,gd,pl,bi){
 function bldSlots(bi){
   const b=world.blds[bi];if(b.slots)return b.slots;
   const {W,H,walk,bldAt,obj,path}=world,fp=BTYPES[b.type].fp;
+  const sa=world.slotAt||(world.slotAt=new Uint8Array(W*H));
   const want=CFG.slots[b.type]||CFG.slots.anders,R=CFG.slotRadius[b.type]||CFG.slotRadius.anders,dx=b.x+0.5,dy=b.y+1.5,c=[];
   for(let y=b.y+1;y<=b.y+fp[3]+R;y++)for(let x=b.x+fp[0]-R;x<=b.x+fp[1]+R;x++){
     if(x<1||y<1||x>=W-1||y>=H-1)continue;const i=y*W+x;
-    if(!walk[i]||bldAt[i]||obj[i]||path[i])continue;
+    if(!walk[i]||bldAt[i]||obj[i]||path[i]||sa[i])continue;   // ook geen stapelplek van een ander gebouw
     if(Math.abs(x-b.x)<=1&&y>=b.y+1&&y<=b.y+2)continue;
     c.push([Math.hypot(x+0.5-dx,y+0.5-dy),i]);
   }
   c.sort((p,q)=>p[0]-q[0]||p[1]-q[1]);
-  return b.slots=c.slice(0,want).map(v=>v[1]);
+  b.slots=c.slice(0,want).map(v=>v[1]);for(const i of b.slots)sa[i]=1;
+  return b.slots;
 }
 /* legt n stuks bij gebouw bi neer: eerst bij onvolle stapels van hetzelfde goed, dan op lege plekken; geeft terug wat niet paste */
 function addGoods(bi,gd,n){

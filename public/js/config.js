@@ -69,6 +69,20 @@ const CFG={
     digShare:0.3,                  // deel van de voortgangsmeter voor het egaliseren
     refund:0.5,                    // afbreken geeft dit deel van het verwerkte materiaal terug (naar beneden afgerond)
   },
+  /* productie (production.js). Buitenwerkers (gather: tree, stone, plant) zoeken binnen area tegels rond hun deur (op eigen
+     grond) het dichtstbijzijnde doel, werken daar work ticks, brengen out naar hun deur en rusten dan rest ticks binnen.
+     spare: boomsoorten die de houthakker laat staan (4 = appelboom, voor de plukker in 5b).
+     Werkplaatsen verwerken in ticks ticks de invoer 'in' tot 'out'; stock = hoeveel van elk invoergoed ze bij de deur willen. */
+  prod:{
+    houthakker:{gather:'tree',area:10,work:80,rest:60,out:'boomstam',spare:[4]},
+    steenhouwer:{gather:'stone',area:10,work:100,rest:60,out:'steen'},
+    bosbouwer:{gather:'plant',area:7,work:50,rest:80},
+    zagerij:{in:{boomstam:1},out:{plank:2},ticks:160,stock:4},
+  },
+  /* natuur (production.js): een geplant boompje is na grow ticks een boom, een stronk verdwijnt na stump ticks,
+     een steenblok geeft stoneUnits stuks steen; plantNear: zoveel bomen of boompjes direct naast een plek (van de 4) en hij
+     plant er niet meer; every = ticks tussen twee controles */
+  nature:{grow:6000,stump:4000,stoneUnits:8,plantNear:2,every:20},
   /* wilde dieren (colonists.js); sleutel = 3D-model in manifest.animals. Aantal = min(max, beloopbaar land (of water) / per).
      keep: afstand tot een startplek bij het neerzetten; range: straal rond hun thuisplek; wait: [min, max] ticks stilstaan;
      rest: kans dat het daarbij gaat liggen of zitten, dan restWait ticks; rate: loopbeelden per 120 ms (huppen sneller) */
@@ -122,9 +136,9 @@ const CFG={
      Elk gebouw verbruikt elke useEvery ticks één stuk van de goederen in 'use'. */
   temp:{
     want:{
-      pakhuis:{plank:8,steen:8,brood:4},zagerij:{boomstam:6},bakkerij:{water:4},woonhuis:{brood:2},wachttoren:{brood:1},
+      pakhuis:{brood:4},bakkerij:{water:4},woonhuis:{brood:2},wachttoren:{brood:1},
       kolenmijn:{brood:2},ijzermijn:{stoofpot:2},goudmijn:{notenmix:2},
     },
-    use:['boomstam','water','brood','stoofpot','notenmix'],useEvery:600,
+    use:['water','brood','stoofpot','notenmix'],useEvery:600,
   },
 };

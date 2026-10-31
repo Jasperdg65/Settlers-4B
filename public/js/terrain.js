@@ -172,10 +172,18 @@ function generate(o){
     if(!ok){place('burcht',s.x,s.y+2,p);s.cx=s.x;s.cy=s.y+2}
     for(const type of VILLAGE){
       const [r0,r1]=type==='wachttoren'?[11,17]:type==='pakhuis'?[5,9]:[6,14];
-      for(let t=0;t<260;t++){
+      /* houthakker en steenhouwer: van een aantal passende plekken die met de meeste bomen of steenblokken in de buurt */
+      /* de bosbouwer zo dicht mogelijk bij de eerste houthakker, zodat het bos rond die houthakker weer aangroeit */
+      const want=type==='houthakker'?1:type==='steenhouwer'?2:0,hk=type==='bosbouwer'&&blds.find(o=>o.type==='houthakker'&&o.p===p);
+      let best=null,bs=-Infinity,tries=0;
+      for(let t=0;t<260&&tries<(want||hk?24:1);t++){
         const a=rand()*6.283,r=r0+rand()*(r1-r0),ax=Math.round(s.cx+Math.cos(a)*r),ay=Math.round(s.cy+Math.sin(a)*r);
-        if(fits(type,ax,ay,false)){place(type,ax,ay,p);break}
+        if(!fits(type,ax,ay,false))continue;tries++;let n=0;
+        if(want)for(let dy=-8;dy<=8;dy++)for(let dx=-8;dx<=8;dx++){const x=ax+dx,y=ay+dy;if(x>0&&y>0&&x<W&&y<H&&dx*dx+dy*dy<=64&&obj[y*W+x]===want)n++}
+        if(hk)n=-Math.hypot(ax-hk.x,ay-hk.y);
+        if(n>bs){bs=n;best=[ax,ay]}
       }
+      if(best)place(type,best[0],best[1],p);
     }
     for(const type of ['kolenmijn','ijzermijn','goudmijn']){const want=BTYPES[type].ore,fp=BTYPES[type].fp;let best=null,bd=1e9;
       for(let t=0;t<2500;t++){const a=rand()*6.283,r=7+rand()*32,ax=Math.round(s.cx+Math.cos(a)*r),ay=Math.round(s.cy+Math.sin(a)*r);
@@ -194,8 +202,16 @@ function generate(o){
       if(i>=0&&i<N&&ter[i]>=T.SAND&&!bldAt[i]){path[i]=1;obj[i]=0}}}
   for(const b of blds){if(b.type!=='houthakker'&&b.type!=='bosbouwer')continue;
     for(let k=0;k<(b.type==='bosbouwer'?16:10);k++){const a=rand()*6.283,r=3+rand()*6,x=Math.round(b.x+Math.cos(a)*r),y=Math.round(b.y+Math.sin(a)*r),i=y*W+x;
-      if(x>0&&y>0&&x<W-1&&y<H-1&&!bldAt[i]&&!path[i]&&ter[i]>=T.GRASS&&ter[i]<=T.DRY&&obj[i]!==1)obj[i]=b.type==='bosbouwer'?4:5}}
+      if(x>0&&y>0&&x<W-1&&y<H-1&&!bldAt[i]&&!path[i]&&ter[i]>=T.GRASS&&ter[i]<=T.DRY&&obj[i]!==1&&obj[i]!==2)obj[i]=b.type==='bosbouwer'?4:5}}
   for(let i=0;i<N;i++){if(obj[i]===0&&(ter[i]===T.GRASS||ter[i]===T.LUSH)&&!bldAt[i]&&!path[i]){const h=hash2(i,77)%1000;if(h<4)obj[i]=4;else if(h<6)obj[i]=5}}
+  /* een groepje steenblokken vlak bij elke steenhouwer (aan de kant van het dorp af), zodat elk dorp een steengroeve heeft */
+  for(const b of blds){if(b.type!=='steenhouwer')continue;const s=starts[b.p],away=Math.atan2(b.y-s.cy,b.x-s.cx);
+    for(let t=0;t<40;t++){const a=away+(rand()-0.5)*2.4,r=4+rand()*3,qx=Math.round(b.x+Math.cos(a)*r),qy=Math.round(b.y+1+Math.sin(a)*r);
+      if(qx<4||qy<4||qx>=W-4||qy>=H-4)continue;let ok=true;
+      for(let dy=-2;dy<=2&&ok;dy++)for(let dx=-2;dx<=2;dx++){const i=(qy+dy)*W+qx+dx;if(bldAt[i]||bldAt[i-W]||ter[i]<T.GRASS||ter[i]>T.ROCKY){ok=false;break}}
+      if(!ok)continue;
+      for(let k=0;k<9;k++){const i=(qy+Math.round((rand()-0.5)*4))*W+qx+Math.round((rand()-0.5)*4);if(!path[i])obj[i]=2}
+      break}}
   for(let i=0;i<N;i++)walk[i]=(ter[i]>=T.SAND&&ter[i]<=T.MOUNTAIN&&!bldAt[i])?1:0;
   /* deuren per speler per rol */
   const doors=starts.map(()=>ROLES.map(()=>[]));

@@ -41,7 +41,8 @@ function enterBuilding(c){
 /* gebouw b verdwijnt (afbreken): de bewoner komt naar buiten en is een werkloze vakman; wie onderweg is, ziet dat bij aankomst */
 function releaseWorker(b){
   const c=b.wkr-1;b.wkr=0;b.occ=0;if(c<0)return;
-  if(S.st[c]===ST.INSIDE){S.ins[c]=0;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;toIdle(c)}
+  if(S.st[c]===ST.P_OUT)world.rsv[S.src[c]]=0;   // stond nog binnen te wachten op zijn route naar buiten
+  if(S.ins[c]){S.ins[c]=0;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;toIdle(c)}
 }
 /* aantallen per beroep voor speler p (of alle spelers bij p < 0): [aantal, waarvan binnen] */
 function jobCounts(p=-1){const n=CFG.jobs.map(()=>[0,0]);for(let i=0;i<S.n;i++)if(p<0||S.pl[i]===p){n[S.job[i]][0]++;if(S.ins[i])n[S.job[i]][1]++}return n}

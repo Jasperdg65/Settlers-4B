@@ -27,6 +27,7 @@ public/                 webroot (Apache-alias /settlers4b)
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
     army.js             krachtpatsers: lopen, opdrachten uitvoeren, selecteren, groepen, markering (Duel-test)
     duel.js             duelmodule: kracht, duelStep (één tick van een duel), uitdagen, afloop
+    production.js       productie: buitenwerkers (kappen, steen hakken, planten), werkplaatsen, natuur (groei, stronken), paneel Productie
     orders.js           opdrachtenwachtrij: de enige weg waarlangs een speler (mens of computer) de simulatie verandert
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
@@ -317,7 +318,8 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 2 | Dragers en transport (planner, A*, routecache) | klaar |
 | 3 | Bouwen (plaatsen, egaliseren, materiaal, afbreken) | klaar |
 | 4 | Beroepen via gereedschap | klaar |
-| 5 | Productieketens: hout, steen, graan → meel → brood, bonenakker en moestuin, gaarkeuken (peulvruchten + groente + water → stoofpot), plukkershut (fruit en noten van appelbomen, hazelaars, bessenstruiken; groeien weer aan), droogschuur (fruit + noten → fruit-notenmix), waterput, mijnen met lievelingskost (`CFG.mineFood`), smelterijen, smidse (gereedschap), uitrustingsmaker (ijzer → helm, schild, polsband: statusuitrusting voor hogere niveaus), paneel Productie, werkgebied per gebouw | gepland |
+| 5a | Productiekern met hout en steen: houthakker, bosbouwer (boompjes groeien uit), zagerij, steenhouwer (steenblokken raken op), werkgebied per gebouw, afvoer van overschot naar de opslag, paneel Productie | klaar |
+| 5b–5c | Productieketens: graan → meel → brood, bonenakker en moestuin, gaarkeuken (peulvruchten + groente + water → stoofpot), plukkershut (fruit en noten van appelbomen, hazelaars, bessenstruiken; groeien weer aan), droogschuur (fruit + noten → fruit-notenmix), waterput, mijnen met lievelingskost (`CFG.mineFood`), smelterijen, smidse (gereedschap), uitrustingsmaker (ijzer → helm, schild, polsband: statusuitrusting voor hogere niveaus), | gepland (5b voedsel, 5c mijnen en metaal) |
 | 6 | Bevolking, gebied en leger: woonhuizen, zichtbare grens, bemande torens, krachthal (kolonisten trainen; niveaus met statusuitrusting) | gepland |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
@@ -406,6 +408,28 @@ de tempel met de natuurgebeurtenissen.
 - Natuurgebeurtenissen met een eigen toevalsgenerator (zoals `drand` voor duels), zodat ze los van
   de rest deterministisch blijven; ze werken via bestaande grootheden (groei van akkers, water,
   beloopbaarheid) en de config.
+
+**Productie (mijlpaal 5a, `js/production.js`, getallen in `CFG.prod` en `CFG.nature`)**
+
+- Buitenwerkers (houthakker, steenhouwer, bosbouwer) zoeken binnen hun werkgebied (`area` tegels rond
+  de deur, alleen op eigen grond) het dichtstbijzijnde doel, lopen erheen, werken, brengen het product
+  naar hun deur en rusten binnen. Een gekapte boom wordt een stronk die na `nature.stump` ticks
+  verdwijnt; een geplant boompje is na `nature.grow` ticks (5 min) een boom; een steenblok geeft
+  `nature.stoneUnits` steen. De houthakker laat appelbomen staan (voor de plukker, 5b).
+- Werkplaatsen (zagerij: 1 boomstam → 2 planken) verwerken wat de dragers bij de deur leggen
+  (`b.want`), als er plek is voor het product.
+- Wat een werkgebouw maakt en zelf niet vraagt, brengen dragers naar de dichtstbijzijnde opslag;
+  wie het nodig heeft, haalt het daar (of direct bij de maker).
+- Stapelplekken zijn nu per gebouw exclusief (`world.slotAt`): een gebouw krijgt geen plek die al
+  bij een ander gebouw hoort.
+- Werkgebied: stippellijn bij het plaatsen en als de muis boven zo'n gebouw staat. Tooltip en het
+  paneel 'Voorraad en productie' tonen per gebouw de toestand (werkt, wacht op boomstam, geen bomen
+  in het werkgebied, opslag bij de deur vol, wacht op een vakman) en hoeveel er gemaakt is.
+- Kaartgenerator: houthakker en steenhouwer van het startdorp staan waar de meeste bomen of
+  steenblokken zijn, de bosbouwer zo dicht mogelijk bij een houthakker, en bij elke steenhouwer ligt
+  een groepje van ongeveer 9 steenblokken.
+- Met de huidige getallen maakt één startdorp ongeveer 8 boomstammen, 15 planken en 3 steen per
+  minuut (Node-simulatie van 15 minuten); het bos rond de houthakker blijft op peil.
 
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 
