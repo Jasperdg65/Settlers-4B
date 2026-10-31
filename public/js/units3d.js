@@ -4,23 +4,29 @@
    en per beeld {anim, dir, i, x, y, w, h, ax, ay}. Richting 0 = oost (schermrechts), met de klok mee per 45°.
    Omkleuren: het masker (grijswaarde) zegt hoeveel spelerkleur een pixel krijgt; per speler en maat één keer
    uitgerekend, pas als het nodig is. ROLE3D koppelt een rol en niveau aan een model; zonder atlas blijft de tekening. */
-let UNIT3D_IMGS={};const U3D={};
+let UNIT3D_IMGS={},DUEL3D_IMGS={};const U3D={},D3D={};
 const UNIT3D_H=18;                 // hoogte van het poppetje (px-maat) in wereldeenheden, gelijk aan de getekende figuren
 const ROLE3D={0:['drager_leeg','drager_leeg','drager_leeg'],          // rol Drager (stresstest): één model
   2:['krachtpatser_1','krachtpatser_2','krachtpatser_3']};             // rol Krachtpatser, niveau 1–3 (junior, medior, senior)
 /* economie: vrije drager zonder kist, drager met een goed met kist (het goed zelf tekent loop.js op punt 'hold') */
 const CARRY3D={free:'drager_leeg',carry:'drager_kist'};
-async function loadUnits3D(){
-  await Promise.all(Object.entries(UNIT3D_IMGS).map(async([key,d])=>{try{
+/* duel-sprites (manifest.duels): per maat F[niveau links][niveau rechts][stand 1–9]; zelfde schaal als de poppetjes */
+async function loadSheets(imgs,out,index,what){
+  await Promise.all(Object.entries(imgs).map(async([key,d])=>{try{
     const r=await fetch('assets/'+d.json+'?v='+d.v);if(!r.ok)throw new Error(d.json+': HTTP '+r.status);
     const meta=await r.json(),sizes=[];
     for(const s of meta.sizes){
       const [b,m]=await Promise.all([s.file,s.mask].map(f=>assetBlob({file:f,v:d.v}).then(createImageBitmap)));
-      const F={};for(const f of s.frames)((F[f.anim]||(F[f.anim]=[]))[f.dir]||(F[f.anim][f.dir]=[]))[f.i]=f;
+      const F={};for(const f of s.frames)index(F,f);
       sizes.push({px:s.px,base:b,mask:m,F,pc:[]});
     }
-    sizes.sort((a,b)=>a.px-b.px);U3D[key]={meta,sizes};
-  }catch(e){console.warn('3D-poppetje '+key+' laden mislukt, de tekening blijft',e)}}));
+    sizes.sort((a,b)=>a.px-b.px);out[key]={meta,sizes};
+  }catch(e){console.warn(what+' '+key+' laden mislukt, de tekening blijft',e)}}));
+}
+const put3=(F,a,b,c,f)=>(((F[a]||(F[a]=[]))[b]||(F[a][b]=[]))[c]=f);
+async function loadUnits3D(){
+  await Promise.all([loadSheets(UNIT3D_IMGS,U3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-poppetje'),
+    loadSheets(DUEL3D_IMGS,D3D,(F,f)=>put3(F,f.lvlL,f.lvlR,f.stand,f),'duel-sprite')]);
   if(Object.keys(U3D).length&&typeof buildGallery==='function'&&$('people').children.length)buildGallery();
 }
 /* atlas in de kleur van speler p */
@@ -37,6 +43,22 @@ function unit3DAtlas(sz,p){
 function unit3DSize(u,zd){const need=UNIT3D_H*zd;for(const s of u.sizes)if(s.px>=need)return s;return u.sizes[u.sizes.length-1]}
 /* tekent beeld (anim, dir, i) van model key voor speler p met de voeten op (x, y); geeft {fr, k} terug
    (beeld uit de JSON en schaal atlas-px → wereld), of null als het model (nog) niet geladen is */
+/* duel-sprite: masker R = linker deelnemer (speler pL), G = rechter (speler pR); per maat en spelerpaar één keer omgekleurd */
+function duel3DAtlas(sz,pL,pR){
+  const key=pL*16+pR;if(sz.pc[key])return sz.pc[key];
+  const w=sz.base.width,h=sz.base.height,c=document.createElement('canvas');c.width=w;c.height=h;
+  const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(sz.mask,0,0);const mk=g.getImageData(0,0,w,h).data;
+  g.clearRect(0,0,w,h);g.drawImage(sz.base,0,0);const im=g.getImageData(0,0,w,h),d=im.data;
+  const rgb=p=>{const n=parseInt(PCOL[p].slice(1),16);return [(n>>16)/255,(n>>8&255)/255,(n&255)/255]},L=rgb(pL),R=rgb(pR);
+  for(let k=0;k<d.length;k+=4){const a=mk[k]/255,b=mk[k+1]/255;if(a+b<0.01)continue;const o=1-a-b;
+    d[k]*=o+a*L[0]+b*R[0];d[k+1]*=o+a*L[1]+b*R[1];d[k+2]*=o+a*L[2]+b*R[2]}
+  g.putImageData(im,0,0);return sz.pc[key]=c;
+}
+/* tekent duel key met niveaus (lvlL, lvlR) in stand 1–9 met de tafel op (x, y); false als hij (nog) niet geladen is */
+function drawDuel3D(key,lvlL,lvlR,stand,pL,pR,x,y,zd,g=ctx){
+  const u=D3D[key];if(!u)return false;const sz=unit3DSize(u,zd),fr=sz.F[lvlL]&&sz.F[lvlL][lvlR]&&sz.F[lvlL][lvlR][stand];if(!fr)return false;
+  const k=UNIT3D_H/sz.px;g.drawImage(duel3DAtlas(sz,pL,pR),fr.x,fr.y,fr.w,fr.h,x-fr.ax*k,y-fr.ay*k,fr.w*k,fr.h*k);return true;
+}
 function drawUnit3D(key,anim,dir,i,p,x,y,zd,g=ctx){
   const u=U3D[key];if(!u)return null;const sz=unit3DSize(u,zd),a=sz.F[anim]||sz.F.idle,fr=a[dir][i%a[dir].length],k=UNIT3D_H/sz.px;
   g.drawImage(unit3DAtlas(sz,p),fr.x,fr.y,fr.w,fr.h,x-fr.ax*k,y-fr.ay*k,fr.w*k,fr.h*k);return {fr,k};

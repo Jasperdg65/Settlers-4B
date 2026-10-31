@@ -25,6 +25,8 @@ public/                 webroot (Apache-alias /settlers4b)
     transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
     build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
+    army.js             krachtpatsers: lopen, opdrachtenwachtrij, selecteren, groepen, markering (Duel-test)
+    duel.js             duelmodule: kracht, duelStep (één tick van een duel), uitdagen, afloop
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
@@ -273,8 +275,8 @@ Draai het vanuit de hoofdmap van de repo. Op de server daarna `git pull`.
 
 ## Economie
 
-Modus *Economie* (standaard) of *Stresstest* (de oude test met duizenden rondlopende
-kolonisten, zonder goederen). De simulatie loopt met `CFG.ticksPerSec` (20) ticks per seconde,
+Modus *Economie* (standaard), *Stresstest* (de oude test met duizenden rondlopende
+kolonisten, zonder goederen) of *Duel-test* (krachtpatsers en armpje drukken, zie hieronder). De simulatie loopt met `CFG.ticksPerSec` (20) ticks per seconde,
 los van het tekenen.
 
 ### Ontwerp en planning
@@ -319,6 +321,59 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 - De krachtpatsers hebben geen wapen; voor het duel komt een eigen armdruk-sprite (mijlpaal 3).
 - Muzikanten ondersteunen de kracht van hun groep binnen een bereik; hoe hoger hun niveau, hoe
   groter dat bereik (getallen in de config).
+
+**Duel-test (krachtpatsers, mijlpaal 4)**
+
+Knop *Duel-test* (of modus Duel-test): op een open veld bij burcht 1 staan per speler 1 en 2 zes
+krachtpatsers (`CFG.duel.test.levels`) en één heler. *Spelen als* kiest welke kant je bestuurt;
+*Start* zet de opstelling opnieuw neer.
+
+- Bediening: links slepen = selectierechthoek (max `CFG.army.maxSelect`, 100); klik = één;
+  Shift+klik = alle eigen krachtpatsers van dat niveau in beeld; Ctrl+1..9 = groep opslaan (ook
+  Alt/Cmd, want sommige browsers houden Ctrl+cijfer voor tabbladen); 1..9 = groep kiezen, twee keer
+  kort na elkaar = camera erheen; rechtsklik op een vijandelijke krachtpatser = de dichtstbijzijnde
+  geselecteerde daagt hem uit; rechtsklik op de grond = lopen in opstelling; rechts slepen = schuiven;
+  Esc = niets geselecteerd. Tooltip boven een krachtpatser: kracht, vermoeidheid, gevoed, uitgeschakeld.
+- Opdrachten gaan in een wachtrij (`ARMY.cmd`) en worden in de volgende tick uitgevoerd; de
+  selectie zelf is alleen weergave. De duels hebben een eigen toevalsgenerator (`drand`, seed van
+  de wereld): dezelfde wereld met dezelfde opdrachten geeft dezelfde afloop.
+- Duel (`js/duel.js`): beide lopen naar een stoel links en rechts van een tafelplek tussen hen in;
+  zodra beide zitten, vervangt de duel-sprite de twee figuren. `duelStep` vergelijkt elke tick de
+  kracht (niveau × gevoed × harmoniemeter × vermoeidheid, `CFG.duel`), met een golvende
+  toevalsterm, en schuift de stand −1..+1; de sprite toont stand 1–9 en het balkje erboven
+  schuift mee in beide spelerkleuren. Met de huidige getallen duurt een gelijk duel gemiddeld
+  ongeveer 9 s; medior wint van junior in ongeveer 3 op de 4, senior van junior in 9 op de 10.
+- Afloop: de winnaar loopt terug naar waar hij stond en is iets vermoeider (herstelt in rust);
+  de verliezer loopt doorschijnend en langzamer naar de dichtstbijzijnde eigen heler (zonder heler:
+  de eigen burcht) en is daar `CFG.duel.outTicks` (30 s) uitgeschakeld.
+- Markering boven geselecteerden: capsule in gezondheids-/vermoeidheidskleur (groen, geel,
+  oranje, donkerrood = uitgeschakeld) met 1–3 koperen stipjes voor het niveau, en een ovaal in de
+  spelerkleur op de grond.
+- **Tijdelijk**: de harmoniemeter is vast (`CFG.duel.harmonyStart`, tot mijlpaal 7), iedereen in
+  de test is gevoed, eenheden van de tegenstander doen niets uit zichzelf (geen terugvechten of
+  uitdagen), een eenheid onderweg naar een duel neemt geen loopopdracht aan, muzikanten ontbreken
+  nog en de heler is nog een getekende figuur.
+
+**Volgende stap: torens veroveren en gebied bij verovering (nog niet bouwen)**
+
+- Bemanning: een toren (en burcht/krachthal) houdt een lijst bewoners bij (krachtpatsers en een
+  heler), met een maximum per gebouwtype in de config; bewoners zitten binnen (`S.ins`) en hebben
+  het gebouw als thuisplek, zodat de winnaar daarheen terugloopt en een verliezer zijn heler vindt.
+- Aanvallen: rechtsklik op een vijandelijke toren met een selectie = opdracht 'aanvallen'. Een
+  verdediger komt naar buiten en neemt de uitdaging aan (via dezelfde `challenge`); per aanvaller
+  één duel tegelijk, de rest wacht in de buurt. Daarvoor is een kleine verdedigings-AI nodig
+  (wie komt eruit, wanneer gaat hij weer naar binnen).
+- Verovering: een toren zonder bewoners die niet uitgeschakeld zijn, wordt overgenomen door de
+  eerste aanvaller die de deur bereikt: `b.p` wordt de nieuwe speler, de aanvaller gaat naar binnen,
+  de vlag wisselt van kleur (sprite-cache per speler), en verliezers van de oude eigenaar gaan naar
+  hun eigen dichtstbijzijnde heler of burcht.
+- Gebied: `world.own` mag dan niet meer 'wie eerst komt' zijn (`claimLand`), maar moet per tegel
+  worden herberekend uit alle bemande gebouwen (dichtstbijzijnde bemande toren wint, burcht gaat
+  voor). Gevolgen bij verlies: bouwplaatsen en stapels op verloren grond (afbreken of overnemen,
+  config), routes opnieuw (`world.walkVer`), grondchunks opnieuw tekenen (`invalidateTiles`),
+  zichtbare grens bijwerken (mijlpaal 6).
+- Netwerk/opslag: aanvallen en overnames lopen via de opdrachtenwachtrij, zodat ze deterministisch
+  blijven en in een savegame of replay passen.
 
 **Ontwerpnotitie: vrije dragers ontspannen (samen met het hunnebed bouwen)**
 

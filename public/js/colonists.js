@@ -22,13 +22,17 @@ function pickTarget(i){
   S.tx[i]=S.hx[i];S.ty[i]=S.hy[i];
 }
 /* eco: economiemodus, iedereen is een vrije drager zonder beroep (zie transport.js); anders de stresstest */
+/* de gedeelde rijen per eenheid; economie (transport.js) en duel-test (army.js) voegen er hun eigen bij */
+function allocUnits(n){
+  for(const k of ['x','y','px','py','tx','ty','hx','hy','sp'])S[k]=new Float32Array(n);
+  S.wait=new Uint16Array(n);S.tb=new Int16Array(n);S.ins=new Uint8Array(n);S.pl=new Uint8Array(n);S.role=new Uint8Array(n);S.dir=new Uint8Array(n);S.vr=new Uint8Array(n);S.lvl=new Uint8Array(n);S.d8=new Uint8Array(n).fill(2);
+  S.n=n;S.next=new Int32Array(n);
+}
 function spawn(total,eco){
-  const P=world.starts.length;S.eco=0;S.carry=null;if(!P){S.n=0;return}
+  const P=world.starts.length;S.eco=0;S.army=0;S.carry=null;if(!P){S.n=0;return}
   const per=Math.floor(total/P),n=per*P,{W,walk}=world;
   srand=mulberry32(hashStr(world.seed+'#settlers'));
-  for(const k of ['x','y','px','py','tx','ty','hx','hy','sp'])S[k]=new Float32Array(n);
-  S.wait=new Uint16Array(n);S.tb=new Int16Array(n);S.ins=new Uint8Array(n);for(const b of world.blds)b.occ=b.type==='burcht'?1:0;S.pl=new Uint8Array(n);S.role=new Uint8Array(n);S.dir=new Uint8Array(n);S.vr=new Uint8Array(n);S.lvl=new Uint8Array(n);S.d8=new Uint8Array(n).fill(2);
-  S.n=n;S.next=new Int32Array(n);
+  allocUnits(n);for(const b of world.blds)b.occ=b.type==='burcht'?1:0;
   let i=0;
   for(let p=0;p<P;p++){const s=world.starts[p];const hx=s.cx+0.5,hy=s.cy+1.6;
     for(let j=0;j<per;j++,i++){
@@ -65,6 +69,7 @@ function tick(){
   tickNo++;
   const {W,walk,ter}=world,{x,y,px,py,tx,ty,sp,wait,dir}=S,n=S.n;
   if(S.eco)tickCarriers();
+  else if(S.army)tickArmy();
   else for(let i=0;i<n;i++){
     px[i]=x[i];py[i]=y[i];
     if(wait[i]>0){wait[i]--;continue}

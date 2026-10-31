@@ -35,15 +35,28 @@ mini.addEventListener('pointerup',()=>miniDown=false);
 let drag=null;
 /* klik = indrukken en loslaten zonder (veel) te slepen; in bouwmodus plaatst of breekt dat af */
 let downAt=null;
-cv.addEventListener('contextmenu',ev=>{if(BUILD.mode){ev.preventDefault();setBuildMode(null);refreshHover()}});
+cv.addEventListener('contextmenu',ev=>{if(S.army){ev.preventDefault();return}if(BUILD.mode){ev.preventDefault();setBuildMode(null);refreshHover()}});
 addEventListener('keydown',ev=>{if(ev.key==='Escape'&&BUILD.mode){setBuildMode(null);refreshHover()}});
 cv.addEventListener('pointerup',ev=>{if(ev.button===0&&downAt&&Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1])<5&&world&&world.own&&BUILD.mode){buildClick();refreshHover()}downAt=null});
-cv.addEventListener('pointerdown',ev=>{downAt=ev.button===0?[ev.clientX,ev.clientY]:null;drag={x:ev.clientX,y:ev.clientY};cv.setPointerCapture(ev.pointerId);cv.classList.add('drag')});
+/* duel-test (S.army): links slepen = selectierechthoek, links klikken = selecteren (Shift: hele niveau in beeld),
+   rechts klikken = opdracht, rechts of middel slepen = schuiven (zie army.js) */
+let downR=null;
+const cvXY=ev=>{const r=cv.getBoundingClientRect();return [ev.clientX-r.left,ev.clientY-r.top]};
+cv.addEventListener('pointerdown',ev=>{
+  if(S.army&&ev.button===0){const [x,y]=cvXY(ev);SEL.box=[x,y,x,y];cv.setPointerCapture(ev.pointerId);return}
+  downR=ev.button===2?[ev.clientX,ev.clientY]:null;
+  downAt=ev.button===0?[ev.clientX,ev.clientY]:null;drag={x:ev.clientX,y:ev.clientY};cv.setPointerCapture(ev.pointerId);cv.classList.add('drag')});
+cv.addEventListener('pointerup',ev=>{
+  if(!S.army)return;const [x,y]=cvXY(ev);
+  if(ev.button===0&&SEL.box){const b=SEL.box;SEL.box=null;if(Math.hypot(x-b[0],y-b[1])<5)armyClick(x,y,ev.shiftKey);else{b[2]=x;b[3]=y;selectRect(b)}}
+  else if(ev.button===2&&downR&&Math.hypot(ev.clientX-downR[0],ev.clientY-downR[1])<5)armyOrder(x,y);
+  downR=null});
 /* muispositie onthouden, zodat tegelinfo en tooltip ook bijwerken als de muis stilstaat (zie refreshHover in loop.js) */
 let mouseAt=null;
 cv.addEventListener('pointermove',ev=>{
   if(!world)return;
   const r=cv.getBoundingClientRect();
+  if(SEL.box){SEL.box[2]=ev.clientX-r.left;SEL.box[3]=ev.clientY-r.top}
   if(drag){cam.x-=(ev.clientX-drag.x)/cam.z;cam.y-=(ev.clientY-drag.y)/cam.z;drag={x:ev.clientX,y:ev.clientY};clampCam()}
   mouseAt=[ev.clientX-r.left,ev.clientY-r.top];updateHover();
 });
@@ -59,6 +72,7 @@ function updateHover(){
     /* tooltip bij een stapel of gebouw; een stapel steekt boven zijn tegel uit, dus ook de tegel eronder telt */
     const st=world.stk,i2=i+world.W,s=st?(st[i]||(y+1<world.H?st[i2]:0))-1:-1;
     if(world.own&&BUILD.mode){showTip(buildHover(x,y),mx,my);return}
+    if(S.army){const u=pickUnit(mx,my);if(u>=0){showTip(unitLabel(u),mx,my);return}}
     showTip(s>=0?stackLabel(s):b?`${BTYPES[world.blds[b-1].type].name} · speler ${world.blds[b-1].p+1}`+(S.eco?wantLabel(b-1):''):'',mx,my);
   }else{hoverTile=null;showTip('')}
 }

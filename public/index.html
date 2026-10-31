@@ -30,8 +30,9 @@
   <label><span class="row">Gebergte <span class="val" id="mountV"></span></span><input type="range" id="mount" min="0" max="1" step="0.05" value="0.5"></label>
   <label><span class="row">Bosdichtheid <span class="val" id="treesV"></span></span><input type="range" id="trees" min="0" max="1" step="0.05" value="0.6"></label>
   <label>Modus
-    <select id="mode"><option value="eco" selected>Economie</option><option value="stress">Stresstest</option></select>
+    <select id="mode"><option value="eco" selected>Economie</option><option value="stress">Stresstest</option><option value="duel">Duel-test</option></select>
   </label>
+  <button id="duelTest" class="wide" title="Twee spelers met krachtpatsers van verschillende niveaus om duels mee te proberen">Duel-test</button>
   <label class="eco-only">Startvoorraad in de burcht
     <select id="stock"><option value="weinig">Weinig</option><option value="normaal" selected>Normaal</option><option value="veel">Veel</option></select>
   </label>
@@ -60,6 +61,20 @@
     <dt>Generatietijd</dt><dd id="genms">–</dd>
   </dl>
   <div id="hover">Beweeg over de kaart voor details per tegel.</div>
+
+  <section class="duel-only">
+    <h2>Krachtpatsers</h2>
+    <label>Spelen als<select id="armyPl"><option value="0">Speler 1 (rood)</option><option value="1">Speler 2 (blauw)</option></select></label>
+    <dl>
+      <dt>Geselecteerd</dt><dd id="nsel">0</dd>
+      <dt>Duels bezig</dt><dd id="nduel">0</dd>
+      <dt>Gewonnen (1 – 2)</dt><dd id="nwon">–</dd>
+    </dl>
+    <p class="note" id="duelMsg"></p>
+    <p class="note">Links slepen: selecteren (max 100) · klik: één · Shift+klik: alle van dat niveau in beeld ·
+      Ctrl+1..9: groep opslaan · 1..9: groep kiezen, twee keer: camera erheen · rechtsklik op een vijandelijke
+      krachtpatser: uitdagen · rechtsklik op de grond: lopen · rechts slepen: schuiven · Esc: niets geselecteerd</p>
+  </section>
 
   <section class="eco-only">
     <h2>Bouwen</h2>
@@ -97,7 +112,7 @@
 <main>
   <canvas id="view"></canvas>
   <div id="tip" hidden></div>
-  <div class="hint">Slepen om te schuiven · scrollen of +/− om te zoomen · WASD/pijltjes</div>
+  <div class="hint" id="hint">Slepen om te schuiven · scrollen of +/− om te zoomen · WASD/pijltjes</div>
   <div class="zoom"><button id="zin" aria-label="Inzoomen">+</button><button id="zout" aria-label="Uitzoomen">−</button></div>
 </main>
 
@@ -116,6 +131,8 @@
 <script src="js/transport.js"></script>
 <script src="js/build.js"></script>
 <script src="js/jobs.js"></script>
+<script src="js/army.js"></script>
+<script src="js/duel.js"></script>
 <script src="js/loop.js"></script>
 <script src="js/input.js"></script>
 <script src="js/assets.js"></script>

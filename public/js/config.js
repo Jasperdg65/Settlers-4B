@@ -69,6 +69,35 @@ const CFG={
     digShare:0.3,                  // deel van de voortgangsmeter voor het egaliseren
     refund:0.5,                    // afbreken geeft dit deel van het verwerkte materiaal terug (naar beneden afgerond)
   },
+  /* krachtpatsers in het veld (nu alleen in de duel-testmodus) */
+  army:{
+    speed:0.075,                   // tegels per tick lopen
+    hurtSpeed:0.6,                 // uitgeschakeld lopen gaat langzamer (factor)
+    maxSelect:100,                 // max geselecteerd tegelijk
+    spacing:0.8,                   // afstand in de opstelling bij een loopopdracht (tegels)
+    groupTap:350,                  // ms: twee keer dezelfde groeptoets binnen deze tijd centreert de camera
+  },
+  /* armpje drukken (duel.js). Kracht = level[niveau] × (gevoed ? 1 : hungry) × (1 + harmony × (2 × harmoniemeter − 1))
+     × (1 − fatigue × vermoeidheid). Per tick schuift de duelstand (−1 links wint … +1 rechts wint) met
+     krachtverschil / krachtsom × push, plus een golvende toevalsterm v (v = v × keep + toeval × noise). */
+  duel:{
+    level:[0,1,1.45,2],            // basiskracht per niveau 1–3 (index 0 ongebruikt)
+    hungry:0.75,                   // kracht als hij niet gevoed is
+    harmony:0.3,                   // invloed van de harmoniemeter (0..1, 0,5 = neutraal): ±30%
+    harmonyStart:0.5,              // TIJDELIJK tot mijlpaal 7: vaste harmoniemeter per speler
+    fatigue:0.35,                  // krachtverlies bij volle vermoeidheid
+    push:0.025,keep:0.95,noise:0.02,
+    tire:0.0012,                   // vermoeidheid erbij per duel-tick (beide deelnemers)
+    rest:0.0004,                   // herstel per tick als hij niet duelleert
+    maxTicks:1200,                 // daarna wint wie op dat moment voorstaat
+    meetTicks:600,                 // zo lang mogen beide over het lopen naar de tafel doen
+    seat:0.34,                     // halve afstand tussen de deelnemers in tegels (past bij de duel-sprite)
+    outTicks:600,                  // verliezer is zo lang uitgeschakeld, bij zijn heler
+    afterOut:0.3,                  // vermoeidheid als hij weer meedoet
+    /* testmodus 'Duel-test': per speler (1 en 2) krachtpatsers met deze niveaus en één heler, op een open veld bij burcht 1;
+       gap = afstand tussen de twee groepen in tegels */
+    test:{levels:[1,2,3,1,2,3],gap:7},
+  },
   /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en elke voltooide wachttoren (nog zonder bemanning) */
   territory:{burcht:20,wachttoren:20},
   /* TIJDELIJK tot mijlpaal 3–5: vraag per gebouwtype, zodat er al vervoerd wordt zonder productie.

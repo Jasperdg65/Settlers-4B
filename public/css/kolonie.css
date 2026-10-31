@@ -69,7 +69,9 @@ button:disabled,input:disabled{opacity:.45;cursor:default}
 .bfig.custom figcaption::after{content:" · eigen";color:var(--accent)}
 .gallery.people{grid-template-columns:repeat(3,1fr)}
 figcaption{font-size:12px;color:var(--muted);line-height:1.2;margin-top:2px}
-body[data-mode="stress"] .eco-only,body[data-mode="eco"] .stress-only{display:none}
+body[data-mode="stress"] .eco-only,body[data-mode="eco"] .stress-only,body[data-mode="duel"] .eco-only,body[data-mode="duel"] .stress-only,
+body:not([data-mode="duel"]) .duel-only{display:none}
+button.wide{width:100%;margin:0 0 10px}
 .stock h3{font:600 12px/1.2 "Source Sans 3",system-ui,sans-serif;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 4px}
 .srow{display:grid;grid-template-columns:24px 1fr auto;gap:8px;align-items:center;font-size:14px;padding:1px 0}
 .srow canvas{display:block}

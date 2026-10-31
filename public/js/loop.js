@@ -47,6 +47,8 @@ function frame(now){
     if(S.eco){const c=carrierStats();$('ncarry').textContent=`${c[0]} van ${c[1]}`;
       $('njobs').textContent=jobCounts().map((n,j)=>j&&n[0]?`${CFG.jobs[j].n.toLowerCase()} ${n[0]}`+(n[1]?` (${n[1]} binnen)`:''):'').filter(Boolean).join(', ')||'–';$('ndone').textContent=TR.done+' · '+TR.used;
       $('npath').textContent=`${pathQueued()} · ${PF.cache.size}, ${Math.round(100*PF.hits/Math.max(1,PF.hits+PF.miss))}% hit`}
+    if(S.army){$('nsel').textContent=ARMY.sel.length;$('nduel').textContent=DUELS.filter(Boolean).length;
+      $('nwon').textContent=ARMY.won.slice(0,2).join(' – ');$('duelMsg').textContent=ARMY.last}
     drawMini();refreshStock();refreshHover();
   }
 }
@@ -111,6 +113,7 @@ function draw(){
     for(let i=0;i<A.n;i++){const Y=py[i]+(y[i]-py[i])*al,r=Y|0;if(r<yMin||r>yMax)continue;
       const X=px[i]+(x[i]-px[i])*al,sx=X*TW-Y*TW/2+off;if(sx<v.l-12||sx>v.r+12)continue;next[i]=rowA[r];rowA[r]=i}}
   if(PROF)pt('emmers',tp);
+  if(S.army)drawArmyGround(al);
   /* kleinste vooraf verkleinde versie die nog minstens zo breed is als op het scherm; 'high' alleen als er nog meer dan 2× verkleind (of vergroot) wordt */
   let q='high';
   const blit=(s,x,y)=>{
@@ -173,7 +176,9 @@ function draw(){
       blit(ANIM[type][f*2+A.dir[k]],X*TW-Y*TW/2+off,Y*TH-hAt(X,Y));
     }
     if(PROF){pt('dieren',tr);tr=performance.now()}
+    if(S.army&&DUELS.length&&drawDuelsRow(y,zd))q='';
     if(detail&&!(PROF&&PX.k))for(let k=rowU[y];k>=0;k=S.next[k]){
+      if(S.army){if(S.ast[k]===AS.DUEL)continue;ctx.globalAlpha=S.ko[k]?0.6:1} // duelleerders zitten in de duel-sprite; uitgeschakeld = doorschijnend
       const Y=S.py[k]+(S.y[k]-S.py[k])*al,X=S.px[k]+(S.x[k]-S.px[k])*al;
       const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]||S.st&&S.st[k]===ST.WORK);
       const f=moving?(animF+k)&3:0;
@@ -190,7 +195,7 @@ function draw(){
         if(m3){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);if(drawUnit3D(m3[S.lvl[k]-1],moving?'walk':'idle',S.d8[k],animF+k,S.pl[k],ux,uy,zd)){q='';continue}}
         blit(m3?UNITC[0][S.vr[k]][S.pl[k]][fr]:UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy)} // krachtpatser: getekende figuur vervalt; tot de atlas er is een gewone kolonist
     }
-    if(PROF)pt('kolonisten',tr);
+    ctx.globalAlpha=1;if(PROF)pt('kolonisten',tr);
   }
   tp=pnow();
   if(S.n&&!detail){const {x,y,px,py,pl}=S;let lp=-1;
@@ -199,6 +204,7 @@ function draw(){
   if(PROF)pt('stippen',tp);
 
   if(world.own){drawSiteBars(v,blit);drawBuildOverlay(v,blit)}
+  if(S.army)drawArmyTop(al);
   if(hoverTile){
     const {x,y}=hoverTile;if(x<W-1&&y<H-1){const a=y*W+x;
       ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=1/cam.z;ctx.beginPath();
