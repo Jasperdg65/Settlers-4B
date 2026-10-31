@@ -94,8 +94,6 @@ const JOBLOOK={
   steenhouwer:{hat:'#9a9a94',kind:'cap',apron:'#7c7c78',item:'houweel'},
   mijnwerker:{hat:'#3a3a3c',kind:'helm',item:'houweel'},
   boer:{hat:'#e0c070',kind:'wide',item:'zeis'},
-  visser:{hat:'#4f6f8a',kind:'wide',apron:'#3e5a70',item:'hengel'},
-  jager:{hat:'#3f5a2a',kind:'cap',apron:'#6b5236',item:'boog'},
   molenaar:{hat:'#f2ede1',kind:'cap',apron:'#e8e2d2',item:'meel'},
   bakker:{hat:'#ffffff',kind:'tall',apron:'#f4f0e6',item:'brood'},
   smelter:{hat:'#5a4030',kind:'cap',apron:'#6b4a30',item:'kolen'},
@@ -109,7 +107,7 @@ function drawLook(g,L,pc,fem){
     const w=L.kind==='wide'?[-4.2,4.9]:[-3,3.9];line(g,[w[0],-11.7,w[1],-11.7],sh(h,0.75),0.8);line(g,[-2.6,-12.5,3.2,-12.5],pc,0.5);
     if(L.kind==='helm')circ(g,2.6,-13.2,0.75,'#ffd25a')}
   /* in de hand (3, −5,2): gereedschap schuin omhoog, een goed ervoor */
-  const tool=['schop','hamer','bijl','zaag','houweel','zeis','hengel','boog'].includes(L.item);
+  const tool=['schop','hamer','bijl','zaag','houweel','zeis'].includes(L.item);
   g.save();if(tool){g.translate(3.2,-5.4);g.rotate(-1.15);g.scale(0.95,0.95);g.translate(0.9,-0.3)}else{g.translate(4.4,-5.6);g.scale(0.62,0.62)}
   GDRAW[L.item](g);g.restore();circ(g,3,-5.2,0.78,SKIN);
 }

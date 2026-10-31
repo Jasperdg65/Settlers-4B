@@ -11,8 +11,8 @@ const CFG={
   startFactor:{weinig:0.5,normaal:1,veel:2},
   startStock:{
     boomstam:16,plank:40,steen:32,
-    brood:12,vis:8,vlees:8,water:8,
-    bijl:2,zaag:2,houweel:3,hamer:6,schop:4,zeis:2,hengel:2,
+    brood:12,stoofpot:8,notenmix:8,water:8,
+    bijl:2,zaag:2,houweel:3,hamer:6,schop:4,zeis:2,
   },
   eco:{colonistsPerPlayer:40},   // kolonisten per speler bij de start in economiemodus
   /* routes (A*): kosten per stap = afstand × terrein × object × (voetpad) + hoogteverschil × up/down */
@@ -46,13 +46,13 @@ const CFG={
     {k:'steenhouwer',n:'Steenhouwer',tool:'houweel',bld:['steenhouwer']},
     {k:'mijnwerker',n:'Mijnwerker',tool:'houweel',bld:['kolenmijn','ijzermijn','goudmijn']},
     {k:'boer',n:'Boer',tool:'zeis',bld:['boerderij']},
-    {k:'visser',n:'Visser',tool:'hengel',bld:[]},   // vissershut volgt in mijlpaal 5
-    {k:'jager',n:'Jager',tool:'boog',bld:[]},       // jagershut volgt in mijlpaal 5
     {k:'molenaar',n:'Molenaar',bld:['molen']},
     {k:'bakker',n:'Bakker',bld:['bakkerij']},
     {k:'smelter',n:'Smelter',bld:['ijzersmelterij','goudsmelterij']},
     {k:'smid',n:'Smid',bld:['smidse','wapensmid']},
   ],
+  /* lievelingskost van mijnwerkers (de wereld is veganistisch); mijnen gebruiken dit vanaf mijlpaal 5 */
+  mineFood:{kolenmijn:'brood',steenmijn:'brood',ijzermijn:'stoofpot',zwavelmijn:'stoofpot',goudmijn:'notenmix'},
   /* bouwen: kosten [planken, steen]; de burcht kan niet gebouwd worden */
   build:{
     cost:{
@@ -76,8 +76,8 @@ const CFG={
   temp:{
     want:{
       pakhuis:{plank:8,steen:8,brood:4},zagerij:{boomstam:6},bakkerij:{water:4},woonhuis:{brood:2},wachttoren:{brood:1},
-      kolenmijn:{brood:2},ijzermijn:{vlees:2},goudmijn:{vis:2},
+      kolenmijn:{brood:2},ijzermijn:{stoofpot:2},goudmijn:{notenmix:2},
     },
-    use:['boomstam','water','brood','vis','vlees'],useEvery:600,
+    use:['boomstam','water','brood','stoofpot','notenmix'],useEvery:600,
   },
 };
