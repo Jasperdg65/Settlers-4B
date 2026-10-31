@@ -22,7 +22,7 @@ function initProduction(){
     else if(obj[i]===5)NAT.stump.push([hash2(i,9)%c.stump,i]);
   }
   NAT.sap.sort((a,b)=>a[0]-b[0]);NAT.stump.sort((a,b)=>a[0]-b[0]);
-  for(const b of world.blds){b.pt=0;b.run=0;b.ps='';b.pend=null;b.alt=0;b.make='auto';b.rec=null}
+  for(const b of world.blds){b.pt=0;b.run=0;b.ps='';b.pend=null;b.alt=0;b.make='auto';b.rec=null;b.born=0}
 }
 /* natuur: elke CFG.nature.every ticks */
 function tickNature(){
@@ -43,6 +43,7 @@ function inputRoom(bi,gd){const b=world.blds[bi],pc=CFG.prod[b.type];if(!pc||pc.
 /* vraag van een gebouw: de invoer van zijn werkplaats (woonhuizen en torens vragen voedsel vanaf mijlpaal 6) */
 function setWant(b){
   b.want.fill(0);const pc=CFG.prod[b.type];
+  if(b.type==='woonhuis'&&(b.born||0)<CFG.pop.house)for(const k of CFG.pop.food)b.want[GI[k]]=CFG.pop.stock;
   if(pc&&!pc.gather)for(const k of allIn(b.type))b.want[GI[k]]=pc.stock;
 }
 /* recepten van een werkplaats: [{k, in, out}]. Een mijn eet zijn lievelingskost; smidse en uitrustingsmaker hebben er meer */
@@ -66,7 +67,9 @@ function tickProduction(){
   if(tickNo%CFG.nature.every===0)tickNature();
   const bl=world.blds;
   for(let bi=0;bi<bl.length;bi++){
-    const b=bl[bi],pc=CFG.prod[b.type];if(!pc||b.dead||b.st)continue;
+    const b=bl[bi],pc=CFG.prod[b.type];
+    if(b.type==='woonhuis'&&!b.dead&&!b.st){tickHouse(b,bi);continue}
+    if(!pc||b.dead||b.st)continue;
     if(!b.occ){b.ps='wacht op een vakman';continue}
     const c=b.wkr-1;if(c<0||S.st[c]!==ST.INSIDE)continue;          // buiten aan het werk, of onderweg naar buiten
     if(b.pend){for(const p of b.pend)p[1]=addGoods(bi,p[0],p[1]);b.pend=b.pend.some(p=>p[1])?b.pend:null;if(b.pend){b.ps='opslag bij de deur vol';continue}}
@@ -188,7 +191,24 @@ function arriveHome(c){
   if(b.dead||b.wkr!==c+1){toIdle(c);return}
   S.ins[c]=1;S.st[c]=ST.INSIDE;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;b.pt=CFG.prod[b.type].rest;
 }
-function prodLabel(b){return CFG.prod[b.type]&&!b.st&&!b.dead&&b.ps?' · '+b.ps:''}
+function prodLabel(b){return (CFG.prod[b.type]||b.type==='woonhuis')&&!b.st&&!b.dead&&b.ps?' · '+b.ps:''}
+
+/* ---------- Bevolking: woonhuizen ---------- */
+function tickHouse(b,bi){
+  const c=CFG.pop;b.born=b.born||0;
+  if(b.born>=c.house){b.ps=`${b.born}/${c.house} bewoners, vol`;return}
+  if(b.pt>0){b.pt--;return}
+  let s=-1;for(const k of c.food){s=freeUnitAt(bi,GI[k]);if(s>=0)break}
+  if(s<0){b.ps=`${b.born}/${c.house} bewoners, wacht op voedsel`;return}
+  takeOne(s);TR.used++;b.born++;b.occ=1;b.pt=c.every;bornAt(b);
+  b.ps=`${b.born}/${c.house} bewoners`;if(b.born>=c.house)setWant(b);
+}
+/* een nieuwe vrije drager bij de deur van woonhuis b */
+function bornAt(b){
+  const i=growUnits(),X=b.x+0.5,Y=b.y+1.5;
+  S.x[i]=S.px[i]=S.hx[i]=S.tx[i]=X;S.y[i]=S.py[i]=S.hy[i]=S.ty[i]=Y;S.pl[i]=b.p;S.role[i]=0;S.lvl[i]=1;S.vr[i]=srand()*ROLES[0].vars|0;
+  S.dir[i]=srand()<0.5?1:0;S.sp[i]=0.07+srand()*0.05;S.wait[i]=20;S.ins[i]=0;S.st[i]=ST.IDLE;S.job[i]=0;S.carry[i]=0;S.path[i]=null;S.d8[i]=2;
+}
 
 /* ---------- Werkgebied tekenen: bij het plaatsen en als de muis boven zo'n gebouw staat ---------- */
 function drawWorkArea(X,Y,R,col){
@@ -209,6 +229,9 @@ let prodShown='';
 function refreshProduction(){
   if(!world.made||document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#prodList'))return;   // niet verversen terwijl een keuzelijst open is
   const p=+$('stockPl').value||0,rows=[];
+  const houses=world.blds.filter(b=>b.type==='woonhuis'&&b.p===p&&!b.dead&&!b.st);
+  if(houses.length){const n=houses.reduce((a,b)=>a+(b.born||0),0),hungry=houses.filter(b=>(b.born||0)<CFG.pop.house&&/voedsel/.test(b.ps)).length;
+    rows.push(`<div class="prow"><b>Woonhuis ×${houses.length}</b><span>${n} van ${houses.length*CFG.pop.house} nieuwe bewoners`+(hungry?` · ${hungry} wacht op voedsel`:'')+'</span></div>')}
   for(const type in CFG.prod){
     const list=world.blds.filter(b=>b.type===type&&b.p===p&&!b.dead&&!b.st);if(!list.length)continue;
     const st={};for(const b of list){const s=b.occ?b.ps||'werkt':'wacht op een vakman';st[s]=(st[s]||0)+1}

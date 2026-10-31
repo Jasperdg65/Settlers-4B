@@ -13,7 +13,7 @@ const TR={rr:0,done:0,used:0};
 const doorTile=b=>(b.y+1)*world.W+b.x;
 const isStore=b=>(b.type==='burcht'||b.type==='pakhuis')&&!b.dead&&!b.st;
 function initTransport(){
-  const n=S.n;
+  const n=S.cap;
   S.eco=1;S.st=new Uint8Array(n);S.carry=new Uint8Array(n);S.gd=new Uint8Array(n);S.src=new Int32Array(n);S.sb=new Int16Array(n);S.dst=new Int16Array(n);S.cm=new Uint8Array(n);
   S.job=new Uint8Array(n);S.jb=new Uint8Array(n);S.pi=new Uint16Array(n);S.path=new Array(n).fill(null);
   for(const b of world.blds){b.want=new Uint8Array(GOODS.length);b.coming=new Uint8Array(GOODS.length);b.cool=0;b.wkr=0;setWant(b)}

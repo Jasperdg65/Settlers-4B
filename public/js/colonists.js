@@ -26,7 +26,16 @@ function pickTarget(i){
 function allocUnits(n){
   for(const k of ['x','y','px','py','tx','ty','hx','hy','sp'])S[k]=new Float32Array(n);
   S.wait=new Uint16Array(n);S.tb=new Int16Array(n);S.ins=new Uint8Array(n);S.pl=new Uint8Array(n);S.role=new Uint8Array(n);S.dir=new Uint8Array(n);S.vr=new Uint8Array(n);S.lvl=new Uint8Array(n);S.d8=new Uint8Array(n).fill(2);
-  S.n=n;S.next=new Int32Array(n);
+  S.n=n;S.cap=n;S.next=new Int32Array(n);
+}
+/* plek voor één kolonist meer (geboorte, mijlpaal 6): alle rijen per eenheid groeien mee, de capaciteit verdubbelt */
+function growUnits(){
+  if(S.n<S.cap)return S.n++;
+  const cap=Math.max(16,S.cap*2);
+  for(const k of Object.keys(S)){const a=S[k];
+    if(ArrayBuffer.isView(a)&&a.length===S.cap){const b=new a.constructor(cap);b.set(a);if(k==='d8')b.fill(2,S.cap);S[k]=b}
+    else if(Array.isArray(a)&&a.length===S.cap)for(let i=S.cap;i<cap;i++)a.push(null)}
+  S.cap=cap;return S.n++;
 }
 function spawn(total,eco){
   ORDERS.length=0;

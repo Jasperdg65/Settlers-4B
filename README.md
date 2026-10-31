@@ -321,7 +321,9 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 5a | Productiekern met hout en steen: houthakker, bosbouwer (boompjes groeien uit), zagerij, steenhouwer (steenblokken raken op), werkgebied per gebouw, afvoer van overschot naar de opslag, paneel Productie | klaar |
 | 5b | Voedsel: boerderij (graan), bonenakker (peulvruchten), moestuin (groente) met akkers die groeien en rijpen; plukkershut (fruit van appelbomen en bessenstruiken, noten van hazelaars, groeien weer aan); waterput; molen (graan → meel), bakkerij (meel + water → brood), gaarkeuken (peulvruchten + groente + water → stoofpot), droogschuur (fruit + noten → fruit-notenmix) | klaar |
 | 5c | Mijnen met lievelingskost (`CFG.mineFood`) en ertstegels die opraken, smelterijen, smidse (gereedschap), uitrustingsmaker (helm, schild, polsband: statusuitrusting voor hogere niveaus), keuze wat ze maken; tijdelijk verbruik vervalt | klaar |
-| 6 | Bevolking, gebied en leger: woonhuizen, zichtbare grens, bemande torens, krachthal (kolonisten trainen; niveaus met statusuitrusting) | gepland |
+| 6a | Bevolking: woonhuizen krijgen met voedsel tot 6 nieuwe bewoners (vrije dragers); start weer 40 kolonisten per speler | klaar |
+| 6b | Gebied: zichtbare grens, gebied alleen van bemande torens | gepland |
+| 6c | Leger: krachthal traint kolonisten tot krachtpatsers (niveaus met statusuitrusting), bemanning van torens | gepland |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
 | 9 | Computerburen met een eigen dorp: zelfde regels en economie als de speler, in een Web Worker, met karakter | later |
@@ -449,8 +451,8 @@ de tempel met de natuurgebeurtenissen.
   één plek per product vrij, anders kan hij vastlopen met alleen invoer bij de deur.
 - Dragers kiezen een opslag waar het goed past; is die bij aankomst vol, dan brengen ze het naar een
   gebouw dat erom vraagt of naar een andere opslag (anders bleven ze wachten bij een volle opslag).
-- TIJDELIJK: 60 kolonisten per speler (`CFG.eco.colonistsPerPlayer`) tot mijlpaal 6 bevolking
-  brengt; met 40 waren er te weinig dragers voor alle vakmensen.
+- Startaantal: 40 kolonisten per speler (`CFG.eco.colonistsPerPlayer`); in 5b tijdelijk 60, sinds 6a
+  komen er meer uit woonhuizen.
 - De nieuwe gebouwen zijn getekende versies (klein en eenvoudig); een geschilderde afbeelding kan
   via het paneel Gebouwen.
 
@@ -472,6 +474,18 @@ de tempel met de natuurgebeurtenissen.
   werkplaatsen en mijnen verwerken.
 - Gemeten (Node, 30 minuten, startdorp plus gaarkeuken, droogschuur, moestuin, bonenakker en
   plukkershut): 84 kolen, 97 ijzererts, 73 ijzer, 9 van elk gereedschap, 6 van elke uitrusting.
+
+**Bevolking (mijlpaal 6a, `CFG.pop`)**
+
+- Een voltooid woonhuis krijgt in de loop van de tijd tot `house` (6) bewoners. Elke `every` ticks
+  komt er één bij als er een stuk voedsel (brood, stoofpot of fruit-notenmix) bij de deur ligt; dat
+  stuk is dan op. De nieuwe bewoner is een vrije drager bij de deur. Is het huis vol, dan vraagt het
+  geen voedsel meer.
+- De rijen per eenheid (`S`) groeien mee (`growUnits`, capaciteit verdubbelt), zodat er tijdens het
+  spel kolonisten bij kunnen komen.
+- Paneel Productie: "Woonhuis ×3 · 12 van 18 nieuwe bewoners · 1 wacht op voedsel"; de meting
+  "Kolonisten" telt mee.
+- Gemeten (Node): speler 1 groeit van 40 naar 58 kolonisten zodra er voedsel is (3 woonhuizen).
 
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 

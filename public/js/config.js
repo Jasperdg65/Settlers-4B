@@ -14,7 +14,7 @@ const CFG={
     brood:12,stoofpot:8,notenmix:8,water:8,
     bijl:2,zaag:2,houweel:4,hamer:6,schop:4,zeis:3,
   },
-  eco:{colonistsPerPlayer:60},   // kolonisten per speler bij de start in economiemodus (TIJDELIJK 60 tot mijlpaal 6 bevolking brengt, anders te weinig dragers)
+  eco:{colonistsPerPlayer:40},   // kolonisten per speler bij de start in economiemodus; meer komen er uit woonhuizen (CFG.pop)
   /* routes (A*): kosten per stap = afstand × terrein × object × (voetpad) + hoogteverschil × up/down */
   path:{
     terrain:[0,0,1.25,1,1.05,1,1.9,2.6,0], // per terreinsoort T (diep, ondiep, strand, gras, weelderig, droog, rots, gebergte, sneeuw); 0 = niet beloopbaar
@@ -76,6 +76,10 @@ const CFG={
     digShare:0.3,                  // deel van de voortgangsmeter voor het egaliseren
     refund:0.5,                    // afbreken geeft dit deel van het verwerkte materiaal terug (naar beneden afgerond)
   },
+  /* bevolking (production.js, mijlpaal 6a): een voltooid woonhuis krijgt in de loop van de tijd tot 'house' bewoners;
+     elke every ticks komt er één bij als er een stuk voedsel (food) bij de deur ligt, dat dan op is. Een nieuwe bewoner
+     is een vrije drager. stock = hoeveel van elk voedsel het woonhuis bij de deur wil zolang het nog niet vol is. */
+  pop:{house:6,every:900,food:['brood','stoofpot','notenmix'],stock:1},
   /* productie (production.js). Buitenwerkers (gather: tree, stone, plant) zoeken binnen area tegels rond hun deur (op eigen
      grond) het dichtstbijzijnde doel, werken daar work ticks, brengen out naar hun deur en rusten dan rest ticks binnen.
      spare: boomsoorten die de houthakker laat staan (4 = appelboom, voor de plukker in 5b).
