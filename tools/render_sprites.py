@@ -19,7 +19,7 @@ CFG = json.load(open(os.path.join(ROOT, 'tools', 'sprites.json')))
 ASSETS = os.path.join(ROOT, 'public', 'assets')
 argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 TEST = '--test' in argv
-KEYS = [a for a in argv if not a.startswith('--')] or list(CFG['models'])
+KEYS = [a for a in argv if not a.startswith('--')] or list(CFG['models']) + list(CFG.get('duels', {}))
 TMP = os.path.join(ROOT, 'tools', '.render-tmp')
 MIN_FREE = 3 * 1024 ** 3  # stoppen onder 3 GB vrij
 
@@ -83,13 +83,14 @@ def setup_scene():
     return sc, cam, ppu, res
 
 
-def load_model(path, hide=()):
+def load_model(path, hide=(), keep_hierarchy=False):
     bpy.ops.import_scene.gltf(filepath=path)
+    bpy.context.view_layer.update()  # matrix_world klopt pas na een update
     for o in list(bpy.context.scene.objects):  # m['hide']: onderdelen weglaten (bv. de kist van de drager)
         if any(o.name.startswith(h) for h in hide):
             bpy.data.objects.remove(o, do_unlink=True)
     objs = [o for o in bpy.context.scene.objects if o.type == 'MESH' and o.name != 'Schaduwvanger']
-    for o in objs:  # losse onderdelen: eventuele ouders loskoppelen met behoud van plek
+    for o in ([] if keep_hierarchy else objs):  # losse onderdelen: eventuele ouders loskoppelen met behoud van plek
         if o.parent:
             m = o.matrix_world.copy()
             o.parent = None
@@ -171,6 +172,14 @@ def set_dir(root, d):
 
 
 # ---------- materialen voor kleur- en maskerpass ----------
+def mask_color(m):
+    """maskerkleur per materiaal: TEAM_R_* rood (linker deelnemer), TEAM_G_* groen (rechter), andere TEAM wit"""
+    if m is None or not m.name.upper().startswith('TEAM'):
+        return (0, 0, 0)
+    n = m.name.upper()
+    return (1, 0, 0) if n.startswith('TEAM_R_') else (0, 1, 0) if n.startswith('TEAM_G_') else (1, 1, 1)
+
+
 def prep_materials(objs):
     team = lambda m: m is not None and m.name.upper().startswith('TEAM')
     for m in bpy.data.materials:  # kleurpass: TEAM wit, zodat het spel per speler kan omkleuren
@@ -185,14 +194,18 @@ def prep_materials(objs):
         nt = m.node_tree
         nt.nodes.clear()
         e = nt.nodes.new('ShaderNodeEmission')
-        e.inputs[0].default_value = (v, v, v, 1)
+        e.inputs[0].default_value = (*v, 1)
         e.inputs[1].default_value = 1
         o = nt.nodes.new('ShaderNodeOutputMaterial')
         nt.links.new(e.outputs[0], o.inputs[0])
         return m
-    white, black = emis('MASK_team', 1.0), emis('MASK_rest', 0.0)
+    cache = {}
+    def mmat(c):
+        if c not in cache:
+            cache[c] = emis('MASK_%d%d%d' % c, c)
+        return cache[c]
     orig = {o.name: [s.material for s in o.material_slots] for o in objs}
-    mask = {o.name: [white if team(m) else black for m in orig[o.name]] for o in objs}
+    mask = {o.name: [mmat(mask_color(m)) for m in orig[o.name]] for o in objs}
     return orig, mask
 
 
@@ -354,19 +367,117 @@ def render_model(key, m):
     return os.path.relpath(jpath, ASSETS), file_hash(written)
 
 
-def register(entries):
+def register(entries, duels={}):
     mf = os.path.join(ASSETS, 'manifest.json')
     man = json.load(open(mf))
-    units = man.setdefault('units', {})
-    for key, (j, v) in entries.items():
-        units[key] = {'json': j, 'v': v}
+    for section, ents in (('units', entries), ('duels', duels)):
+        if not ents:
+            continue
+        sec = man.setdefault(section, {})
+        for key, (j, v) in ents.items():
+            sec[key] = {'json': j, 'v': v}
     json.dump(man, open(mf, 'w'), indent=4, ensure_ascii=False)
     open(mf, 'a').write('\n')
 
 
-done = {}
+def duel_frames():
+    """frames van de geïmporteerde animatie (9 standen), oplopend"""
+    fr = set()
+    for a in bpy.data.actions:
+        for fc in a.fcurves:
+            fr.update(round(k.co.x, 3) for k in fc.keyframe_points)
+    return sorted(fr)
+
+
+def render_duel(key, m):
+    """duel-sprite: per niveaucombinatie (rijen) de standen (kolommen); masker R = links, G = rechts"""
+    check_disk()
+    L = m['levels']
+    combos = [(l, r) for l in L for r in L]
+    if TEST:
+        combos = combos[:1]
+    os.makedirs(TMP, exist_ok=True)
+    tmp = os.path.join(TMP, key + '.png')
+    col, msk = {}, {}
+    nst = m['standen']
+    for (l, r) in combos:
+        sc, cam, ppu, res = setup_scene()
+        objs = load_model(os.path.join(ROOT, m['glb'].format(l=l, r=r)), keep_hierarchy=True)  # animatie zit in de hiërarchie
+        # alles 90 graden om de verticale as: Player (TEAM_R) links, Opponent (TEAM_G) rechts op het scherm
+        root = empty('Duel', (0, 0, 0))
+        for o in list(bpy.context.scene.objects):
+            if o is not root and o.parent is None and o.type in ('MESH', 'EMPTY'):
+                o.parent = root
+        root.rotation_euler = (0, 0, math.radians(m.get('rotate', 90)))
+        frames = duel_frames()
+        if len(frames) != nst:
+            raise SystemExit(f'{key}: {len(frames)} animatieframes gevonden, {nst} standen verwacht')
+        orig, mask = prep_materials(objs)
+        stands = range(nst) if not TEST else [0, nst // 2, nst - 1]
+        for k in stands:
+            sc.frame_set(int(frames[k]), subframe=frames[k] - int(frames[k]))
+            bpy.context.view_layer.update()
+            set_pass(sc, False); apply_mats(objs, orig); col[l, r, k] = render_rgba(sc, tmp)
+            set_pass(sc, True); apply_mats(objs, mask); msk[l, r, k] = render_rgba(sc, tmp, linear=True)
+            check_disk()
+        print(f'  {key}: niveaus {l}-{r} klaar', flush=True)
+    os.remove(tmp)
+    al = np.max(np.stack([c[..., 3] for c in col.values()]), axis=0)
+    ys, xs = np.nonzero(al > CFG['cropAlpha'])
+    F = CFG['supersample'] * max(CFG['sizes']) // min(CFG['sizes'])
+    x0, y0 = int(xs.min()) // F * F, int(ys.min()) // F * F
+    x1, y1 = -(-(int(xs.max()) + 1) // F) * F, -(-(int(ys.max()) + 1) // F) * F
+    cw, ch = x1 - x0, y1 - y0
+    from bpy_extras.object_utils import world_to_camera_view
+    v = world_to_camera_view(sc, cam, Vector((0, 0, 0)))
+    ax, ay = v.x * res - x0, (1 - v.y) * res - y0
+    stands = sorted({k for (_, _, k) in col})
+    out = {'model': os.path.basename(m['glb']), 'key': key, 'standen': nst,
+           'standNote': '1 = links wint bijna, ' + str((nst + 1) // 2) + ' = neutraal, ' + str(nst) + ' = rechts wint bijna; '
+                        'masker R = linker deelnemer, G = rechter',
+           'levels': L, 'refHeight': CFG['refHeight'], 'sizes': []}
+    written = []
+    for size in CFG['sizes']:
+        f = CFG['supersample'] * max(CFG['sizes']) // size
+        w, h = cw // f, ch // f
+        atlas = np.zeros((h * len(combos), w * len(stands), 4), np.float32)
+        matlas = np.zeros_like(atlas)
+        fl = []
+        for rr, (l, r) in enumerate(combos):
+            for c, k in enumerate(stands):
+                atlas[rr * h:(rr + 1) * h, c * w:(c + 1) * w] = shrink(col[l, r, k][y0:y1, x0:x1], f)
+                mm = msk[l, r, k][y0:y1, x0:x1].copy()
+                mm[..., 2] = 0  # B = 0
+                matlas[rr * h:(rr + 1) * h, c * w:(c + 1) * w] = shrink(mm, f)
+                fl.append({'stand': k + 1, 'lvlL': l, 'lvlR': r, 'x': c * w, 'y': rr * h, 'w': w, 'h': h,
+                           'ax': round(ax / f, 2), 'ay': round(ay / f, 2)})
+        base = os.path.join(TMP if TEST else ASSETS, m['out'] + f'_{size}')
+        os.makedirs(os.path.dirname(base), exist_ok=True)
+        save_webp(atlas, base + '.webp', CFG['quality'])
+        save_webp(matlas, base + '_mask.webp', 100, linear=True)
+        written += [base + '.webp', base + '_mask.webp']
+        if TEST:
+            g = np.concatenate([atlas, matlas]); bg = np.full_like(g, 0.45); bg[..., 3] = 1
+            pv = bg.copy(); pv[..., :3] = g[..., :3] * g[..., 3:4] + bg[..., :3] * (1 - g[..., 3:4])
+            save_png(pv, base + '_voorbeeld.png')
+        rel = os.path.relpath(base, TMP if TEST else ASSETS)
+        out['sizes'].append({'px': size, 'file': rel + '.webp', 'mask': rel + '_mask.webp',
+                             'w': w * len(stands), 'h': h * len(combos), 'frames': fl})
+    jpath = os.path.join(TMP if TEST else ASSETS, m['out'] + '.json')
+    json.dump(out, open(jpath, 'w'), indent=1)
+    written.append(jpath)
+    print(f'{key}: kader {cw}x{ch} render-px, anker {ax:.0f},{ay:.0f}, {len(combos)} combinaties x {len(stands)} standen', flush=True)
+    return os.path.relpath(jpath, ASSETS), file_hash(written)
+
+
+done, duels = {}, {}
 for k in KEYS:
-    done[k] = render_model(k, CFG['models'][k])
+    if k in CFG['models']:
+        done[k] = render_model(k, CFG['models'][k])
+    elif k in CFG.get('duels', {}):
+        duels[k] = render_duel(k, CFG['duels'][k])
+    else:
+        raise SystemExit(f'Onbekende sleutel {k}: niet in models of duels van tools/sprites.json')
 if not TEST:
-    register(done)
+    register(done, duels)
 print('KLAAR', ', '.join(done))

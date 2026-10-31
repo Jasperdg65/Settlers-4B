@@ -208,7 +208,28 @@ Wat het script doet (instellingen in `tools/sprites.json`):
    `tools/blender/blender -b -P tools/preview_units.py -- uit.png krachtpatser_1 krachtpatser_2 krachtpatser_3`
    Zonder geladen atlas tekent het spel de oude figuur.
 
-**Ontwerpnotitie: duel-sprite (armpje drukken), later toevoegen**
+**Duel-sprite (armpje drukken)** (`duels` in `tools/sprites.json`)
+
+- Bron: `bron/modellen/build_krachtpatsers.py` maakt per niveaucombinatie een geanimeerde GLB in
+  `bron/modellen/duels/armpje_drukken_L{links}_R{rechts}.glb` (9 standen als keyframes), plus
+  `armpje_drukken.glb` en `standen/` (medior tegen senior). Frame 1 = Player (`TEAM_R_*`) wint bijna,
+  5 = neutraal, 9 = Opponent (`TEAM_G_*`) wint bijna. Het bovenlijf draait rond de heup: bij de
+  uiterste standen leunt de verliezer 18° weg en de winnaar 6° naar voren (`LEAN_LOSE`, `LEAN_WIN`),
+  tussenstanden evenredig; de worstelarm wordt per stand naar het gedeelde handpunt gericht.
+  Opnieuw maken: `nice tools/blender/blender -b -P bron/modellen/build_krachtpatsers.py` (~7 min;
+  schrijft ook de losse krachtpatsers, `renders/` en het .blend-bestand opnieuw).
+- Render: het hele duel 90° om de verticale as, zodat Player links en Opponent rechts staat
+  (voor-achter en schuin zijn onleesbaar). Zelfde camera, licht en maten als de andere sprites.
+- Uitvoer `public/assets/units/armdrukken_<px>.webp` + `_mask.webp` + `armdrukken.json`: rijen =
+  niveaucombinaties (links 1–3 × rechts 1–3), kolommen = standen 1–9; per beeld `stand`, `lvlL`,
+  `lvlR`, positie en anker (midden onder de tafel). Masker: R = linker deelnemer, G = rechter,
+  B = 0, lineair. In het spel: kleur = basis × (1 − R − G) + basis × spelerkleurLinks × R +
+  basis × spelerkleurRechts × G (de teamvlakken zijn wit gerenderd, dus de belichting blijft).
+  In het manifest onder `duels`.
+- `nice tools/blender/blender -b -P tools/render_sprites.py -- armdrukken` (~8 min);
+  met `--test` alleen niveau 1 tegen 1, standen 1, 5 en 9.
+
+**Oorspronkelijke ontwerpnotitie duel-sprite**
 
 - Eén krachtpatser-model twee keer, tegenover elkaar op het scherm (links en rechts), met een
   tafeltje of boomstronk ertussen. Samen in één beeld renderen, zodat de ineengegrepen handen
@@ -298,6 +319,15 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 - De krachtpatsers hebben geen wapen; voor het duel komt een eigen armdruk-sprite (mijlpaal 3).
 - Muzikanten ondersteunen de kracht van hun groep binnen een bereik; hoe hoger hun niveau, hoe
   groter dat bereik (getallen in de config).
+
+**Ontwerpnotitie: vrije dragers ontspannen (samen met het hunnebed bouwen)**
+
+- Een drager die een tijdje geen opdracht heeft, gaat soms onder een boom zitten, knielt bij een
+  dier dat blijft staan of gaat liggen (knuffelen), of gaat met 3–5 anderen in een kring zitten
+  picknicken (kleedje en mand). Komt er werk, dan staat hij op; transport gaat altijd voor.
+- Vraagt een zit- en een knielpose in de renderstraat (dezelfde als voor de meditatie) en de
+  dierentoestand "ligt bij". Picknicken en knuffelen kunnen een kleine harmoniebijdrage geven
+  (config).
 
 **Ontwerpnotitie: school (nog niet bouwen)**
 

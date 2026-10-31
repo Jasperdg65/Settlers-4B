@@ -452,5 +452,11 @@
             "json": "units/drager_kist.json",
             "v": "dae33b842c"
         }
+    },
+    "duels": {
+        "armdrukken": {
+            "json": "units/armdrukken.json",
+            "v": "6ac9e8e5c3"
+        }
     }
 }

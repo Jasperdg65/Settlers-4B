@@ -1,5 +1,6 @@
 from pathlib import Path
 exec((Path(__file__).resolve().parent/'character_helpers.py').read_text())
+from mathutils import Matrix
 OUT=str(Path(__file__).resolve().parent)
 mat('Felt',(.24,.22,.18),rough=.96)
 mat('Felt_Light',(.39,.35,.27),rough=.96)
@@ -137,21 +138,43 @@ def export(name,roots,meshes,animated=False):
   body=b''.join(struct.pack('<II',len(data),kind)+data for kind,data in chunks)
   with open(path,'wb') as f:f.write(struct.pack('<III',0x46546c67,2,len(body)+12)+body)
 
+# Meeleunen: het bovenlijf draait rond de heup. Bij de uiterste standen leunt de verliezer LEAN_LOSE graden weg
+# en de winnaar LEAN_WIN graden naar voren; tussenstanden evenredig. Stand 1: Player (TEAM_R) wint bijna, 9: Opponent.
+HIP=.90;LEAN_LOSE=18;LEAN_WIN=6
+def lean_rig(players):
+ uppers=[]
+ for r in players:
+  up=bpy.data.objects.new(r.name+'_Upper',None);bpy.context.collection.objects.link(up);up.parent=r;up.location=(0,0,HIP)
+  for o in list(r.children):
+   n=o.name.lower()
+   if o is up or 'boot' in n or 'trouser' in n:continue
+   o.parent=up;o.matrix_parent_inverse=Matrix.Translation((0,0,-HIP))
+  uppers.append(up)
+ return uppers
+
 def build_duel_motion(scene,roots):
  scene.frame_start=1;scene.frame_end=9;scene.render.fps=8
  bpy.context.view_layer.update()
  players=[r for r in roots if r.name.startswith(('Player','Opponent'))]
+ uppers=lean_rig(players)
  axis=Vector((.8,-.6,0));lateral=Vector((.6,.8,0));center=Vector((0,0,1.17));radius=.365
  records=[]
- for i,r in enumerate(players):
-  inv=r.matrix_world.inverted();e=Vector((-.22,-.46,1.17));w=Vector((-.028,-.625,1.535));d=(w-e).normalized()
-  records.append((r,inv,e,w,d,{o:o.matrix_basis.copy() for o in r.children if o.name.startswith('Wrestling_right')}))
+ for i,(r,up) in enumerate(zip(players,uppers)):
+  e=Vector((-.22,-.46,1.17));w=Vector((-.028,-.625,1.535));d=(w-e).normalized()
+  records.append((r,up,e,w,d,{o:o.matrix_basis.copy() for o in up.children if o.name.startswith('Wrestling_right')}))
  data=[]
  for frame in range(1,10):
-  theta=math.radians(75-(frame-1)*18.75)
+  theta=math.radians(-75+(frame-1)*18.75)  # frame 1: handen naar de kant van Opponent, dus Player (TEAM_R) wint bijna
   h=center+Vector((0,0,radius*math.cos(theta)))+lateral*(radius*math.sin(theta))
+  s=(5-frame)/4  # +1 Player wint bijna, -1 Opponent wint bijna
+  for i,up in enumerate(uppers):
+   win=s if i==0 else -s
+   up.rotation_mode='XYZ';up.rotation_euler=(math.radians(LEAN_WIN*win if win>0 else LEAN_LOSE*win),0,0)
+   up.keyframe_insert(data_path='rotation_euler',frame=frame)
+  bpy.context.view_layer.update()
   endpoints=[]
-  for i,(r,inv,e,w,d,parts) in enumerate(records):
+  for i,(r,up,e,w,d,parts) in enumerate(records):
+   M_=up.matrix_world@Matrix.Translation((0,0,-HIP));inv=M_.inverted()
    wp=inv@(h+axis*(-.028 if i==0 else .028));new_d=(wp-e).normalized();q=d.rotation_difference(new_d)
    edges=[o for o in parts if o.name.startswith('Wrestling_right_Brass_band_edge')]
    for o,base in parts.items():
@@ -168,10 +191,11 @@ def build_duel_motion(scene,roots):
      o.location=wp+q@(loc-w);o.rotation_quaternion=q@rot;o.scale=scale
     else:continue
     o.keyframe_insert(data_path='location',frame=frame);o.keyframe_insert(data_path='rotation_quaternion',frame=frame);o.keyframe_insert(data_path='scale',frame=frame)
-   endpoints.append(tuple(r.matrix_world@wp))
+   endpoints.append(tuple(M_@wp))
   # Exact shared contact center and constant palm separation at all nine poses.
   assert abs((Vector(endpoints[0])-Vector(endpoints[1])).length-.056)<1e-5
-  data.append({'frame':frame,'angle_degrees':75-(frame-1)*18.75,'shared_hand_center':list(h),'palm_separation':.056,'description':'links (groen) wint bijna' if frame==1 else 'neutraal' if frame==5 else 'rechts (rood) wint bijna' if frame==9 else 'tussenstand'})
+  data.append({'frame':frame,'angle_degrees':-75+(frame-1)*18.75,'lean_player':LEAN_WIN*s if s>0 else LEAN_LOSE*s,'lean_opponent':LEAN_WIN*-s if s<0 else LEAN_LOSE*-s,
+   'shared_hand_center':list(h),'palm_separation':.056,'description':'Player (TEAM_R) wint bijna' if frame==1 else 'neutraal' if frame==5 else 'Opponent (TEAM_G) wint bijna' if frame==9 else 'tussenstand'})
  scene.frame_set(5)
  return data
 
@@ -222,6 +246,34 @@ def render_color_mask(scene):
  for slot,old in saved:slot.material=old
  scene.view_settings.view_transform=old_view;scene.view_settings.look=old_look;scene.render.dither_intensity=old_dither;scene.cycles.samples=old_samples;scene.cycles.use_denoising=old_denoising;scene.render.filepath=old_path;bg.inputs[0].default_value=old_bg;bg.inputs[1].default_value=old_strength
 
+def make_table():
+ # Sturdy neutral wooden arm-wrestling table and soft felt elbow pads.
+ global objects
+ objects=[]
+ for i in range(4):
+  y=(i-1.5)*.23
+  box('Table_top_plank',(0,y,1.035),(1.27,.225,.10),'Wood_Light',.018)
+ for x in [-.49,.49]:
+  for y in [-.31,.31]:box('Table_leg',(x,y,.51),(.13,.13,.98),'Wood',.018)
+ for x in [-.49,.49]:box('Table_lower_brace',(x,0,.29),(.085,.69,.10),'Wood',.015)
+ box('Table_cross_brace',(0,0,.31),(1.07,.08,.12),'Wood',.015)
+ for s in [-1,1]:
+  box('Neutral_felt_elbow_pad',(s*.22,-s*.165,1.10),(.28,.23,.03),'Felt_Light',.015)
+  cyl('Table_support_grip',(s*.52,s*.36,1.09),(s*.52,s*.36,1.22),.029,'Wood')
+ table=bpy.data.objects.new('Arm_wrestling_table',None);bpy.context.collection.objects.link(table)
+ for o in objects:o.parent=table
+ return table,objects[:]
+
+def build_duel(scene,lvl_player,lvl_opponent):
+ roots=[];parts=[]
+ for i,(level,side) in enumerate([(lvl_player,1),(lvl_opponent,-1)]):
+  root,ps=strongman(level,'wrestle',opponent=i==1)
+  root.location.y=side*.625;root.rotation_euler.z=0 if side==1 else math.pi
+  roots.append(root);parts+=ps
+ table,tparts=make_table();parts+=tparts;roots.append(table)
+ match_colors(scene)
+ return roots,parts,build_duel_motion(scene,roots)
+
 levels_scene=bpy.context.scene;levels_scene.name='Drie niveaus'
 for i,label in enumerate(['junior','medior','senior']):
  root,parts=strongman(i)
@@ -238,21 +290,8 @@ for i,(level,side) in enumerate([(1,1),(2,-1)]):
  root,ps=strongman(level,'wrestle',opponent=i==1)
  root.location.y=side*.625;root.rotation_euler.z=0 if side==1 else math.pi
  roots.append(root);parts+=ps
-# Sturdy neutral wooden arm-wrestling table and soft felt elbow pads.
-objects=[]
-for i in range(4):
- y=(i-1.5)*.23
- box('Table_top_plank',(0,y,1.035),(1.27,.225,.10),'Wood_Light',.018)
-for x in [-.49,.49]:
- for y in [-.31,.31]:box('Table_leg',(x,y,.51),(.13,.13,.98),'Wood',.018)
-for x in [-.49,.49]:box('Table_lower_brace',(x,0,.29),(.085,.69,.10),'Wood',.015)
-box('Table_cross_brace',(0,0,.31),(1.07,.08,.12),'Wood',.015)
-for s in [-1,1]:
- box('Neutral_felt_elbow_pad',(s*.22,-s*.165,1.10),(.28,.23,.03),'Felt_Light',.015)
- cyl('Table_support_grip',(s*.52,s*.36,1.09),(s*.52,s*.36,1.22),.029,'Wood')
-table=bpy.data.objects.new('Arm_wrestling_table',None);bpy.context.collection.objects.link(table)
-for o in objects:o.parent=table
-parts+=objects;roots.append(table)
+table,tparts=make_table()
+parts+=tparts;roots.append(table)
 match_colors(match)
 pose_data=build_duel_motion(match,roots)
 export('armpje_drukken',roots,parts,animated=True)
@@ -282,4 +321,16 @@ match.frame_set(5)
 shutil.copy(os.path.join(OUT,'renders','armpje_drukken_05_RG.png'),os.path.join(OUT,'armpje_drukken_kleurmasker_RG.png'))
 with open(os.path.join(OUT,'standen.json'),'w') as f:json.dump({'frame_count':9,'neutral_frame':5,'fps':8,'poses':pose_data},f,indent=2)
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT,'krachtpatsers_bron.blend'))
+# Alle niveaucombinaties (1-3 links/Player x 1-3 rechts/Opponent) voor tools/render_sprites.py, elk in een eigen scene.
+os.makedirs(os.path.join(OUT,'duels'),exist_ok=True)
+# Telkens met een schone lei (het .blend-bestand is hierboven al bewaard): headless komen nieuwe objecten
+# niet betrouwbaar in een nieuwe scene terecht, en anders stapelen de combinaties zich op in de GLB's.
+for a in range(3):
+ for b in range(3):
+  for o in list(bpy.data.objects):bpy.data.objects.remove(o,do_unlink=True)
+  for ac in list(bpy.data.actions):bpy.data.actions.remove(ac)
+  sc=bpy.context.scene
+  r_,p_,_=build_duel(sc,a,b)
+  export('duels/armpje_drukken_L%d_R%d'%(a+1,b+1),r_,p_,animated=True)
+  print('DUEL_DONE',a+1,b+1,flush=True)
 print('STRONGMEN_DONE')

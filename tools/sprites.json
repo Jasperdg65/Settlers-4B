@@ -27,6 +27,9 @@
     "fight": [-35, -95, -150, -115, -55, -20]
   },
   "anims": {"idle": 1, "walk": 8, "fight": 6},
+  "duels": {
+    "armdrukken": {"glb": "bron/modellen/duels/armpje_drukken_L{l}_R{r}.glb", "out": "units/armdrukken", "levels": [1, 2, 3], "standen": 9, "rotate": 90}
+  },
   "models": {
     "krachtpatser_1": {"glb": "bron/modellen/krachtpatser_junior.glb", "out": "units/krachtpatser_junior", "anims": ["idle", "walk"]},
     "krachtpatser_2": {"glb": "bron/modellen/krachtpatser_medior.glb", "out": "units/krachtpatser_medior", "anims": ["idle", "walk"]},

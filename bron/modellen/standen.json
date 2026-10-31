@@ -1,0 +1,124 @@
+{
+  "frame_count": 9,
+  "neutral_frame": 5,
+  "fps": 8,
+  "poses": [
+    {
+      "frame": 1,
+      "angle_degrees": -75.0,
+      "lean_player": 6.0,
+      "lean_opponent": -18.0,
+      "shared_hand_center": [
+        -0.21153776347637177,
+        -0.28205034136772156,
+        1.2644689083099365
+      ],
+      "palm_separation": 0.056,
+      "description": "Player (TEAM_R) wint bijna"
+    },
+    {
+      "frame": 2,
+      "angle_degrees": -56.25,
+      "lean_player": 4.5,
+      "lean_opponent": -13.5,
+      "shared_hand_center": [
+        -0.1820918470621109,
+        -0.2427891343832016,
+        1.3727830648422241
+      ],
+      "palm_separation": 0.056,
+      "description": "tussenstand"
+    },
+    {
+      "frame": 3,
+      "angle_degrees": -37.5,
+      "lean_player": 3.0,
+      "lean_opponent": -9.0,
+      "shared_hand_center": [
+        -0.13331875205039978,
+        -0.1777583360671997,
+        1.4595739841461182
+      ],
+      "palm_separation": 0.056,
+      "description": "tussenstand"
+    },
+    {
+      "frame": 4,
+      "angle_degrees": -18.75,
+      "lean_player": 1.5,
+      "lean_opponent": -4.5,
+      "shared_hand_center": [
+        -0.07039524614810944,
+        -0.09386032074689865,
+        1.5156294107437134
+      ],
+      "palm_separation": 0.056,
+      "description": "tussenstand"
+    },
+    {
+      "frame": 5,
+      "angle_degrees": 0.0,
+      "lean_player": 0.0,
+      "lean_opponent": -0.0,
+      "shared_hand_center": [
+        0.0,
+        0.0,
+        1.534999966621399
+      ],
+      "palm_separation": 0.056,
+      "description": "neutraal"
+    },
+    {
+      "frame": 6,
+      "angle_degrees": 18.75,
+      "lean_player": -4.5,
+      "lean_opponent": 1.5,
+      "shared_hand_center": [
+        0.07039524614810944,
+        0.09386032074689865,
+        1.5156294107437134
+      ],
+      "palm_separation": 0.056,
+      "description": "tussenstand"
+    },
+    {
+      "frame": 7,
+      "angle_degrees": 37.5,
+      "lean_player": -9.0,
+      "lean_opponent": 3.0,
+      "shared_hand_center": [
+        0.13331875205039978,
+        0.1777583360671997,
+        1.4595739841461182
+      ],
+      "palm_separation": 0.056,
+      "description": "tussenstand"
+    },
+    {
+      "frame": 8,
+      "angle_degrees": 56.25,
+      "lean_player": -13.5,
+      "lean_opponent": 4.5,
+      "shared_hand_center": [
+        0.1820918470621109,
+        0.2427891343832016,
+        1.3727830648422241
+      ],
+      "palm_separation": 0.056,
+      "description": "tussenstand"
+    },
+    {
+      "frame": 9,
+      "angle_degrees": 75.0,
+      "lean_player": -18.0,
+      "lean_opponent": 6.0,
+      "shared_hand_center": [
+        0.21153776347637177,
+        0.28205034136772156,
+        1.2644689083099365
+      ],
+      "palm_separation": 0.056,
+      "description": "Opponent (TEAM_G) wint bijna"
+    }
+  ]
+}
