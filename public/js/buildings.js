@@ -1,5 +1,6 @@
 "use strict";
 /* ---------- Gebouwen (tijdelijke getekende versies) ----------
+   Sleutels blijven stabiel als de naam verandert: kazerne = Krachthal (training), wapensmid = Uitrustingsmaker.
    off:1 = voorlopig niet in het spel (niet in het startdorp, het bouwmenu of de galerij); de tekening blijft bewaard. */
 function ground(g,w,d){const ox=d*0.55,oy=-d*0.7;poly(g,[-w/2-2,1.2,w/2+2,1.2,w/2+2+ox,oy+1.2,-w/2-2+ox,oy+1.2],'rgba(170,138,92,.55)')}
 function box(g,x0,x1,y0,h,d,col){const ox=d*0.55,oy=-d*0.7;
@@ -114,7 +115,7 @@ const BTYPES={
     win(g,-8,-6,2.6,2.4);win(g,8,-6,2.6,2.4);
     barrel(g,-13.6,0.8);barrel(g,-11,1.3);sack(g,-15.8,1.4);crate(g,12.6,1,2.4);crate(g,13.2,-1.4,1.8);
   }},
-  kazerne:{name:'Kazerne',fp:[-2,2,-2,0],sc:1.7,box:[46,38,23,33],pc:true,smoke:[10.3,-23],draw:(g,pc)=>{
+  kazerne:{name:'Krachthal',fp:[-2,2,-2,0],sc:1.7,box:[46,38,23,33],pc:true,smoke:[10.3,-23],draw:(g,pc)=>{
     ground(g,26,12);house(g,{w:24,h:10,d:12,ph:6,wall:'#c2b8a6',roof:'slate',stone:true});chimney(g,8.6,-18,4);
     door(g,0,3.6,6,'#4a2f1d');win(g,-7,-5.4,2.4,2.4);win(g,7,-5.4,2.4,2.4);
     for(const x of [-4,4]){g.strokeStyle='#e8d6a0';g.lineWidth=0.4;g.beginPath();g.moveTo(x-1.4,-9.4);g.lineTo(x+1.4,-9.4);g.lineTo(x+1.4,-7.6);
@@ -179,7 +180,7 @@ const BTYPES={
   goudsmelterij:{name:'Goudsmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#c9bfae',roof:'slate',stone:true});chimney(g,5.4,-16,6);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<3;k++)box(g,8+k*2.2,10+k*2.2,0.6,1,1.4,'#e6b422')}},
-  wapensmid:{name:'Wapensmid',fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[-2.6,-3],draw:(g)=>{
+  wapensmid:{name:'Uitrustingsmaker',fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#e6d6b4',roof:'slate',timber:true});chimney(g,5.4,-16,5);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<4;k++)line(g,[9+k*1.3,0.4,9.4+k*1.3,-6],'#c8c8c4',0.5)}},
   boerderij:{name:'Boerderij',fp:[-2,2,-2,0],sc:1.7,box:[52,34,30,29],smoke:[6.2,-18],draw:(g)=>{

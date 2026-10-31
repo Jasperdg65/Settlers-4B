@@ -9,7 +9,7 @@ const GOODS=[
   {k:'ijzer',n:'IJzer',gr:'Metalen'},{k:'goud',n:'Goud',gr:'Metalen'},
   {k:'bijl',n:'Bijl',gr:'Gereedschap'},{k:'zaag',n:'Zaag',gr:'Gereedschap'},{k:'houweel',n:'Houweel',gr:'Gereedschap'},{k:'hamer',n:'Hamer',gr:'Gereedschap'},
   {k:'schop',n:'Schop',gr:'Gereedschap'},{k:'zeis',n:'Zeis',gr:'Gereedschap'},
-  {k:'zwaard',n:'Zwaard',gr:'Wapens'},{k:'boog',n:'Boog',gr:'Wapens'}];
+  {k:'helm',n:'Helm',gr:'Uitrusting'},{k:'schild',n:'Schild',gr:'Uitrusting'},{k:'polsband',n:'Polsband',gr:'Uitrusting'}];
 const GI={};GOODS.forEach((d,i)=>GI[d.k]=i);
 /* één exemplaar rond (0,0), ongeveer 4,4 breed en 2 hoog */
 const bag=(g,col,mark)=>{ell(g,0,-0.3,1.5,1.3,col);poly(g,[-0.5,-1.4,0.5,-1.4,0.3,-2,-0.3,-2],sh(col,0.85));line(g,[-0.5,-1.6,0.5,-1.6],'#7a6340',0.3);
@@ -46,8 +46,12 @@ const GDRAW={
   hamer:g=>{handle(g,-2,0.8,1.2,-0.5);box(g,0.6,2,-0.1,1.1,0.8,'#7c8087')},
   schop:g=>{handle(g,-2.3,0.9,0.6,-0.3);poly(g,[0.4,-0.9,2.3,-0.6,2.1,0.5,0.6,0.4],'#9aa1a8',OUT,0.2)},
   zeis:g=>{handle(g,-2.2,0.8,1.6,-0.4);g.strokeStyle='#b8bec4';g.lineWidth=0.45;g.beginPath();g.moveTo(1.6,-0.4);g.quadraticCurveTo(1.2,-1.8,-0.8,-1.6);g.stroke()},
-  zwaard:g=>{line(g,[-0.9,0.4,2.3,-0.8],'#d4d8dc',0.55);line(g,[-1.2,-0.4,-0.6,1.2],'#8a6a2c',0.45);line(g,[-2.2,0.9,-0.9,0.4],'#5e3b20',0.45);circ(g,-2.3,0.95,0.3,'#c9a54a')},
-  boog:g=>{g.strokeStyle='#8a5a34';g.lineWidth=0.45;g.beginPath();g.moveTo(-2,0.9);g.quadraticCurveTo(0.6,1.1,1.9,-1.2);g.stroke();line(g,[-2,0.9,1.9,-1.2],'#efe6d4',0.15)},
+  /* statusuitrusting van de uitrustingsmaker (geen wapens: een duel is armdrukken) */
+  helm:g=>{g.beginPath();g.arc(0,0.4,1.9,Math.PI,0);g.closePath();g.fillStyle='#8d949c';g.fill();g.strokeStyle=OUT;g.lineWidth=0.25;g.stroke();
+    line(g,[-2.2,0.45,2.2,0.45],'#b08a3a',0.5);line(g,[0,-1.5,0,0.4],'#b8bec4',0.35);ell(g,-0.8,-0.6,0.4,0.25,'rgba(255,255,255,.4)')},
+  schild:g=>{ell(g,0,0,2,1.3,'#7a4e2c');ell(g,0,0,1.65,1.05,'#a8763c');ell(g,0,0,0.45,0.32,'#c9a54a');
+    g.strokeStyle='#8d949c';g.lineWidth=0.3;g.beginPath();g.ellipse(0,0,2,1.3,0,0,6.283);g.stroke()},
+  polsband:g=>{for(const x of [-1,1]){ell(g,x,0,1,0.75,'#6b4a2c');ell(g,x,0,0.6,0.42,'#3a2a1c');line(g,[x-0.9,-0.15,x+0.9,-0.15],'#b08a3a',0.25);circ(g,x,-0.55,0.18,'#c9a54a')}},
 };
 const GSC=1.5; // schaal van stapels op de kaart t.o.v. de tekening
 /* stapel van n stuks (1..8): onderste laag 4 plekken van achter naar voren, daarboven nog 4 */
