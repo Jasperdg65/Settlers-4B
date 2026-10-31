@@ -25,8 +25,9 @@ public/                 webroot (Apache-alias /settlers4b)
     transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
     build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
-    army.js             krachtpatsers: lopen, opdrachtenwachtrij, selecteren, groepen, markering (Duel-test)
+    army.js             krachtpatsers: lopen, opdrachten uitvoeren, selecteren, groepen, markering (Duel-test)
     duel.js             duelmodule: kracht, duelStep (één tick van een duel), uitdagen, afloop
+    orders.js           opdrachtenwachtrij: de enige weg waarlangs een speler (mens of computer) de simulatie verandert
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
@@ -320,10 +321,48 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 6 | Bevolking, gebied en leger: woonhuizen, zichtbare grens, bemande torens, krachthal (kolonisten trainen; niveaus met statusuitrusting) | gepland |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
-| 9 | Handel: marktplaats, handelaar met handkar of bootje, ruilvenster, ruilverhouding volgens schaarste | later |
-| 10 | Diplomatie: relatieniveau per buur, geschenken, samen mediteren, feesten en feesttoernooien, vrede met vaste grenzen | later |
-| 11 | Hoofddoel: Tempel van Vrede en Welvaart op neutraal terrein, bouwfasen, bijdrage per speler, gezamenlijke winst; modus "vrij spel" zonder tempel | later |
-| 12 | Natuur als uitdaging: droogte, strenge winter, overstroming | later |
+| 9 | Computerburen met een eigen dorp: zelfde regels en economie als de speler, in een Web Worker, met karakter | later |
+| 10 | Handel: marktplaats, handelaar met handkar of bootje, ruilvenster, ruilverhouding volgens schaarste | later |
+| 11 | Diplomatie: relatieniveau en geheugen per buur, geschenken, afspraken, samen mediteren, feesten en feesttoernooien, vrede met vaste grenzen | later |
+| 12 | Hoofddoel: Tempel van Vrede en Welvaart op neutraal terrein (bouwfasen, bijdrage per speler, gezamenlijke winst; modus "vrij spel" zonder tempel) en natuurgebeurtenissen: droogte, strenge winter, overstroming | later |
+
+Bouwvolgorde na de economie (mijlpaal 5–7): eerst computerburen, dan handel, dan diplomatie, dan
+de tempel met de natuurgebeurtenissen.
+
+**Ontwerpnotitie: speelvorm solo tegen computerburen (nog niet bouwen)**
+
+- Het spel is **solo**: één mens tegen computerburen, geen multiplayer.
+- Computerburen volgen exact dezelfde spelregels en economie als de speler, zonder gratis goederen.
+  Ze draaien in een **Web Worker**.
+- Elke buur heeft een **karakter** (onder andere gul, zuinig, trots, voorzichtig) met instelbare
+  eigenschappen in de config.
+- Ze houden hun overschotten en tekorten bij en doen zelf **handels- en hulpvoorstellen**, met een
+  korte, leesbare uitleg voor de speler ("We hebben veel steen over maar komen brood tekort").
+- **Geheugen** per buur: eerlijk handelen, nagekomen afspraken en hulp bij natuurrampen verbeteren
+  de relatie; een gebroken afspraak verslechtert hem een tijd.
+- Bijdrage aan de tempel naar vermogen en karakter.
+- De startrelaties verschillen; sommige buren moeten gewonnen worden.
+- **Moeilijkheidsgraad**: hoe zelfstandig de buren zijn en hoe snel ze vertrouwen geven.
+
+**Wat de computerburen vragen van de opbouw**
+
+- **Eén opdrachtenwachtrij** (`js/orders.js`, al gebouwd): `order({p, t, ...})` is de enige weg waarlangs
+  een speler de simulatie verandert, voor mens en computer gelijk. Opdrachten worden op een
+  tickgrens uitgevoerd en gecontroleerd alsof ze van een onbekende komen (eigenaar, gebied,
+  materiaal). Nu: `place`, `demolish`, `move`, `duel`. Later: handel, geschenk, afspraak, en de
+  instellingen per gebouw (productiekeuze, school).
+- De mens is speler 0 (`world.human`); elke andere speler is een computerbuur met een eigen
+  karakter (`world.ai[p]`). Wat in panelen nu "speler kiezen" heet (voorraad, bouwen, Spelen als),
+  is een testhulp en verdwijnt dan.
+- **Web Worker**: de simulatie blijft in de hoofdthread. De worker krijgt per beurt (bijvoorbeeld
+  elke seconde) een compacte, alleen-lezen samenvatting van wat die buur mag weten (eigen voorraad,
+  gebouwen, gebied, bekende buren en relaties) en stuurt opdrachten terug. Die opdrachten gaan
+  met het tickgetal waarop ze binnenkomen de wachtrij in. Zo hoeft de worker de hele wereld niet
+  te kennen en kan hij niet vals spelen.
+- Afspraken (leveren, helpen, grens respecteren) worden records met een looptijd en een controle
+  die de simulatie zelf doet; het geheugen per buur telt nagekomen en gebroken afspraken.
+- Voorstellen van een buur zijn ook opdrachten (`propose`) met een uitlegtekst; de speler
+  antwoordt met een opdracht (`accept`/`reject`).
 
 **Ontwerpnotitie: hoofddoel en samenspel (nog niet bouwen)**
 
@@ -357,9 +396,9 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 - Relaties als matrix `world.rel[p][q]` (getal met drempels voor de niveaus uit de config), met
   bijdragen per bron (handel, geschenk, meditatie, feest, toernooi, geschil), net als de
   harmonie, zodat nieuwe bronnen er los bij kunnen.
-- Handel, geschenken, vrede sluiten en uitdagingen lopen als opdrachten via de wachtrij
-  (`ARMY.cmd`, later één wachtrij voor alles), zodat ze deterministisch zijn en straks over het
-  netwerk en in een savegame passen. Een AI-speler beslist ook alleen via die opdrachten.
+- Handel, geschenken, vrede sluiten en uitdagingen lopen als opdrachten via `order()`, zodat ze
+  deterministisch zijn en in een savegame passen. Een computerbuur beslist ook alleen via die
+  opdrachten.
 - Duelmodule: een duel krijgt een soort (`veld`, `grens`, `toernooi`). `endDuel` geeft de afloop
   door aan wie het duel aanvroeg, en de gevolgen per soort staan in de config: in het veld
   uitgeschakeld bij de heler, in een toernooi alleen wat vermoeidheid en een relatiebonus, bij
@@ -411,7 +450,7 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   krachtpatser = uitdagen, op de grond = lopen; vasthouden en slepen = selectierechthoek; vasthouden op
   een eenheid = alle van dat type in beeld; knop 'Niets geselecteerd'. Een tik toont ook de tooltip.
   In bouwmodus: eerste tik bekijkt de plek, tweede tik op dezelfde plek bouwt of breekt af.
-- Opdrachten gaan in een wachtrij (`ARMY.cmd`) en worden in de volgende tick uitgevoerd; de
+- Opdrachten gaan via `order()` (`js/orders.js`) en worden in de volgende tick uitgevoerd; de
   selectie zelf is alleen weergave. De duels hebben een eigen toevalsgenerator (`drand`, seed van
   de wereld): dezelfde wereld met dezelfde opdrachten geeft dezelfde afloop.
 - Duel (`js/duel.js`): beide lopen naar een stoel links en rechts van een tafelplek tussen hen in;
@@ -457,7 +496,7 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   voor). Gevolgen bij verlies: bouwplaatsen en stapels op verloren grond (afbreken of overnemen,
   config), routes opnieuw (`world.walkVer`), grondchunks opnieuw tekenen (`invalidateTiles`),
   zichtbare grens bijwerken (mijlpaal 6).
-- Netwerk/opslag: aanvallen en overnames lopen via de opdrachtenwachtrij, zodat ze deterministisch
+- Opslag: aanvallen en overnames lopen via de opdrachtenwachtrij, zodat ze deterministisch
   blijven en in een savegame of replay passen.
 
 **Ontwerpnotitie: vrije dragers ontspannen (samen met het hunnebed bouwen)**

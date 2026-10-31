@@ -34,7 +34,7 @@ function frame(now){
     if(PROF)pt('sim',t0);
     if(steps){simAvg=simAvg*0.9+((performance.now()-t0)/steps)*0.1}
     if(acc>TICK*8)acc=0;
-  }
+  }else if(ORDERS.length)runOrders();   // gepauzeerd: opdrachten meteen uitvoeren (dezelfde tickgrens)
   keyPan(dt);
   const t1=performance.now();draw();
   drawAvg=drawAvg*0.9+(performance.now()-t1)*0.1;

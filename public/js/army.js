@@ -3,13 +3,13 @@
    Toestand per eenheid S.ast (AS): staan, wacht op route, lopen, zit aan de duel-tafel, duelleert, uitgeschakeld
    bij de heler. S.aim zegt wat er gebeurt bij aankomst (AIM). Verder S.fat (vermoeidheid 0..1), S.ko (uitgeschakeld),
    S.out (ticks tot hij weer meedoet), S.du (duel + 1, zie duel.js), S.fed (gevoed).
-   Muis en toetsen veranderen de simulatie nooit direct: opdrachten gaan in ARMY.cmd en worden in de volgende tick
-   uitgevoerd, zodat alles alleen van ticks en opdrachten afhangt (deterministisch; later ook bruikbaar voor netwerk).
+   Muis en toetsen veranderen de simulatie nooit direct: opdrachten gaan via order() (orders.js) en worden op een
+   tickgrens uitgevoerd, zodat alles alleen van ticks en opdrachten afhangt (deterministisch).
    De selectie zelf is alleen weergave en hoort niet bij de simulatie. */
 const AS={IDLE:0,PATH:1,WALK:2,SEAT:3,DUEL:4,OUT:5};
 const AIM={IDLE:0,SEAT:1,HEAL:2};
 const LVLNAME=['','junior','medior','senior'],INSTR=['','fluit','harp','doedelzak'];
-const ARMY={p:0,sel:[],groups:[],cmd:[],last:'',won:[],tap:{k:-1,t:0},ping:null};
+const ARMY={p:0,sel:[],groups:[],last:'',won:[],tap:{k:-1,t:0},ping:null};
 const SEL={box:null};
 let drand=mulberry32(1);   // eigen toeval voor duels, los van de dieren (die gebruiken srand)    // sleeprechthoek in schermpixels [x0, y0, x1, y1]
 
@@ -39,7 +39,7 @@ function openArea(s,rx,ry){
 function spawnDuelTest(){
   const P=world.starts.length,t=CFG.duel.test;S.eco=0;S.carry=null;S.army=1;
   drand=mulberry32(hashStr(world.seed+'#duel'));tickNo=0;
-  DUELS.length=0;Object.assign(ARMY,{sel:[],groups:[],cmd:[],last:'',won:new Array(P).fill(0),ping:null});
+  DUELS.length=0;ORDERS.length=0;Object.assign(ARMY,{sel:[],groups:[],last:'',won:new Array(P).fill(0),ping:null});
   world.harm=new Array(P).fill(CFG.duel.harmonyStart);
   if(P<2){allocUnits(0);ARMY.last='Duel-test heeft twee spelers nodig.';return}
   const [cx,cy]=openArea(world.starts[0],Math.ceil(t.gap/2+5),3),list=[];ARMY.at=[cx,cy];
@@ -79,7 +79,6 @@ function walkArmy(i){
   if(d-m<0.02){if(mid)S.pi[i]=k+1;else arriveArmy(i)}
 }
 function tickArmy(){
-  for(const c of ARMY.cmd)runCmd(c);ARMY.cmd.length=0;
   pathTick();
   const c=CFG.duel;
   for(let i=0;i<S.n;i++){
@@ -90,9 +89,9 @@ function tickArmy(){
   }
   tickDuels();
 }
-/* opdrachten: {t:'move', ids, x, y} in een opstelling rond (x, y); {t:'duel', ids, j}: de sterkste vrije uit ids daagt j uit */
+/* opdrachten van speler p (orders.js): {t:'move', ids, x, y} in een opstelling rond (x, y); {t:'duel', ids, j}: de sterkste vrije uit ids daagt j uit */
 function runCmd(c){
-  const ids=c.ids.filter(i=>!S.ko[i]&&!S.du[i]&&S.ast[i]!==AS.OUT);if(!ids.length)return;
+  const ids=c.ids.filter(i=>i>=0&&i<S.n&&S.pl[i]===c.p&&S.role[i]>=2&&S.role[i]!==3&&!S.ko[i]&&!S.du[i]&&S.ast[i]!==AS.OUT);if(!ids.length)return;
   if(c.t==='move'){
     const n=ids.length,cols=Math.ceil(Math.sqrt(n)),rows=Math.ceil(n/cols),sp=CFG.army.spacing;
     ids.forEach((i,k)=>{const [x,y]=freeSpot(c.x+(k%cols-(cols-1)/2)*sp,c.y+((k/cols|0)-(rows-1)/2)*sp);armyGo(i,x,y,AIM.IDLE)});
@@ -137,9 +136,9 @@ function selectRect(b){
 /* rechtsklik: op een vijandelijke krachtpatser = uitdagen, anders = daarheen lopen */
 function armyOrder(mx,my,pad=0){
   if(!ARMY.sel.length)return;const u=pickUnit(mx,my,pad),ids=ARMY.sel.slice();
-  if(u>=0&&S.role[u]===2&&S.pl[u]!==ARMY.p){ARMY.cmd.push({t:'duel',ids,j:u});ARMY.ping={x:S.x[u],y:S.y[u],t:tNow,c:'#ffd27a'};return}
+  if(u>=0&&S.role[u]===2&&S.pl[u]!==ARMY.p){order({p:ARMY.p,t:'duel',ids,j:u});ARMY.ping={x:S.x[u],y:S.y[u],t:tNow,c:'#ffd27a'};return}
   const t=screenToTile(mx,my);if(t.x<1||t.y<1||t.x>world.W-2||t.y>world.H-2)return;
-  ARMY.cmd.push({t:'move',ids,x:t.x,y:t.y});ARMY.ping={x:t.x,y:t.y,t:tNow,c:'#ffffff'};
+  order({p:ARMY.p,t:'move',ids,x:t.x,y:t.y});ARMY.ping={x:t.x,y:t.y,t:tNow,c:'#ffffff'};
 }
 /* groepen: Ctrl (of Alt/Cmd) + 1..9 slaat op, 1..9 selecteert, twee keer kort na elkaar centreert de camera */
 addEventListener('keydown',ev=>{

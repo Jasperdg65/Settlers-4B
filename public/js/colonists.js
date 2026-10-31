@@ -29,6 +29,7 @@ function allocUnits(n){
   S.n=n;S.next=new Int32Array(n);
 }
 function spawn(total,eco){
+  ORDERS.length=0;
   const P=world.starts.length;S.eco=0;S.army=0;S.carry=null;if(!P){S.n=0;return}
   const per=Math.floor(total/P),n=per*P,{W,walk}=world;
   srand=mulberry32(hashStr(world.seed+'#settlers'));
@@ -65,7 +66,7 @@ function spawnAnimals(){
   $('nanim').textContent=A.n.toLocaleString('nl-NL');
 }
 function tick(){
-  tickNo++;
+  runOrders();tickNo++;
   const {W,walk,ter}=world,{x,y,px,py,tx,ty,sp,wait,dir}=S,n=S.n;
   if(S.eco)tickCarriers();
   else if(S.army)tickArmy();

@@ -1,0 +1,16 @@
+"use strict";
+/* ---------- Opdrachten: de enige weg waarlangs een speler de simulatie verandert ----------
+   Mens en computerbuur (later in een Web Worker) gebruiken dezelfde opdrachten: order({p, t, ...}) zet er een in de
+   wachtrij en runOrders() voert ze op een tickgrens uit, in volgorde van binnenkomst (aan het begin van de volgende tick,
+   of meteen als het spel pauzeert). Zo hangt alles alleen af van de seed en de opdrachten (deterministisch, en later
+   bruikbaar voor een savegame of herhaling). Elke opdracht wordt gecontroleerd alsof hij van een onbekende komt:
+   speler p moet eigenaar zijn en de regels gelden voor iedereen gelijk, zonder gratis goederen.
+   Soorten nu: place {type, x, y}, demolish {b}, move {ids, x, y}, duel {ids, j}. Later: handel, geschenk, afspraak (README). */
+const ORDERS=[];
+function order(c){ORDERS.push(c)}
+function runOrders(){for(let k=0;k<ORDERS.length;k++)runOrder(ORDERS[k]);ORDERS.length=0}
+function runOrder(c){
+  if(c.t==='place'){if(world.own&&!canPlace(c.type,c.x,c.y,c.p))placeSite(c.type,c.x,c.y,c.p)}
+  else if(c.t==='demolish'){const b=world.blds[c.b];if(b&&b.p===c.p)demolish(c.b)}
+  else if((c.t==='move'||c.t==='duel')&&S.army)runCmd(c);
+}

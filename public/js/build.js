@@ -212,9 +212,10 @@ function buildHover(x,y){
   BUILD.hover=bi;const c=CFG.build.cost[b.type]||[0,0],u=b.st?b.used:c,r=CFG.build.refund;
   return `${BTYPES[b.type].name} afbreken · geeft ${Math.floor(u[0]*r)} plank, ${Math.floor(u[1]*r)} steen terug`;
 }
+/* klik in bouwmodus: als opdracht (orders.js), net zoals een computerbuur bouwt */
 function buildClick(){
-  if(BUILD.mode==='place'&&!BUILD.why){placeSite(BUILD.type,BUILD.ax,BUILD.ay,buildPl());BUILD.why=canPlace(BUILD.type,BUILD.ax,BUILD.ay,buildPl())}
-  else if(BUILD.mode==='demolish'&&BUILD.hover>=0){demolish(BUILD.hover);BUILD.hover=-1}
+  if(BUILD.mode==='place'&&!BUILD.why){order({p:buildPl(),t:'place',type:BUILD.type,x:BUILD.ax,y:BUILD.ay});BUILD.why='wordt geplaatst'}
+  else if(BUILD.mode==='demolish'&&BUILD.hover>=0){order({p:buildPl(),t:'demolish',b:BUILD.hover});BUILD.hover=-1}
 }
 $('bldPl').onchange=buildBuildPanel;
 $('demolish').onclick=()=>setBuildMode(BUILD.mode==='demolish'?null:'demolish');
