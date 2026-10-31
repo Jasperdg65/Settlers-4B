@@ -136,6 +136,14 @@ Wordt de PNG anders bijgesneden (andere marge), controleer ze dan opnieuw.
   wereldgrootte plus origineel, `spriteMips` in `js/core.js`); `blit` kiest per frame de kleinste
   die nog scherp is voor `cam.z * dpr`.
 - Grondchunks: maximaal 2 bouwen per frame, cache als LRU met een pixelbudget (`CHUNK_PX`).
+- Gemeten (Brave met GPU, 1049×957, 320-kaart): 60 fps op zoom 1, 2 en 3 met 2000 kolonisten;
+  met 10000 ook 60 fps op zoom 2 en 3, en 56 fps op zoom 1. Zonder GPU-versnelling in de browser
+  (`brave://gpu`: "Software only") zakt dit naar 20–47 fps.
+
+**TODO – sprite-atlas** (geparkeerd tot de nieuwe gerenderde poppetjes er zijn): zet de sprites
+van kolonisten en dieren per mip-niveau in één atlas-bitmap, zodat opeenvolgende `drawImage`'s
+dezelfde bron hebben en de GPU ze kan bundelen. Doel: stabiel 60 fps met 10000 kolonisten op
+zoom 1 (nu ~56; tekentijd in JS is daar maar ~3 ms, de rest zit aan de GPU-kant).
 
 ## API
 
