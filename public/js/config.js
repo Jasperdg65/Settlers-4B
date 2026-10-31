@@ -12,7 +12,7 @@ const CFG={
   startStock:{
     boomstam:16,plank:40,steen:32,
     brood:12,stoofpot:8,notenmix:8,water:8,
-    bijl:2,zaag:2,houweel:3,hamer:6,schop:4,zeis:3,
+    bijl:2,zaag:2,houweel:4,hamer:6,schop:4,zeis:3,
   },
   eco:{colonistsPerPlayer:60},   // kolonisten per speler bij de start in economiemodus (TIJDELIJK 60 tot mijlpaal 6 bevolking brengt, anders te weinig dragers)
   /* routes (A*): kosten per stap = afstand × terrein × object × (voetpad) + hoogteverschil × up/down */
@@ -98,6 +98,18 @@ const CFG={
     bakkerij:{in:{meel:1,water:1},out:{brood:2},ticks:200,stock:4},
     gaarkeuken:{in:{peulvruchten:1,groente:1,water:1},out:{stoofpot:2},ticks:200,stock:4},
     droogschuur:{in:{fruit:1,noten:1},out:{notenmix:2},ticks:200,stock:4},
+    /* mijnen en metaal (5c). Een mijn (mine = ertssoort in world.ore: 1 kolen, 2 ijzer, 3 goud) eet per ronde één stuk
+       lievelingskost (CFG.mineFood) en haalt één stuk erts uit de dichtstbijzijnde ertstegel binnen area tegels;
+       elke ertstegel bevat mineUnits stuks. Smidse en uitrustingsmaker hebben recepten (product: invoer); automatisch maken
+       ze het product waarvan de speler het minst heeft, of wat de speler kiest (opdracht 'make'). */
+    mineUnits:20,
+    kolenmijn:{mine:1,area:3,out:{kolen:1},ticks:200,stock:4},
+    ijzermijn:{mine:2,area:3,out:{ijzererts:1},ticks:220,stock:4},
+    goudmijn:{mine:3,area:3,out:{gouderts:1},ticks:260,stock:4},
+    ijzersmelterij:{in:{ijzererts:1,kolen:1},out:{ijzer:1},ticks:240,stock:4},
+    goudsmelterij:{in:{gouderts:1,kolen:1},out:{goud:1},ticks:240,stock:4},
+    smidse:{recipes:{bijl:{ijzer:1,plank:1},zaag:{ijzer:1,plank:1},houweel:{ijzer:1,plank:1},hamer:{ijzer:1,plank:1},schop:{ijzer:1,plank:1},zeis:{ijzer:1,plank:1}},ticks:300,stock:4},
+    wapensmid:{recipes:{helm:{ijzer:1},schild:{ijzer:1,plank:1},polsband:{ijzer:1,goud:1}},ticks:300,stock:4,enough:6},   // uitrusting: pas nodig vanaf mijlpaal 6, dus weinig
   },
   /* natuur (production.js): een geplant boompje is na grow ticks een boom, een stronk verdwijnt na stump ticks,
      een steenblok geeft stoneUnits stuks steen; plantNear: zoveel bomen of boompjes direct naast een plek (van de 4) en hij
@@ -154,13 +166,4 @@ const CFG={
   },
   /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en elke voltooide wachttoren (nog zonder bemanning) */
   territory:{burcht:20,wachttoren:20},
-  /* TIJDELIJK tot mijlpaal 3–5: vraag per gebouwtype, zodat er al vervoerd wordt zonder productie.
-     Elk gebouw verbruikt elke useEvery ticks één stuk van de goederen in 'use'. */
-  temp:{
-    want:{
-      pakhuis:{brood:4},woonhuis:{brood:2},wachttoren:{brood:1},
-      kolenmijn:{brood:2},ijzermijn:{stoofpot:2},goudmijn:{notenmix:2},
-    },
-    use:['water','brood','stoofpot','notenmix'],useEvery:600,
-  },
 };

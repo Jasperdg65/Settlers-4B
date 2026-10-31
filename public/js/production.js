@@ -13,7 +13,8 @@
 let NAT=null;
 function initProduction(){
   const {W,H,obj}=world,N=W*H,c=CFG.nature;
-  world.res=new Uint8Array(N);world.rsv=new Uint8Array(N);world.crop=new Uint8Array(N);world.pickT=new Uint32Array(N);world.made=world.starts.map(()=>new Uint32Array(GOODS.length));
+  world.res=new Uint8Array(N);world.rsv=new Uint8Array(N);world.oreRes=new Uint8Array(N);
+  for(let i=0;i<N;i++)if(world.ore[i])world.oreRes[i]=CFG.prod.mineUnits;world.crop=new Uint8Array(N);world.pickT=new Uint32Array(N);world.made=world.starts.map(()=>new Uint32Array(GOODS.length));
   NAT={sap:[],sapH:0,stump:[],stumpH:0,crop:[],cropH:0};
   for(let i=0;i<N;i++){
     if(obj[i]===2)world.res[i]=c.stoneUnits;
@@ -21,7 +22,7 @@ function initProduction(){
     else if(obj[i]===5)NAT.stump.push([hash2(i,9)%c.stump,i]);
   }
   NAT.sap.sort((a,b)=>a[0]-b[0]);NAT.stump.sort((a,b)=>a[0]-b[0]);
-  for(const b of world.blds){b.pt=0;b.run=0;b.ps='';b.pend=null;b.alt=0}
+  for(const b of world.blds){b.pt=0;b.run=0;b.ps='';b.pend=null;b.alt=0;b.make='auto';b.rec=null}
 }
 /* natuur: elke CFG.nature.every ticks */
 function tickNature(){
@@ -37,20 +38,28 @@ function tickNature(){
 function roomFor(bi,gd,keep=0){const st=world.stk,M=CFG.stackMax;let e=0;
   for(const i of bldSlots(bi)){const s=st[i]-1;if(s<0)e++;else if(G.bld[s]===bi&&G.good[s]===gd&&G.cnt[s]<M)return true}return e>keep}
 /* invoer van een werkplaats laat bij de deur één lege plek per product over, zodat het product altijd kwijt kan */
-function inputRoom(bi,gd){const b=world.blds[bi],pc=CFG.prod[b.type];if(!pc||!pc.in||!(GOODS[gd].k in pc.in))return true;
-  return roomFor(bi,gd,Object.keys(pc.out).length)}
-/* vraag van een gebouw: tijdelijke vraag (CFG.temp) plus de invoer van zijn werkplaats */
+function inputRoom(bi,gd){const b=world.blds[bi],pc=CFG.prod[b.type];if(!pc||pc.gather||!allIn(b.type).includes(GOODS[gd].k))return true;
+  return roomFor(bi,gd,outCount(b.type))}
+/* vraag van een gebouw: de invoer van zijn werkplaats (woonhuizen en torens vragen voedsel vanaf mijlpaal 6) */
 function setWant(b){
-  b.want.fill(0);const w=CFG.temp.want[b.type],pc=CFG.prod[b.type];
-  if(w)for(const k in w)b.want[GI[k]]=w[k];
-  if(pc&&pc.in)for(const k in pc.in)b.want[GI[k]]=pc.stock;
+  b.want.fill(0);const pc=CFG.prod[b.type];
+  if(pc&&!pc.gather)for(const k of allIn(b.type))b.want[GI[k]]=pc.stock;
 }
+/* recepten van een werkplaats: [{k, in, out}]. Een mijn eet zijn lievelingskost; smidse en uitrustingsmaker hebben er meer */
+const RECIPES={};
+function recipes(type){
+  if(RECIPES[type])return RECIPES[type];const pc=CFG.prod[type];
+  return RECIPES[type]=pc.recipes?Object.keys(pc.recipes).map(k=>({k,in:pc.recipes[k],out:{[k]:1}})):[{k:'',in:pc.mine?{[CFG.mineFood[type]]:1}:pc.in,out:pc.out}];
+}
+const allIn=type=>[...new Set(recipes(type).flatMap(r=>Object.keys(r.in)))];
+const outCount=type=>Math.max(...recipes(type).map(r=>Object.keys(r.out).length));
 const made=(b,gd,n)=>{world.made[b.p][gd]+=n};
 /* voorraad per speler, hoogstens één keer per tick uitgerekend (voor de grens CFG.prod.enough) */
 let prodTotT=-1,prodTot=[];
 function enough(b,keys){
   if(prodTotT!==tickNo){prodTotT=tickNo;prodTot=[]}const t=prodTot[b.p]||(prodTot[b.p]=stockTotals(b.p));
-  for(const k of keys)if(t[GI[k]]<CFG.prod.enough)return '';
+  const lim=(CFG.prod[b.type]||{}).enough||CFG.prod.enough;   // een gebouwtype mag een eigen grens hebben
+  for(const k of keys)if(t[GI[k]]<lim)return '';
   return 'genoeg '+keys.map(k=>GOODS[GI[k]].n.toLowerCase()).join(' en ')+' op voorraad';
 }
 function tickProduction(){
@@ -66,18 +75,40 @@ function tickProduction(){
   }
 }
 /* ---------- Werkplaats ---------- */
+/* een ronde beginnen: het eerste recept (automatisch: het product waarvan de speler het minst heeft) waarvoor de invoer
+   bij de deur ligt, het product kwijt kan en de speler er nog niet genoeg van heeft. Anders de reden van het eerste. */
 function startBatch(b,bi,pc){
-  const full=enough(b,Object.keys(pc.out));if(full){b.ps=full;b.pt=CFG.nature.every*5;return}
+  let list=recipes(b.type);
+  if(b.make&&b.make!=='auto')list=list.filter(r=>r.k===b.make);
+  else if(list.length>1){enough(b,[]);const t=prodTot[b.p];list=list.slice().sort((x,y)=>t[GI[x.k]]-t[GI[y.k]])}
+  let why='';
+  for(const r of list){
+    const w=tryRecipe(b,bi,pc,r);if(!w)return;if(!why)why=w;
+  }
+  b.ps=why;if(why.startsWith('genoeg'))b.pt=CFG.nature.every*5;
+}
+function tryRecipe(b,bi,pc,r){
+  const full=enough(b,Object.keys(r.out));if(full)return full;
+  let ore=-1;if(pc.mine){ore=findOre(b,pc);if(ore<0)return 'geen '+ORE[pc.mine]+' meer in de buurt'}
   const src=[];
-  for(const k in pc.in)for(let n=0;n<pc.in[k];n++){const s=freeUnitAt(bi,GI[k]);if(s<0||src.includes(s)&&G.cnt[s]-G.res[s]<=src.filter(x=>x===s).length){b.ps='wacht op '+GOODS[GI[k]].n.toLowerCase();return}src.push(s)}
-  for(const k in pc.out)if(!roomFor(bi,GI[k])){b.ps='opslag bij de deur vol';return}
-  for(const s of src)takeOne(s);
-  b.pt=pc.ticks;b.run=1;b.ps='werkt';
+  for(const k in r.in)for(let n=0;n<r.in[k];n++){const s=freeUnitAt(bi,GI[k]);if(s<0||src.includes(s)&&G.cnt[s]-G.res[s]<=src.filter(x=>x===s).length)return 'wacht op '+GOODS[GI[k]].n.toLowerCase();src.push(s)}
+  for(const k in r.out)if(!roomFor(bi,GI[k]))return 'opslag bij de deur vol';
+  for(const s of src)takeOne(s);TR.used+=src.length;
+  b.rec=r;b.ore=ore;b.pt=pc.ticks;b.run=1;b.ps=r.k&&recipes(b.type).length>1?'maakt '+GOODS[GI[r.k]].n.toLowerCase():'werkt';
+  return '';
 }
 function finishBatch(b,bi,pc){
-  b.run=0;
-  const left=[];for(const k in pc.out){const gd=GI[k],r=addGoods(bi,gd,pc.out[k]);made(b,gd,pc.out[k]);if(r)left.push([gd,r])}
+  b.run=0;const r=b.rec;if(!r)return;
+  if(pc.mine&&world.oreRes[b.ore]>0)world.oreRes[b.ore]--;
+  const left=[];for(const k in r.out){const gd=GI[k],n=addGoods(bi,gd,r.out[k]);made(b,gd,r.out[k]);if(n)left.push([gd,n])}
   b.pend=left.length?left:null;
+}
+/* dichtstbijzijnde ertstegel van de juiste soort met nog erts, binnen area tegels rond de mijn, of -1 */
+function findOre(b,pc){
+  const {W,H,ore,oreRes}=world,R=pc.area;let best=-1,bd=Infinity;
+  for(let dy=-R;dy<=R;dy++)for(let dx=-R;dx<=R;dx++){const x=b.x+dx,y=b.y+dy;if(x<0||y<0||x>=W||y>=H)continue;const i=y*W+x,d=dx*dx+dy*dy;
+    if(d<=R*R&&ore[i]===pc.mine&&oreRes[i]>0&&d<bd){bd=d;best=i}}
+  return best;
 }
 /* ---------- Buitenwerker ---------- */
 const GATHER_NONE={tree:'geen bomen in het werkgebied',stone:'geen steen in het werkgebied',plant:'geen plek om te planten',
@@ -176,15 +207,21 @@ function drawWorkAreas(){
 /* ---------- Paneel 'Productie' (speler uit de keuze bij Voorraad) ---------- */
 let prodShown='';
 function refreshProduction(){
-  if(!world.made)return;const p=+$('stockPl').value||0,rows=[];
+  if(!world.made||document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#prodList'))return;   // niet verversen terwijl een keuzelijst open is
+  const p=+$('stockPl').value||0,rows=[];
   for(const type in CFG.prod){
     const list=world.blds.filter(b=>b.type===type&&b.p===p&&!b.dead&&!b.st);if(!list.length)continue;
     const st={};for(const b of list){const s=b.occ?b.ps||'werkt':'wacht op een vakman';st[s]=(st[s]||0)+1}
-    const pc=CFG.prod[type],outs=pc.gather?[pc.out,pc.out2].filter(Boolean):Object.keys(pc.out);
+    const pc=CFG.prod[type],outs=pc.gather?[pc.out,pc.out2].filter(Boolean):[...new Set(recipes(type).flatMap(r=>Object.keys(r.out)))];
     const mk=outs.map(k=>`${world.made[p][GI[k]]} ${GOODS[GI[k]].n.toLowerCase()}`).join(', ');
+    /* smidse en uitrustingsmaker: keuze wat ze maken (geldt voor al die gebouwen van deze speler, als opdracht) */
+    const sel=pc.recipes?`<label class="pmake">maakt <select data-type="${type}"><option value="auto">automatisch (wat het minst is)</option>`+
+      Object.keys(pc.recipes).map(k=>`<option value="${k}"${list[0].make===k?' selected':''}>${GOODS[GI[k]].n.toLowerCase()}</option>`).join('')+'</select></label>':'';
     rows.push(`<div class="prow"><b>${BTYPES[type].name} ×${list.length}</b><span>${Object.entries(st).map(([s,n])=>(list.length>1?n+' ':'')+s).join(' · ')}</span>`+
-      (mk?`<span class="pmade">gemaakt: ${mk}</span>`:'')+'</div>');
+      (mk?`<span class="pmade">gemaakt: ${mk}</span>`:'')+sel+'</div>');
   }
   const html=rows.join('')||'<p class="note">Nog geen voltooide werkgebouwen.</p>';
   if(html!==prodShown){prodShown=html;$('prodList').innerHTML=html}
 }
+$('prodList').addEventListener('change',ev=>{const t=ev.target.dataset.type;if(!t)return;const p=+$('stockPl').value||0;
+  world.blds.forEach((b,bi)=>{if(b.type===t&&b.p===p&&!b.dead)order({p,t:'make',b:bi,make:ev.target.value})})});

@@ -320,7 +320,7 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 4 | Beroepen via gereedschap | klaar |
 | 5a | Productiekern met hout en steen: houthakker, bosbouwer (boompjes groeien uit), zagerij, steenhouwer (steenblokken raken op), werkgebied per gebouw, afvoer van overschot naar de opslag, paneel Productie | klaar |
 | 5b | Voedsel: boerderij (graan), bonenakker (peulvruchten), moestuin (groente) met akkers die groeien en rijpen; plukkershut (fruit van appelbomen en bessenstruiken, noten van hazelaars, groeien weer aan); waterput; molen (graan → meel), bakkerij (meel + water → brood), gaarkeuken (peulvruchten + groente + water → stoofpot), droogschuur (fruit + noten → fruit-notenmix) | klaar |
-| 5c | Mijnen met lievelingskost (`CFG.mineFood`), smelterijen, smidse (gereedschap), uitrustingsmaker (ijzer → helm, schild, polsband: statusuitrusting voor hogere niveaus) | gepland |
+| 5c | Mijnen met lievelingskost (`CFG.mineFood`) en ertstegels die opraken, smelterijen, smidse (gereedschap), uitrustingsmaker (helm, schild, polsband: statusuitrusting voor hogere niveaus), keuze wat ze maken; tijdelijk verbruik vervalt | klaar |
 | 6 | Bevolking, gebied en leger: woonhuizen, zichtbare grens, bemande torens, krachthal (kolonisten trainen; niveaus met statusuitrusting) | gepland |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
@@ -453,6 +453,25 @@ de tempel met de natuurgebeurtenissen.
   brengt; met 40 waren er te weinig dragers voor alle vakmensen.
 - De nieuwe gebouwen zijn getekende versies (klein en eenvoudig); een geschilderde afbeelding kan
   via het paneel Gebouwen.
+
+**Mijnen en metaal (mijlpaal 5c)**
+
+- Mijn: eet per ronde één stuk lievelingskost (`CFG.mineFood`: kolenmijn brood, ijzermijn stoofpot,
+  goudmijn fruit-notenmix) en haalt één stuk erts uit de dichtstbijzijnde ertstegel van zijn soort
+  binnen `area` tegels; elke ertstegel bevat `CFG.prod.mineUnits` (20) stuks (`world.oreRes`, ook in
+  de tegelinfo). Zonder erts: "geen ijzer meer in de buurt".
+- Smelterijen: erts + kolen → ijzer of goud. Kolen is de knelpunt-grondstof (beide smelterijen).
+- Smidse en uitrustingsmaker werken met recepten (`recipes`: product → invoer). Automatisch maken ze
+  het product waarvan de speler het minst heeft; in het paneel Productie kies je een vast product
+  (opdracht `make` via `order()`, dus ook bruikbaar voor computerburen). Smidse: bijl, zaag, houweel,
+  hamer, schop, zeis (ijzer + plank). Uitrustingsmaker: helm (ijzer), schild (ijzer + plank),
+  polsband (ijzer + goud), met een eigen voorraadgrens van 6 (`enough`), want uitrusting is pas
+  vanaf mijlpaal 6 nodig.
+- Het tijdelijke verbruik (`CFG.temp`) is weg: alle voedsel wordt nu gemaakt en door de mijnen
+  gegeten. Woonhuizen en torens gaan eten in mijlpaal 6. "Verbruikt" in de meting telt nu wat
+  werkplaatsen en mijnen verwerken.
+- Gemeten (Node, 30 minuten, startdorp plus gaarkeuken, droogschuur, moestuin, bonenakker en
+  plukkershut): 84 kolen, 97 ijzererts, 73 ijzer, 9 van elk gereedschap, 6 van elke uitrusting.
 
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 

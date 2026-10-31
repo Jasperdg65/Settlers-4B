@@ -115,14 +115,8 @@ function wander(i){
     if(X>1&&Y>1&&X<W-2&&Y<H-2&&walk[(Y|0)*W+(X|0)]){S.tx[i]=X;S.ty[i]=Y;return}}
   S.tx[i]=S.x[i];S.ty[i]=S.y[i];
 }
-/* tijdelijk verbruik (CFG.temp): houdt de vraag gaande zolang er nog geen productie is */
-function tempUse(){
-  const use=CFG.temp.use.map(k=>GI[k]);
-  world.blds.forEach((b,bi)=>{if(b.dead||b.st||isStore(b))return;for(const gd of use)if(b.want[gd]&&b.has[gd]){const s=freeUnitAt(bi,gd);if(s>=0){takeOne(s);TR.used++;break}}});
-}
 function tickCarriers(){
   if(tickNo%CFG.carry.plannerEvery===0)planTransport();
-  if(tickNo%CFG.temp.useEvery===0)tempUse();
   tickProduction();
   pathTick();
   const {W,walk}=world,{x,y,px,py,tx,ty,sp,wait,dir,st}=S,n=S.n;
