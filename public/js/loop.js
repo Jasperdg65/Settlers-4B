@@ -179,12 +179,16 @@ function draw(){
       const f=moving?(animF+k)&3:0;
       const ux=X*TW-Y*TW/2+off,uy=Y*TH-hAt(X,Y),fr=f*2+S.dir[k];
       if(S.carry){const c=S.carry[k],j=S.job[k];
+        /* drager als 3D-poppetje: zonder of met kist; het goed ligt in de kist op punt 'hold' (recht van achteren niet zichtbaar) */
+        if(!j){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);const d=S.d8[k];
+          const r=drawUnit3D(c?CARRY3D.carry:CARRY3D.free,moving?'walk':'idle',d,animF+k,S.pl[k],ux,uy,zd);
+          if(r){q='';if(c&&d!==6&&r.fr.pts){const h=r.fr.pts.hold;blit(carrySprite(c-1),ux+(h[0]-r.fr.ax)*r.k,uy+(h[1]-r.fr.ay)*r.k-1.2)}continue}}
         if(c){blit(UNITC[1][S.vr[k]][S.pl[k]][fr],ux,uy);blit(carrySprite(c-1),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}
         else blit(j?jobSprite(j,S.vr[k],S.pl[k],fr):UNITC[0][S.vr[k]][S.pl[k]][fr],ux,uy)}
       else{const m3=ROLE3D[S.role[k]];
         /* 3D-poppetje (rol met model en niveau): richting uit de beweging, anders de laatste; zonder atlas de tekening */
         if(m3){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);if(drawUnit3D(m3[S.lvl[k]-1],moving?'walk':'idle',S.d8[k],animF+k,S.pl[k],ux,uy,zd)){q='';continue}}
-        blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy)}
+        blit(m3?UNITC[0][S.vr[k]][S.pl[k]][fr]:UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy)} // krachtpatser: getekende figuur vervalt; tot de atlas er is een gewone kolonist
     }
     if(PROF)pt('kolonisten',tr);
   }

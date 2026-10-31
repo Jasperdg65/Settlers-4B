@@ -83,8 +83,11 @@ def setup_scene():
     return sc, cam, ppu, res
 
 
-def load_model(path):
+def load_model(path, hide=()):
     bpy.ops.import_scene.gltf(filepath=path)
+    for o in list(bpy.context.scene.objects):  # m['hide']: onderdelen weglaten (bv. de kist van de drager)
+        if any(o.name.startswith(h) for h in hide):
+            bpy.data.objects.remove(o, do_unlink=True)
     objs = [o for o in bpy.context.scene.objects if o.type == 'MESH' and o.name != 'Schaduwvanger']
     for o in objs:  # losse onderdelen: eventuele ouders loskoppelen met behoud van plek
         if o.parent:
@@ -115,7 +118,7 @@ def attach(o, e):
     o.matrix_world = m
 
 
-def build_rig(objs, R):
+def build_rig(objs, R, body_prefixes=()):
     root = empty('Root', (0, 0, 0))
     body = empty('Romp', (0, 0, 0), root)
     sx, sy, sz = R['shoulder']
@@ -128,7 +131,9 @@ def build_rig(objs, R):
         c = center(o)
         s = -1 if c.x < 0 else 1
         nm = o.name.lower()
-        if 'boot' in nm or 'trouser' in nm:  # Boot_…, Felt_boot_…, Trouser_…
+        if any(o.name.startswith(b) for b in body_prefixes):  # m['body']: altijd romp (bv. de kist)
+            attach(o, body); groups['body'].append(o.name)
+        elif 'boot' in nm or 'trouser' in nm:  # Boot_…, Felt_boot_…, Trouser_…
             attach(o, legs[s]); groups['legs'][s].append(o.name)
         elif abs(c.x) > R['armMinX']:
             attach(o, arms[s]); groups['arms'][s].append(o.name)
@@ -141,8 +146,11 @@ def build_rig(objs, R):
 
 def pose(rig, anim, i, R):
     root, body, legs, arms, sword, _ = rig
-    for e in list(legs.values()) + list(arms.values()):
+    for e in legs.values():
         e.rotation_euler = (0, 0, 0)
+    rest = math.radians(R.get('armRest', 0))  # armen omlaag (+) vanuit de gemodelleerde stand
+    for e in arms.values():
+        e.rotation_euler = (rest, 0, 0)
     body.location.z = 0
     if anim == 'walk':
         ph = i / CFG['anims']['walk'] * 2 * math.pi
@@ -150,8 +158,8 @@ def pose(rig, anim, i, R):
         legs[-1].rotation_euler.x = a
         legs[1].rotation_euler.x = -a
         b = math.radians(R['armSwing']) * math.sin(ph)
-        arms[-1].rotation_euler.x = -b
-        arms[1].rotation_euler.x = b
+        arms[-1].rotation_euler.x = rest - b
+        arms[1].rotation_euler.x = rest + b
         body.location.z = R['bob'] * math.cos(2 * ph)
     elif anim == 'fight':
         arms[sword].rotation_euler.x = math.radians(R['fight'][i])
@@ -265,9 +273,9 @@ def file_hash(paths):
 def render_model(key, m):
     check_disk()
     sc, cam, ppu, res = setup_scene()
-    objs = load_model(os.path.join(ROOT, m['glb']))
+    objs = load_model(os.path.join(ROOT, m['glb']), m.get('hide', ()))
     R = {**CFG['rig'], **m.get('rig', {})}  # eigen rig per model gaat voor de algemene
-    rig = build_rig(objs, R)
+    rig = build_rig(objs, R, m.get('body', ()))
     orig, mask = prep_materials(objs)
     frames = [(a, i) for a in m['anims'] for i in range(CFG['anims'][a])]
     dirs = list(range(CFG['dirs']))
@@ -275,13 +283,17 @@ def render_model(key, m):
         frames = [f for f in frames if f[1] == 0][:2]
     os.makedirs(TMP, exist_ok=True)
     tmp = os.path.join(TMP, key + '.png')
-    col, msk = {}, {}
+    from bpy_extras.object_utils import world_to_camera_view
+    col, msk, pts = {}, {}, {}
     n = 0
     for d in dirs:
         set_dir(rig[0], d)
         for (a, i) in frames:
             pose(rig, a, i, R)
             bpy.context.view_layer.update()
+            # m['points']: punten op de romp (modelmaten), per beeld naar render-px; bv. 'hold' = waar het goed ligt
+            pts[d, a, i] = {k: (lambda v: (v.x * res, (1 - v.y) * res))(world_to_camera_view(sc, cam, rig[1].matrix_world @ Vector(p)))
+                            for k, p in m.get('points', {}).items()}
             set_pass(sc, False); apply_mats(objs, orig); col[d, a, i] = render_rgba(sc, tmp)
             set_pass(sc, True); apply_mats(objs, mask); msk[d, a, i] = render_rgba(sc, tmp, linear=True)
             n += 1
@@ -297,7 +309,6 @@ def render_model(key, m):
     x1, y1 = -(-(int(xs.max()) + 1) // F) * F, -(-(int(ys.max()) + 1) // F) * F
     cw, ch = x1 - x0, y1 - y0
     # anker: projectie van de oorsprong (voeten) in het render-kader
-    from bpy_extras.object_utils import world_to_camera_view
     v = world_to_camera_view(sc, cam, Vector((0, 0, 0)))
     ax, ay = v.x * res - x0, (1 - v.y) * res - y0
     out = {'model': os.path.basename(m['glb']), 'key': key, 'dirs': CFG['dirs'],
@@ -318,8 +329,11 @@ def render_model(key, m):
                 mm = msk[d, a, i][y0:y1, x0:x1].copy()
                 mm[..., :3] = mm[..., :1]  # één kanaal is genoeg: grijswaarde = aandeel spelerkleur
                 matlas[r * h:(r + 1) * h, c * w:(c + 1) * w] = shrink(mm, f)
-                fl.append({'anim': a, 'dir': d, 'i': i, 'x': c * w, 'y': r * h, 'w': w, 'h': h,
-                           'ax': round(ax / f, 2), 'ay': round(ay / f, 2)})
+                fe = {'anim': a, 'dir': d, 'i': i, 'x': c * w, 'y': r * h, 'w': w, 'h': h,
+                      'ax': round(ax / f, 2), 'ay': round(ay / f, 2)}
+                if pts[d, a, i]:  # punten in px binnen het beeld, net als het anker
+                    fe['pts'] = {k: [round((px - x0) / f, 2), round((py - y0) / f, 2)] for k, (px, py) in pts[d, a, i].items()}
+                fl.append(fe)
         base = os.path.join(TMP if TEST else ASSETS, m['out'] + f'_{size}')
         os.makedirs(os.path.dirname(base), exist_ok=True)
         save_webp(atlas, base + '.webp', CFG['quality'])

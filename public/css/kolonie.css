@@ -84,3 +84,4 @@ body[data-mode="stress"] .eco-only,body[data-mode="eco"] .stress-only{display:no
 .bb.on,#demolish.on{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent);color:var(--accent-ink)}
 .bb.on small{color:inherit}
 #njobs{grid-column:1/-1;text-align:left;font-size:13px;line-height:1.35}
+.pv3d{margin-top:6px}.pv3d canvas{display:block;border-radius:6px;max-width:100%}

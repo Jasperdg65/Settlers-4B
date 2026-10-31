@@ -52,12 +52,16 @@ function refreshCustomUI(){
 function buildGallery(){
   const pu=$('people');pu.innerHTML='';
   const lv3=ROLE3D[2].map(k=>unit3DSprite(k));
-  [[0,0,'Drager'],[0,2,'Draagster'],[1,0,'Bouwer'],...(lv3.every(Boolean)?[]:[[2,0,'Soldaat']]),[3,0,'Boog­schutter'],[4,1,'Heler']].forEach(([r,v,n])=>{
+  [[0,0,'Drager'],[0,2,'Draagster'],[1,0,'Bouwer'],[3,0,'Boog­schutter'],[4,1,'Heler']].forEach(([r,v,n])=>{
     const fig=document.createElement('figure');fig.appendChild(thumb(UNITS[r][v][0][0],44,54,2.2));
     const cap=document.createElement('figcaption');cap.textContent=n;fig.appendChild(cap);pu.appendChild(fig)});
-  /* soldaat niveau 1–3 als 3D-poppetje (als de atlassen geladen zijn) */
+  /* drager als 3D-poppetje: vrij en met kist */
+  [['drager_leeg','Drager (3D)'],['drager_kist','Drager met kist']].forEach(([k,n])=>{const sp=unit3DSprite(k);if(!sp)return;
+    const fig=document.createElement('figure');fig.appendChild(thumb(sp,44,54));const cap=document.createElement('figcaption');cap.textContent=n;fig.appendChild(cap);pu.appendChild(fig)});
+  /* krachtpatser junior/medior/senior als 3D-poppetje (als de atlassen geladen zijn), plus controlestrook op spelgrootte */
   if(lv3.every(Boolean))lv3.forEach((sp,k)=>{const fig=document.createElement('figure');fig.appendChild(thumb(sp,44,54));
-    const cap=document.createElement('figcaption');cap.textContent='Soldaat '+(k+1);fig.appendChild(cap);pu.appendChild(fig)});
+    const cap=document.createElement('figcaption');cap.textContent='Krachtpatser '+['junior','medior','senior'][k];fig.appendChild(cap);pu.appendChild(fig)});
+  const pv=unit3DPreview(2),box=$('people3d');box.innerHTML='';if(pv){box.appendChild(pv);box.hidden=false}else box.hidden=true;
   /* beroepen van de economie */
   CFG.jobs.forEach((j,k)=>{if(!k)return;const fig=document.createElement('figure');fig.appendChild(thumb(jobSprite(k,0,0,0),44,54,2.2));
     const cap=document.createElement('figcaption');cap.textContent=j.n;fig.appendChild(cap);pu.appendChild(fig)});

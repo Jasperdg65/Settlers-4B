@@ -6,7 +6,10 @@
    uitgerekend, pas als het nodig is. ROLE3D koppelt een rol en niveau aan een model; zonder atlas blijft de tekening. */
 let UNIT3D_IMGS={};const U3D={};
 const UNIT3D_H=18;                 // hoogte van het poppetje (px-maat) in wereldeenheden, gelijk aan de getekende figuren
-const ROLE3D={2:['soldaat_1','soldaat_2','soldaat_3']}; // rol Soldaat, niveau 1–3
+const ROLE3D={0:['drager_leeg','drager_leeg','drager_leeg'],          // rol Drager (stresstest): één model
+  2:['krachtpatser_1','krachtpatser_2','krachtpatser_3']};             // rol Krachtpatser, niveau 1–3 (junior, medior, senior)
+/* economie: vrije drager zonder kist, drager met een goed met kist (het goed zelf tekent loop.js op punt 'hold') */
+const CARRY3D={free:'drager_leeg',carry:'drager_kist'};
 async function loadUnits3D(){
   await Promise.all(Object.entries(UNIT3D_IMGS).map(async([key,d])=>{try{
     const r=await fetch('assets/'+d.json+'?v='+d.v);if(!r.ok)throw new Error(d.json+': HTTP '+r.status);
@@ -32,13 +35,24 @@ function unit3DAtlas(sz,p){
 }
 /* kleinste maat die op het scherm nog minstens zo groot is (zd = zoom × dpr) */
 function unit3DSize(u,zd){const need=UNIT3D_H*zd;for(const s of u.sizes)if(s.px>=need)return s;return u.sizes[u.sizes.length-1]}
-/* tekent beeld (anim, dir, i) van model key voor speler p met de voeten op (x, y); false als het model (nog) niet geladen is */
-function drawUnit3D(key,anim,dir,i,p,x,y,zd){
-  const u=U3D[key];if(!u)return false;const sz=unit3DSize(u,zd),a=sz.F[anim]||sz.F.idle,fr=a[dir][i%a[dir].length],k=UNIT3D_H/sz.px;
-  ctx.drawImage(unit3DAtlas(sz,p),fr.x,fr.y,fr.w,fr.h,x-fr.ax*k,y-fr.ay*k,fr.w*k,fr.h*k);return true;
+/* tekent beeld (anim, dir, i) van model key voor speler p met de voeten op (x, y); geeft {fr, k} terug
+   (beeld uit de JSON en schaal atlas-px → wereld), of null als het model (nog) niet geladen is */
+function drawUnit3D(key,anim,dir,i,p,x,y,zd,g=ctx){
+  const u=U3D[key];if(!u)return null;const sz=unit3DSize(u,zd),a=sz.F[anim]||sz.F.idle,fr=a[dir][i%a[dir].length],k=UNIT3D_H/sz.px;
+  g.drawImage(unit3DAtlas(sz,p),fr.x,fr.y,fr.w,fr.h,x-fr.ax*k,y-fr.ay*k,fr.w*k,fr.h*k);return {fr,k};
 }
 /* richting 0–7 uit een stap (dx, dy) in tegels: schermrichting, met de diepte terug naar de grond (camera 30° → ×2) */
 function dir8(dx,dy){const sx=dx*TW-dy*TW/2,sy=dy*TH;return Math.round(Math.atan2(2*sy,sx)/(Math.PI/4))&7}
+/* controlebeeld op spelgrootte: per model in ROLE3D[role] een figuur in rood en een in blauw, op zoom 1 en 2 */
+function unit3DPreview(role=2){
+  const keys=ROLE3D[role];if(!keys.every(k=>U3D[k]))return null;const d=Math.min(2,devicePixelRatio||1),W=300,H=110;
+  const c=document.createElement('canvas');c.width=W*d;c.height=H*d;c.style.width=W+'px';c.style.height=H+'px';
+  const g=c.getContext('2d');g.scale(d,d);g.fillStyle='#86aa46';g.fillRect(0,0,W,H);g.imageSmoothingQuality='high';
+  g.fillStyle='rgba(0,0,0,.55)';g.font='11px "Source Sans 3",sans-serif';g.fillText('zoom 1',4,12);g.fillText('zoom 2',4,58);
+  for(const [z,y0,step] of [[1,44,22],[2,104,46]])keys.forEach((k,l)=>[0,1].forEach(p=>{
+    const x=(z===1?52:40)+(l*2+p)*step;g.save();g.translate(x,y0);g.scale(z,z);drawUnit3D(k,'idle',2,0,p,0,0,z*d,g);g.restore()}));
+  return c;
+}
 /* losse sprite {c,w,h,ax,ay} van een model (naar de kijker, stilstaand) voor de galerij */
 function unit3DSprite(key,p=0){
   const u=U3D[key];if(!u)return null;const sz=u.sizes[u.sizes.length-1],fr=sz.F.idle[2][0],c=document.createElement('canvas');

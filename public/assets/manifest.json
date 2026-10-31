@@ -432,17 +432,25 @@
         }
     },
     "units": {
-        "soldaat_1": {
-            "json": "units/soldaat_beginner.json",
-            "v": "304aca0c11"
+        "krachtpatser_1": {
+            "json": "units/krachtpatser_junior.json",
+            "v": "cd26069e46"
         },
-        "soldaat_2": {
-            "json": "units/soldaat_gemiddeld.json",
-            "v": "8f6b8c6f2e"
+        "krachtpatser_2": {
+            "json": "units/krachtpatser_medior.json",
+            "v": "db302fa226"
         },
-        "soldaat_3": {
-            "json": "units/soldaat_veteraan.json",
-            "v": "ee291e5463"
+        "krachtpatser_3": {
+            "json": "units/krachtpatser_senior.json",
+            "v": "7cb886ef0c"
+        },
+        "drager_leeg": {
+            "json": "units/drager_leeg.json",
+            "v": "0a37d15356"
+        },
+        "drager_kist": {
+            "json": "units/drager_kist.json",
+            "v": "dae33b842c"
         }
     }
 }

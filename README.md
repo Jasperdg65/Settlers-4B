@@ -178,6 +178,13 @@ Wat het script doet (instellingen in `tools/sprites.json`):
 2. Voeg het model toe aan `models` in `tools/sprites.json`, bijvoorbeeld
    `"drager": {"glb": "bron/modellen/drager.glb", "out": "units/drager", "anims": ["idle", "walk"]}`.
    Wijken heup of schouders af, zet dan een eigen `rig` in die regel (die gaat voor de algemene).
+   Verdere opties per model:
+   - `hide`: onderdelen weglaten (naam begint met …), bv. `["Cargo"]` voor de drager zonder kist;
+   - `body`: onderdelen die altijd bij de romp horen, ook als ze ver van het midden zitten
+     (bv. de kist, anders zwaaien de zijplanken mee met de armen);
+   - `rig.armRest`: armen in graden omlaag vanuit de gemodelleerde stand (vrije drager: 52);
+   - `points`: punten op de romp in modelmaten, per beeld geprojecteerd naar `pts` in de JSON
+     (bv. `"hold"`: waar het spel het gedragen goed tekent).
 3. Proefrender (alleen stilstaan en de eerste loopstap, alle richtingen, met PNG-voorbeeld in
    `tools/.render-tmp/units/`):
 
@@ -192,7 +199,13 @@ Wat het script doet (instellingen in `tools/sprites.json`):
    Reken op ongeveer 5 s per beeld op deze server (120 beelden per model met drie animaties,
    dus zo'n 10 minuten per model). Lokaal renderen kan ook, zie hieronder.
 5. Koppel het in het spel: `ROLE3D` in `js/units3d.js` wijst per rol (index in `ROLES`) de
-   modelsleutels per niveau aan, bijvoorbeeld `2: ['soldaat_1','soldaat_2','soldaat_3']`.
+   modelsleutels per niveau aan, nu `2: ['krachtpatser_1','krachtpatser_2','krachtpatser_3']`
+   (rol Krachtpatser, junior/medior/senior) en `0: drager_leeg` (rol Drager in de stresstest).
+   In de economie gebruiken vrije dragers `drager_leeg` en dragers met een goed `drager_kist`,
+   met het goed op punt `hold` (`CARRY3D`). De galerij *Inwoners* toont ze, met een
+   controlestrook op spelgrootte (zoom 1 en 2) in rood en blauw.
+   Controlebeeld buiten de browser (zelfde maatkeuze, schaal en omkleuring als het spel):
+   `tools/blender/blender -b -P tools/preview_units.py -- uit.png krachtpatser_1 krachtpatser_2 krachtpatser_3`
    Zonder geladen atlas tekent het spel de oude figuur.
 
 **Ontwerpnotitie: duel-sprite (armpje drukken), later toevoegen**
@@ -218,9 +231,9 @@ Het script werkt met paden ten opzichte van de repo, dus alleen het pad naar Ble
 
 ```
 git pull
-"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" -b -P tools/render_sprites.py -- soldaat_1 --test
-"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" -b -P tools/render_sprites.py -- soldaat_1
-git add public/assets/units public/assets/manifest.json && git commit -m "Spritesheet soldaat_1" && git push
+"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" -b -P tools/render_sprites.py -- krachtpatser_1 --test
+"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" -b -P tools/render_sprites.py -- krachtpatser_1
+git add public/assets/units public/assets/manifest.json && git commit -m "Spritesheet krachtpatser_1" && git push
 ```
 
 Draai het vanuit de hoofdmap van de repo. Op de server daarna `git pull`.
@@ -282,10 +295,45 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
     velden af; ze rekent zelf geen kracht uit.
 - Geen wapens: de uitrustingsmaker (gebouwsleutel `wapensmid`) maakt van ijzer helmen, schilden
   en polsbanden, statusuitrusting voor hogere niveaus. De ijzer- en kolenketen blijft dus nodig.
-- De 3D-soldaten zijn nog gerenderd met een zwaard en een zwaardslag als vechtanimatie; bij
-  mijlpaal 6/8 komen er modellen zonder zwaard en een armdrukanimatie.
+- De krachtpatsers hebben geen wapen; voor het duel komt een eigen armdruk-sprite (mijlpaal 3).
 - Muzikanten ondersteunen de kracht van hun groep binnen een bereik; hoe hoger hun niveau, hoe
   groter dat bereik (getallen in de config).
+
+**Ontwerpnotitie: school (nog niet bouwen)**
+
+- Gebouw School met beroep Leraar.
+- Instellingen per school: aantal leerlingen (2–10), opleidingsduur (kort/middel/lang → niveau
+  basis/gevorderd/meester), en of ook bewoners met een beroep mogen gaan (die werken dan
+  tijdelijk niet).
+- Leerlingen eten wel, werken niet.
+- Effect: sneller werken in het beroep, bijdrage aan de harmonie (meester het meest), betere
+  helers en muzikanten; optioneel vereist niveau 3 krachtpatser een opleiding. Alle getallen in
+  de config.
+
+**Ontwerpnotitie: hunnebed en meditatie (nog niet bouwen)**
+
+- Bijzonder bouwwerk Hunnebed (veel steen), niet te dicht bij werkplaatsen.
+- Periodiek komen vrije bewoners in een kring zitten; dieren in de buurt komen erbij liggen.
+  Zolang de meditatie loopt, stijgt de harmonie, afhankelijk van het aantal mensen en dieren.
+- Gevulde voederbakken in de buurt trekken dieren aan.
+- Lawaaiige gebouwen (smidse, mijnen, zagerij) binnen een straal verminderen het effect.
+- Instelling: aandeel van de tijd dat bewoners mogen mediteren.
+- Beeld: zittende houding, liggende dieren, zachte gloed boven de kring.
+
+**Wat dit vraagt van de opbouw** (houden we nu al rekening mee)
+
+- Instellingen per gebouw (`b.cfg`: leerlingen, duur, toegang; meditatietijd), in hetzelfde
+  paneel als de productiekeuze per smidse (mijlpaal 5).
+- Per kolonist naast `S.job` een opleidingsniveau (`S.edu`: 0 geen, 1 basis, 2 gevorderd,
+  3 meester) en een toestand "leerling" of "mediteert": eet wel, werkt niet; het beroep blijft
+  bewaard. Werksnelheid = basis × factor per `S.edu` uit de config.
+- Harmonie (mijlpaal 7) als som van bijdragen per bron (voederbakken, wei, bos, bloemen, school,
+  hunnebed), zodat nieuwe bronnen er los bij kunnen.
+- Gebouwtypes krijgen een eigenschap `noise` (straal) voor lawaai: smidse, mijnen, zagerij.
+  Het hunnebed en straks de harmonie gebruiken die; plaatsen controleert de minimale afstand.
+- Dieren krijgen een toestand "ligt bij" (een doelpunt), dezelfde die de ertsader-hint gebruikt.
+- Zittende kolonisten en liggende dieren: een animatie `sit` in de renderstraat (pose zonder
+  skelet, net als lopen) en voor de getekende dieren een liggende variant.
 
 **Ontwerpregel: niveaus** (voor alle militaire en ondersteunende rollen)
 
@@ -302,8 +350,9 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | Heler | kap | messing voorhoofdsring | bladerkrans met lint in spelerkleur | |
 
 - Selectiemarkering van een eenheid: naast de gezondheidskleur 1–3 stipjes voor het niveau.
-- De huidige 3D-soldaten volgen de regel voor de helm al: beginner zonder versiering, gemiddeld
-  met messing voet en punt, veteraan met kam in `TEAM_Crest`. Het zwaard moet er nog uit.
+- De wereld is pacifistisch: de rol Soldaat heet Krachtpatser (junior/medior/senior = niveau
+  1/2/3: kale helm, helm met piek, hanenkam in spelerkleur). De soldaat-GLB's met zwaard en de
+  getekende soldaat worden voor deze rol niet meer gebruikt (bron blijft in `bron/modellen/`).
 - Nieuwe 3D-modellen voor muzikant en heler: per niveau een eigen GLB (zoals de soldaten),
   `TEAM_Crest` alleen op niveau 3; de renderstraat kleurt dat vanzelf in spelerkleur.
 

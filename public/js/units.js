@@ -4,7 +4,7 @@
 const ROLES=[
   {name:'Drager',bld:['pakhuis','houthakker','zagerij','steenhouwer','bakkerij','molen','boerderij','burcht','kolenmijn','ijzermijn','goudmijn','ijzersmelterij','goudsmelterij'],share:0.6,vars:3},
   {name:'Bouwer',bld:['woonhuis','pakhuis','zagerij','smidse','wapensmid','bosbouwer','houthakker','kazerne'],share:0.14,vars:2},
-  {name:'Soldaat',bld:['kazerne','wachttoren','burcht'],share:0.12,vars:1},
+  {name:'Krachtpatser',bld:['kazerne','wachttoren','burcht'],share:0.12,vars:1}, // 3D-sprite per niveau (units3d.js)
   {name:'Boogschutter',bld:['wachttoren','kazerne'],share:0.08,vars:1},
   {name:'Heler',bld:['kruidenhuis','burcht','woonhuis'],share:0.06,vars:3}];
 const SKIN='#f0c9a0',HAIRS=['#4a2e1a','#6b3f22','#2f2118','#8a5a2e'];
