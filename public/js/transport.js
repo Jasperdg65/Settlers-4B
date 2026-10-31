@@ -4,9 +4,10 @@
    De planner koppelt elke ontbrekende eenheid aan de dichtstbijzijnde stapel die beschikbaar is en geeft
    de opdracht aan de dichtstbijzijnde vrije drager. Stapels bij afgebroken gebouwen gaan naar de opslag.
    Een drager: vrij → wacht op route → naar de stapel → oppakken → wacht op route → naar de deur → neerleggen.
-   Gravers en bouwers (S.job, zie build.js): een vrije drager haalt eerst het gereedschap, daarna werkt hij op bouwplaatsen.
+   Beroepen (S.job, CFG.jobs): een vrije drager haalt eerst het gereedschap; gravers en bouwers werken daarna op
+   bouwplaatsen (build.js), de andere vakmensen gaan hun gebouw in (jobs.js).
    Elke 'wacht op route'-toestand (PATH_*) is oneven en gaat bij een gevonden route naar de volgende (lopen). */
-const ST={IDLE:0,PATH_SRC:1,TO_SRC:2,PATH_DST:3,TO_DST:4,PATH_TOOL:5,TO_TOOL:6,PATH_WORK:7,TO_WORK:8,WORK:9};
+const ST={IDLE:0,PATH_SRC:1,TO_SRC:2,PATH_DST:3,TO_DST:4,PATH_TOOL:5,TO_TOOL:6,PATH_WORK:7,TO_WORK:8,WORK:9,INSIDE:10,PATH_IN:11,TO_IN:12};
 const TR={rr:0,done:0,used:0};
 const doorTile=b=>(b.y+1)*world.W+b.x;
 const isStore=b=>(b.type==='burcht'||b.type==='pakhuis')&&!b.dead&&!b.st;
@@ -14,7 +15,7 @@ function initTransport(){
   const n=S.n;
   S.eco=1;S.st=new Uint8Array(n);S.carry=new Uint8Array(n);S.gd=new Uint8Array(n);S.src=new Int32Array(n);S.sb=new Int16Array(n);S.dst=new Int16Array(n);S.cm=new Uint8Array(n);
   S.job=new Uint8Array(n);S.jb=new Uint8Array(n);S.pi=new Uint16Array(n);S.path=new Array(n).fill(null);
-  for(const b of world.blds){b.want=new Uint8Array(GOODS.length);b.coming=new Uint8Array(GOODS.length);b.cool=0;setTempWant(b)}
+  for(const b of world.blds){b.want=new Uint8Array(GOODS.length);b.coming=new Uint8Array(GOODS.length);b.cool=0;b.wkr=0;setTempWant(b)}
   TR.rr=0;TR.done=0;TR.used=0;tickNo=0;pathInit();
 }
 function setTempWant(b){const w=CFG.temp.want[b.type];b.want.fill(0);if(w)for(const k in w)b.want[GI[k]]=w[k]}
@@ -41,7 +42,7 @@ function goPath(c,st,to){S.st[c]=st;findPath(tileOf(c),to,p=>gotPath(c,p))}
 function fetchGood(c,s,bi,gd,counted){G.res[s]++;if(counted)world.blds[bi].coming[gd]++;S.cm[c]=counted;S.gd[c]=gd;S.src[c]=s;S.dst[c]=bi;S.wait[c]=0;goPath(c,ST.PATH_SRC,G.tile[s])}
 function planTransport(){
   const bl=world.blds,nb=bl.length,P=world.starts.length,M=CFG.carry.maxAssignPerRun,noIdle=new Uint8Array(P);
-  let made=planWorkers(M);
+  let made=planWorkers(M);made+=planJobs(M-made);
   for(let k=0;k<nb&&made<M;k++){
     const bi=(TR.rr+k)%nb,b=bl[bi];if(b.dead||noIdle[b.p]||b.cool>tickNo)continue;
     for(let gd=0;gd<GOODS.length&&made<M;gd++){
@@ -71,6 +72,7 @@ function gotPath(c,p){
   if(st===ST.PATH_SRC||st===ST.PATH_TOOL)G.res[S.src[c]]--;
   else if(st===ST.PATH_DST){addGoods(S.sb[c],gd,1);S.carry[c]=0} // terugleggen bij de bron
   else if(st===ST.PATH_WORK)b.wk--;
+  if(b.wkr===c+1)b.wkr=0; // was op weg om hier vakman te worden
   if(S.cm[c])b.coming[gd]--;S.cm[c]=0;toIdle(c);
 }
 function arrived(c){
@@ -78,12 +80,16 @@ function arrived(c){
   if(st===ST.TO_SRC||st===ST.TO_TOOL){
     const s=S.src[c],ok=G.cnt[s]&&G.res[s]&&G.good[s]===gd;
     if(ok){G.res[s]--;S.sb[c]=G.bld[s];takeOne(s);S.wait[c]=CFG.carry.pickTicks}
-    if(st===ST.TO_TOOL){if(ok)S.job[c]=S.jb[c];toIdle(c);return} // gereedschap opgepakt: nu graver of bouwer
+    if(st===ST.TO_TOOL){ // gereedschap opgepakt: nu vakman; wie voor een gebouw komt, loopt er meteen heen
+      if(ok)S.job[c]=S.jb[c];
+      if(ok&&b.wkr===c+1&&!b.dead)goPath(c,ST.PATH_IN,doorTile(b));else{if(b.wkr===c+1)b.wkr=0;toIdle(c)}
+      return}
     if(ok){S.carry[c]=gd+1;goPath(c,ST.PATH_DST,doorTile(b))}
     else{if(S.cm[c])b.coming[gd]--;S.cm[c]=0;toIdle(c)}
     return;
   }
   if(st===ST.TO_WORK){S.st[c]=ST.WORK;S.wait[c]=1;return}
+  if(st===ST.TO_IN){enterBuilding(c);return}
   /* bij de deur: neerleggen; past het niet (of is het gebouw weg), dan naar de dichtstbijzijnde opslag, of daar later opnieuw */
   if(!b.dead&&!addGoods(bi,gd,1)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;S.carry[c]=0;TR.done++;
     toIdle(c);S.wait[c]=CFG.carry.dropTicks;return}
@@ -109,9 +115,9 @@ function tickCarriers(){
   pathTick();
   const {W,walk}=world,{x,y,px,py,tx,ty,sp,wait,dir,st}=S,n=S.n;
   for(let i=0;i<n;i++){
+    const s=st[i];if(s===ST.INSIDE)continue;
     px[i]=x[i];py[i]=y[i];
     if(wait[i]>0){wait[i]--;continue}
-    const s=st[i];
     if(s===ST.WORK){siteWork(i);continue}
     if(s&1)continue; // wacht op een route (PATH_*)
     if(s===ST.IDLE){
@@ -141,4 +147,4 @@ function wantLabel(bi){
   for(let gd=0;gd<GOODS.length;gd++)if(b.want[gd])r.push(`${GOODS[gd].n} ${b.has[gd]}/${b.want[gd]}`+(b.coming[gd]?` (+${b.coming[gd]} onderweg)`:''));
   return siteLabel(b)+(r.length?(b.st?' · nog nodig: ':' · vraagt: ')+r.join(', '):'');
 }
-function carrierStats(){let busy=0,w=[0,0,0];for(let i=0;i<S.n;i++){if(S.st[i]&&!S.job[i])busy++;w[S.job[i]]++}return [busy,w[0],w[1],w[2]]}
+function carrierStats(){let busy=0,free=0;for(let i=0;i<S.n;i++)if(!S.job[i]){free++;if(S.st[i])busy++}return [busy,free]}

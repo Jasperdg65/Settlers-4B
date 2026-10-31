@@ -44,7 +44,8 @@ function frame(now){
     $('fps').textContent=fpsAvg.toFixed(0);
     $('simms').textContent=running?simAvg.toFixed(2)+' ms':'–';
     $('drawms').textContent=drawAvg.toFixed(1)+' ms';{const bl=world.blds.filter(b=>!b.dead);$('nocc').textContent=bl.filter(b=>b.occ).length+' van '+bl.length}
-    if(S.eco){const c=carrierStats();$('ncarry').textContent=`${c[0]} van ${c[1]} · gravers ${c[2]} · bouwers ${c[3]}`;$('ndone').textContent=TR.done+' · '+TR.used;
+    if(S.eco){const c=carrierStats();$('ncarry').textContent=`${c[0]} van ${c[1]}`;
+      $('njobs').textContent=jobCounts().map((n,j)=>j&&n[0]?`${CFG.jobs[j].n.toLowerCase()} ${n[0]}`+(n[1]?` (${n[1]} binnen)`:''):'').filter(Boolean).join(', ')||'–';$('ndone').textContent=TR.done+' · '+TR.used;
       $('npath').textContent=`${pathQueued()} · ${PF.cache.size}, ${Math.round(100*PF.hits/Math.max(1,PF.hits+PF.miss))}% hit`}
     drawMini();refreshStock();refreshHover();
   }
@@ -178,9 +179,8 @@ function draw(){
       const f=moving?(animF+k)&3:0;
       const ux=X*TW-Y*TW/2+off,uy=Y*TH-hAt(X,Y),fr=f*2+S.dir[k];
       if(S.carry){const c=S.carry[k],j=S.job[k];
-        /* TIJDELIJK tot mijlpaal 4: bouwer = bestaande bouwersfiguur, graver = drager met schop */
-        if(j===2)blit(UNITS[1][S.vr[k]][S.pl[k]][fr],ux,uy);
-        else{blit(UNITC[c||j?1:0][S.vr[k]][S.pl[k]][fr],ux,uy);if(c||j)blit(carrySprite(c?c-1:GI.schop),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}}
+        if(c){blit(UNITC[1][S.vr[k]][S.pl[k]][fr],ux,uy);blit(carrySprite(c-1),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}
+        else blit(j?jobSprite(j,S.vr[k],S.pl[k],fr):UNITC[0][S.vr[k]][S.pl[k]][fr],ux,uy)}
       else blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy);
     }
     if(PROF)pt('kolonisten',tr);

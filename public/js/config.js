@@ -32,7 +32,27 @@ const CFG={
     pickTicks:8,dropTicks:8,       // bukken bij oppakken en neerleggen
     idleRadius:4,idleWait:[20,90], // vrij rondlopen: straal rond de laatste plek en wachttijd in ticks
     retryTicks:200,                // pauze voor een gebouw als een route onbereikbaar bleek
+    keepFree:8,                    // zoveel vrije dragers per speler blijven er altijd over (niet omscholen tot vakman)
   },
+  /* beroepen: volgorde = nummer in S.job (0 drager, 1 graver, 2 bouwer staan vast). Een vrije drager wordt vakman door
+     het gereedschap uit de voorraad te halen; beroepen zonder gereedschap beginnen meteen. bld = gebouwen waarin hij werkt. */
+  jobs:[
+    {k:'drager',n:'Drager'},
+    {k:'graver',n:'Graver',tool:'schop'},
+    {k:'bouwer',n:'Bouwer',tool:'hamer'},
+    {k:'houthakker',n:'Houthakker',tool:'bijl',bld:['houthakker']},
+    {k:'bosbouwer',n:'Bosbouwer',tool:'schop',bld:['bosbouwer']},
+    {k:'zager',n:'Zager',tool:'zaag',bld:['zagerij']},
+    {k:'steenhouwer',n:'Steenhouwer',tool:'houweel',bld:['steenhouwer']},
+    {k:'mijnwerker',n:'Mijnwerker',tool:'houweel',bld:['kolenmijn','ijzermijn','goudmijn']},
+    {k:'boer',n:'Boer',tool:'zeis',bld:['boerderij']},
+    {k:'visser',n:'Visser',tool:'hengel',bld:[]},   // vissershut volgt in mijlpaal 5
+    {k:'jager',n:'Jager',tool:'boog',bld:[]},       // jagershut volgt in mijlpaal 5
+    {k:'molenaar',n:'Molenaar',bld:['molen']},
+    {k:'bakker',n:'Bakker',bld:['bakkerij']},
+    {k:'smelter',n:'Smelter',bld:['ijzersmelterij','goudsmelterij']},
+    {k:'smid',n:'Smid',bld:['smidse','wapensmid']},
+  ],
   /* bouwen: kosten [planken, steen]; de burcht kan niet gebouwd worden */
   build:{
     cost:{
@@ -55,9 +75,8 @@ const CFG={
      Elk gebouw verbruikt elke useEvery ticks één stuk van de goederen in 'use'. */
   temp:{
     want:{
-      pakhuis:{plank:8,steen:8,brood:4},zagerij:{boomstam:6},houthakker:{bijl:1},steenhouwer:{houweel:1},
-      bosbouwer:{schop:1},bakkerij:{water:4},boerderij:{zeis:1},woonhuis:{brood:2},wachttoren:{brood:1},
-      kolenmijn:{brood:2,houweel:1},ijzermijn:{vlees:2},goudmijn:{vis:2},
+      pakhuis:{plank:8,steen:8,brood:4},zagerij:{boomstam:6},bakkerij:{water:4},woonhuis:{brood:2},wachttoren:{brood:1},
+      kolenmijn:{brood:2},ijzermijn:{vlees:2},goudmijn:{vis:2},
     },
     use:['boomstam','water','brood','vis','vlees'],useEvery:600,
   },

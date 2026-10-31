@@ -2,9 +2,9 @@
 /* ---------- Bouwen: plaatsen, egaliseren, bouwen, afbreken ----------
    b.st: 0 klaar, 1 bouwplaats wordt geëgaliseerd door gravers, 2 bouwers verwerken planken en steen.
    Tijdens het egaliseren is de bouwplaats beloopbaar (de gravers staan erop); daarna niet meer.
+   Graver = beroep 1, bouwer = beroep 2 (CFG.jobs), gelijk aan b.st van de fase waarin ze werken.
    Afgebroken gebouwen houden hun index (b.dead), zodat stapels en lopende opdrachten geldig blijven;
    wat er nog ligt, brengen dragers naar de opslag. */
-const JOBS=[{n:'Drager'},{n:'Graver',tool:'schop'},{n:'Bouwer',tool:'hamer'}];
 const canBuild=t=>t!=='burcht'&&!!CFG.build.cost[t];
 function initBuild(){
   const {W,H}=world,own=world.own=new Uint8Array(W*H);world.sites=[];
@@ -77,7 +77,7 @@ function demolish(bi){
   const {W,ter,bldAt,bldAnchor,walk}=world,c=CFG.build.cost[b.type]||[0,0],used=b.st?b.used:c;
   fpTiles(b,i=>{bldAt[i]=0;walk[i]=ter[i]>=T.SAND&&ter[i]<=T.MOUNTAIN?1:0});bldAnchor[b.y*W+b.x]=0;world.walkVer++;
   if(b.st)world.sites.splice(world.sites.indexOf(bi),1);
-  b.dead=1;b.st=0;b.occ=0;b.want.fill(0);
+  releaseWorker(b);b.dead=1;b.st=0;b.want.fill(0);
   addGoods(bi,GI.plank,Math.floor(used[0]*CFG.build.refund));addGoods(bi,GI.steen,Math.floor(used[1]*CFG.build.refund));
   const reg=[];siteRegion(BTYPES[b.type].fp,b.x,b.y,(x,y)=>reg.push(y*W+x));invalidateTiles(reg);buildMini();stockVer++;return true;
 }
@@ -91,8 +91,8 @@ function planWorkers(M){
       const c=nearestIdle(b.p,doorTile(b),kind);
       if(c>=0){sendWorker(c,bi);made++;continue}
       let busy=false;for(let i=0;i<S.n;i++)if(S.pl[i]===b.p&&S.jb[i]===kind&&(S.st[i]===ST.PATH_TOOL||S.st[i]===ST.TO_TOOL)){busy=true;break}
-      if(busy)break; // er is al iemand onderweg naar gereedschap
-      const s=nearestSource(b.p,GI[JOBS[kind].tool],bi,b.x,b.y);if(s<0)break;
+      if(busy||freeCarriers(b.p)<=CFG.carry.keepFree)break; // al iemand onderweg naar gereedschap, of te weinig vrije dragers
+      const s=nearestSource(b.p,GI[CFG.jobs[kind].tool],bi,b.x,b.y);if(s<0)break;
       const r=nearestIdle(b.p,G.tile[s],0);if(r<0)break;
       G.res[s]++;S.gd[r]=G.good[s];S.src[r]=s;S.dst[r]=bi;S.jb[r]=kind;S.cm[r]=0;S.wait[r]=0;goPath(r,ST.PATH_TOOL,G.tile[s]);made++;break;
     }

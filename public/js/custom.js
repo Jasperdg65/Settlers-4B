@@ -54,6 +54,9 @@ function buildGallery(){
   [[0,0,'Drager'],[0,2,'Draagster'],[1,0,'Bouwer'],[2,0,'Soldaat'],[3,0,'Boog­schutter'],[4,1,'Heler']].forEach(([r,v,n])=>{
     const fig=document.createElement('figure');fig.appendChild(thumb(UNITS[r][v][0][0],44,54,2.2));
     const cap=document.createElement('figcaption');cap.textContent=n;fig.appendChild(cap);pu.appendChild(fig)});
+  /* beroepen van de economie */
+  CFG.jobs.forEach((j,k)=>{if(!k)return;const fig=document.createElement('figure');fig.appendChild(thumb(jobSprite(k,0,0,0),44,54,2.2));
+    const cap=document.createElement('figcaption');cap.textContent=j.n;fig.appendChild(cap);pu.appendChild(fig)});
   const gb=$('buildings');gb.innerHTML='';
   for(const k of Object.keys(BTYPES)){
     const fig=document.createElement('figure');fig.tabIndex=0;fig.className='bfig'+(CUSTOM[k]?' custom':'')+(k===cbType?' sel':'');

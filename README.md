@@ -23,6 +23,7 @@ public/                 webroot (Apache-alias /settlers4b)
     path.js             A* over het tegelraster, wachtrij met knopenbudget per tick, routecache
     transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
     build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
+    jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
@@ -165,6 +166,13 @@ los van het tekenen.
   of hamer uit de voorraad halen. Afbreken geeft de helft van het verwerkte materiaal terug; dat en wat er
   nog lag, brengen dragers naar de opslag. De burcht kan niet gebouwd of afgebroken worden.
   Afgebroken gebouwen blijven in `world.blds` staan met `dead`, zodat indexen geldig blijven.
+- **Beroepen** (`CFG.jobs`, `js/jobs.js`): elk voltooid werkgebouw krijgt een vakman. Eerst een werkloze
+  vakman met dat beroep, anders een vrije drager die het gereedschap uit de voorraad haalt (bijl, zaag,
+  houweel, hamer, schop, zeis, hengel, boog; molenaar, bakker, smelter en smid hebben niets nodig).
+  Hij loopt naar de deur, gaat naar binnen en de vlag verschijnt. Er blijven altijd `CFG.carry.keepFree`
+  vrije dragers per speler over. Bij afbreken komt de bewoner naar buiten en houdt zijn beroep.
+  Uiterlijk (`JOBLOOK` in `js/units.js`): de vrije drager met hoed, schort en gereedschap of een
+  kenmerkend goed in de hand; sprites worden pas gemaakt als ze nodig zijn (`jobSprite`).
 - **Tijdelijk** (`CFG.territory`): eigen gebied is een straal rond de burcht en elke voltooide wachttoren
   (vrij land, wie eerst komt; afbreken neemt geen gebied weg); de grens is alleen als stippen te zien tijdens bouwen of afbreken.
 - **Tijdelijk** (`CFG.temp`): zolang er geen productie en bouw is, vragen gebouwen een vaste

@@ -9,7 +9,7 @@ const ROLES=[
   {name:'Heler',bld:['kruidenhuis','burcht','woonhuis'],share:0.06,vars:3}];
 const SKIN='#f0c9a0',HAIRS=['#4a2e1a','#6b3f22','#2f2118','#8a5a2e'];
 /* pose (alleen economie): 1 = vrije drager met lege handen, 2 = drager met beide handen vooruit (het goed tekent loop.js erop) */
-function drawUnit(g,role,v,pc,f,hairCol,pose){
+function drawUnit(g,role,v,pc,f,hairCol,pose,look){
   const sw=[0,1.3,0,-1.3][f],bob=(f%2)?-0.45:0,fem=v===2;
   ell(g,0.4,0.1,3.4,1.15,'rgba(30,25,10,.3)');
   g.save();g.translate(0,bob);
@@ -80,7 +80,45 @@ function drawUnit(g,role,v,pc,f,hairCol,pose){
     if(role===4){line(g,[3.1,-0.4,3.5,-14.2],'#7a5434',0.6);for(let k=0;k<3;k++)ell(g,3.5+(k-1)*0.9,-14.8+(k%2)*0.4,0.5,1,'#5aa043',(k-1)*0.6);
       poly(g,[-3.8,-5.6,-1.8,-5.6,-1.6,-3.2,-3.8,-3.2],'#8a6a40',OUT,0.3);line(g,[-3.4,-5.3,-2.2,-3.6],'#5aa043',0.5)}
   }
+  if(look)drawLook(g,look,pc,fem);
   g.restore();
+}
+/* beroepen (economie): hoed, schort en wat ze in de hand houden (gereedschap of een kenmerkend goed, zie GDRAW).
+   Basis is de vrije drager met lege handen (pose 1). hat: cap, wide (brede rand), tall (bakkersmuts), helm (met lampje) */
+const JOBLOOK={
+  graver:{hat:'#7a5a3a',kind:'cap',item:'schop'},
+  bouwer:{hat:'#c9a55a',kind:'wide',apron:'#8a5a34',item:'hamer'},
+  houthakker:{hat:'#2f5d32',kind:'cap',apron:'#6b4a2c',item:'bijl'},
+  bosbouwer:{hat:'#6f9a3e',kind:'wide',apron:'#4f7a36',item:'schop'},
+  zager:{hat:'#8a6a40',kind:'cap',apron:'#c9b68c',item:'zaag'},
+  steenhouwer:{hat:'#9a9a94',kind:'cap',apron:'#7c7c78',item:'houweel'},
+  mijnwerker:{hat:'#3a3a3c',kind:'helm',item:'houweel'},
+  boer:{hat:'#e0c070',kind:'wide',item:'zeis'},
+  visser:{hat:'#4f6f8a',kind:'wide',apron:'#3e5a70',item:'hengel'},
+  jager:{hat:'#3f5a2a',kind:'cap',apron:'#6b5236',item:'boog'},
+  molenaar:{hat:'#f2ede1',kind:'cap',apron:'#e8e2d2',item:'meel'},
+  bakker:{hat:'#ffffff',kind:'tall',apron:'#f4f0e6',item:'brood'},
+  smelter:{hat:'#5a4030',kind:'cap',apron:'#6b4a30',item:'kolen'},
+  smid:{hat:'#3a2a20',kind:'cap',apron:'#5a3b22',item:'ijzer'},
+};
+function drawLook(g,L,pc,fem){
+  if(L.apron){poly(g,[-1.7,-3.2,2.1,-3.2,1.8,-7.9,-1.4,-7.9],L.apron,OUT,0.3);line(g,[-1.4,-7.9,0.2,-8.8,1.8,-7.9],sh(L.apron,0.7),0.3)}
+  const h=L.hat;
+  if(L.kind==='tall'){poly(g,[-2.2,-12.2,2.8,-12.2,3.3,-16.4,-2.7,-16.4],h,OUT,0.3);line(g,[-2.6,-12.4,3.2,-12.4],pc,0.6)}
+  else{g.beginPath();g.arc(0.3,-11.8,3,Math.PI,2*Math.PI);g.fillStyle=h;g.fill();g.strokeStyle=OUT;g.lineWidth=0.3;g.stroke();
+    const w=L.kind==='wide'?[-4.2,4.9]:[-3,3.9];line(g,[w[0],-11.7,w[1],-11.7],sh(h,0.75),0.8);line(g,[-2.6,-12.5,3.2,-12.5],pc,0.5);
+    if(L.kind==='helm')circ(g,2.6,-13.2,0.75,'#ffd25a')}
+  /* in de hand (3, −5,2): gereedschap schuin omhoog, een goed ervoor */
+  const tool=['schop','hamer','bijl','zaag','houweel','zeis','hengel','boog'].includes(L.item);
+  g.save();if(tool){g.translate(3.2,-5.4);g.rotate(-1.15);g.scale(0.95,0.95);g.translate(0.9,-0.3)}else{g.translate(4.4,-5.6);g.scale(0.62,0.62)}
+  GDRAW[L.item](g);g.restore();circ(g,3,-5.2,0.78,SKIN);
+}
+const JSPR=[];
+/* sprite van beroep job (index in CFG.jobs), variant v, speler p, frame fr = f*2+dir; pas gemaakt als hij nodig is */
+function jobSprite(job,v,p,fr){
+  const k=((job*3+v)*8+p)*8+fr;if(JSPR[k])return JSPR[k];
+  const f=fr>>1,L=JOBLOOK[CFG.jobs[job].k],s=spr(16,22,7,20,g=>drawUnit(g,0,v,PCOL[p],f,HAIRS[(v+p)%4],1,L),1.2);
+  JSPR[k-(fr&1)]=s;JSPR[k-(fr&1)+1]=flipped(s);return JSPR[k];
 }
 const UNITS=[],UNITC=[]; // UNITS[role][var][p][f*2+dir]
 function makeUnits(pcols){
