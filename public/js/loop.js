@@ -59,15 +59,19 @@ function draw(){
   ctx.imageSmoothingEnabled=TEX.ready||cam.z<1;const zd=cam.z*dpr,cres=!TEX.ready||zd<1.6?1:1.5;
   const v=viewRect(),{W,H,hp,ter,obj,tree,bldAnchor,blds}=world;
   const ncx=Math.ceil((W-1)/CH),ncy=Math.ceil((H-1)/CH);
-  let built=0,tp=pnow(),tb=0;
+  let built=0,tp=pnow(),tb=0,vis=0;ctx.imageSmoothingQuality='high';
   for(let cy=0;cy<ncy;cy++)for(let cx=0;cx<ncx;cx++){
     const b=chunkBounds(cx,cy);
     if(b.right<v.l||b.left>v.r||b.bottom<v.t||b.top>v.b)continue;
     const key=cy*1000+cx+cres*1e6;let ch=chunks.get(key);
-    if(!ch){if(built>=(TEX.ready?3:6)&&chunks.size>0)continue;const tc=pnow();ch=renderChunk(cx,cy,cres);if(PROF){tb+=performance.now()-tc;PN.built++}chunks.set(key,ch);built++}
-    ch.used=frameNo;ctx.drawImage(ch.c,ch.left,ch.top,ch.c.width/ch.cres,ch.c.height/ch.cres);
+    if(!ch){if(built>=2&&chunks.size>0)continue;const tc=pnow();ch=renderChunk(cx,cy,cres);if(PROF){tb+=performance.now()-tc;PN.built++}built++}
+    else chunks.delete(key);
+    chunks.set(key,ch);ch.used=frameNo;vis+=ch.c.width*ch.c.height;ctx.drawImage(ch.c,ch.left,ch.top,ch.c.width/ch.cres,ch.c.height/ch.cres);
   }
-  if(chunks.size>40&&frameNo%30===0)for(const [k,c] of chunks)if(frameNo-c.used>(c.cres>1?90:600))chunks.delete(k);
+  /* LRU: de Map staat op volgorde van laatst gebruikt; ruim de oudste op tot de cache binnen het budget valt */
+  let cpx=0;for(const c of chunks.values())cpx+=c.c.width*c.c.height;
+  const cap=Math.max(CHUNK_PX,vis*1.5);
+  for(const [k,c] of chunks){if(cpx<=cap||c.used===frameNo)break;chunks.delete(k);cpx-=c.c.width*c.c.height;c.c.width=0}
   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
   if(PROF){pt('grond',tp);PT.grond-=tb;PT.chunkbouw=(PT.chunkbouw||0)+tb;tp=performance.now()}
 
@@ -95,7 +99,14 @@ function draw(){
     for(let i=0;i<A.n;i++){const Y=py[i]+(y[i]-py[i])*al,r=Y|0;if(r<yMin||r>yMax)continue;
       const X=px[i]+(x[i]-px[i])*al,sx=X*TW-Y*TW/2+off;if(sx<v.l-12||sx>v.r+12)continue;next[i]=rowA[r];rowA[r]=i}}
   if(PROF)pt('emmers',tp);
-  const blit=(s,x,y)=>ctx.drawImage(s.c,x-s.ax,y-s.ay,s.w,s.h);
+  /* kleinste vooraf verkleinde versie die nog minstens zo breed is als op het scherm; 'high' alleen als er nog meer dan 2× verkleind (of vergroot) wordt */
+  let q='high';
+  const blit=(s,x,y)=>{
+    if(s.m===undefined)spriteMips(s);
+    const need=s.w*zd;let c=s.c;
+    if(s.m&&s.m.length){const m=s.m;c=m[m.length-1];for(let k=0;k<m.length;k++)if(m[k].width>=need){c=m[k];break}}
+    const r=c.width/need,qq=r<1||r>2?'high':'low';if(qq!==q){q=qq;ctx.imageSmoothingQuality=q}
+    ctx.drawImage(c,x-s.ax,y-s.ay,s.w,s.h)};
   const animF=(tNow/120|0);
   for(let y=yMin;y<=yMax;y++){
     const [xa,xb]=xr(y);let tr=pnow();

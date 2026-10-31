@@ -6,6 +6,7 @@ function resize(){const r=cv.getBoundingClientRect();dpr=Math.min(2,window.devic
 new ResizeObserver(resize).observe(cv);resize();
 
 let world=null,chunks=new Map(),frameNo=0;
+const CHUNK_PX=24e6; // budget gecachte grondchunks in pixels (~96 MB); bij veel zichtbare chunks 1,5× wat in beeld is
 const cam={x:0,y:0,z:1};
 const SX=(x,y)=>x*TW-y*TW/2+world.H*TW/2;
 

@@ -10,6 +10,14 @@ function spr(w,h,ax,ay,fn,sc=1){
   const g=c.getContext('2d');g.scale(SS*sc,SS*sc);g.translate(ax,ay);g.lineJoin='round';g.lineCap='round';fn(g);
   return {c,w:w*sc,h:h*sc,ax:ax*sc,ay:ay*sc};
 }
+/* Vooraf verkleinde versies (1×, 2×, 4× de wereldgrootte, plus het origineel) als ImageBitmap, oplopend in breedte.
+   Wordt per sprite bij het eerste tekenen gestart; tot ze klaar zijn tekent blit het origineel. */
+function spriteMips(s){
+  s.m=null;const sw=s.c.width,shh=s.c.height,lv=[];
+  for(const f of [1,2,4]){const w=Math.round(s.w*f);if(w>0&&w<sw*0.9)lv.push(createImageBitmap(s.c,{resizeWidth:w,resizeHeight:Math.max(1,Math.round(w*shh/sw)),resizeQuality:'high'}))}
+  lv.push(createImageBitmap(s.c));
+  Promise.all(lv).then(m=>s.m=m,()=>s.m=[]);
+}
 function flipped(s){
   const c=document.createElement('canvas');c.width=s.c.width;c.height=s.c.height;
   const g=c.getContext('2d');g.translate(c.width,0);g.scale(-1,1);g.drawImage(s.c,0,0);
