@@ -83,8 +83,8 @@ function endDuel(k,w){
   const h=healerSpot(lose);armyGo(lose,h[0],h[1],AIM.HEAL);
   ARMY.won[S.pl[win]]++;
 }
-/* 'speler 1 senior (kracht 2,30 met muziek)' voor de meldingen */
-const duelName=i=>`speler ${S.pl[i]+1} ${LVLNAME[S.lvl[i]]} (kracht ${strength(i).toFixed(2).replace('.',',')}${musicFor(i)>=0?' met muziek':''})`;
+/* 'speler 1 senior (kracht 2,10, muziek, 25% moe)' voor de meldingen */
+const duelName=i=>`speler ${S.pl[i]+1} ${LVLNAME[S.lvl[i]]} (kracht ${strength(i).toFixed(2).replace('.',',')}${musicFor(i)>=0?', muziek':''}${S.fat[i]>=0.05?`, ${Math.round(S.fat[i]*100)}% moe`:''})`;
 /* plek naast de dichtstbijzijnde eigen heler; zonder heler de deur van de eigen burcht */
 function healerSpot(i){
   let best=-1,bd=Infinity;

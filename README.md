@@ -372,12 +372,12 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   kracht (niveau × gevoed × harmoniemeter × vermoeidheid, `CFG.duel`), met een golvende
   toevalsterm, en schuift de stand −1..+1; de sprite toont stand 1–9 en het balkje erboven
   schuift mee in beide spelerkleuren. Met de huidige getallen duurt een gelijk duel gemiddeld
-  ongeveer 18 s; bij 15% meer kracht wint de sterkste ongeveer 3 op de 4 keer, bij 25% meer ruim 4 op
-  de 5, medior tegen junior 19 op de 20 en senior tegen junior vrijwel altijd.
-- Afloop: de winnaar loopt terug naar waar hij stond en krijgt er `winTire` (0,2) vermoeidheid bij,
+  ongeveer 23 s; bij 15% meer kracht (bijvoorbeeld muziek) wint de sterkste 9 op de 10 keer, vanaf 30%
+  meer altijd: een frisse senior verliest nooit van een junior (duurt ~4 s).
+- Afloop: de winnaar loopt terug naar waar hij stond en krijgt er `winTire` (0,1) vermoeidheid bij,
   bovenop wat het duel zelf kostte; herstel in rust gaat langzaam (`rest`, van vol naar fris ruim
-  8 minuten). Volle vermoeidheid kost 60% kracht, dus een uitgeputte senior verliest van een frisse
-  junior: wie de ene na de andere aanval afslaat, raakt op (meestal binnen 3–5 aanvallen);
+  4 minuten). Volle vermoeidheid kost 35% kracht: een uitgeputte senior wint nog van een junior, maar
+  verliest van een frisse medior;
   de verliezer loopt doorschijnend en langzamer naar de dichtstbijzijnde eigen heler (zonder heler:
   de eigen burcht) en is daar `CFG.duel.outTicks` (30 s) uitgeschakeld.
 - Markering boven geselecteerden: capsule in gezondheids-/vermoeidheidskleur (groen, geel,
