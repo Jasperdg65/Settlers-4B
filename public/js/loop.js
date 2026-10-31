@@ -44,7 +44,7 @@ function frame(now){
     $('fps').textContent=fpsAvg.toFixed(0);
     $('simms').textContent=running?simAvg.toFixed(2)+' ms':'–';
     $('drawms').textContent=drawAvg.toFixed(1)+' ms';{const bl=world.blds;$('nocc').textContent=bl.filter(b=>b.occ).length+' van '+bl.length}
-    drawMini();
+    drawMini();refreshStock();
   }
 }
 let rowU=new Int32Array(1),rowA=new Int32Array(1);
@@ -63,7 +63,7 @@ function draw(){
   const z=cam.z*dpr;
   ctx.setTransform(z,0,0,z,cv.width/2-cam.x*z,cv.height/2-cam.y*z);
   ctx.imageSmoothingEnabled=TEX.ready||cam.z<1;const zd=cam.z*dpr,cres=!TEX.ready||zd<1.6?1:1.5;
-  const v=viewRect(),{W,H,hp,ter,obj,tree,bldAnchor,blds}=world;
+  const v=viewRect(),{W,H,hp,ter,obj,tree,bldAnchor,blds,stk}=world;
   const ncx=Math.ceil((W-1)/CH),ncy=Math.ceil((H-1)/CH);
   let built=0,tp=pnow(),tb=0,vis=0;ctx.imageSmoothingQuality=PROF&&PX.q?'low':'high';
   for(let cy=0;cy<ncy;cy++)for(let cx=0;cx<ncx;cx++){
@@ -145,6 +145,7 @@ function draw(){
           ctx.globalAlpha=1}
         if(PROF)pt('gebouwen',tg);
         continue}
+      if(stk&&stk[i]&&detail){const s=stk[i]-1;if(G.cnt[s])blit(goodSprite(G.good[s],G.cnt[s]),SX(x+0.5,y+0.5),(y+0.5)*TH-hAt(x+0.5,y+0.5))}
       if(!o||PROF&&PX.n)continue;
       const h=hash2(x*7,y*13),px=SX(x,y)+((h&7)-3.5)*0.9,py=y*TH-hp[i]+((h>>>3&3)-1.5)*0.6;
       if(px<v.l-30||px>v.r+30)continue;

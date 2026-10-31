@@ -1,7 +1,7 @@
 "use strict";
 /* ---------- Kolonisten en dieren ---------- */
 const S={n:0},A={n:0};
-const TICK=50;let running=false,acc=0,simAvg=0,tickNo=0;
+const TICK=1000/CFG.ticksPerSec;let running=false,acc=0,simAvg=0,tickNo=0;
 let srand=mulberry32(1);
 function hAt(X,Y){
   const {W,H,hp}=world;const x=Math.min(W-2,Math.max(0,X)),y=Math.min(H-2,Math.max(0,Y));

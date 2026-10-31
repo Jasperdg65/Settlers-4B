@@ -11,12 +11,15 @@ public/                 webroot (Apache-alias /settlers4b)
   css/kolonie.css
   js/                   gewone <script>-tags, vaste volgorde (zie index.html)
     core.js             tekenhulpen ($, spr, poly, …)
+    config.js           CFG: alle getallen voor de balans (tickrate, stapels, startvoorraad, …)
     nature.js           getekende bomen, struiken, rotsen, dieren (reserve-sprites)
     units.js            inwoners
     buildings.js        gebouwtypes (BTYPES), getekende gebouwen, spelerkleuren
+    goods.js            goederensoorten (GOODS) en getekende stapels
     terrain.js          seeded random, ruis, mapgenerator (incl. mijnen, paden)
     render.js           canvas, camera, chunks (renderChunk met resolutie cres)
     colonists.js        kolonisten en dieren
+    stock.js            stapels op de grond, stapelplekken per gebouw, paneel Voorraad
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
@@ -125,6 +128,21 @@ Wordt de PNG anders bijgesneden (andere marge), controleer ze dan opnieuw.
    uit de HTML; `src`, `px` en `keep` blijven behouden). Nieuwe sleutels krijgen
    hun bron-PNG via de tabel bovenin het script.
 3. Zet de HTML in `bron/` als nieuwe referentie.
+
+## Economie
+
+Modus *Economie* (standaard) of *Stresstest* (de oude test met duizenden rondlopende
+kolonisten, zonder goederen). De simulatie loopt met `CFG.ticksPerSec` (20) ticks per seconde,
+los van het tekenen.
+
+- **Goederen** (`GOODS` in `js/goods.js`): bouwmaterialen, voedsel, grondstoffen, metalen,
+  gereedschap en wapens; elk met een eigen getekende sprite.
+- **Stapels**: alles ligt als stapel op de grond, max `CFG.stackMax` (8) per stapel, één per tegel
+  (`world.stk[tegel]` = stapel+1). Stapels staan in compacte arrays (`G.tile`, `G.good`, `G.cnt`,
+  `G.pl`, `G.bld`). Ook de voorraad van burcht en pakhuis ligt zo, op hun stapelplekken
+  (`bldSlots`: vrije tegels rond het gebouw, dichtst bij de deur; ingang en paden blijven vrij).
+- **Startvoorraad** in de burcht: `CFG.startStock`, keuze Weinig/Normaal/Veel in het paneel.
+- **Paneel Voorraad**: totaal per goed per speler.
 
 ## Prestaties
 

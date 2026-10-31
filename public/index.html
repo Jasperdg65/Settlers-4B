@@ -29,10 +29,16 @@
   <label><span class="row">Waterniveau <span class="val" id="waterV"></span></span><input type="range" id="water" min="0.08" max="0.6" step="0.01" value="0.3"></label>
   <label><span class="row">Gebergte <span class="val" id="mountV"></span></span><input type="range" id="mount" min="0" max="1" step="0.05" value="0.5"></label>
   <label><span class="row">Bosdichtheid <span class="val" id="treesV"></span></span><input type="range" id="trees" min="0" max="1" step="0.05" value="0.6"></label>
+  <label>Modus
+    <select id="mode"><option value="eco" selected>Economie</option><option value="stress">Stresstest</option></select>
+  </label>
+  <label class="eco-only">Startvoorraad in de burcht
+    <select id="stock"><option value="weinig">Weinig</option><option value="normaal" selected>Normaal</option><option value="veel">Veel</option></select>
+  </label>
   <button class="primary" id="gen">Genereer wereld</button>
 
-  <h2>Stresstest</h2>
-  <label><span class="row">Kolonisten <span class="val" id="countV"></span></span><input type="range" id="count" min="500" max="20000" step="500" value="2000"></label>
+  <h2>Simulatie</h2>
+  <label class="stress-only"><span class="row">Kolonisten <span class="val" id="countV"></span></span><input type="range" id="count" min="500" max="20000" step="500" value="2000"></label>
   <label>Snelheid
     <select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select>
   </label>
@@ -50,6 +56,12 @@
     <dt>Generatietijd</dt><dd id="genms">–</dd>
   </dl>
   <div id="hover">Beweeg over de kaart voor details per tegel.</div>
+
+  <section class="eco-only">
+    <h2>Voorraad</h2>
+    <label>Speler<select id="stockPl"></select></label>
+    <div id="stockList" class="stock"></div>
+  </section>
 
   <h2>Inwoners</h2>
   <div class="gallery people" id="people"></div>
@@ -76,12 +88,15 @@
 </main>
 
 <script src="js/core.js"></script>
+<script src="js/config.js"></script>
 <script src="js/nature.js"></script>
 <script src="js/units.js"></script>
 <script src="js/buildings.js"></script>
+<script src="js/goods.js"></script>
 <script src="js/terrain.js"></script>
 <script src="js/render.js"></script>
 <script src="js/colonists.js"></script>
+<script src="js/stock.js"></script>
 <script src="js/loop.js"></script>
 <script src="js/input.js"></script>
 <script src="js/assets.js"></script>

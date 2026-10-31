@@ -4,20 +4,26 @@ const fmt={players:v=>v,water:v=>Math.round(v*100)+'%',mount:v=>Math.round(v*100
 for(const k in fmt){const el=$(k),out=$(k+'V');const u=()=>out.textContent=fmt[k](el.value);el.addEventListener('input',u);u()}
 $('dice').onclick=()=>{const w=['eik','duin','veen','berk','klei','heide','fjord','kreek','polder','mergel'];$('seed').value=w[Math.random()*w.length|0]+'-'+(Math.random()*9000+1000|0)};
 $('ores').onchange=ev=>showOres=ev.target.checked;
+const mode=()=>$('mode').value;
+const colonistTarget=()=>mode()==='eco'?world.starts.length*CFG.eco.colonistsPerPlayer:+$('count').value;
 function regenerate(){
+  document.body.dataset.mode=mode();
   const o={seed:$('seed').value||'kolonie',size:+$('size').value,shape:$('shape').value,players:+$('players').value,
     water:+$('water').value,mount:+$('mount').value,trees:+$('trees').value};
   world=generate(o);chunks.clear();buildMini();
   $('genms').textContent=world.genMs.toFixed(0)+' ms';
   if(world.starts.length<o.players)$('hover').textContent=`Slechts ${world.starts.length} geschikte startplekken gevonden. Verlaag het waterniveau of het gebergte.`;
   const s=world.starts[0]||{cx:world.W/2,cy:world.H/2};centerOn(s.cx+0.5,s.cy-1);cam.z=2;
-  spawnAnimals();spawn(+$('count').value);
+  spawnAnimals();spawn(colonistTarget());
+  if(mode()==='eco'){initGoods();buildStockPanel()}else{world.stk=null;G.n=0}
   drawMini();
 }
 $('gen').onclick=regenerate;
-$('start').onclick=()=>{if(!world)return;spawn(+$('count').value);running=true;acc=0;$('pause').textContent='Pauze'};
+$('start').onclick=()=>{if(!world)return;spawn(colonistTarget());running=true;acc=0;$('pause').textContent='Pauze'};
 $('pause').onclick=()=>{running=!running;$('pause').textContent=running?'Pauze':'Verder'};
-$('count').addEventListener('change',()=>spawn(+$('count').value));
+$('count').addEventListener('change',()=>{if(mode()==='stress')spawn(colonistTarget())});
+$('mode').onchange=regenerate;
+$('stock').onchange=()=>{if(world&&world.stk){initGoods();refreshStock()}};
 
 makeTrees();makeNature();makeAnimals();makeUnits(PCOL);
 regenerate();running=true;

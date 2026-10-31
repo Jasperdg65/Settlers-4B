@@ -43,7 +43,8 @@ cv.addEventListener('pointermove',ev=>{
     hoverTile={x,y};const i=y*world.W+x,o=world.obj[i],b=world.bldAt[i];
     $('hover').textContent=`Tegel ${x}, ${y} · ${TNAME[world.ter[i]]} · hoogte ${world.hp[i].toFixed(0)}`+
       (b?` · ${BTYPES[world.blds[b-1].type].name} van speler ${world.blds[b-1].p+1} (${world.blds[b-1].occ?'bewoond':'leeg'})`:'')+
-      (o===1?` · ${TREE_NAMES[world.tree[i]/3|0]}`:o===2?' · steen':o===3?' · struik':o===4?' · jonge boom':o===5?' · boomstronk':'')+(world.ore[i]?` · erts: ${ORE[world.ore[i]]}`:'');
+      (o===1?` · ${TREE_NAMES[world.tree[i]/3|0]}`:o===2?' · steen':o===3?' · struik':o===4?' · jonge boom':o===5?' · boomstronk':'')+(world.ore[i]?` · erts: ${ORE[world.ore[i]]}`:'')+
+      (world.stk&&world.stk[i]?(s=>` · stapel: ${G.cnt[s]}× ${GOODS[G.good[s]].n} (${BTYPES[world.blds[G.bld[s]].type].name.replace(/ \(.*\)/,'')}, speler ${G.pl[s]+1})`)(world.stk[i]-1):'');
   }else hoverTile=null;
 });
 const endDrag=()=>{drag=null;cv.classList.remove('drag')};
