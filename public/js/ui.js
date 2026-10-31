@@ -27,5 +27,5 @@ $('stock').onchange=()=>{if(world&&world.stk)startColonists()};
 
 makeTrees();makeNature();makeAnimals();makeUnits(PCOL);
 regenerate();running=true;
-loadManifest().then(()=>{loadTextures();loadNature();loadCustom().then(()=>{buildGallery();refreshCustomUI()})});
+loadManifest().then(()=>{loadTextures();loadNature();loadUnits3D();loadCustom().then(()=>{buildGallery();refreshCustomUI()})});
 requestAnimationFrame(frame);

@@ -27,7 +27,7 @@ function spawn(total,eco){
   const per=Math.floor(total/P),n=per*P,{W,walk}=world;
   srand=mulberry32(hashStr(world.seed+'#settlers'));
   for(const k of ['x','y','px','py','tx','ty','hx','hy','sp'])S[k]=new Float32Array(n);
-  S.wait=new Uint16Array(n);S.tb=new Int16Array(n);S.ins=new Uint8Array(n);for(const b of world.blds)b.occ=b.type==='burcht'?1:0;S.pl=new Uint8Array(n);S.role=new Uint8Array(n);S.dir=new Uint8Array(n);S.vr=new Uint8Array(n);
+  S.wait=new Uint16Array(n);S.tb=new Int16Array(n);S.ins=new Uint8Array(n);for(const b of world.blds)b.occ=b.type==='burcht'?1:0;S.pl=new Uint8Array(n);S.role=new Uint8Array(n);S.dir=new Uint8Array(n);S.vr=new Uint8Array(n);S.lvl=new Uint8Array(n);S.d8=new Uint8Array(n).fill(2);
   S.n=n;S.next=new Int32Array(n);
   let i=0;
   for(let p=0;p<P;p++){const s=world.starts[p];const hx=s.cx+0.5,hy=s.cy+1.6;
@@ -35,7 +35,7 @@ function spawn(total,eco){
       let role=0;if(!eco){let rr=srand();for(let k=0;k<ROLES.length;k++){if(rr<ROLES[k].share){role=k;break}rr-=ROLES[k].share}}
       let X=hx,Y=hy;
       for(let t=0;t<30;t++){const a=srand()*6.283,d=2+srand()*11,xx=hx+Math.cos(a)*d,yy=hy+Math.sin(a)*d;if(walk[(yy|0)*W+(xx|0)]){X=xx;Y=yy;break}}
-      S.x[i]=S.px[i]=X;S.y[i]=S.py[i]=Y;S.hx[i]=hx;S.hy[i]=hy;S.pl[i]=p;S.role[i]=role;S.vr[i]=srand()*ROLES[role].vars|0;S.dir[i]=srand()<0.5?1:0;
+      S.x[i]=S.px[i]=X;S.y[i]=S.py[i]=Y;S.hx[i]=hx;S.hy[i]=hy;S.pl[i]=p;S.role[i]=role;S.lvl[i]=1+(i*7+p)%3;S.vr[i]=srand()*ROLES[role].vars|0;S.dir[i]=srand()<0.5?1:0;
       S.sp[i]=0.07+srand()*0.05;S.wait[i]=srand()*60|0;
       if(eco){S.hx[i]=X;S.hy[i]=Y;S.tx[i]=X;S.ty[i]=Y}else pickTarget(i);
     }

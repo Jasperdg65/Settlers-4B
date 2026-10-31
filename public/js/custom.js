@@ -51,9 +51,13 @@ function refreshCustomUI(){
 }
 function buildGallery(){
   const pu=$('people');pu.innerHTML='';
-  [[0,0,'Drager'],[0,2,'Draagster'],[1,0,'Bouwer'],[2,0,'Soldaat'],[3,0,'Boog­schutter'],[4,1,'Heler']].forEach(([r,v,n])=>{
+  const lv3=ROLE3D[2].map(k=>unit3DSprite(k));
+  [[0,0,'Drager'],[0,2,'Draagster'],[1,0,'Bouwer'],...(lv3.every(Boolean)?[]:[[2,0,'Soldaat']]),[3,0,'Boog­schutter'],[4,1,'Heler']].forEach(([r,v,n])=>{
     const fig=document.createElement('figure');fig.appendChild(thumb(UNITS[r][v][0][0],44,54,2.2));
     const cap=document.createElement('figcaption');cap.textContent=n;fig.appendChild(cap);pu.appendChild(fig)});
+  /* soldaat niveau 1–3 als 3D-poppetje (als de atlassen geladen zijn) */
+  if(lv3.every(Boolean))lv3.forEach((sp,k)=>{const fig=document.createElement('figure');fig.appendChild(thumb(sp,44,54));
+    const cap=document.createElement('figcaption');cap.textContent='Soldaat '+(k+1);fig.appendChild(cap);pu.appendChild(fig)});
   /* beroepen van de economie */
   CFG.jobs.forEach((j,k)=>{if(!k)return;const fig=document.createElement('figure');fig.appendChild(thumb(jobSprite(k,0,0,0),44,54,2.2));
     const cap=document.createElement('figcaption');cap.textContent=j.n;fig.appendChild(cap);pu.appendChild(fig)});

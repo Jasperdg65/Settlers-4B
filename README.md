@@ -13,7 +13,8 @@ public/                 webroot (Apache-alias /settlers4b)
     core.js             tekenhulpen ($, spr, poly, …)
     config.js           CFG: alle getallen voor de balans (tickrate, stapels, startvoorraad, …)
     nature.js           getekende bomen, struiken, rotsen, dieren (reserve-sprites)
-    units.js            inwoners
+    units.js            inwoners (getekend) en het uiterlijk per beroep
+    units3d.js          3D-poppetjes: atlassen laden, omkleuren per speler, tekenen
     buildings.js        gebouwtypes (BTYPES), getekende gebouwen, spelerkleuren
     goods.js            goederensoorten (GOODS) en getekende stapels
     terrain.js          seeded random, ruis, mapgenerator (incl. mijnen, paden)
@@ -35,6 +36,7 @@ public/                 webroot (Apache-alias /settlers4b)
     buildings/*.webp    20 gebouwen
     nature/*.webp       21 bomen, struiken, rotsen
     textures/*.webp     6 naadloze grondtexturen, 512×512
+    units/*             3D-poppetjes: per model een JSON en per maat atlas + masker (webp)
   api/
     maps.php            maps (generator-instelling, later editor-data)
     saves.php           savegames
@@ -44,8 +46,12 @@ tools/
   build-images.php      webp's opnieuw maken uit bron/
   extract-embedded.php  afbeeldingen uit een ingebakken kolonie-fase1.html halen
   split-html.py         eenmalig: eerste HTML gesplitst in index/css/js
+  render_sprites.py     renderstraat: GLB → spritesheets (Blender headless)
+  sprites.json          instellingen en modellijst voor render_sprites.py
+  blender               snelkoppeling naar portable Blender 4.5 LTS (niet in git, zie hieronder)
 bron/                   NIET publiek: originele PNG's (niet in git) en de
                         laatst verwerkte kolonie-fase1.html (referentie)
+  modellen/             3D-modellen (GLB), hun .blend-bronnen en bouwscripts
 ```
 
 Apache-config: repo `server-beheer`, `apache/doc-dgol-projects.conf`
@@ -121,6 +127,101 @@ stronk).
 Let op: `ax`, `ay`, `flag` en `hub` zijn relatief aan het bijgesneden beeld.
 Wordt de PNG anders bijgesneden (andere marge), controleer ze dan opnieuw.
 
+### 3D-poppetjes (renderstraat)
+
+`tools/render_sprites.py` zet een GLB uit `bron/modellen/` om naar spritesheets. Blender draait
+headless. Om de systeemschijf te sparen staan Blender en de tijdelijke renderbestanden op het
+lokale volume; `tools/blender` en `tools/.render-tmp` zijn snelkoppelingen daarheen (niet in git):
+
+```
+/mnt/HC_Volume_105876660/kolonie/blender      portable Blender 4.5 LTS
+/mnt/HC_Volume_105876660/kolonie/render-tmp   tijdelijke renders
+```
+
+Opnieuw neerzetten:
+
+```
+cd /mnt/HC_Volume_105876660/kolonie
+curl -LO https://download.blender.org/release/Blender4.5/blender-4.5.15-linux-x64.tar.xz
+mkdir -p blender render-tmp && tar -xJf blender-4.5.15-linux-x64.tar.xz -C blender --strip-components=1 && rm blender-4.5.15-linux-x64.tar.xz
+ln -sfn /mnt/HC_Volume_105876660/kolonie/blender tools/blender
+ln -sfn /mnt/HC_Volume_105876660/kolonie/render-tmp tools/.render-tmp
+```
+
+Wat het script doet (instellingen in `tools/sprites.json`):
+
+- Camera orthografisch, 30° boven horizontaal (past bij de 16×8-tegels). Warm hoofdlicht van
+  linksboven, blauwige vulling, schaduwvanger op de grond, transparante achtergrond.
+- Vaste schaal voor alle modellen: `refHeight` (2,05 modeleenheden) is de px-maat van het
+  poppetje; maten 24, 48 en 96 px, gerenderd op 2× en netjes verkleind.
+- Animatie zonder skelet: per kant scharnieren alle onderdelen met Boot of Trouser in de naam
+  rond de heup (`rig.hip`); onderdelen verder dan `rig.armMinX` van het midden horen bij de arm
+  van die kant en draaien rond de schouder (`rig.shoulder`); de rest is romp en gaat iets op en
+  neer. Lopen 8 stappen, stilstaan 1, vechten 6 (de arm met het zwaard, `rig.fight` in graden).
+  De kant van het zwaard herkent het script aan onderdelen die met `Sword` beginnen.
+- 8 richtingen: rij 0 = oost (schermrechts), met de klok mee per 45°; rij 2 kijkt naar de kijker.
+- Spelerkleur: materialen die met `TEAM` beginnen, worden wit gerenderd; een tweede pass maakt
+  een masker (wit = spelerkleur) met dezelfde indeling. Het spel kleurt per speler om.
+- Uitvoer in `public/assets/units/`: `<naam>_<px>.webp`, `<naam>_<px>_mask.webp` en
+  `<naam>.json` (per beeld `anim`, `dir`, `i`, positie `x y w h` in de atlas en anker `ax ay`
+  = voeten). Daarna zet het `units.<sleutel> = {json, v}` in `assets/manifest.json`.
+- Veiligheid: stopt als er minder dan 3 GB vrij is; tijdelijke bestanden in `tools/.render-tmp/`.
+
+**Een nieuw model toevoegen**
+
+1. Zet de GLB in `bron/modellen/`. Opbouw zoals de soldaten: losse onderdelen, z omhoog,
+   voorkant naar −y, voeten op z = 0, ongeveer 2 eenheden hoog. Benen heten `Boot_…`/`Trouser_…`,
+   spelerkleur-materialen beginnen met `TEAM` (`TEAM_Cloth`, `TEAM_Shield`, `TEAM_Crest`).
+2. Voeg het model toe aan `models` in `tools/sprites.json`, bijvoorbeeld
+   `"drager": {"glb": "bron/modellen/drager.glb", "out": "units/drager", "anims": ["idle", "walk"]}`.
+   Wijken heup of schouders af, zet dan een eigen `rig` in die regel (die gaat voor de algemene).
+3. Proefrender (alleen stilstaan en de eerste loopstap, alle richtingen, met PNG-voorbeeld in
+   `tools/.render-tmp/units/`):
+
+   ```
+   nice tools/blender/blender -b -P tools/render_sprites.py -- drager --test
+   ```
+4. Echte render (schrijft naar `public/assets/units/` en het manifest); zonder sleutel alle modellen:
+
+   ```
+   nice tools/blender/blender -b -P tools/render_sprites.py -- drager
+   ```
+   Reken op ongeveer 5 s per beeld op deze server (120 beelden per model met drie animaties,
+   dus zo'n 10 minuten per model). Lokaal renderen kan ook, zie hieronder.
+5. Koppel het in het spel: `ROLE3D` in `js/units3d.js` wijst per rol (index in `ROLES`) de
+   modelsleutels per niveau aan, bijvoorbeeld `2: ['soldaat_1','soldaat_2','soldaat_3']`.
+   Zonder geladen atlas tekent het spel de oude figuur.
+
+**Ontwerpnotitie: duel-sprite (armpje drukken), later toevoegen**
+
+- Eén krachtpatser-model twee keer, tegenover elkaar op het scherm (links en rechts), met een
+  tafeltje of boomstronk ertussen. Samen in één beeld renderen, zodat de ineengegrepen handen
+  goed overlappen.
+- Masker met twee kanalen: R = spelerkleur-vlakken van de linker figuur, G = die van de rechter;
+  het spel kleurt ze per speler in. (Het masker van losse figuren gebruikt nu alle kanalen
+  gelijk; het spel leest daar R, dus beide passen in dezelfde omkleurcode.)
+- 9 standen, van "links wint bijna" tot "rechts wint bijna": armen scharnieren rond de
+  schouders, lichamen leunen mee. Het spel kiest de stand op basis van het duelverloop.
+- Alle 9 combinaties van niveaus (1–3 links × 1–3 rechts), dus 81 beelden; één kijkrichting.
+- Zelfde camera, licht en maten (24/48/96) als de andere sprites.
+- In het script: een tweede soort opdracht naast `models` (bijvoorbeeld `duels`), die twee
+  geïmporteerde kopieën neerzet, per figuur de TEAM-materialen een eigen maskermateriaal geeft
+  (rood of groen) en een eigen JSON schrijft (per beeld `stand`, `lvlL`, `lvlR`).
+
+**Lokaal renderen (Windows of een andere pc)**
+
+Gebruik dezelfde Blender-versie als de server (4.5 LTS), anders kunnen licht en kleur net verschillen.
+Het script werkt met paden ten opzichte van de repo, dus alleen het pad naar Blender verschilt:
+
+```
+git pull
+"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" -b -P tools/render_sprites.py -- soldaat_1 --test
+"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" -b -P tools/render_sprites.py -- soldaat_1
+git add public/assets/units public/assets/manifest.json && git commit -m "Spritesheet soldaat_1" && git push
+```
+
+Draai het vanuit de hoofdmap van de repo. Op de server daarna `git pull`.
+
 ### Een nieuwe kolonie-fase1.html verwerken
 
 1. Vergelijk het script met de vorige versie in `bron/` (zonder de base64-regels)
@@ -139,8 +240,72 @@ Modus *Economie* (standaard) of *Stresstest* (de oude test met duizenden rondlop
 kolonisten, zonder goederen). De simulatie loopt met `CFG.ticksPerSec` (20) ticks per seconde,
 los van het tekenen.
 
+### Ontwerp en planning
+
+Eigen spel, geïnspireerd door het genre; geen teksten of plaatjes uit bestaande spellen, geen
+magie en geen priesters. **De wereld is veganistisch**: geen jacht, visserij, veehouderij of
+slachterij, geen vis of vlees. Voedsel komt van akkers, moestuinen en plukken; dieren leven vrij
+en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
+
+| Mijlpaal | Inhoud | Stand |
+| --- | --- | --- |
+| 1 | Goederen en opslag (stapels, paneel Voorraad) | klaar |
+| 2 | Dragers en transport (planner, A*, routecache) | klaar |
+| 3 | Bouwen (plaatsen, egaliseren, materiaal, afbreken) | klaar |
+| 4 | Beroepen via gereedschap | klaar |
+| 5 | Productieketens: hout, steen, graan → meel → brood, bonenakker en moestuin, gaarkeuken (peulvruchten + groente + water → stoofpot), plukkershut (fruit en noten van appelbomen, hazelaars, bessenstruiken; groeien weer aan), droogschuur (fruit + noten → fruit-notenmix), waterput, mijnen met lievelingskost (`CFG.mineFood`), smelterijen, smidse (gereedschap), uitrustingsmaker (ijzer → helm, schild, polsband: statusuitrusting voor hogere niveaus), paneel Productie, werkgebied per gebouw | gepland |
+| 6 | Bevolking, gebied en leger: woonhuizen, zichtbare grens, bemande torens, krachthal (kolonisten trainen; niveaus met statusuitrusting) | gepland |
+| 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
+| 8 | Gevechten (zie ontwerpnotitie hieronder) | later |
+
+**Ontwerpnotitie: gevechten (nog niet bouwen)**
+
+- Het gevecht wordt een losse module (bijvoorbeeld `js/combat.js`) met één functie die een duel
+  tussen twee eenheden afhandelt: kracht vergelijken, winnaar bepalen. Geen andere code beslist
+  over winnen of verliezen.
+- Het leger bestaat uit armdrukkers, helers en muzikanten die samen optrekken. Helers zijn een
+  soort soldaat (geen gebouw): ze trekken mee met hun groep.
+- De verliezer sterft niet: hij keert terug naar de heler van zijn groep (waar die op dat moment
+  is) en is een tijd uitgeschakeld.
+- Kracht hangt af van niveau (1–3), gevoed zijn en de harmoniemeter van zijn speler; de
+  formule en alle getallen staan in de config.
+- Gevolgen voor de opbouw van soldaten, kazerne en wapens (mijlpaal 6):
+  - elke militaire eenheid heeft een soort (armdrukker, heler, muzikant), niveau, uitrusting,
+    of hij gevoed is, zijn groep, zijn thuisplek (kazerne of toren) en een
+    "uitgeschakeld tot"-tick, in compacte arrays zoals de andere kolonisten;
+  - een groep (leger dat samen optrekt) is een eigen record met zijn leden, zodat een
+    verliezer zijn heler kan vinden;
+  - de krachthal (gebouwsleutel `kazerne`) traint kolonisten en levert alleen eenheden met die
+    velden af; ze rekent zelf geen kracht uit.
+- Geen wapens: de uitrustingsmaker (gebouwsleutel `wapensmid`) maakt van ijzer helmen, schilden
+  en polsbanden, statusuitrusting voor hogere niveaus. De ijzer- en kolenketen blijft dus nodig.
+- De 3D-soldaten zijn nog gerenderd met een zwaard en een zwaardslag als vechtanimatie; bij
+  mijlpaal 6/8 komen er modellen zonder zwaard en een armdrukanimatie.
+- Muzikanten ondersteunen de kracht van hun groep binnen een bereik; hoe hoger hun niveau, hoe
+  groter dat bereik (getallen in de config).
+
+**Ontwerpregel: niveaus** (voor alle militaire en ondersteunende rollen)
+
+| Niveau | Hoofddeksel |
+| --- | --- |
+| 1 | eenvoudig hoofddeksel zonder versiering |
+| 2 | hetzelfde hoofddeksel met een klein messing puntje of knopje bovenop |
+| 3 | grote pluim of kam in spelerkleur (materiaal `TEAM_Crest`) |
+
+| Rol | Hoofddeksel | Niveau 2 | Niveau 3 | Verder |
+| --- | --- | --- | --- | --- |
+| Krachtpatser (armdrukker) | helm | messing puntje | kam in spelerkleur | |
+| Muzikant | vilten muts of baret | messing speld | grote veer | instrument: 1 fluit, 2 harp, 3 doedelzak |
+| Heler | kap | messing voorhoofdsring | bladerkrans met lint in spelerkleur | |
+
+- Selectiemarkering van een eenheid: naast de gezondheidskleur 1–3 stipjes voor het niveau.
+- De huidige 3D-soldaten volgen de regel voor de helm al: beginner zonder versiering, gemiddeld
+  met messing voet en punt, veteraan met kam in `TEAM_Crest`. Het zwaard moet er nog uit.
+- Nieuwe 3D-modellen voor muzikant en heler: per niveau een eigen GLB (zoals de soldaten),
+  `TEAM_Crest` alleen op niveau 3; de renderstraat kleurt dat vanzelf in spelerkleur.
+
 - **Goederen** (`GOODS` in `js/goods.js`): bouwmaterialen, voedsel, grondstoffen, metalen,
-  gereedschap en wapens; elk met een eigen getekende sprite.
+  gereedschap en uitrusting; elk met een eigen getekende sprite.
 - **Stapels**: alles ligt als stapel op de grond, max `CFG.stackMax` (8) per stapel, één per tegel
   (`world.stk[tegel]` = stapel+1). Stapels staan in compacte arrays (`G.tile`, `G.good`, `G.cnt`,
   `G.pl`, `G.bld`). Ook de voorraad van burcht en pakhuis ligt zo, op hun stapelplekken
@@ -168,7 +333,7 @@ los van het tekenen.
   Afgebroken gebouwen blijven in `world.blds` staan met `dead`, zodat indexen geldig blijven.
 - **Beroepen** (`CFG.jobs`, `js/jobs.js`): elk voltooid werkgebouw krijgt een vakman. Eerst een werkloze
   vakman met dat beroep, anders een vrije drager die het gereedschap uit de voorraad haalt (bijl, zaag,
-  houweel, hamer, schop, zeis, hengel, boog; molenaar, bakker, smelter en smid hebben niets nodig).
+  houweel, hamer, schop, zeis; molenaar, bakker, smelter en smid hebben niets nodig).
   Hij loopt naar de deur, gaat naar binnen en de vlag verschijnt. Er blijven altijd `CFG.carry.keepFree`
   vrije dragers per speler over. Bij afbreken komt de bewoner naar buiten en houdt zijn beroep.
   Uiterlijk (`JOBLOOK` in `js/units.js`): de vrije drager met hoed, schort en gereedschap of een
@@ -176,7 +341,8 @@ los van het tekenen.
 - **Tijdelijk** (`CFG.territory`): eigen gebied is een straal rond de burcht en elke voltooide wachttoren
   (vrij land, wie eerst komt; afbreken neemt geen gebied weg); de grens is alleen als stippen te zien tijdens bouwen of afbreken.
 - **Tijdelijk** (`CFG.temp`): zolang er geen productie en bouw is, vragen gebouwen een vaste
-  hoeveelheid goederen en verbruiken ze elke 30 s één stuk voedsel, water of boomstam.
+  hoeveelheid goederen en verbruiken ze elke 30 s één stuk voedsel, water of boomstam
+  (de mijnen alvast hun lievelingskost: brood, stoofpot of fruit-notenmix).
 
 ## Prestaties
 

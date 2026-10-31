@@ -156,3 +156,7 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# portable Blender voor tools/render-sprites (niet in git)
+tools/blender
+tools/.render-tmp

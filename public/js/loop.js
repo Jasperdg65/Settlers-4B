@@ -181,7 +181,10 @@ function draw(){
       if(S.carry){const c=S.carry[k],j=S.job[k];
         if(c){blit(UNITC[1][S.vr[k]][S.pl[k]][fr],ux,uy);blit(carrySprite(c-1),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}
         else blit(j?jobSprite(j,S.vr[k],S.pl[k],fr):UNITC[0][S.vr[k]][S.pl[k]][fr],ux,uy)}
-      else blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy);
+      else{const m3=ROLE3D[S.role[k]];
+        /* 3D-poppetje (rol met model en niveau): richting uit de beweging, anders de laatste; zonder atlas de tekening */
+        if(m3){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);if(drawUnit3D(m3[S.lvl[k]-1],moving?'walk':'idle',S.d8[k],animF+k,S.pl[k],ux,uy,zd)){q='';continue}}
+        blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy)}
     }
     if(PROF)pt('kolonisten',tr);
   }
