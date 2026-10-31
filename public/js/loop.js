@@ -2,8 +2,11 @@
 /* ---------- Hoofdlus ---------- */
 let last=performance.now(),fpsAvg=0,drawAvg=0,showOres=false,hoverTile=null,tNow=0;
 /* Meten: ?prof=1 toont ms per onderdeel (CPU-tijd van de tekenopdrachten; GPU-werk zie je in fps en frametijd).
-   Toetsen 1, 2, 3 zetten de zoom. */
+   Toetsen 1, 2, 3 zetten de zoom. Om GPU-werk per onderdeel te vinden: G grond, N natuur, K kolonisten uit/aan,
+   Q grondchunks met 'low' i.p.v. 'high' schalen; vergelijk de fps. */
 const PROF=/[?&]prof=1/.test(location.search),PT={},PN={f:0,dt:0,dtMax:0,built:0};let profEl=null;
+const PX={g:0,n:0,k:0,q:0};let gpuName='?';
+if(PROF)try{const gl=document.createElement('canvas').getContext('webgl'),x=gl&&gl.getExtension('WEBGL_debug_renderer_info');gpuName=x?gl.getParameter(x.UNMASKED_RENDERER_WEBGL):gl?'(verborgen)':'geen WebGL'}catch(e){}
 const pnow=()=>PROF?performance.now():0,pt=(k,t)=>{PT[k]=(PT[k]||0)+performance.now()-t};
 function profReport(){
   if(!profEl){profEl=document.createElement('pre');profEl.style.cssText='position:fixed;right:8px;top:8px;z-index:99;margin:0;padding:8px 10px;background:rgba(0,0,0,.75);color:#fff;font:12px/1.4 monospace;pointer-events:none';document.body.appendChild(profEl)}
@@ -12,10 +15,13 @@ function profReport(){
   PT.objecten=(PT.tegels||0)-(PT.gebouwen||0);
   profEl.textContent=`zoom ${cam.z.toFixed(2)} · dpr ${dpr} · ${S.n} kolonisten · ${cv.width}×${cv.height}\n`+
     `fps ${(1000*f/PN.dt).toFixed(1)} · frame gem ${(PN.dt/f).toFixed(1)} ms, max ${PN.dtMax.toFixed(1)} ms\n`+
+    `GPU: ${gpuName}\n`+
+    `uit: ${[PX.g&&'grond',PX.n&&'natuur',PX.k&&'kolonisten',PX.q&&'chunks low'].filter(Boolean).join(', ')||'–'}  (G N K Q)\n`+
     `chunks: ${chunks.size} in cache, ${PN.built} gebouwd\n`+rows.map(([n,k])=>n.padEnd(24)+m(k)+' ms').join('\n');
   for(const k in PT)PT[k]=0;PN.f=PN.dt=PN.dtMax=PN.built=0;
 }
-if(PROF)addEventListener('keydown',ev=>{const z={'1':1,'2':2,'3':3}[ev.key];if(z&&ev.target.tagName!=='INPUT'){cam.z=z;clampCam()}});
+if(PROF)addEventListener('keydown',ev=>{const z={'1':1,'2':2,'3':3}[ev.key];if(ev.target.tagName==='INPUT')return;if(z){cam.z=z;clampCam()}
+  const t={g:'g',n:'n',k:'k',q:'q'}[ev.key.toLowerCase()];if(t)PX[t]^=1});
 function viewRect(){const hw=vw/2/cam.z,hh=vh/2/cam.z;return {l:cam.x-hw,r:cam.x+hw,t:cam.y-hh,b:cam.y+hh}}
 function frame(now){
   requestAnimationFrame(frame);
@@ -59,14 +65,14 @@ function draw(){
   ctx.imageSmoothingEnabled=TEX.ready||cam.z<1;const zd=cam.z*dpr,cres=!TEX.ready||zd<1.6?1:1.5;
   const v=viewRect(),{W,H,hp,ter,obj,tree,bldAnchor,blds}=world;
   const ncx=Math.ceil((W-1)/CH),ncy=Math.ceil((H-1)/CH);
-  let built=0,tp=pnow(),tb=0,vis=0;ctx.imageSmoothingQuality='high';
+  let built=0,tp=pnow(),tb=0,vis=0;ctx.imageSmoothingQuality=PROF&&PX.q?'low':'high';
   for(let cy=0;cy<ncy;cy++)for(let cx=0;cx<ncx;cx++){
     const b=chunkBounds(cx,cy);
     if(b.right<v.l||b.left>v.r||b.bottom<v.t||b.top>v.b)continue;
     const key=cy*1000+cx+cres*1e6;let ch=chunks.get(key);
     if(!ch){if(built>=2&&chunks.size>0)continue;const tc=pnow();ch=renderChunk(cx,cy,cres);if(PROF){tb+=performance.now()-tc;PN.built++}built++}
     else chunks.delete(key);
-    chunks.set(key,ch);ch.used=frameNo;vis+=ch.c.width*ch.c.height;ctx.drawImage(ch.c,ch.left,ch.top,ch.c.width/ch.cres,ch.c.height/ch.cres);
+    chunks.set(key,ch);ch.used=frameNo;vis+=ch.c.width*ch.c.height;if(!(PROF&&PX.g))ctx.drawImage(ch.c,ch.left,ch.top,ch.c.width/ch.cres,ch.c.height/ch.cres);
   }
   /* LRU: de Map staat op volgorde van laatst gebruikt; ruim de oudste op tot de cache binnen het budget valt */
   let cpx=0;for(const c of chunks.values())cpx+=c.c.width*c.c.height;
@@ -139,7 +145,7 @@ function draw(){
           ctx.globalAlpha=1}
         if(PROF)pt('gebouwen',tg);
         continue}
-      if(!o)continue;
+      if(!o||PROF&&PX.n)continue;
       const h=hash2(x*7,y*13),px=SX(x,y)+((h&7)-3.5)*0.9,py=y*TH-hp[i]+((h>>>3&3)-1.5)*0.6;
       if(px<v.l-30||px>v.r+30)continue;
       if(o===1)blit(TREES[tree[i]*2+(h>>>6&1)],px,py);
@@ -156,7 +162,7 @@ function draw(){
       blit(ANIM[type][f*2+A.dir[k]],X*TW-Y*TW/2+off,Y*TH-hAt(X,Y));
     }
     if(PROF){pt('dieren',tr);tr=performance.now()}
-    if(detail)for(let k=rowU[y];k>=0;k=S.next[k]){
+    if(detail&&!(PROF&&PX.k))for(let k=rowU[y];k>=0;k=S.next[k]){
       const Y=S.py[k]+(S.y[k]-S.py[k])*al,X=S.px[k]+(S.x[k]-S.px[k])*al;
       const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]);
       const f=moving?(animF+k)&3:0;
