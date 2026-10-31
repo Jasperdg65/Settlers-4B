@@ -319,7 +319,54 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 5 | Productieketens: hout, steen, graan → meel → brood, bonenakker en moestuin, gaarkeuken (peulvruchten + groente + water → stoofpot), plukkershut (fruit en noten van appelbomen, hazelaars, bessenstruiken; groeien weer aan), droogschuur (fruit + noten → fruit-notenmix), waterput, mijnen met lievelingskost (`CFG.mineFood`), smelterijen, smidse (gereedschap), uitrustingsmaker (ijzer → helm, schild, polsband: statusuitrusting voor hogere niveaus), paneel Productie, werkgebied per gebouw | gepland |
 | 6 | Bevolking, gebied en leger: woonhuizen, zichtbare grens, bemande torens, krachthal (kolonisten trainen; niveaus met statusuitrusting) | gepland |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
-| 8 | Gevechten (zie ontwerpnotitie hieronder) | later |
+| 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
+| 9 | Handel: marktplaats, handelaar met handkar of bootje, ruilvenster, ruilverhouding volgens schaarste | later |
+| 10 | Diplomatie: relatieniveau per buur, geschenken, samen mediteren, feesten en feesttoernooien, vrede met vaste grenzen | later |
+| 11 | Hoofddoel: Tempel van Vrede en Welvaart op neutraal terrein, bouwfasen, bijdrage per speler, gezamenlijke winst; modus "vrij spel" zonder tempel | later |
+| 12 | Natuur als uitdaging: droogte, strenge winter, overstroming | later |
+
+**Ontwerpnotitie: hoofddoel en samenspel (nog niet bouwen)**
+
+- Hoofddoel: de spelers bouwen samen een **Tempel van Vrede en Welvaart** op neutraal terrein.
+  De bouw gaat in fasen (fundering, zuilen, dak, versiering), elk met een eigen goederenmix. De
+  bijdrage per speler is zichtbaar; als de tempel af is, winnen alle spelers samen.
+- Optionele modus **vrij spel**: hetzelfde spel zonder tempeldoel.
+- Kaartgenerator: een schuif **onderlinge afhankelijkheid** verdeelt grondstoffen bewust ongelijk
+  over de spelers (de een heeft veel steen, de ander ijzer of vruchtbare grond), zodat handel nodig is.
+- **Handel**: een marktplaats met een handelaar die met een handkar over land of met een bootje over
+  water rijdt. Een ruilvenster met aanbod en vraag; de ruilverhouding volgt de schaarste.
+- **Diplomatie**: relatieniveau per buur (onbekend, kennis, vriend, bondgenoot). Het stijgt door
+  handel, geschenken, samen mediteren (hunnebed) en feesten. Vrede sluiten legt de grenzen vast.
+  Een slechte band geeft een slechtere ruil of een weigering.
+- **Krachtpatsers**: grensgeschillen en feesttoernooien worden met armpje drukken beslecht, via de
+  bestaande duelmodule. Een toernooi verbetert de relatie.
+- **Natuur als uitdaging**: droogte, strenge winter en overstroming.
+
+**Wat het hoofddoel vraagt van de opbouw** (houden we nu al rekening mee)
+
+- Spelmodus als wereldinstelling (`world.goal`: tempel of vrij), gekozen bij het genereren; de
+  tempel is een eigen gebouwtype dat niemand bezit (`b.p` = neutraal) en dat alleen op
+  neutraal terrein kan staan.
+- Kaartgenerator: neutraal terrein in het midden of tussen de startplekken (in `world.own` een
+  eigen waarde, nooit te claimen); de grondstofverdeling per startplek komt uit een instelling
+  `interdep` (0 = eerlijk, 1 = sterk ongelijk) die de ertsaders, steen, bos en vruchtbare grond
+  per speler weegt. Deterministisch uit de seed.
+- Tempel: per fase een lijst goederen en aantallen in de config (`CFG.temple`), en per speler
+  per goed wat hij heeft gebracht (`temple.gave[p][goed]`). Dragers brengen goederen erheen
+  zoals naar een bouwplaats; de planner kent het als vraag.
+- Relaties als matrix `world.rel[p][q]` (getal met drempels voor de niveaus uit de config), met
+  bijdragen per bron (handel, geschenk, meditatie, feest, toernooi, geschil), net als de
+  harmonie, zodat nieuwe bronnen er los bij kunnen.
+- Handel, geschenken, vrede sluiten en uitdagingen lopen als opdrachten via de wachtrij
+  (`ARMY.cmd`, later één wachtrij voor alles), zodat ze deterministisch zijn en straks over het
+  netwerk en in een savegame passen. Een AI-speler beslist ook alleen via die opdrachten.
+- Duelmodule: een duel krijgt een soort (`veld`, `grens`, `toernooi`). `endDuel` geeft de afloop
+  door aan wie het duel aanvroeg, en de gevolgen per soort staan in de config: in het veld
+  uitgeschakeld bij de heler, in een toernooi alleen wat vermoeidheid en een relatiebonus, bij
+  een grensgeschil gaat de betwiste strook naar de winnaar.
+- Natuurgebeurtenissen met een eigen toevalsgenerator (zoals `drand` voor duels), zodat ze los van
+  de rest deterministisch blijven; ze werken via bestaande grootheden (groei van akkers, water,
+  beloopbaarheid) en de config.
 
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 
