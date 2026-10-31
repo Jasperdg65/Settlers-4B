@@ -1,79 +1,94 @@
 "use strict";
-/* ---------- Transport: centrale planner en dragers ----------
+/* ---------- Transport: centrale planner, dragers en werkers ----------
    Vraag: b.want[goed] (hoeveel gebouw b wil hebben), b.has (ligt er), b.coming (onderweg).
-   De planner koppelt elke ontbrekende eenheid aan de dichtstbijzijnde stapel die beschikbaar is
-   (bij een gebouw dat dat goed zelf niet vraagt) en geeft de opdracht aan de dichtstbijzijnde vrije drager.
-   Een drager: vrij → wacht op route → naar de stapel → oppakken → wacht op route → naar de deur → neerleggen. */
-const ST={IDLE:0,PATH_SRC:1,TO_SRC:2,PATH_DST:3,TO_DST:4};
+   De planner koppelt elke ontbrekende eenheid aan de dichtstbijzijnde stapel die beschikbaar is en geeft
+   de opdracht aan de dichtstbijzijnde vrije drager. Stapels bij afgebroken gebouwen gaan naar de opslag.
+   Een drager: vrij → wacht op route → naar de stapel → oppakken → wacht op route → naar de deur → neerleggen.
+   Gravers en bouwers (S.job, zie build.js): een vrije drager haalt eerst het gereedschap, daarna werkt hij op bouwplaatsen.
+   Elke 'wacht op route'-toestand (PATH_*) is oneven en gaat bij een gevonden route naar de volgende (lopen). */
+const ST={IDLE:0,PATH_SRC:1,TO_SRC:2,PATH_DST:3,TO_DST:4,PATH_TOOL:5,TO_TOOL:6,PATH_WORK:7,TO_WORK:8,WORK:9};
 const TR={rr:0,done:0,used:0};
 const doorTile=b=>(b.y+1)*world.W+b.x;
-const isStore=b=>b.type==='burcht'||b.type==='pakhuis';
+const isStore=b=>(b.type==='burcht'||b.type==='pakhuis')&&!b.dead&&!b.st;
 function initTransport(){
-  const n=S.n,want=CFG.temp.want;
+  const n=S.n;
   S.eco=1;S.st=new Uint8Array(n);S.carry=new Uint8Array(n);S.gd=new Uint8Array(n);S.src=new Int32Array(n);S.sb=new Int16Array(n);S.dst=new Int16Array(n);S.cm=new Uint8Array(n);
-  S.pi=new Uint16Array(n);S.path=new Array(n).fill(null);
-  for(const b of world.blds){b.want=new Uint8Array(GOODS.length);b.coming=new Uint8Array(GOODS.length);b.cool=0;
-    const w=want[b.type];if(w)for(const k in w)b.want[GI[k]]=w[k]}
+  S.job=new Uint8Array(n);S.jb=new Uint8Array(n);S.pi=new Uint16Array(n);S.path=new Array(n).fill(null);
+  for(const b of world.blds){b.want=new Uint8Array(GOODS.length);b.coming=new Uint8Array(GOODS.length);b.cool=0;setTempWant(b)}
   TR.rr=0;TR.done=0;TR.used=0;tickNo=0;pathInit();
 }
-/* dichtstbijzijnde stapel van speler p met een vrij stuk van gd, niet bij een gebouw dat gd zelf vraagt */
+function setTempWant(b){const w=CFG.temp.want[b.type];b.want.fill(0);if(w)for(const k in w)b.want[GI[k]]=w[k]}
+/* mag gebouw b goed gd halen bij gebouw o? Niet bij een gebouw dat het zelf vraagt, behalve een opslag voor een niet-opslag */
+const canSource=(o,b,gd)=>!o.want[gd]||isStore(o)&&!isStore(b);
+/* dichtstbijzijnde stapel van speler p met een vrij stuk van gd voor gebouw bi (tx,ty = waar het heen moet) */
 function nearestSource(p,gd,bi,tx,ty){
-  const {W}=world,bl=world.blds;let best=-1,bd=Infinity;
+  const {W}=world,bl=world.blds,b=bl[bi];let best=-1,bd=Infinity;
   for(let s=0;s<G.n;s++){
-    if(G.good[s]!==gd||G.pl[s]!==p||G.cnt[s]<=G.res[s]||G.bld[s]===bi||bl[G.bld[s]].want[gd])continue;
+    if(G.good[s]!==gd||G.pl[s]!==p||G.cnt[s]<=G.res[s]||G.bld[s]===bi||!canSource(bl[G.bld[s]],b,gd))continue;
     const t=G.tile[s],d=Math.hypot(t%W-tx,(t/W|0)-ty);if(d<bd){bd=d;best=s}
   }
   return best;
 }
-function nearestIdle(p,t){
+/* dichtstbijzijnde vrije kolonist van speler p met beroep job */
+function nearestIdle(p,t,job=0){
   const W=world.W,X=t%W+0.5,Y=(t/W|0)+0.5;let best=-1,bd=Infinity;
-  for(let i=0;i<S.n;i++){if(S.st[i]!==ST.IDLE||S.pl[i]!==p)continue;const d=Math.hypot(S.x[i]-X,S.y[i]-Y);if(d<bd){bd=d;best=i}}
+  for(let i=0;i<S.n;i++){if(S.st[i]!==ST.IDLE||S.pl[i]!==p||S.job[i]!==job)continue;const d=Math.hypot(S.x[i]-X,S.y[i]-Y);if(d<bd){bd=d;best=i}}
   return best;
 }
+function nearestStore(p,x,y){let best=-1,bd=Infinity;world.blds.forEach((o,oi)=>{if(o.p===p&&isStore(o)){const d=Math.hypot(o.x-x,o.y-y);if(d<bd){bd=d;best=oi}}});return best}
 const tileOf=i=>(S.y[i]|0)*world.W+(S.x[i]|0);
+function goPath(c,st,to){S.st[c]=st;findPath(tileOf(c),to,p=>gotPath(c,p))}
+function fetch(c,s,bi,gd,counted){G.res[s]++;if(counted)world.blds[bi].coming[gd]++;S.cm[c]=counted;S.gd[c]=gd;S.src[c]=s;S.dst[c]=bi;S.wait[c]=0;goPath(c,ST.PATH_SRC,G.tile[s])}
 function planTransport(){
-  const bl=world.blds,nb=bl.length,P=world.starts.length,noIdle=new Uint8Array(P);let made=0;
-  for(let k=0;k<nb&&made<CFG.carry.maxAssignPerRun;k++){
-    const bi=(TR.rr+k)%nb,b=bl[bi];if(noIdle[b.p]||b.cool>tickNo)continue;
-    for(let gd=0;gd<GOODS.length&&made<CFG.carry.maxAssignPerRun;gd++){
+  const bl=world.blds,nb=bl.length,P=world.starts.length,M=CFG.carry.maxAssignPerRun,noIdle=new Uint8Array(P);
+  let made=planWorkers(M);
+  for(let k=0;k<nb&&made<M;k++){
+    const bi=(TR.rr+k)%nb,b=bl[bi];if(b.dead||noIdle[b.p]||b.cool>tickNo)continue;
+    for(let gd=0;gd<GOODS.length&&made<M;gd++){
       let need=b.want[gd]-b.has[gd]-b.coming[gd];
-      while(need>0&&made<CFG.carry.maxAssignPerRun){
+      while(need>0&&made<M){
         const s=nearestSource(b.p,gd,bi,b.x,b.y+1);if(s<0)break;
         const c=nearestIdle(b.p,G.tile[s]);if(c<0){noIdle[b.p]=1;break}
-        G.res[s]++;b.coming[gd]++;need--;made++;
-        S.st[c]=ST.PATH_SRC;S.cm[c]=1;S.gd[c]=gd;S.src[c]=s;S.dst[c]=bi;S.wait[c]=0;
-        findPath(tileOf(c),G.tile[s],p=>gotPath(c,p));
+        fetch(c,s,bi,gd,1);need--;made++;
       }
       if(noIdle[b.p])break;
     }
   }
+  /* wat bij afgebroken gebouwen ligt, gaat naar de dichtstbijzijnde opslag */
+  for(let s=0;s<G.n&&made<M;s++){
+    if(G.cnt[s]<=G.res[s]||!bl[G.bld[s]].dead||noIdle[G.pl[s]])continue;
+    const t=G.tile[s],W=world.W,o=nearestStore(G.pl[s],t%W,t/W|0);if(o<0)continue;
+    const c=nearestIdle(G.pl[s],t);if(c<0){noIdle[G.pl[s]]=1;continue}
+    fetch(c,s,o,G.good[s],0);made++;
+  }
   TR.rr=(TR.rr+1)%Math.max(1,nb);
 }
+function toIdle(c){S.st[c]=ST.IDLE;S.path[c]=null;S.hx[c]=S.x[c];S.hy[c]=S.y[c]}
 function gotPath(c,p){
-  const b=world.blds[S.dst[c]],gd=S.gd[c];
-  if(!p){
-    b.cool=tickNo+CFG.carry.retryTicks;
-    if(S.st[c]===ST.PATH_SRC)G.res[S.src[c]]--;else{addGoods(S.sb[c],gd,1);S.carry[c]=0} // terugleggen bij de bron
-    if(S.cm[c])b.coming[gd]--;S.cm[c]=0;
-    S.st[c]=ST.IDLE;S.hx[c]=S.x[c];S.hy[c]=S.y[c];return;
-  }
-  S.path[c]=p;S.pi[c]=p.length>1?1:0;S.st[c]=S.st[c]===ST.PATH_SRC?ST.TO_SRC:ST.TO_DST;
+  const st=S.st[c],b=world.blds[S.dst[c]],gd=S.gd[c];
+  if(p){S.path[c]=p;S.pi[c]=p.length>1?1:0;S.st[c]=st+1;return}
+  b.cool=tickNo+CFG.carry.retryTicks;
+  if(st===ST.PATH_SRC||st===ST.PATH_TOOL)G.res[S.src[c]]--;
+  else if(st===ST.PATH_DST){addGoods(S.sb[c],gd,1);S.carry[c]=0} // terugleggen bij de bron
+  else if(st===ST.PATH_WORK)b.wk--;
+  if(S.cm[c])b.coming[gd]--;S.cm[c]=0;toIdle(c);
 }
 function arrived(c){
-  S.path[c]=null;const gd=S.gd[c],bi=S.dst[c],b=world.blds[bi];
-  if(S.st[c]===ST.TO_SRC){
-    const s=S.src[c];
-    if(G.cnt[s]&&G.res[s]&&G.good[s]===gd){G.res[s]--;S.sb[c]=G.bld[s];takeOne(s);S.carry[c]=gd+1;
-      S.wait[c]=CFG.carry.pickTicks;S.st[c]=ST.PATH_DST;findPath(tileOf(c),doorTile(b),p=>gotPath(c,p))}
-    else{if(S.cm[c])b.coming[gd]--;S.cm[c]=0;S.st[c]=ST.IDLE}
+  S.path[c]=null;const st=S.st[c],gd=S.gd[c],bi=S.dst[c],b=world.blds[bi];
+  if(st===ST.TO_SRC||st===ST.TO_TOOL){
+    const s=S.src[c],ok=G.cnt[s]&&G.res[s]&&G.good[s]===gd;
+    if(ok){G.res[s]--;S.sb[c]=G.bld[s];takeOne(s);S.wait[c]=CFG.carry.pickTicks}
+    if(st===ST.TO_TOOL){if(ok)S.job[c]=S.jb[c];toIdle(c);return} // gereedschap opgepakt: nu graver of bouwer
+    if(ok){S.carry[c]=gd+1;goPath(c,ST.PATH_DST,doorTile(b))}
+    else{if(S.cm[c])b.coming[gd]--;S.cm[c]=0;toIdle(c)}
     return;
   }
-  /* bij de deur: neerleggen; past het niet, dan naar de dichtstbijzijnde opslag (of daar later opnieuw proberen) */
-  if(!addGoods(bi,gd,1)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;S.carry[c]=0;TR.done++;
-    S.st[c]=ST.IDLE;S.wait[c]=CFG.carry.dropTicks;S.hx[c]=S.x[c];S.hy[c]=S.y[c];return}
-  if(!isStore(b)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;let best=-1,bd=Infinity;
-    world.blds.forEach((o,oi)=>{if(o.p===b.p&&isStore(o)){const d=Math.hypot(o.x-b.x,o.y-b.y);if(d<bd){bd=d;best=oi}}});
-    if(best>=0){S.dst[c]=best;S.st[c]=ST.PATH_DST;findPath(tileOf(c),doorTile(world.blds[best]),p=>gotPath(c,p));return}}
+  if(st===ST.TO_WORK){S.st[c]=ST.WORK;S.wait[c]=1;return}
+  /* bij de deur: neerleggen; past het niet (of is het gebouw weg), dan naar de dichtstbijzijnde opslag, of daar later opnieuw */
+  if(!b.dead&&!addGoods(bi,gd,1)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;S.carry[c]=0;TR.done++;
+    toIdle(c);S.wait[c]=CFG.carry.dropTicks;return}
+  if(!isStore(b)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;const o=nearestStore(b.p,b.x,b.y);
+    if(o>=0){S.dst[c]=o;goPath(c,ST.PATH_DST,doorTile(world.blds[o]));return}}
   S.wait[c]=CFG.carry.retryTicks;S.st[c]=ST.TO_DST; // opslag vol: blijven staan en straks opnieuw
 }
 function wander(i){
@@ -86,7 +101,7 @@ function wander(i){
 /* tijdelijk verbruik (CFG.temp): houdt de vraag gaande zolang er nog geen productie is */
 function tempUse(){
   const use=CFG.temp.use.map(k=>GI[k]);
-  world.blds.forEach((b,bi)=>{for(const gd of use)if(b.want[gd]&&b.has[gd]&&!isStore(b)){const s=freeUnitAt(bi,gd);if(s>=0){takeOne(s);TR.used++;break}}});
+  world.blds.forEach((b,bi)=>{if(b.dead||b.st||isStore(b))return;for(const gd of use)if(b.want[gd]&&b.has[gd]){const s=freeUnitAt(bi,gd);if(s>=0){takeOne(s);TR.used++;break}}});
 }
 function tickCarriers(){
   if(tickNo%CFG.carry.plannerEvery===0)planTransport();
@@ -97,16 +112,18 @@ function tickCarriers(){
     px[i]=x[i];py[i]=y[i];
     if(wait[i]>0){wait[i]--;continue}
     const s=st[i];
-    if(s===ST.PATH_SRC||s===ST.PATH_DST)continue;
+    if(s===ST.WORK){siteWork(i);continue}
+    if(s&1)continue; // wacht op een route (PATH_*)
     if(s===ST.IDLE){
       const dx=tx[i]-x[i],dy=ty[i]-y[i],d=Math.hypot(dx,dy);
       if(d<0.2){wander(i);continue}
       const m=Math.min(d,sp[i]*0.7),nx=x[i]+dx/d*m,ny=y[i]+dy/d*m;
       if(Math.abs(dx*2-dy)>0.05)dir[i]=dx*2-dy<0?1:0;
-      if(walk[(ny|0)*W+(nx|0)]){x[i]=nx;y[i]=ny}else wander(i);
+      /* wie op een onbeloopbare tegel staat (net bebouwd), mag eraf lopen */
+      if(walk[(ny|0)*W+(nx|0)]||!walk[(y[i]|0)*W+(x[i]|0)]){x[i]=nx;y[i]=ny}else wander(i);
       continue;
     }
-    /* route volgen: naar het midden van de volgende tegel, met een kleine vaste verschuiving per drager */
+    /* route volgen: naar het midden van de volgende tegel, met een kleine vaste verschuiving per kolonist */
     const p=S.path[i];let k=S.pi[i];
     if(!p){arrived(i);continue}
     const t=p[k],jx=((i*37)%9)/9*0.4-0.2,jy=((i*53)%7)/7*0.4-0.2;
@@ -118,10 +135,10 @@ function tickCarriers(){
     if(d-m<0.05){if(k+1<p.length)S.pi[i]=k+1;else arrived(i)}
   }
 }
-/* tooltip-tekst voor een gebouw: wat het vraagt en wat er onderweg is */
+/* tooltip-tekst voor een gebouw: bouwstand, wat het vraagt en wat er onderweg is */
 function wantLabel(bi){
   const b=world.blds[bi];if(!b.want)return '';const r=[];
   for(let gd=0;gd<GOODS.length;gd++)if(b.want[gd])r.push(`${GOODS[gd].n} ${b.has[gd]}/${b.want[gd]}`+(b.coming[gd]?` (+${b.coming[gd]} onderweg)`:''));
-  return r.length?' · vraagt: '+r.join(', '):'';
+  return siteLabel(b)+(r.length?(b.st?' · nog nodig: ':' · vraagt: ')+r.join(', '):'');
 }
-function carrierStats(){let busy=0;for(let i=0;i<S.n;i++)if(S.st[i])busy++;return busy}
+function carrierStats(){let busy=0,w=[0,0,0];for(let i=0;i<S.n;i++){if(S.st[i]&&!S.job[i])busy++;w[S.job[i]]++}return [busy,w[0],w[1],w[2]]}

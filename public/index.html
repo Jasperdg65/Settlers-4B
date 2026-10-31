@@ -53,12 +53,20 @@
     <dt>Kolonisten</dt><dd id="nset">0</dd>
     <dt>Dieren</dt><dd id="nanim">0</dd>
     <dt>Gebouwen bewoond</dt><dd id="nocc">–</dd>
-    <dt class="eco-only">Dragers bezig</dt><dd class="eco-only" id="ncarry">–</dd>
+    <dt class="eco-only">Dragers bezig · beroepen</dt><dd class="eco-only" id="ncarry">–</dd>
     <dt class="eco-only">Afgeleverd · verbruikt</dt><dd class="eco-only" id="ndone">–</dd>
     <dt class="eco-only">Routes (wachtrij · cache)</dt><dd class="eco-only" id="npath">–</dd>
     <dt>Generatietijd</dt><dd id="genms">–</dd>
   </dl>
   <div id="hover">Beweeg over de kaart voor details per tegel.</div>
+
+  <section class="eco-only">
+    <h2>Bouwen</h2>
+    <label>Bouwen als<select id="bldPl"></select></label>
+    <div id="buildList" class="bgrid"></div>
+    <div class="btns" style="margin-top:6px"><button id="demolish">Afbreken</button></div>
+    <p class="note" id="buildMsg"></p>
+  </section>
 
   <section class="eco-only">
     <h2>Voorraad</h2>
@@ -103,6 +111,7 @@
 <script src="js/stock.js"></script>
 <script src="js/path.js"></script>
 <script src="js/transport.js"></script>
+<script src="js/build.js"></script>
 <script src="js/loop.js"></script>
 <script src="js/input.js"></script>
 <script src="js/assets.js"></script>

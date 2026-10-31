@@ -21,7 +21,8 @@ public/                 webroot (Apache-alias /settlers4b)
     colonists.js        kolonisten en dieren
     stock.js            stapels op de grond, stapelplekken per gebouw, paneel Voorraad
     path.js             A* over het tegelraster, wachtrij met knopenbudget per tick, routecache
-    transport.js        planner vraag/aanbod en dragers
+    transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
+    build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
@@ -155,6 +156,17 @@ los van het tekenen.
   stenen, voetpaden en hoogteverschil (`CFG.path`). Zoekopdrachten staan in een wachtrij met een
   vast knopenbudget per tick, dus geen Web Worker nodig en de simulatie blijft deterministisch.
   Routes en 'onbereikbaar' gaan in een LRU-cache; `world.walkVer` verhogen maakt die leeg.
+- **Bouwen** (`js/build.js`, getallen in `CFG.build`): kies een gebouw in het paneel Bouwen; op de
+  kaart kleurt de voetafdruk groen of rood met de reden in de tooltip (eigen gebied, vlak genoeg,
+  geen boom/steen/goederen, ondergrond: mijnen op rots of gebergte, de rest op gras). Esc of de
+  rechtermuisknop stopt. Een bouwplaats doorloopt: gravers egaliseren (meer werk naarmate het hoogteverschil
+  groter is, de grond verandert zichtbaar), dragers brengen planken en steen, bouwers verwerken ze en
+  het gebouw verschijnt van onder naar boven. Gravers en bouwers zijn vrije dragers die eerst een schop
+  of hamer uit de voorraad halen. Afbreken geeft de helft van het verwerkte materiaal terug; dat en wat er
+  nog lag, brengen dragers naar de opslag. De burcht kan niet gebouwd of afgebroken worden.
+  Afgebroken gebouwen blijven in `world.blds` staan met `dead`, zodat indexen geldig blijven.
+- **Tijdelijk** (`CFG.territory`): eigen gebied is een straal rond de burcht en de wachttorens van de
+  start; de grens is alleen als stippen te zien tijdens bouwen of afbreken.
 - **Tijdelijk** (`CFG.temp`): zolang er geen productie en bouw is, vragen gebouwen een vaste
   hoeveelheid goederen en verbruiken ze elke 30 s één stuk voedsel, water of boomstam.
 

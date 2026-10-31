@@ -33,6 +33,23 @@ const CFG={
     idleRadius:4,idleWait:[20,90], // vrij rondlopen: straal rond de laatste plek en wachttijd in ticks
     retryTicks:200,                // pauze voor een gebouw als een route onbereikbaar bleek
   },
+  /* bouwen: kosten [planken, steen]; de burcht kan niet gebouwd worden */
+  build:{
+    cost:{
+      houthakker:[2,2],bosbouwer:[2,2],steenhouwer:[2,2],kruidenhuis:[2,2],     // kleine hut
+      zagerij:[3,3],molen:[3,3],bakkerij:[3,3],boerderij:[3,3],                 // werkplaats
+      kolenmijn:[3,1],ijzermijn:[3,1],goudmijn:[3,1],                           // mijn
+      ijzersmelterij:[4,5],goudsmelterij:[4,5],smidse:[4,5],wapensmid:[4,5],    // smelterij en smidse
+      pakhuis:[3,3],woonhuis:[2,3],wachttoren:[2,3],kazerne:[4,5],
+    },
+    maxRise:9,maxRiseMine:26,      // max hoogteverschil op de bouwplaats (mijnen staan op rots of gebergte)
+    digBase:2,digPerUnit:6,        // graafwerk in beurten: digBase + (som van alle hoogteverschillen tot het gemiddelde) / digPerUnit
+    digTicks:30,buildTicks:50,     // ticks per graafbeurt / per verwerkte plank of steen
+    diggers:2,builders:2,          // max per bouwplaats
+    refund:0.5,                    // afbreken geeft dit deel van het verwerkte materiaal terug (naar beneden afgerond)
+  },
+  /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en de wachttorens van de start */
+  territory:{burcht:20,wachttoren:12},
   /* TIJDELIJK tot mijlpaal 3–5: vraag per gebouwtype, zodat er al vervoerd wordt zonder productie.
      Elk gebouw verbruikt elke useEvery ticks één stuk van de goederen in 'use'. */
   temp:{

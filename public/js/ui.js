@@ -5,7 +5,7 @@ for(const k in fmt){const el=$(k),out=$(k+'V');const u=()=>out.textContent=fmt[k
 $('dice').onclick=()=>{const w=['eik','duin','veen','berk','klei','heide','fjord','kreek','polder','mergel'];$('seed').value=w[Math.random()*w.length|0]+'-'+(Math.random()*9000+1000|0)};
 $('ores').onchange=ev=>showOres=ev.target.checked;
 const mode=()=>$('mode').value;
-const startColonists=()=>{spawn(colonistTarget(),mode()==='eco');if(mode()==='eco'){initGoods();buildStockPanel()}else{world.stk=null;G.n=0}};
+const startColonists=()=>{spawn(colonistTarget(),mode()==='eco');if(mode()==='eco'){initGoods();initBuild();buildStockPanel();buildBuildPanel()}else{world.stk=null;world.own=null;world.sites=null;G.n=0}};
 const colonistTarget=()=>mode()==='eco'?world.starts.length*CFG.eco.colonistsPerPlayer:+$('count').value;
 function regenerate(){
   document.body.dataset.mode=mode();

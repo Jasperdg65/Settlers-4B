@@ -43,8 +43,8 @@ function frame(now){
   if(frameNo%15===0){
     $('fps').textContent=fpsAvg.toFixed(0);
     $('simms').textContent=running?simAvg.toFixed(2)+' ms':'–';
-    $('drawms').textContent=drawAvg.toFixed(1)+' ms';{const bl=world.blds;$('nocc').textContent=bl.filter(b=>b.occ).length+' van '+bl.length}
-    if(S.eco){$('ncarry').textContent=carrierStats()+' van '+S.n;$('ndone').textContent=TR.done+' · '+TR.used;
+    $('drawms').textContent=drawAvg.toFixed(1)+' ms';{const bl=world.blds.filter(b=>!b.dead);$('nocc').textContent=bl.filter(b=>b.occ).length+' van '+bl.length}
+    if(S.eco){const c=carrierStats();$('ncarry').textContent=`${c[0]} van ${c[1]} · gravers ${c[2]} · bouwers ${c[3]}`;$('ndone').textContent=TR.done+' · '+TR.used;
       $('npath').textContent=`${pathQueued()} · ${PF.cache.size}, ${Math.round(100*PF.hits/Math.max(1,PF.hits+PF.miss))}% hit`}
     drawMini();refreshStock();
   }
@@ -72,7 +72,9 @@ function draw(){
     const b=chunkBounds(cx,cy);
     if(b.right<v.l||b.left>v.r||b.bottom<v.t||b.top>v.b)continue;
     const key=cy*1000+cx+cres*1e6;let ch=chunks.get(key);
-    if(!ch){if(built>=2&&chunks.size>0)continue;const tc=pnow();ch=renderChunk(cx,cy,cres);if(PROF){tb+=performance.now()-tc;PN.built++}built++}
+    /* verouderd (grond veranderd): opnieuw zodra er bouwruimte is, tot dan de oude tonen */
+    if(!ch||ch.stale&&built<2){if(!ch&&built>=2&&chunks.size>0)continue;const tc=pnow(),old=ch;ch=renderChunk(cx,cy,cres);if(old){chunks.delete(key);old.c.width=0}
+      if(PROF){tb+=performance.now()-tc;PN.built++}built++}
     else chunks.delete(key);
     chunks.set(key,ch);ch.used=frameNo;vis+=ch.c.width*ch.c.height;if(!(PROF&&PX.g))ctx.drawImage(ch.c,ch.left,ch.top,ch.c.width/ch.cres,ch.c.height/ch.cres);
   }
@@ -94,6 +96,7 @@ function draw(){
   if(showOres)for(let y=yMin;y<=yMax;y++){const [xa,xb]=xr(y);for(let x=xa;x<=xb;x++){const i=y*W+x,o=world.ore[i];if(!o||(x+y)%2)continue;
     ctx.fillStyle=ORECOL[o];ctx.fillRect(SX(x,y)-1.6,y*TH-hp[i]-1.6,3.2,3.2)}}
 
+  if(world.sites)drawSitesGround(v);
   if(PROF){pt('water',tp);tp=performance.now()}
   /* eenheden en dieren per rij in emmers, voor juiste diepte */
   const detail=cam.z>=0.6,off=H*TW/2;
@@ -120,7 +123,11 @@ function draw(){
     const [xa,xb]=xr(y);let tr=pnow();
     for(let x=xa;x<=xb;x++){
       const i=y*W+x,o=obj[i];
-      if(bldAnchor[i]){const tg=pnow(),b=blds[bldAnchor[i]-1],s=bldSprite(b.type,b.p,PCOL),bx=SX(x,y),by=y*TH-hp[i];blit(s,bx,by);
+      if(bldAnchor[i]){const tg=pnow(),b=blds[bldAnchor[i]-1],s=bldSprite(b.type,b.p,PCOL),bx=SX(x,y),by=y*TH-hp[i];
+        /* in aanbouw: schim van het gebouw, van onderen op zichtbaar naar voortgang */
+        if(b.st){if(b.st===2){ctx.globalAlpha=0.22;blit(s,bx,by);ctx.globalAlpha=1;ctx.save();ctx.beginPath();ctx.rect(bx-s.ax-4,by-s.ay+s.h*(1-b.prog),s.w+8,s.h*b.prog+4);ctx.clip();blit(s,bx,by);ctx.restore();q=''}
+          if(PROF)pt('gebouwen',tg);continue}
+        blit(s,bx,by);
         const bt=BTYPES[b.type],sc=bt.sc,cust=s.custom;
         if(!cust&&bt.glow){const fl=0.55+0.25*Math.sin(tNow*0.013+b.seed*40)+0.15*Math.sin(tNow*0.031);
           const gx=bx+bt.glow[0]*sc,gy=by+bt.glow[1]*sc,gr=ctx.createRadialGradient(gx,gy,0,gx,gy,7*sc);
@@ -167,10 +174,13 @@ function draw(){
     if(PROF){pt('dieren',tr);tr=performance.now()}
     if(detail&&!(PROF&&PX.k))for(let k=rowU[y];k>=0;k=S.next[k]){
       const Y=S.py[k]+(S.y[k]-S.py[k])*al,X=S.px[k]+(S.x[k]-S.px[k])*al;
-      const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]);
+      const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]||S.st&&S.st[k]===ST.WORK);
       const f=moving?(animF+k)&3:0;
       const ux=X*TW-Y*TW/2+off,uy=Y*TH-hAt(X,Y),fr=f*2+S.dir[k];
-      if(S.carry){const c=S.carry[k];blit(UNITC[c?1:0][S.vr[k]][S.pl[k]][fr],ux,uy);if(c)blit(carrySprite(c-1),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}
+      if(S.carry){const c=S.carry[k],j=S.job[k];
+        /* TIJDELIJK tot mijlpaal 4: bouwer = bestaande bouwersfiguur, graver = drager met schop */
+        if(j===2)blit(UNITS[1][S.vr[k]][S.pl[k]][fr],ux,uy);
+        else{blit(UNITC[c||j?1:0][S.vr[k]][S.pl[k]][fr],ux,uy);if(c||j)blit(carrySprite(c?c-1:GI.schop),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}}
       else blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][fr],ux,uy);
     }
     if(PROF)pt('kolonisten',tr);
@@ -181,6 +191,7 @@ function draw(){
       const sy=Y*TH-hAt(X,Y);if(sy<v.t||sy>v.b+10)continue;if(pl[i]!==lp){lp=pl[i];ctx.fillStyle=PCOL[lp]}ctx.fillRect(sx-1.5,sy-3,3,3)}}
   if(PROF)pt('stippen',tp);
 
+  if(world.own)drawBuildOverlay(v,blit);
   if(hoverTile){
     const {x,y}=hoverTile;if(x<W-1&&y<H-1){const a=y*W+x;
       ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=1/cam.z;ctx.beginPath();

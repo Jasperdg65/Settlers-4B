@@ -46,7 +46,7 @@ function takeOne(s){
 }
 /* een stuk van goed gd bij gebouw bi dat niemand komt halen, of -1 */
 function freeUnitAt(bi,gd){const st=world.stk;for(const i of bldSlots(bi)){const s=st[i]-1;if(s>=0&&G.bld[s]===bi&&G.good[s]===gd&&G.cnt[s]>G.res[s])return s}return -1}
-function stackLabel(s){return `${G.cnt[s]}× ${GOODS[G.good[s]].n} · ${BTYPES[world.blds[G.bld[s]].type].name.replace(/ \(.*\)/,'')}, speler ${G.pl[s]+1}`}
+function stackLabel(s){const b=world.blds[G.bld[s]];return `${G.cnt[s]}× ${GOODS[G.good[s]].n} · ${BTYPES[b.type].name.replace(/ \(.*\)/,'')}${b.dead?' (afgebroken)':b.st?' (bouwplaats)':''}, speler ${G.pl[s]+1}`}
 /* totaal per goed voor speler p: stapels plus wat dragers onderweg vasthouden */
 function stockTotals(p){const t=new Uint32Array(GOODS.length);for(let s=0;s<G.n;s++)if(G.cnt[s]&&G.pl[s]===p)t[G.good[s]]+=G.cnt[s];
   if(S.carry)for(let i=0;i<S.n;i++)if(S.carry[i]&&S.pl[i]===p)t[S.carry[i]-1]++;return t}

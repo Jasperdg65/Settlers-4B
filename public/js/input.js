@@ -7,7 +7,7 @@ function buildMini(){
   for(let i=0;i<W*H;i++){const t=TCOL[ter[i]];let s=1+(i+W+1<W*H?(hp[i]-hp[i+W+1])*0.04:0);if(obj[i]===1)s*=0.75;
     img.data[i*4]=t[0]*s;img.data[i*4+1]=t[1]*s;img.data[i*4+2]=t[2]*s;img.data[i*4+3]=255}
   miniBase=document.createElement('canvas');miniBase.width=W;miniBase.height=H;const g=miniBase.getContext('2d');g.putImageData(img,0,0);
-  for(const b of world.blds){const fp=BTYPES[b.type].fp;g.fillStyle=PCOL[b.p];g.fillRect(b.x+fp[0],b.y+fp[2],fp[1]-fp[0]+1,fp[3]-fp[2]+1)}
+  for(const b of world.blds){if(b.dead)continue;const fp=BTYPES[b.type].fp;g.fillStyle=PCOL[b.p];g.fillRect(b.x+fp[0],b.y+fp[2],fp[1]-fp[0]+1,fp[3]-fp[2]+1)}
 }
 function screenToTile(mx,my){
   const {W,H,hp}=world;const wx=(mx-vw/2)/cam.z+cam.x,wy=(my-vh/2)/cam.z+cam.y;
@@ -33,7 +33,13 @@ mini.addEventListener('pointerup',()=>miniDown=false);
 
 /* ---------- Invoer ---------- */
 let drag=null;
-cv.addEventListener('pointerdown',ev=>{drag={x:ev.clientX,y:ev.clientY};cv.setPointerCapture(ev.pointerId);cv.classList.add('drag')});
+/* klik = indrukken en loslaten zonder (veel) te slepen; in bouwmodus plaatst of breekt dat af */
+let downAt=null;
+cv.addEventListener('contextmenu',ev=>{if(BUILD.mode){ev.preventDefault();setBuildMode(null);showTip('')}});
+addEventListener('keydown',ev=>{if(ev.key==='Escape'&&BUILD.mode){setBuildMode(null);showTip('')}});
+cv.addEventListener('pointerup',ev=>{if(ev.button===0&&downAt&&Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1])<5&&world&&world.own&&BUILD.mode){buildClick();
+  const r=cv.getBoundingClientRect(),t=screenToTile(ev.clientX-r.left,ev.clientY-r.top);showTip(buildHover(Math.floor(t.x),Math.floor(t.y)),ev.clientX-r.left,ev.clientY-r.top)}downAt=null});
+cv.addEventListener('pointerdown',ev=>{downAt=ev.button===0?[ev.clientX,ev.clientY]:null;drag={x:ev.clientX,y:ev.clientY};cv.setPointerCapture(ev.pointerId);cv.classList.add('drag')});
 cv.addEventListener('pointermove',ev=>{
   if(!world)return;
   const r=cv.getBoundingClientRect();
@@ -47,6 +53,7 @@ cv.addEventListener('pointermove',ev=>{
       (world.stk&&world.stk[i]?' · stapel: '+stackLabel(world.stk[i]-1):'');
     /* tooltip bij een stapel of gebouw; een stapel steekt boven zijn tegel uit, dus ook de tegel eronder telt */
     const st=world.stk,i2=i+world.W,s=st?(st[i]||(y+1<world.H?st[i2]:0))-1:-1;
+    if(world.own&&BUILD.mode){showTip(buildHover(x,y),ev.clientX-r.left,ev.clientY-r.top);return}
     showTip(s>=0?stackLabel(s):b?`${BTYPES[world.blds[b-1].type].name} · speler ${world.blds[b-1].p+1}`+(S.eco?wantLabel(b-1):''):'',ev.clientX-r.left,ev.clientY-r.top);
   }else{hoverTile=null;showTip('')}
 });
