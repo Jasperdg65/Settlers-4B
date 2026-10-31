@@ -159,9 +159,12 @@ Wat het script doet (instellingen in `tools/sprites.json`):
   van die kant en draaien rond de schouder (`rig.shoulder`); de rest is romp en gaat iets op en
   neer. Lopen 8 stappen, stilstaan 1, vechten 6 (de arm met het zwaard, `rig.fight` in graden).
   De kant van het zwaard herkent het script aan onderdelen die met `Sword` beginnen.
+  Benen worden hoofdletterongevoelig herkend (`Boot_…`, `Felt_boot_…`, `Trouser…`).
 - 8 richtingen: rij 0 = oost (schermrechts), met de klok mee per 45°; rij 2 kijkt naar de kijker.
-- Spelerkleur: materialen die met `TEAM` beginnen, worden wit gerenderd; een tweede pass maakt
-  een masker (wit = spelerkleur) met dezelfde indeling. Het spel kleurt per speler om.
+- Spelerkleur: materialen die met `TEAM` beginnen (`TEAM_Felt`, `TEAM_Crest`, …), worden wit
+  gerenderd; een tweede pass maakt een masker (wit = spelerkleur) met dezelfde indeling. Het masker
+  is lineaire data: weergave Raw, geen denoise, opgeslagen als Non-Color. Het spel kleurt per
+  speler om.
 - Uitvoer in `public/assets/units/`: `<naam>_<px>.webp`, `<naam>_<px>_mask.webp` en
   `<naam>.json` (per beeld `anim`, `dir`, `i`, positie `x y w h` in de atlas en anker `ax ay`
   = voeten). Daarna zet het `units.<sleutel> = {json, v}` in `assets/manifest.json`.

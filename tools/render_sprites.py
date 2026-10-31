@@ -6,7 +6,7 @@
 # --test rendert per model alleen idle en de eerste loopstap (alle richtingen) naar tools/.render-tmp/, met een PNG-voorbeeld.
 #
 # Per model: atlas per maat (24/48/96 px poppetje) als WebP met alfa, een masker met dezelfde indeling
-# (wit = spelerkleur) en één JSON met per beeld de positie in de atlas en het ankerpunt (voeten).
+# (wit = spelerkleur; lineaire data: Raw-weergave, geen denoise, Non-Color) en één JSON met per beeld de positie in de atlas en het ankerpunt (voeten).
 # Rijen = richtingen (0 = oost/schermrechts, daarna met de klok mee per 45°), kolommen = beelden: idle, walk, fight.
 # Animatie zonder skelet: onderdelen worden gegroepeerd (benen = Boot/Trouser per kant, armen = alles verder
 # dan rig.armMinX van het midden per kant, rest = romp) en scharnieren rond heup en schouder.
@@ -127,7 +127,8 @@ def build_rig(objs, R):
     for o in objs:
         c = center(o)
         s = -1 if c.x < 0 else 1
-        if 'Boot' in o.name or 'Trouser' in o.name:
+        nm = o.name.lower()
+        if 'boot' in nm or 'trouser' in nm:  # Boot_…, Felt_boot_…, Trouser_…
             attach(o, legs[s]); groups['legs'][s].append(o.name)
         elif abs(c.x) > R['armMinX']:
             attach(o, arms[s]); groups['arms'][s].append(o.name)
@@ -194,10 +195,12 @@ def apply_mats(objs, table):
             s.material = m
 
 
-def render_rgba(sc, path):
+def render_rgba(sc, path, linear=False):
     sc.render.filepath = path
     bpy.ops.render.render(write_still=True)
     img = bpy.data.images.load(path, check_existing=False)
+    if linear:
+        img.colorspace_settings.name = 'Non-Color'  # masker: waarden ongewijzigd inlezen
     w, h = img.size
     a = np.empty(w * h * 4, dtype=np.float32)
     img.pixels.foreach_get(a)
@@ -209,7 +212,7 @@ def set_pass(sc, mask):
     sc.cycles.samples = CFG['maskSamples'] if mask else CFG['samples']
     sc.cycles.use_denoising = not mask
     sc.cycles.max_bounces = 0 if mask else 6
-    sc.view_settings.view_transform = 'Standard' if mask else 'AgX'
+    sc.view_settings.view_transform = 'Raw' if mask else 'AgX'  # masker = lineaire data, geen kleurbeheer
     sc.view_settings.look = 'None'
     pl = bpy.data.objects.get('Schaduwvanger')
     if pl:
@@ -230,9 +233,11 @@ def shrink(rgba, f):
     return p
 
 
-def save_webp(arr, path, quality):
+def save_webp(arr, path, quality, linear=False):
     h, w = arr.shape[:2]
     img = bpy.data.images.new(os.path.basename(path), w, h, alpha=True)
+    if linear:
+        img.colorspace_settings.name = 'Non-Color'
     img.pixels.foreach_set(np.ascontiguousarray(arr[::-1]).ravel().astype(np.float32))
     img.filepath_raw = path
     img.file_format = 'WEBP'
@@ -278,7 +283,7 @@ def render_model(key, m):
             pose(rig, a, i, R)
             bpy.context.view_layer.update()
             set_pass(sc, False); apply_mats(objs, orig); col[d, a, i] = render_rgba(sc, tmp)
-            set_pass(sc, True); apply_mats(objs, mask); msk[d, a, i] = render_rgba(sc, tmp)
+            set_pass(sc, True); apply_mats(objs, mask); msk[d, a, i] = render_rgba(sc, tmp, linear=True)
             n += 1
             if n % 10 == 0:
                 check_disk()
@@ -318,7 +323,7 @@ def render_model(key, m):
         base = os.path.join(TMP if TEST else ASSETS, m['out'] + f'_{size}')
         os.makedirs(os.path.dirname(base), exist_ok=True)
         save_webp(atlas, base + '.webp', CFG['quality'])
-        save_webp(matlas, base + '_mask.webp', 100)
+        save_webp(matlas, base + '_mask.webp', 100, linear=True)
         if TEST:  # voorbeeld om te bekijken: kleur boven, masker eronder, op grijs
             g = np.concatenate([atlas, matlas]); bg = np.full_like(g, 0.45); bg[..., 3] = 1
             pv = bg.copy(); pv[..., :3] = g[..., :3] * g[..., 3:4] + bg[..., :3] * (1 - g[..., 3:4])

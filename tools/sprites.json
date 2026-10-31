@@ -30,6 +30,9 @@
   "models": {
     "soldaat_1": {"glb": "bron/modellen/soldaat_beginner.glb", "out": "units/soldaat_beginner", "anims": ["idle", "walk", "fight"]},
     "soldaat_2": {"glb": "bron/modellen/soldaat_gemiddeld.glb", "out": "units/soldaat_gemiddeld", "anims": ["idle", "walk", "fight"]},
-    "soldaat_3": {"glb": "bron/modellen/soldaat_veteraan.glb", "out": "units/soldaat_veteraan", "anims": ["idle", "walk", "fight"]}
+    "soldaat_3": {"glb": "bron/modellen/soldaat_veteraan.glb", "out": "units/soldaat_veteraan", "anims": ["idle", "walk", "fight"]},
+    "krachtpatser_1": {"glb": "bron/modellen/krachtpatser_junior.glb", "out": "units/krachtpatser_junior", "anims": ["idle", "walk"]},
+    "krachtpatser_2": {"glb": "bron/modellen/krachtpatser_medior.glb", "out": "units/krachtpatser_medior", "anims": ["idle", "walk"]},
+    "krachtpatser_3": {"glb": "bron/modellen/krachtpatser_senior.glb", "out": "units/krachtpatser_senior", "anims": ["idle", "walk"]}
   }
 }
