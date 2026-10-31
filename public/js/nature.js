@@ -56,6 +56,27 @@ function makeNature(){
   }
 }
 
+/* struiksoort van een tegel, voor tekenen en plukken gelijk: 0 bessenstruik, 1 hazelaar, 2 varen, 3 bloeiende struik.
+   Met de geschilderde struiken (8 beelden) is dat precies dat beeld; de getekende reserve heeft gewoon, bessen en bloemen. */
+const bushKind=(x,y)=>(hash2(x*7,y*13)>>>7)%4;
+const bushSprite=(x,y)=>{const h=hash2(x*7,y*13),k=(h>>>7)%4;return BUSHES[(BUSHES.length===8?k:[1,0,0,2][k])*2+(h>>>9&1)]};
+/* akkers (mijlpaal 5b): per gewas (1 graan, 2 peulvruchten, 3 groente) een beeld groeiend en rijp, zo groot als één tegel
+   (een tegel is op het scherm een parallellogram: bij rij y loopt x van −8−y tot 8−y rond het midden) */
+const CROPS=[];
+function makeCrops(){
+  const soil=g=>{poly(g,[-3.4,-3.4,10.2,-3.4,3.4,3.4,-10.2,3.4],'#8a6440');for(const y of [-1.6,0.6,2.6])line(g,[-6.6-y,y+0.5,6.6-y,y+0.5],'#6e4e30',0.35)};
+  const rows=(g,f)=>{for(const y of [-2.2,0,2.2])for(let x=-6.4-y;x<=6.4-y;x+=2.6)f(x,y)};
+  const draw=[
+    [g=>rows(g,(x,y)=>{line(g,[x,y,x-0.3,y-1.6],'#6fa040',0.35);line(g,[x,y,x+0.4,y-1.4],'#5f9035',0.35)}),           // graan, groeiend
+     g=>rows(g,(x,y)=>{for(const d of [-0.5,0,0.5]){line(g,[x+d,y,x+d*1.6,y-4.4],'#c9a040',0.3);ell(g,x+d*1.7,y-4.8,0.35,0.8,'#e5c35a')}})],
+    [g=>rows(g,(x,y)=>{circ(g,x,y-0.6,0.8,'#6fa040')}),                                                                   // peulvruchten
+     g=>rows(g,(x,y)=>{line(g,[x,y,x,y-5],'#7a5434',0.3);for(let k=0;k<3;k++)ell(g,x+(k%2?0.6:-0.6),y-1.2-k*1.3,0.75,0.5,k%2?'#5f8a35':'#7aa848');ell(g,x+0.5,y-2.2,0.25,0.7,'#9a7a4a')})],
+    [g=>rows(g,(x,y)=>{ell(g,x-0.4,y-0.4,0.6,0.3,'#7fb050');ell(g,x+0.4,y-0.5,0.6,0.3,'#6fa040')}),                       // groente
+     g=>rows(g,(x,y)=>{if(((x*7+y*3)|0)&1){circ(g,x,y-0.9,1.1,'#6fa84a');circ(g,x,y-1,0.65,'#9cc870')}else{poly(g,[x-0.4,y,x+0.4,y,x,y+0.8],'#e07a26');for(const a of [-0.6,0,0.6])line(g,[x,y,x+a,y-1.8],'#4f8a35',0.3)}})],
+  ];
+  for(const [grow,ripe] of draw)for(const f of [grow,ripe])CROPS.push(spr(26,14,13,7,g=>{soil(g);f(g)}));
+}
+
 /* ---------- Dieren ---------- */
 const ANIM=[[],[],[]];
 function makeAnimals(){

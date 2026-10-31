@@ -32,7 +32,7 @@ $('armyPl').onchange=ev=>{ARMY.p=+ev.target.value;ARMY.sel=[]};
 $('selNone').onclick=()=>{ARMY.sel=[]};
 $('stock').onchange=()=>{if(world&&world.stk)startColonists()};
 
-makeTrees();makeNature();makeAnimals();makeUnits(PCOL);
+makeTrees();makeNature();makeCrops();makeAnimals();makeUnits(PCOL);
 regenerate();running=true;
 loadManifest().then(()=>{loadTextures();loadNature();loadUnits3D();loadCustom().then(()=>{buildGallery();refreshCustomUI()})});
 requestAnimationFrame(frame);

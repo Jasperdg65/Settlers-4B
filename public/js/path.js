@@ -11,7 +11,7 @@ function pathInit(){
   const N=world.W*world.H,c=CFG.path;
   pfG=new Float32Array(N);pfPar=new Int32Array(N);pfSeen=new Uint32Array(N);pfDone=new Uint32Array(N);pfStamp=0;
   world.walkVer=world.walkVer|0;Object.assign(PF,{q:[],qh:0,cur:null,ver:world.walkVer,hits:0,miss:0,nodes:0});PF.cache.clear();
-  PF.tc=Float32Array.from(c.terrain);PF.oc=Float32Array.from([1,c.tree,c.stone,c.bush,1,1]);
+  PF.tc=Float32Array.from(c.terrain);PF.oc=Float32Array.from([1,c.tree,c.stone,c.bush,1,1,c.field,c.field]);
   let m=Infinity;for(const v of c.terrain)if(v>0)m=Math.min(m,v);PF.minC=m*Math.min(1,c.footpath);
 }
 /* kosten van tegel a naar buurtegel b (d = 1 of √2) */

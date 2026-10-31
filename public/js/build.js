@@ -67,7 +67,7 @@ function buildStep(b,bi){
   for(const [k,gd] of [[0,GI.plank],[1,GI.steen]]){
     if(b.used[k]>=c[k])continue;const s=freeUnitAt(bi,gd);if(s<0)continue;
     takeOne(s);b.used[k]++;b.want[gd]--;b.prog=(b.used[0]+b.used[1])/(c[0]+c[1]);
-    if(b.prog>=1){b.st=0;b.prog=1;setWant(b);b.pt=0;b.ps='';claimLand(b);world.sites.splice(world.sites.indexOf(bi),1);invalidateTiles(b.reg);stockVer++}
+    if(b.prog>=1){b.st=0;b.prog=1;setWant(b);b.pt=0;b.run=0;b.ps='';claimLand(b);world.sites.splice(world.sites.indexOf(bi),1);invalidateTiles(b.reg);stockVer++}
     return true;
   }
   return false;

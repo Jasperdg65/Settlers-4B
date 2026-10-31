@@ -36,7 +36,10 @@ function nearestIdle(p,t,job=0){
   for(let i=0;i<S.n;i++){if(S.st[i]!==ST.IDLE||S.pl[i]!==p||S.job[i]!==job)continue;const d=Math.hypot(S.x[i]-X,S.y[i]-Y);if(d<bd){bd=d;best=i}}
   return best;
 }
-function nearestStore(p,x,y){let best=-1,bd=Infinity;world.blds.forEach((o,oi)=>{if(o.p===p&&isStore(o)){const d=Math.hypot(o.x-x,o.y-y);if(d<bd){bd=d;best=oi}}});return best}
+/* dichtstbijzijnde gebouw van speler p (geen opslag) dat nog een stuk van gd vraagt, of -1 */
+function nearestWanting(p,gd,x,y){let best=-1,bd=Infinity;world.blds.forEach((o,oi)=>{if(o.p===p&&!o.dead&&!isStore(o)&&o.want[gd]>o.has[gd]+o.coming[gd]){const d=Math.hypot(o.x-x,o.y-y);if(d<bd){bd=d;best=oi}}});return best}
+/* dichtstbijzijnde opslag van speler p; met gd alleen een opslag waar nog een stuk van gd past */
+function nearestStore(p,x,y,gd=-1){let best=-1,bd=Infinity;world.blds.forEach((o,oi)=>{if(o.p===p&&isStore(o)&&(gd<0||roomFor(oi,gd))){const d=Math.hypot(o.x-x,o.y-y);if(d<bd){bd=d;best=oi}}});return best}
 const tileOf=i=>(S.y[i]|0)*world.W+(S.x[i]|0);
 function goPath(c,st,to){S.st[c]=st;findPath(tileOf(c),to,p=>gotPath(c,p))}
 function fetchGood(c,s,bi,gd,counted){G.res[s]++;if(counted)world.blds[bi].coming[gd]++;S.cm[c]=counted;S.gd[c]=gd;S.src[c]=s;S.dst[c]=bi;S.wait[c]=0;goPath(c,ST.PATH_SRC,G.tile[s])}
@@ -46,7 +49,7 @@ function planTransport(){
   for(let k=0;k<nb&&made<M;k++){
     const bi=(TR.rr+k)%nb,b=bl[bi];if(b.dead||noIdle[b.p]||b.cool>tickNo)continue;
     for(let gd=0;gd<GOODS.length&&made<M;gd++){
-      let need=b.want[gd]-b.has[gd]-b.coming[gd];
+      let need=b.want[gd]-b.has[gd]-b.coming[gd];if(need>0&&!b.st&&!inputRoom(bi,gd))continue;   // invoer past niet meer bij de deur
       while(need>0&&made<M){
         const s=nearestSource(b.p,gd,bi,b.x,b.y+1);if(s<0)break;
         const c=nearestIdle(b.p,G.tile[s]);if(c<0){noIdle[b.p]=1;break}
@@ -59,7 +62,7 @@ function planTransport(){
   for(let s=0;s<G.n&&made<M;s++){
     const ob=bl[G.bld[s]];
     if(G.cnt[s]<=G.res[s]||noIdle[G.pl[s]]||!(ob.dead||CFG.prod[ob.type]&&!ob.st&&!ob.want[G.good[s]]))continue;
-    const t=G.tile[s],W=world.W,o=nearestStore(G.pl[s],t%W,t/W|0);if(o<0)continue;
+    const t=G.tile[s],W=world.W,o=nearestStore(G.pl[s],t%W,t/W|0,G.good[s]);if(o<0)continue;
     const c=nearestIdle(G.pl[s],t);if(c<0){noIdle[G.pl[s]]=1;continue}
     fetchGood(c,s,o,G.good[s],0);made++;
   }
@@ -96,11 +99,14 @@ function arrived(c){
   if(st===ST.TO_WORK){S.st[c]=ST.WORK;S.wait[c]=1;return}
   if(st===ST.TO_IN){enterBuilding(c);return}
   /* bij de deur: neerleggen; past het niet (of is het gebouw weg), dan naar de dichtstbijzijnde opslag, of daar later opnieuw */
-  if(!b.dead&&!addGoods(bi,gd,1)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;S.carry[c]=0;TR.done++;
+  if(!b.dead&&inputRoom(bi,gd)&&!addGoods(bi,gd,1)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;S.carry[c]=0;TR.done++;
     toIdle(c);S.wait[c]=CFG.carry.dropTicks;return}
-  if(!isStore(b)){if(S.cm[c])b.coming[gd]--;S.cm[c]=0;const o=nearestStore(b.p,b.x,b.y);
-    if(o>=0){S.dst[c]=o;goPath(c,ST.PATH_DST,doorTile(world.blds[o]));return}}
-  S.wait[c]=CFG.carry.retryTicks;S.st[c]=ST.TO_DST; // opslag vol: blijven staan en straks opnieuw
+  if(S.cm[c])b.coming[gd]--;S.cm[c]=0;
+  /* past niet: eerst naar een gebouw dat dit goed vraagt, anders naar een opslag waar het wel past */
+  const w=nearestWanting(b.p,gd,b.x,b.y);if(w>=0&&w!==bi){world.blds[w].coming[gd]++;S.cm[c]=1;S.dst[c]=w;goPath(c,ST.PATH_DST,doorTile(world.blds[w]));return}
+  const o=nearestStore(b.p,b.x,b.y,gd);
+  if(o>=0&&o!==bi){S.dst[c]=o;goPath(c,ST.PATH_DST,doorTile(world.blds[o]));return}
+  S.wait[c]=CFG.carry.retryTicks;S.st[c]=ST.TO_DST; // alle opslag vol: blijven staan en straks opnieuw
 }
 function wander(i){
   const {W,H,walk}=world,R=CFG.carry.idleRadius,[w0,w1]=CFG.carry.idleWait;

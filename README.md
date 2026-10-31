@@ -27,7 +27,7 @@ public/                 webroot (Apache-alias /settlers4b)
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
     army.js             krachtpatsers: lopen, opdrachten uitvoeren, selecteren, groepen, markering (Duel-test)
     duel.js             duelmodule: kracht, duelStep (één tick van een duel), uitdagen, afloop
-    production.js       productie: buitenwerkers (kappen, steen hakken, planten), werkplaatsen, natuur (groei, stronken), paneel Productie
+    production.js       productie: buitenwerkers (kappen, steen hakken, planten, akkers, plukken), werkplaatsen, natuur (groei, stronken, akkers), paneel Productie
     orders.js           opdrachtenwachtrij: de enige weg waarlangs een speler (mens of computer) de simulatie verandert
     loop.js             hoofdlus en tekenen
     input.js            overzichtskaart, muis, toetsen
@@ -319,7 +319,8 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 3 | Bouwen (plaatsen, egaliseren, materiaal, afbreken) | klaar |
 | 4 | Beroepen via gereedschap | klaar |
 | 5a | Productiekern met hout en steen: houthakker, bosbouwer (boompjes groeien uit), zagerij, steenhouwer (steenblokken raken op), werkgebied per gebouw, afvoer van overschot naar de opslag, paneel Productie | klaar |
-| 5b–5c | Productieketens: graan → meel → brood, bonenakker en moestuin, gaarkeuken (peulvruchten + groente + water → stoofpot), plukkershut (fruit en noten van appelbomen, hazelaars, bessenstruiken; groeien weer aan), droogschuur (fruit + noten → fruit-notenmix), waterput, mijnen met lievelingskost (`CFG.mineFood`), smelterijen, smidse (gereedschap), uitrustingsmaker (ijzer → helm, schild, polsband: statusuitrusting voor hogere niveaus) | gepland (5b voedsel, 5c mijnen en metaal) |
+| 5b | Voedsel: boerderij (graan), bonenakker (peulvruchten), moestuin (groente) met akkers die groeien en rijpen; plukkershut (fruit van appelbomen en bessenstruiken, noten van hazelaars, groeien weer aan); waterput; molen (graan → meel), bakkerij (meel + water → brood), gaarkeuken (peulvruchten + groente + water → stoofpot), droogschuur (fruit + noten → fruit-notenmix) | klaar |
+| 5c | Mijnen met lievelingskost (`CFG.mineFood`), smelterijen, smidse (gereedschap), uitrustingsmaker (ijzer → helm, schild, polsband: statusuitrusting voor hogere niveaus) | gepland |
 | 6 | Bevolking, gebied en leger: woonhuizen, zichtbare grens, bemande torens, krachthal (kolonisten trainen; niveaus met statusuitrusting) | gepland |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
@@ -429,7 +430,29 @@ de tempel met de natuurgebeurtenissen.
   steenblokken zijn, de bosbouwer zo dicht mogelijk bij een houthakker, en bij elke steenhouwer ligt
   een groepje van ongeveer 9 steenblokken.
 - Met de huidige getallen maakt één startdorp ongeveer 8 boomstammen, 15 planken en 3 steen per
-  minuut (Node-simulatie van 15 minuten); het bos rond de houthakker blijft op peil.
+  minuut (Node-simulatie van 15 minuten, zonder voorraadgrens); het bos rond de houthakker blijft op peil.
+
+**Voedsel (mijlpaal 5b)**
+
+- Akkers: de boer (boerderij, bonenakker) en de tuinier (moestuin) oogsten eerst een rijpe akker van
+  hun gewas in het werkgebied en zaaien anders een nieuwe op vrije, vruchtbare grond (gras of
+  weelderig). `world.crop` = gewas, `obj` 6 = groeit, 7 = rijp; groeitijd per gewas in
+  `CFG.nature.crop`. Akkers zijn beloopbaar (`CFG.path.field`).
+- Plukker: om en om fruit (appelboom, bessenstruik) en noten (hazelaar); een geplukte boom of struik
+  heeft na `CFG.nature.regrow` ticks weer vruchten (`world.pickT`). De struiksoort hangt vast aan de
+  tegel (`bushKind`), voor tekenen en plukken gelijk.
+- Werkplaatsen: waterput (uit het niets), molen, bakkerij, gaarkeuken, droogschuur (`CFG.prod`).
+- Voorraadgrens `CFG.prod.enough` (24): een werkgebouw stopt zolang de speler genoeg van zijn product
+  heeft; dat scheelt dragers en opslagruimte. Melding "genoeg … op voorraad".
+- Stapelplekken: werkgebouwen kiezen eerst, opslag daarna, en een werkgebouw mag een lege plek van
+  een opslag overnemen; straal voor werkgebouwen `CFG.slotRadius.anders` (5). Een werkplaats houdt
+  één plek per product vrij, anders kan hij vastlopen met alleen invoer bij de deur.
+- Dragers kiezen een opslag waar het goed past; is die bij aankomst vol, dan brengen ze het naar een
+  gebouw dat erom vraagt of naar een andere opslag (anders bleven ze wachten bij een volle opslag).
+- TIJDELIJK: 60 kolonisten per speler (`CFG.eco.colonistsPerPlayer`) tot mijlpaal 6 bevolking
+  brengt; met 40 waren er te weinig dragers voor alle vakmensen.
+- De nieuwe gebouwen zijn getekende versies (klein en eenvoudig); een geschilderde afbeelding kan
+  via het paneel Gebouwen.
 
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 

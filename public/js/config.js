@@ -5,20 +5,21 @@ const CFG={
   ticksPerSec:20,                // simulatie, los van het tekenen
   stackMax:8,                    // goederen per stapel
   /* stapelplekken per gebouw; burcht en pakhuis zijn opslag, de rest heeft een paar plekken bij de deur */
-  slots:{burcht:40,pakhuis:32,anders:4},
-  slotRadius:{burcht:9,pakhuis:7,anders:3},
+  slots:{burcht:40,pakhuis:32,anders:6},
+  slotRadius:{burcht:9,pakhuis:7,anders:5},
   /* startvoorraad in de burcht, keuze 'Startvoorraad' vermenigvuldigt */
   startFactor:{weinig:0.5,normaal:1,veel:2},
   startStock:{
     boomstam:16,plank:40,steen:32,
     brood:12,stoofpot:8,notenmix:8,water:8,
-    bijl:2,zaag:2,houweel:3,hamer:6,schop:4,zeis:2,
+    bijl:2,zaag:2,houweel:3,hamer:6,schop:4,zeis:3,
   },
-  eco:{colonistsPerPlayer:40},   // kolonisten per speler bij de start in economiemodus
+  eco:{colonistsPerPlayer:60},   // kolonisten per speler bij de start in economiemodus (TIJDELIJK 60 tot mijlpaal 6 bevolking brengt, anders te weinig dragers)
   /* routes (A*): kosten per stap = afstand × terrein × object × (voetpad) + hoogteverschil × up/down */
   path:{
     terrain:[0,0,1.25,1,1.05,1,1.9,2.6,0], // per terreinsoort T (diep, ondiep, strand, gras, weelderig, droog, rots, gebergte, sneeuw); 0 = niet beloopbaar
     tree:1.5,stone:2.2,bush:1.15,  // vermenigvuldiger op een tegel met boom, steenblok of struik
+    field:1.1,                     // akker (gezaaid of rijp)
     footpath:0.9,                  // bestaande voetpaden lopen iets makkelijker (geen wegenbouw nodig)
     up:0.12,down:0.04,             // extra kosten per hoogte-eenheid omhoog / omlaag
     budget:6000,                   // A*-knopen per tick, verdeeld over de zoekopdrachten in de wachtrij
@@ -45,7 +46,12 @@ const CFG={
     {k:'zager',n:'Zager',tool:'zaag',bld:['zagerij']},
     {k:'steenhouwer',n:'Steenhouwer',tool:'houweel',bld:['steenhouwer']},
     {k:'mijnwerker',n:'Mijnwerker',tool:'houweel',bld:['kolenmijn','ijzermijn','goudmijn']},
-    {k:'boer',n:'Boer',tool:'zeis',bld:['boerderij']},
+    {k:'boer',n:'Boer',tool:'zeis',bld:['boerderij','bonenakker']},
+    {k:'tuinier',n:'Tuinier',bld:['moestuin']},
+    {k:'plukker',n:'Plukker',bld:['plukkershut']},
+    {k:'waterhaler',n:'Waterhaler',bld:['waterput']},
+    {k:'kok',n:'Kok',bld:['gaarkeuken']},
+    {k:'droger',n:'Droger',bld:['droogschuur']},
     {k:'molenaar',n:'Molenaar',bld:['molen']},
     {k:'bakker',n:'Bakker',bld:['bakkerij']},
     {k:'smelter',n:'Smelter',bld:['ijzersmelterij','goudsmelterij']},
@@ -58,6 +64,7 @@ const CFG={
     cost:{
       houthakker:[2,2],bosbouwer:[2,2],steenhouwer:[2,2],                        // kleine hut
       zagerij:[3,3],molen:[3,3],bakkerij:[3,3],boerderij:[3,3],                 // werkplaats
+      bonenakker:[2,1],moestuin:[2,1],plukkershut:[2,1],waterput:[1,2],gaarkeuken:[3,3],droogschuur:[3,1],   // voedsel (5b)
       kolenmijn:[3,1],ijzermijn:[3,1],goudmijn:[3,1],                           // mijn
       ijzersmelterij:[4,5],goudsmelterij:[4,5],smidse:[4,5],wapensmid:[4,5],    // smelterij en smidse
       pakhuis:[3,3],woonhuis:[2,3],wachttoren:[2,3],kazerne:[4,5],
@@ -74,15 +81,30 @@ const CFG={
      spare: boomsoorten die de houthakker laat staan (4 = appelboom, voor de plukker in 5b).
      Werkplaatsen verwerken in ticks ticks de invoer 'in' tot 'out'; stock = hoeveel van elk invoergoed ze bij de deur willen. */
   prod:{
+    enough:24,                     // een werkgebouw stopt zolang de speler minstens zoveel van zijn product heeft (scheelt dragers)
     houthakker:{gather:'tree',area:10,work:80,rest:60,out:'boomstam',spare:[4]},
     steenhouwer:{gather:'stone',area:10,work:100,rest:60,out:'steen'},
     bosbouwer:{gather:'plant',area:7,work:50,rest:80},
     zagerij:{in:{boomstam:1},out:{plank:2},ticks:160,stock:4},
+    /* voedsel (5b). farm: oogst eerst een rijpe akker van zijn gewas (crop: 1 graan, 2 peulvruchten, 3 groente) in het
+       werkgebied, anders zaait hij een nieuwe; de akker is na nature.crop[crop] ticks rijp. pick: plukt een appelboom of
+       bessenstruik (fruit) of hazelaar (noten), om en om; daarna groeien er na nature.regrow ticks nieuwe vruchten aan. */
+    boerderij:{gather:'farm',crop:1,area:6,work:60,rest:40,out:'graan'},
+    bonenakker:{gather:'farm',crop:2,area:4,work:60,rest:40,out:'peulvruchten'},
+    moestuin:{gather:'farm',crop:3,area:4,work:50,rest:40,out:'groente'},
+    plukkershut:{gather:'pick',area:9,work:60,rest:40,out:'fruit',out2:'noten'},
+    waterput:{in:{},out:{water:1},ticks:140,stock:0},
+    molen:{in:{graan:1},out:{meel:1},ticks:120,stock:4},
+    bakkerij:{in:{meel:1,water:1},out:{brood:2},ticks:200,stock:4},
+    gaarkeuken:{in:{peulvruchten:1,groente:1,water:1},out:{stoofpot:2},ticks:200,stock:4},
+    droogschuur:{in:{fruit:1,noten:1},out:{notenmix:2},ticks:200,stock:4},
   },
   /* natuur (production.js): een geplant boompje is na grow ticks een boom, een stronk verdwijnt na stump ticks,
      een steenblok geeft stoneUnits stuks steen; plantNear: zoveel bomen of boompjes direct naast een plek (van de 4) en hij
      plant er niet meer; every = ticks tussen twee controles */
-  nature:{grow:6000,stump:4000,stoneUnits:8,plantNear:2,every:20},
+  nature:{grow:6000,stump:4000,stoneUnits:8,plantNear:2,every:20,
+    crop:[0,3600,3000,2400],       // ticks tot een akker rijp is: graan, peulvruchten, groente
+    regrow:3000},                  // ticks tot een geplukte boom of struik weer vruchten heeft
   /* wilde dieren (colonists.js); sleutel = 3D-model in manifest.animals. Aantal = min(max, beloopbaar land (of water) / per).
      keep: afstand tot een startplek bij het neerzetten; range: straal rond hun thuisplek; wait: [min, max] ticks stilstaan;
      rest: kans dat het daarbij gaat liggen of zitten, dan restWait ticks; rate: loopbeelden per 120 ms (huppen sneller) */
@@ -136,7 +158,7 @@ const CFG={
      Elk gebouw verbruikt elke useEvery ticks één stuk van de goederen in 'use'. */
   temp:{
     want:{
-      pakhuis:{brood:4},bakkerij:{water:4},woonhuis:{brood:2},wachttoren:{brood:1},
+      pakhuis:{brood:4},woonhuis:{brood:2},wachttoren:{brood:1},
       kolenmijn:{brood:2},ijzermijn:{stoofpot:2},goudmijn:{notenmix:2},
     },
     use:['water','brood','stoofpot','notenmix'],useEvery:600,

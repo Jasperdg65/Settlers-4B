@@ -164,9 +164,10 @@ function draw(){
       if(px<v.l-30||px>v.r+30)continue;
       if(o===1)blit(TREES[tree[i]*2+(h>>>6&1)],px,py);
       else if(o===2)blit(STONES[((h>>>7)%(ter[i]>=T.MOUNTAIN?8:6))],px,py);
-      else if(o===3&&detail)blit(BUSHES[(h>>>7)%BUSHES.length],px,py);
+      else if(o===3&&detail)blit(bushSprite(x,y),px,py);
       else if(o===4&&detail&&SAPL.length)blit(SAPL[(h>>>7)%4],px,py);
       else if(o===5&&detail&&STUMP.length)blit(STUMP[(h>>>7)%2],px,py);
+      else if(o>=6&&detail&&world.crop)blit(CROPS[(world.crop[i]-1)*2+o-6],SX(x+0.5,y+0.5),(y+0.5)*TH-hAt(x+0.5,y+0.5));   // akker: groeiend of rijp
     }
     if(PROF){pt('tegels',tr);tr=performance.now()}
     for(let k=rowA[y];k>=0;k=A.next[k]){

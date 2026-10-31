@@ -71,7 +71,7 @@ function updateHover(){
     hoverTile={x,y};const i=y*world.W+x,o=world.obj[i],b=world.bldAt[i];
     $('hover').textContent=`Tegel ${x}, ${y} · ${TNAME[world.ter[i]]} · hoogte ${world.hp[i].toFixed(0)}`+
       (b?` · ${BTYPES[world.blds[b-1].type].name} van speler ${world.blds[b-1].p+1} (${world.blds[b-1].occ?'bewoond':'leeg'})`:'')+
-      (o===1?` · ${TREE_NAMES[world.tree[i]/3|0]}`:o===2?' · steenblok'+(world.res?` (nog ${world.res[i]} steen)`:''):o===3?' · struik':o===4?' · jonge boom':o===5?' · boomstronk':'')+(world.ore[i]?` · erts: ${ORE[world.ore[i]]}`:'')+
+      (o===1?` · ${TREE_NAMES[world.tree[i]/3|0]}`:o===2?' · steenblok'+(world.res?` (nog ${world.res[i]} steen)`:''):o===3?' · '+['bessenstruik','hazelaar','varen','bloeiende struik'][bushKind(x,y)]:o===4?' · jonge boom':o===5?' · boomstronk':o>=6?` · akker: ${['graan','peulvruchten','groente'][world.crop[i]-1]} (${o===7?'rijp':'groeit'})`:'')+(world.ore[i]?` · erts: ${ORE[world.ore[i]]}`:'')+
       (world.stk&&world.stk[i]?' · stapel: '+stackLabel(world.stk[i]-1):'');
     /* tooltip bij een stapel of gebouw; een stapel steekt boven zijn tegel uit, dus ook de tegel eronder telt */
     const st=world.stk,i2=i+world.W,s=st?(st[i]||(y+1<world.H?st[i2]:0))-1:-1;
