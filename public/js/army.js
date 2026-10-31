@@ -90,14 +90,16 @@ function tickArmy(){
   }
   tickDuels();
 }
-/* opdrachten: {t:'move', ids, x, y} in een opstelling rond (x, y); {t:'duel', ids, j}: de dichtstbijzijnde vrije uit ids daagt j uit */
+/* opdrachten: {t:'move', ids, x, y} in een opstelling rond (x, y); {t:'duel', ids, j}: de sterkste vrije uit ids daagt j uit */
 function runCmd(c){
   const ids=c.ids.filter(i=>!S.ko[i]&&!S.du[i]&&S.ast[i]!==AS.OUT);if(!ids.length)return;
   if(c.t==='move'){
     const n=ids.length,cols=Math.ceil(Math.sqrt(n)),rows=Math.ceil(n/cols),sp=CFG.army.spacing;
     ids.forEach((i,k)=>{const [x,y]=freeSpot(c.x+(k%cols-(cols-1)/2)*sp,c.y+((k/cols|0)-(rows-1)/2)*sp);armyGo(i,x,y,AIM.IDLE)});
   }else if(c.t==='duel'){
-    const j=c.j,cand=ids.filter(i=>S.role[i]===2&&S.pl[i]!==S.pl[j]).sort((a,b)=>Math.hypot(S.x[a]-S.x[j],S.y[a]-S.y[j])-Math.hypot(S.x[b]-S.x[j],S.y[b]-S.y[j]));
+    /* de sterkste uit de selectie gaat (bij gelijke kracht de dichtstbijzijnde), niet zomaar wie vooraan staat */
+    const j=c.j,dist=i=>Math.hypot(S.x[i]-S.x[j],S.y[i]-S.y[j]),
+      cand=ids.filter(i=>S.role[i]===2&&S.pl[i]!==S.pl[j]).sort((a,b)=>strength(b)-strength(a)||dist(a)-dist(b));
     if(!duelFree(j)){ARMY.last='Die krachtpatser is nu niet uit te dagen.';return}
     if(!cand.length){ARMY.last='Alleen krachtpatsers kunnen uitdagen.';return}
     for(const i of cand)if(challenge(i,j))return;

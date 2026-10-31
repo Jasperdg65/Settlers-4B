@@ -356,8 +356,8 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
 - Bediening: links slepen = selectierechthoek (max `CFG.army.maxSelect`, 100); klik = één;
   Shift+klik = alle eigen krachtpatsers van dat niveau in beeld; Ctrl+1..9 = groep opslaan (ook
   Alt/Cmd, want sommige browsers houden Ctrl+cijfer voor tabbladen); 1..9 = groep kiezen, twee keer
-  kort na elkaar = camera erheen; rechtsklik op een vijandelijke krachtpatser = de dichtstbijzijnde
-  geselecteerde daagt hem uit; rechtsklik op de grond = lopen in opstelling; rechts slepen = schuiven;
+  kort na elkaar = camera erheen; rechtsklik op een vijandelijke krachtpatser = de sterkste vrije
+  geselecteerde daagt hem uit (de melding noemt beider kracht); rechtsklik op de grond = lopen in opstelling; rechts slepen = schuiven;
   Esc = niets geselecteerd. Tooltip boven een krachtpatser: kracht, vermoeidheid, gevoed, uitgeschakeld.
 - Aanraken (tablet, telefoon; `CFG.touch`): één vinger = schuiven, twee vingers = knijpend zoomen;
   tik op een eigen eenheid = erbij selecteren (nog eens = eruit); tik met een selectie op een vijandelijke
@@ -372,7 +372,8 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   kracht (niveau × gevoed × harmoniemeter × vermoeidheid, `CFG.duel`), met een golvende
   toevalsterm, en schuift de stand −1..+1; de sprite toont stand 1–9 en het balkje erboven
   schuift mee in beide spelerkleuren. Met de huidige getallen duurt een gelijk duel gemiddeld
-  ongeveer 9 s; medior wint van junior in ongeveer 3 op de 4, senior van junior in 9 op de 10.
+  ongeveer 18 s; bij 15% meer kracht wint de sterkste ongeveer 3 op de 4 keer, bij 25% meer ruim 4 op
+  de 5, medior tegen junior 19 op de 20 en senior tegen junior vrijwel altijd.
 - Afloop: de winnaar loopt terug naar waar hij stond en krijgt er `winTire` (0,2) vermoeidheid bij,
   bovenop wat het duel zelf kostte; herstel in rust gaat langzaam (`rest`, van vol naar fris ruim
   8 minuten). Volle vermoeidheid kost 60% kracht, dus een uitgeputte senior verliest van een frisse

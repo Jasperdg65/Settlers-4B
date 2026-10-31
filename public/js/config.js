@@ -99,8 +99,8 @@ const CFG={
     harmony:0.3,                   // invloed van de harmoniemeter (0..1, 0,5 = neutraal): ±30%
     harmonyStart:0.5,              // TIJDELIJK tot mijlpaal 7: vaste harmoniemeter per speler
     fatigue:0.6,                   // krachtverlies bij volle vermoeidheid (een uitgeputte senior is zwakker dan een frisse junior)
-    push:0.025,keep:0.95,noise:0.02,
-    tire:0.0012,                   // vermoeidheid erbij per duel-tick (beide deelnemers)
+    push:0.025,keep:0.95,noise:0.012, // toeval: bij 25% meer kracht wint de sterkste ruim 4 op de 5 keer; een gelijk duel duurt ~18 s
+    tire:0.0008,                   // vermoeidheid erbij per duel-tick (beide deelnemers)
     rest:0.0001,                   // herstel per tick als hij niet duelleert (van vol naar fris: ruim 8 minuten)
     winTire:0.2,                   // vermoeidheid erbij voor de winnaar na elk duel: wie vaak wint, raakt op
     maxTicks:1200,                 // daarna wint wie op dat moment voorstaat

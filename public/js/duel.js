@@ -51,6 +51,7 @@ function challenge(i,j){
   let k=DUELS.indexOf(null);if(k<0)k=DUELS.push(null)-1;DUELS[k]=d;
   S.du[a]=S.du[b]=k+1;
   armyGo(a,d.x-CFG.duel.seat,d.y,AIM.SEAT);armyGo(b,d.x+CFG.duel.seat,d.y,AIM.SEAT);
+  ARMY.last=`${duelName(i)} daagt ${duelName(j)} uit`;
   return true;
 }
 /* gaat niet door (geen route, te lang onderweg): beide blijven staan waar ze zijn */
@@ -75,14 +76,15 @@ function tickDuels(){
 function endDuel(k,w){
   const d=DUELS[k];DUELS[k]=null;
   const [win,lose]=w<0?[d.a,d.b]:[d.b,d.a],r=d.ret[w<0?0:1];
+  ARMY.last=`${duelName(win)} wint van ${duelName(lose)} na ${(d.t/CFG.ticksPerSec).toFixed(1).replace('.',',')} s`;   // kracht aan het eind van het duel
   S.du[win]=S.du[lose]=0;
   armyGo(win,r[0],r[1],AIM.IDLE);S.fat[win]=Math.min(1,S.fat[win]+CFG.duel.winTire);
   S.ko[lose]=1;S.fat[lose]=1;
   const h=healerSpot(lose);armyGo(lose,h[0],h[1],AIM.HEAL);
-  const nm=i=>`speler ${S.pl[i]+1} (${LVLNAME[S.lvl[i]]})`;
-  ARMY.last=`${nm(win)} wint van ${nm(lose)} na ${(d.t/CFG.ticksPerSec).toFixed(1).replace('.',',')} s`;
   ARMY.won[S.pl[win]]++;
 }
+/* 'speler 1 senior (kracht 2,30 met muziek)' voor de meldingen */
+const duelName=i=>`speler ${S.pl[i]+1} ${LVLNAME[S.lvl[i]]} (kracht ${strength(i).toFixed(2).replace('.',',')}${musicFor(i)>=0?' met muziek':''})`;
 /* plek naast de dichtstbijzijnde eigen heler; zonder heler de deur van de eigen burcht */
 function healerSpot(i){
   let best=-1,bd=Infinity;
