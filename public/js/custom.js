@@ -42,7 +42,7 @@ async function loadCustom(){await DB.open();const seen=new Set();
     try{const blob=await assetBlob(d);CUSTOM[k]={bmp:await createImageBitmap(blob),blob,w:d.w,ax:d.ax,ay:d.ay,builtin:true};customSpr(k)}catch(e){}}}
 let cbType='woonhuis';
 function refreshCustomUI(){
-  const sel=$('cbType');if(!sel.options.length)for(const k of Object.keys(BTYPES)){const o=document.createElement('option');o.value=k;o.textContent=BTYPES[k].name;sel.appendChild(o)}
+  const sel=$('cbType');if(!sel.options.length)for(const k of Object.keys(BTYPES)){if(BTYPES[k].off)continue;const o=document.createElement('option');o.value=k;o.textContent=BTYPES[k].name;sel.appendChild(o)}
   sel.value=cbType;const c=CUSTOM[cbType];
   for(const id of ['cbW','cbAx','cbAy','cbDel'])$(id).disabled=!c;
   if(c){$('cbW').value=Math.round(c.w);$('cbAx').value=c.ax;$('cbAy').value=c.ay}
@@ -58,7 +58,7 @@ function buildGallery(){
   CFG.jobs.forEach((j,k)=>{if(!k)return;const fig=document.createElement('figure');fig.appendChild(thumb(jobSprite(k,0,0,0),44,54,2.2));
     const cap=document.createElement('figcaption');cap.textContent=j.n;fig.appendChild(cap);pu.appendChild(fig)});
   const gb=$('buildings');gb.innerHTML='';
-  for(const k of Object.keys(BTYPES)){
+  for(const k of Object.keys(BTYPES)){if(BTYPES[k].off)continue;
     const fig=document.createElement('figure');fig.tabIndex=0;fig.className='bfig'+(CUSTOM[k]?' custom':'')+(k===cbType?' sel':'');
     fig.title='Klik om te kiezen, of sleep een afbeelding hierheen';
     fig.appendChild(thumb(bldSprite(k,0,PCOL),74,62));

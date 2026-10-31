@@ -5,7 +5,7 @@
    Graver = beroep 1, bouwer = beroep 2 (CFG.jobs), gelijk aan b.st van de fase waarin ze werken.
    Afgebroken gebouwen houden hun index (b.dead), zodat stapels en lopende opdrachten geldig blijven;
    wat er nog ligt, brengen dragers naar de opslag. */
-const canBuild=t=>t!=='burcht'&&!!CFG.build.cost[t];
+const canBuild=t=>t!=='burcht'&&!BTYPES[t].off&&!!CFG.build.cost[t];
 function initBuild(){
   const {W,H}=world,own=world.own=new Uint8Array(W*H);world.sites=[];
   for(const b of world.blds){claimLand(b);b.wk=0;b.prog=1}

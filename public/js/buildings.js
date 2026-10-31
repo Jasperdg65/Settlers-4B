@@ -1,5 +1,6 @@
 "use strict";
-/* ---------- Gebouwen (tijdelijke getekende versies) ---------- */
+/* ---------- Gebouwen (tijdelijke getekende versies) ----------
+   off:1 = voorlopig niet in het spel (niet in het startdorp, het bouwmenu of de galerij); de tekening blijft bewaard. */
 function ground(g,w,d){const ox=d*0.55,oy=-d*0.7;poly(g,[-w/2-2,1.2,w/2+2,1.2,w/2+2+ox,oy+1.2,-w/2-2+ox,oy+1.2],'rgba(170,138,92,.55)')}
 function box(g,x0,x1,y0,h,d,col){const ox=d*0.55,oy=-d*0.7;
   poly(g,[x1,y0,x1+ox,y0+oy,x1+ox,y0+oy-h,x1,y0-h],sh(col,0.74),OUT,0.4);
@@ -122,7 +123,7 @@ const BTYPES={
     for(let k=0;k<3;k++)line(g,[-17+k*0.9,0.4,-16.6+k*0.9,-5.2],'#c8c8c4',0.4);
     line(g,[14.6,0.5,14.6,-17],'#5a3b22',0.6);circ(g,14.6,-17.4,0.6,'#e5c56c');banner(g,14.6,-15.8,pc,4,5.4);
   }},
-  kruidenhuis:{name:'Kruidenhuis (heler)',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],smoke:[6.4,-17],draw:(g)=>{
+  kruidenhuis:{off:1,name:'Kruidenhuis (heler)',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],smoke:[6.4,-17],draw:(g)=>{
     ground(g,18,10);house(g,{w:12,h:8,d:9,ph:5,wall:'#ede2c9',roof:'thatch',timber:true});chimney(g,5,-13.4,3.2);
     door(g,-2.4,2.8,5,'#557a3e');win(g,2.6,-4.6,2.4,2.2);
     for(let r=0;r<3;r++)for(let k=0;k<4;k++){const x=8+k*1.6+r*0.8,y=1.2-r*1.4;ell(g,x,y,0.9,0.4,'#6f5236');circ(g,x,y-0.8,0.8,['#5a9a3e','#7fae4a','#9c6ac0'][r])}

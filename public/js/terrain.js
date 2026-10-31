@@ -29,7 +29,7 @@ const ORECOL=['','#222','#b8622f','#f2c230','#e8e05a'];
 const PCOL=['#d33b3b','#2f6fd6','#e6b422','#3aa457','#9b4fc9','#e07a26','#22b0ad','#e05aa0'];
 const TREE_NAMES=['eik','berk','den','beuk','appelboom'];
 const TW=16,TH=8,HP=96,CH=32;
-const VILLAGE=['ijzersmelterij','goudsmelterij','wapensmid','pakhuis','woonhuis','houthakker','bakkerij','molen','boerderij','smidse','woonhuis','zagerij','houthakker','bosbouwer','steenhouwer','kazerne','kruidenhuis','woonhuis','wachttoren','wachttoren'];
+const VILLAGE=['ijzersmelterij','goudsmelterij','wapensmid','pakhuis','woonhuis','houthakker','bakkerij','molen','boerderij','smidse','woonhuis','zagerij','houthakker','bosbouwer','steenhouwer','kazerne','woonhuis','wachttoren','wachttoren'];
 
 function quantile(arr,q){const c=Float32Array.from(arr).sort();return c[Math.min(c.length-1,Math.floor(q*c.length))]}
 

@@ -56,7 +56,7 @@ const CFG={
   /* bouwen: kosten [planken, steen]; de burcht kan niet gebouwd worden */
   build:{
     cost:{
-      houthakker:[2,2],bosbouwer:[2,2],steenhouwer:[2,2],kruidenhuis:[2,2],     // kleine hut
+      houthakker:[2,2],bosbouwer:[2,2],steenhouwer:[2,2],                        // kleine hut
       zagerij:[3,3],molen:[3,3],bakkerij:[3,3],boerderij:[3,3],                 // werkplaats
       kolenmijn:[3,1],ijzermijn:[3,1],goudmijn:[3,1],                           // mijn
       ijzersmelterij:[4,5],goudsmelterij:[4,5],smidse:[4,5],wapensmid:[4,5],    // smelterij en smidse
