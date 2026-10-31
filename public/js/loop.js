@@ -1,6 +1,21 @@
 "use strict";
 /* ---------- Hoofdlus ---------- */
 let last=performance.now(),fpsAvg=0,drawAvg=0,showOres=false,hoverTile=null,tNow=0;
+/* Meten: ?prof=1 toont ms per onderdeel (CPU-tijd van de tekenopdrachten; GPU-werk zie je in fps en frametijd).
+   Toetsen 1, 2, 3 zetten de zoom. */
+const PROF=/[?&]prof=1/.test(location.search),PT={},PN={f:0,dt:0,dtMax:0,built:0};let profEl=null;
+const pnow=()=>PROF?performance.now():0,pt=(k,t)=>{PT[k]=(PT[k]||0)+performance.now()-t};
+function profReport(){
+  if(!profEl){profEl=document.createElement('pre');profEl.style.cssText='position:fixed;right:8px;top:8px;z-index:99;margin:0;padding:8px 10px;background:rgba(0,0,0,.75);color:#fff;font:12px/1.4 monospace;pointer-events:none';document.body.appendChild(profEl)}
+  const f=PN.f,m=k=>((PT[k]||0)/f).toFixed(2).padStart(7);
+  const rows=[['grond (chunks tekenen)','grond'],['chunks bouwen','chunkbouw'],['water + erts','water'],['emmers vullen','emmers'],['objecten (natuur)','objecten'],['gebouwen','gebouwen'],['dieren','dieren'],['kolonisten','kolonisten'],['kolonisten (stippen)','stippen'],['draw totaal','draw'],['simulatie','sim']];
+  PT.objecten=(PT.tegels||0)-(PT.gebouwen||0);
+  profEl.textContent=`zoom ${cam.z.toFixed(2)} · dpr ${dpr} · ${S.n} kolonisten · ${cv.width}×${cv.height}\n`+
+    `fps ${(1000*f/PN.dt).toFixed(1)} · frame gem ${(PN.dt/f).toFixed(1)} ms, max ${PN.dtMax.toFixed(1)} ms\n`+
+    `chunks: ${chunks.size} in cache, ${PN.built} gebouwd\n`+rows.map(([n,k])=>n.padEnd(24)+m(k)+' ms').join('\n');
+  for(const k in PT)PT[k]=0;PN.f=PN.dt=PN.dtMax=PN.built=0;
+}
+if(PROF)addEventListener('keydown',ev=>{const z={'1':1,'2':2,'3':3}[ev.key];if(z&&ev.target.tagName!=='INPUT'){cam.z=z;clampCam()}});
 function viewRect(){const hw=vw/2/cam.z,hh=vh/2/cam.z;return {l:cam.x-hw,r:cam.x+hw,t:cam.y-hh,b:cam.y+hh}}
 function frame(now){
   requestAnimationFrame(frame);
@@ -10,12 +25,14 @@ function frame(now){
     acc+=dt*(+$('speed').value);
     let steps=0;const t0=performance.now();
     while(acc>=TICK&&steps<8){tick();acc-=TICK;steps++}
+    if(PROF)pt('sim',t0);
     if(steps){simAvg=simAvg*0.9+((performance.now()-t0)/steps)*0.1}
     if(acc>TICK*8)acc=0;
   }
   keyPan(dt);
   const t1=performance.now();draw();
   drawAvg=drawAvg*0.9+(performance.now()-t1)*0.1;
+  if(PROF){pt('draw',t1);PN.f++;PN.dt+=dt;PN.dtMax=Math.max(PN.dtMax,dt);if(PN.f>=60)profReport()}
   fpsAvg=fpsAvg*0.95+(1000/Math.max(1,dt))*0.05;
   if(frameNo%15===0){
     $('fps').textContent=fpsAvg.toFixed(0);
@@ -42,16 +59,17 @@ function draw(){
   ctx.imageSmoothingEnabled=TEX.ready||cam.z<1;const zd=cam.z*dpr,cres=!TEX.ready||zd<1.6?1:1.5;
   const v=viewRect(),{W,H,hp,ter,obj,tree,bldAnchor,blds}=world;
   const ncx=Math.ceil((W-1)/CH),ncy=Math.ceil((H-1)/CH);
-  let built=0;
+  let built=0,tp=pnow(),tb=0;
   for(let cy=0;cy<ncy;cy++)for(let cx=0;cx<ncx;cx++){
     const b=chunkBounds(cx,cy);
     if(b.right<v.l||b.left>v.r||b.bottom<v.t||b.top>v.b)continue;
     const key=cy*1000+cx+cres*1e6;let ch=chunks.get(key);
-    if(!ch){if(built>=(TEX.ready?3:6)&&chunks.size>0)continue;ch=renderChunk(cx,cy,cres);chunks.set(key,ch);built++}
+    if(!ch){if(built>=(TEX.ready?3:6)&&chunks.size>0)continue;const tc=pnow();ch=renderChunk(cx,cy,cres);if(PROF){tb+=performance.now()-tc;PN.built++}chunks.set(key,ch);built++}
     ch.used=frameNo;ctx.drawImage(ch.c,ch.left,ch.top,ch.c.width/ch.cres,ch.c.height/ch.cres);
   }
   if(chunks.size>40&&frameNo%30===0)for(const [k,c] of chunks)if(frameNo-c.used>(c.cres>1?90:600))chunks.delete(k);
   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+  if(PROF){pt('grond',tp);PT.grond-=tb;PT.chunkbouw=(PT.chunkbouw||0)+tb;tp=performance.now()}
 
   const yMin=Math.max(0,Math.floor(v.t/TH)-1),yMax=Math.min(H-1,Math.ceil((v.b+HP+90)/TH)+1);
   const xr=y=>[Math.max(0,Math.floor((v.l-H*TW/2+y*TW/2)/TW)-3),Math.min(W-1,Math.ceil((v.r-H*TW/2+y*TW/2)/TW)+3)];
@@ -64,6 +82,7 @@ function draw(){
   if(showOres)for(let y=yMin;y<=yMax;y++){const [xa,xb]=xr(y);for(let x=xa;x<=xb;x++){const i=y*W+x,o=world.ore[i];if(!o||(x+y)%2)continue;
     ctx.fillStyle=ORECOL[o];ctx.fillRect(SX(x,y)-1.6,y*TH-hp[i]-1.6,3.2,3.2)}}
 
+  if(PROF){pt('water',tp);tp=performance.now()}
   /* eenheden en dieren per rij in emmers, voor juiste diepte */
   const detail=cam.z>=0.6,off=H*TW/2;
   if(rowU.length<H){rowU=new Int32Array(H);rowA=new Int32Array(H)}
@@ -75,13 +94,14 @@ function draw(){
   if(A.n){const {x,y,px,py,next}=A;
     for(let i=0;i<A.n;i++){const Y=py[i]+(y[i]-py[i])*al,r=Y|0;if(r<yMin||r>yMax)continue;
       const X=px[i]+(x[i]-px[i])*al,sx=X*TW-Y*TW/2+off;if(sx<v.l-12||sx>v.r+12)continue;next[i]=rowA[r];rowA[r]=i}}
+  if(PROF)pt('emmers',tp);
   const blit=(s,x,y)=>ctx.drawImage(s.c,x-s.ax,y-s.ay,s.w,s.h);
   const animF=(tNow/120|0);
   for(let y=yMin;y<=yMax;y++){
-    const [xa,xb]=xr(y);
+    const [xa,xb]=xr(y);let tr=pnow();
     for(let x=xa;x<=xb;x++){
       const i=y*W+x,o=obj[i];
-      if(bldAnchor[i]){const b=blds[bldAnchor[i]-1],s=bldSprite(b.type,b.p,PCOL),bx=SX(x,y),by=y*TH-hp[i];blit(s,bx,by);
+      if(bldAnchor[i]){const tg=pnow(),b=blds[bldAnchor[i]-1],s=bldSprite(b.type,b.p,PCOL),bx=SX(x,y),by=y*TH-hp[i];blit(s,bx,by);
         const bt=BTYPES[b.type],sc=bt.sc,cust=s.custom;
         if(!cust&&bt.glow){const fl=0.55+0.25*Math.sin(tNow*0.013+b.seed*40)+0.15*Math.sin(tNow*0.031);
           const gx=bx+bt.glow[0]*sc,gy=by+bt.glow[1]*sc,gr=ctx.createRadialGradient(gx,gy,0,gx,gy,7*sc);
@@ -106,6 +126,7 @@ function draw(){
           for(let k=0;k<3;k++){const ph=((tNow/2800)+k/3+b.seed)%1;ctx.globalAlpha=(1-ph)*0.5*Math.min(1,ph*6);
             ctx.fillStyle='#ecebe6';ctx.beginPath();ctx.arc(bx+sm[0]*sc+ph*5+Math.sin(ph*6+b.seed*9)*1.2,by+sm[1]*sc-ph*16,1.3+ph*3,0,6.283);ctx.fill()}
           ctx.globalAlpha=1}
+        if(PROF)pt('gebouwen',tg);
         continue}
       if(!o)continue;
       const h=hash2(x*7,y*13),px=SX(x,y)+((h&7)-3.5)*0.9,py=y*TH-hp[i]+((h>>>3&3)-1.5)*0.6;
@@ -116,22 +137,27 @@ function draw(){
       else if(o===4&&detail&&SAPL.length)blit(SAPL[(h>>>7)%4],px,py);
       else if(o===5&&detail&&STUMP.length)blit(STUMP[(h>>>7)%2],px,py);
     }
+    if(PROF){pt('tegels',tr);tr=performance.now()}
     for(let k=rowA[y];k>=0;k=A.next[k]){
       const Y=A.py[k]+(A.y[k]-A.py[k])*al,X=A.px[k]+(A.x[k]-A.px[k])*al,type=A.type[k];
       const moving=A.x[k]!==A.px[k]||A.y[k]!==A.py[k];
       const f=type===2?((tNow/700+k)|0)&1:moving?((animF>>(type===1?0:1))+k)&1:0;
       blit(ANIM[type][f*2+A.dir[k]],X*TW-Y*TW/2+off,Y*TH-hAt(X,Y));
     }
+    if(PROF){pt('dieren',tr);tr=performance.now()}
     if(detail)for(let k=rowU[y];k>=0;k=S.next[k]){
       const Y=S.py[k]+(S.y[k]-S.py[k])*al,X=S.px[k]+(S.x[k]-S.px[k])*al;
       const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]);
       const f=moving?(animF+k)&3:0;
       blit(UNITS[S.role[k]][S.vr[k]][S.pl[k]][f*2+S.dir[k]],X*TW-Y*TW/2+off,Y*TH-hAt(X,Y));
     }
+    if(PROF)pt('kolonisten',tr);
   }
+  tp=pnow();
   if(S.n&&!detail){const {x,y,px,py,pl}=S;let lp=-1;
     for(let i=0;i<S.n;i++){const X=px[i]+(x[i]-px[i])*al,Y=py[i]+(y[i]-py[i])*al,sx=X*TW-Y*TW/2+off;if(sx<v.l||sx>v.r)continue;
       const sy=Y*TH-hAt(X,Y);if(sy<v.t||sy>v.b+10)continue;if(pl[i]!==lp){lp=pl[i];ctx.fillStyle=PCOL[lp]}ctx.fillRect(sx-1.5,sy-3,3,3)}}
+  if(PROF)pt('stippen',tp);
 
   if(hoverTile){
     const {x,y}=hoverTile;if(x<W-1&&y<H-1){const a=y*W+x;
