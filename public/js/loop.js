@@ -46,7 +46,7 @@ function frame(now){
     $('drawms').textContent=drawAvg.toFixed(1)+' ms';{const bl=world.blds.filter(b=>!b.dead);$('nocc').textContent=bl.filter(b=>b.occ).length+' van '+bl.length}
     if(S.eco){const c=carrierStats();$('ncarry').textContent=`${c[0]} van ${c[1]} · gravers ${c[2]} · bouwers ${c[3]}`;$('ndone').textContent=TR.done+' · '+TR.used;
       $('npath').textContent=`${pathQueued()} · ${PF.cache.size}, ${Math.round(100*PF.hits/Math.max(1,PF.hits+PF.miss))}% hit`}
-    drawMini();refreshStock();
+    drawMini();refreshStock();refreshHover();
   }
 }
 let rowU=new Int32Array(1),rowA=new Int32Array(1);
@@ -191,7 +191,7 @@ function draw(){
       const sy=Y*TH-hAt(X,Y);if(sy<v.t||sy>v.b+10)continue;if(pl[i]!==lp){lp=pl[i];ctx.fillStyle=PCOL[lp]}ctx.fillRect(sx-1.5,sy-3,3,3)}}
   if(PROF)pt('stippen',tp);
 
-  if(world.own)drawBuildOverlay(v,blit);
+  if(world.own){drawSiteBars(v,blit);drawBuildOverlay(v,blit)}
   if(hoverTile){
     const {x,y}=hoverTile;if(x<W-1&&y<H-1){const a=y*W+x;
       ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=1/cam.z;ctx.beginPath();

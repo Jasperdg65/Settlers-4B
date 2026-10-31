@@ -35,16 +35,21 @@ mini.addEventListener('pointerup',()=>miniDown=false);
 let drag=null;
 /* klik = indrukken en loslaten zonder (veel) te slepen; in bouwmodus plaatst of breekt dat af */
 let downAt=null;
-cv.addEventListener('contextmenu',ev=>{if(BUILD.mode){ev.preventDefault();setBuildMode(null);showTip('')}});
-addEventListener('keydown',ev=>{if(ev.key==='Escape'&&BUILD.mode){setBuildMode(null);showTip('')}});
-cv.addEventListener('pointerup',ev=>{if(ev.button===0&&downAt&&Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1])<5&&world&&world.own&&BUILD.mode){buildClick();
-  const r=cv.getBoundingClientRect(),t=screenToTile(ev.clientX-r.left,ev.clientY-r.top);showTip(buildHover(Math.floor(t.x),Math.floor(t.y)),ev.clientX-r.left,ev.clientY-r.top)}downAt=null});
+cv.addEventListener('contextmenu',ev=>{if(BUILD.mode){ev.preventDefault();setBuildMode(null);refreshHover()}});
+addEventListener('keydown',ev=>{if(ev.key==='Escape'&&BUILD.mode){setBuildMode(null);refreshHover()}});
+cv.addEventListener('pointerup',ev=>{if(ev.button===0&&downAt&&Math.hypot(ev.clientX-downAt[0],ev.clientY-downAt[1])<5&&world&&world.own&&BUILD.mode){buildClick();refreshHover()}downAt=null});
 cv.addEventListener('pointerdown',ev=>{downAt=ev.button===0?[ev.clientX,ev.clientY]:null;drag={x:ev.clientX,y:ev.clientY};cv.setPointerCapture(ev.pointerId);cv.classList.add('drag')});
+/* muispositie onthouden, zodat tegelinfo en tooltip ook bijwerken als de muis stilstaat (zie refreshHover in loop.js) */
+let mouseAt=null;
 cv.addEventListener('pointermove',ev=>{
   if(!world)return;
   const r=cv.getBoundingClientRect();
   if(drag){cam.x-=(ev.clientX-drag.x)/cam.z;cam.y-=(ev.clientY-drag.y)/cam.z;drag={x:ev.clientX,y:ev.clientY};clampCam()}
-  const t=screenToTile(ev.clientX-r.left,ev.clientY-r.top),x=Math.floor(t.x),y=Math.floor(t.y);
+  mouseAt=[ev.clientX-r.left,ev.clientY-r.top];updateHover();
+});
+function refreshHover(){if(mouseAt&&world)updateHover()}
+function updateHover(){
+  const [mx,my]=mouseAt,t=screenToTile(mx,my),x=Math.floor(t.x),y=Math.floor(t.y);
   if(x>=0&&y>=0&&x<world.W&&y<world.H){
     hoverTile={x,y};const i=y*world.W+x,o=world.obj[i],b=world.bldAt[i];
     $('hover').textContent=`Tegel ${x}, ${y} · ${TNAME[world.ter[i]]} · hoogte ${world.hp[i].toFixed(0)}`+
@@ -53,14 +58,14 @@ cv.addEventListener('pointermove',ev=>{
       (world.stk&&world.stk[i]?' · stapel: '+stackLabel(world.stk[i]-1):'');
     /* tooltip bij een stapel of gebouw; een stapel steekt boven zijn tegel uit, dus ook de tegel eronder telt */
     const st=world.stk,i2=i+world.W,s=st?(st[i]||(y+1<world.H?st[i2]:0))-1:-1;
-    if(world.own&&BUILD.mode){showTip(buildHover(x,y),ev.clientX-r.left,ev.clientY-r.top);return}
-    showTip(s>=0?stackLabel(s):b?`${BTYPES[world.blds[b-1].type].name} · speler ${world.blds[b-1].p+1}`+(S.eco?wantLabel(b-1):''):'',ev.clientX-r.left,ev.clientY-r.top);
+    if(world.own&&BUILD.mode){showTip(buildHover(x,y),mx,my);return}
+    showTip(s>=0?stackLabel(s):b?`${BTYPES[world.blds[b-1].type].name} · speler ${world.blds[b-1].p+1}`+(S.eco?wantLabel(b-1):''):'',mx,my);
   }else{hoverTile=null;showTip('')}
-});
+}
 function showTip(t,x,y){const el=$('tip');if(!t){el.hidden=true;return}el.textContent=t;el.hidden=false;el.style.left=(x+14)+'px';el.style.top=(y+16)+'px'}
 const endDrag=()=>{drag=null;cv.classList.remove('drag')};
 cv.addEventListener('pointerup',endDrag);cv.addEventListener('pointercancel',endDrag);
-cv.addEventListener('pointerleave',()=>{hoverTile=null;showTip('')});
+cv.addEventListener('pointerleave',()=>{hoverTile=null;mouseAt=null;showTip('')});
 function zoomAt(f,mx,my){
   const wx=(mx-vw/2)/cam.z+cam.x,wy=(my-vh/2)/cam.z+cam.y;
   cam.z=Math.min(4,Math.max(0.3,cam.z*f));

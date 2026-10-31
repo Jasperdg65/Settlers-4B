@@ -46,6 +46,7 @@ const CFG={
     digBase:2,digPerUnit:6,        // graafwerk in beurten: digBase + (som van alle hoogteverschillen tot het gemiddelde) / digPerUnit
     digTicks:30,buildTicks:50,     // ticks per graafbeurt / per verwerkte plank of steen
     diggers:2,builders:2,          // max per bouwplaats
+    digShare:0.3,                  // deel van de voortgangsmeter voor het egaliseren
     refund:0.5,                    // afbreken geeft dit deel van het verwerkte materiaal terug (naar beneden afgerond)
   },
   /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en de wachttorens van de start */

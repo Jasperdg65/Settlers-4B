@@ -110,8 +110,9 @@ function siteWork(c){
   if(b.st===kind)S.wait[c]=kind===1?CFG.build.digTicks:CFG.build.buildTicks;else{b.wk--;toIdle(c)}
 }
 function siteLabel(b){
-  if(b.st===1)return ` · bouwplaats: egaliseren ${Math.round(100*(1-b.dig/b.dig0))}%`;
-  if(b.st===2){const c=CFG.build.cost[b.type];return ` · in aanbouw ${b.used[0]+b.used[1]}/${c[0]+c[1]}`}
+  const pc=Math.round(100*siteProgress(b))+'%';
+  if(b.st===1)return ` · bouwplaats ${pc}: egaliseren (${b.dig0-b.dig}/${b.dig0} beurten)`;
+  if(b.st===2){const c=CFG.build.cost[b.type];return ` · in aanbouw ${pc}: ${b.used[0]+b.used[1]}/${c[0]+c[1]} verwerkt`}
   return '';
 }
 /* grondchunks met deze tegels opnieuw laten tekenen (de oude blijft zichtbaar tot de nieuwe klaar is) */
@@ -135,6 +136,26 @@ function drawSitesGround(v){
     const c=[[fp[0],fp[2]],[fp[1]+1,fp[2]],[fp[1]+1,fp[3]+1],[fp[0],fp[3]+1]].map(([dx,dy])=>{const x=b.x+dx,y=b.y+dy;return [SX(x,y),y*TH-hAt(x,y)]});
     ctx.strokeStyle='rgba(235,220,180,.9)';ctx.lineWidth=0.5;ctx.beginPath();c.forEach(([x,y],k)=>k?ctx.lineTo(x,y-2.4):ctx.moveTo(x,y-2.4));ctx.closePath();ctx.stroke();
     ctx.strokeStyle='#6b4a2b';ctx.lineWidth=0.9;ctx.beginPath();for(const [x,y] of c){ctx.moveTo(x,y);ctx.lineTo(x,y-3.6)}ctx.stroke();
+  }
+}
+/* voortgangsmeter boven elke bouwplaats, bovenop alles: egaliseren telt als CFG.build.digShare van het geheel.
+   Bruin = egaliseren, groen = bouwen; schop of hamer ernaast; vanaf zoom 1,5 ook het percentage */
+function siteProgress(b){const d=CFG.build.digShare;return b.st===1?d*(1-b.dig/b.dig0):d+(1-d)*b.prog}
+function drawSiteBars(v,blit){
+  const k=Math.max(1,1.3/cam.z); // op kleine zoom niet onleesbaar klein
+  for(const bi of world.sites){
+    const b=world.blds[bi],s=bldSprite(b.type,b.p,PCOL),bx=SX(b.x,b.y),top=b.y*TH-world.hp[b.y*world.W+b.x]-s.ay-3*k;
+    if(bx<v.l-40||bx>v.r+40||top<v.t-20||top>v.b+20)continue;
+    const f=siteProgress(b),w=26*k,h=3.6*k,x0=bx-w/2+3*k,d=CFG.build.digShare;
+    ctx.fillStyle='rgba(20,16,10,.7)';ctx.fillRect(x0-0.8*k,top-h-0.8*k,w+1.6*k,h+1.6*k);
+    ctx.fillStyle='#a8743e';ctx.fillRect(x0,top-h,w*Math.min(f,d),h);
+    if(f>d){ctx.fillStyle='#4fbf5a';ctx.fillRect(x0+w*d,top-h,w*(f-d),h)}
+    ctx.fillStyle='rgba(255,255,255,.55)';ctx.fillRect(x0+w*d-0.25*k,top-h,0.5*k,h); // scheiding egaliseren | bouwen
+    const ic=carrySprite(b.st===1?GI.schop:GI.hamer),sc=0.75*k;
+    ctx.drawImage(ic.c,x0-1.5*k-ic.w*sc,top-h/2-ic.ay*sc,ic.w*sc,ic.h*sc);
+    if(cam.z>=1.5){const lbl=Math.round(f*100)+'%'+(b.st===2&&!b.has[GI.plank]&&!b.has[GI.steen]&&b.prog<1?' · wacht op materiaal':'');
+      ctx.font=`600 ${3.6*k}px "Source Sans 3",sans-serif`;ctx.textAlign='center';ctx.lineWidth=0.9*k;ctx.strokeStyle='rgba(20,16,10,.8)';
+      ctx.strokeText(lbl,x0+w/2,top-h-1.6*k);ctx.fillStyle='#fff';ctx.fillText(lbl,x0+w/2,top-h-1.6*k);ctx.textAlign='start'}
   }
 }
 const BUILD={mode:null,type:null,ax:0,ay:0,why:'',hover:-1};
