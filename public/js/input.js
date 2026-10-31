@@ -44,12 +44,16 @@ cv.addEventListener('pointermove',ev=>{
     $('hover').textContent=`Tegel ${x}, ${y} · ${TNAME[world.ter[i]]} · hoogte ${world.hp[i].toFixed(0)}`+
       (b?` · ${BTYPES[world.blds[b-1].type].name} van speler ${world.blds[b-1].p+1} (${world.blds[b-1].occ?'bewoond':'leeg'})`:'')+
       (o===1?` · ${TREE_NAMES[world.tree[i]/3|0]}`:o===2?' · steen':o===3?' · struik':o===4?' · jonge boom':o===5?' · boomstronk':'')+(world.ore[i]?` · erts: ${ORE[world.ore[i]]}`:'')+
-      (world.stk&&world.stk[i]?(s=>` · stapel: ${G.cnt[s]}× ${GOODS[G.good[s]].n} (${BTYPES[world.blds[G.bld[s]].type].name.replace(/ \(.*\)/,'')}, speler ${G.pl[s]+1})`)(world.stk[i]-1):'');
-  }else hoverTile=null;
+      (world.stk&&world.stk[i]?' · stapel: '+stackLabel(world.stk[i]-1):'');
+    /* tooltip bij een stapel of gebouw; een stapel steekt boven zijn tegel uit, dus ook de tegel eronder telt */
+    const st=world.stk,i2=i+world.W,s=st?(st[i]||(y+1<world.H?st[i2]:0))-1:-1;
+    showTip(s>=0?stackLabel(s):b?`${BTYPES[world.blds[b-1].type].name} · speler ${world.blds[b-1].p+1}`:'',ev.clientX-r.left,ev.clientY-r.top);
+  }else{hoverTile=null;showTip('')}
 });
+function showTip(t,x,y){const el=$('tip');if(!t){el.hidden=true;return}el.textContent=t;el.hidden=false;el.style.left=(x+14)+'px';el.style.top=(y+16)+'px'}
 const endDrag=()=>{drag=null;cv.classList.remove('drag')};
 cv.addEventListener('pointerup',endDrag);cv.addEventListener('pointercancel',endDrag);
-cv.addEventListener('pointerleave',()=>{hoverTile=null});
+cv.addEventListener('pointerleave',()=>{hoverTile=null;showTip('')});
 function zoomAt(f,mx,my){
   const wx=(mx-vw/2)/cam.z+cam.x,wy=(my-vh/2)/cam.z+cam.y;
   cam.z=Math.min(4,Math.max(0.3,cam.z*f));

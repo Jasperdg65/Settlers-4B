@@ -42,9 +42,10 @@ const GDRAW={
   zwaard:g=>{line(g,[-0.9,0.4,2.3,-0.8],'#d4d8dc',0.55);line(g,[-1.2,-0.4,-0.6,1.2],'#8a6a2c',0.45);line(g,[-2.2,0.9,-0.9,0.4],'#5e3b20',0.45);circ(g,-2.3,0.95,0.3,'#c9a54a')},
   boog:g=>{g.strokeStyle='#8a5a34';g.lineWidth=0.45;g.beginPath();g.moveTo(-2,0.9);g.quadraticCurveTo(0.6,1.1,1.9,-1.2);g.stroke();line(g,[-2,0.9,1.9,-1.2],'#efe6d4',0.15)},
 };
+const GSC=1.5; // schaal van stapels op de kaart t.o.v. de tekening
 /* stapel van n stuks (1..8): onderste laag 4 plekken van achter naar voren, daarboven nog 4 */
 const GSLOT=[[-2.3,-0.8],[2.3,-0.8],[-2.3,0.9],[2.3,0.9]];
 const GSPR=[];
 function goodSprite(gd,n){const k=gd*9+n;
   return GSPR[k]||(GSPR[k]=spr(13,10,6.5,7,g=>{ell(g,0,1.2,5.4,1.7,'rgba(40,30,10,.22)');const d=GDRAW[GOODS[gd].k];
-    for(let j=0;j<n;j++){const [x,y]=GSLOT[j&3];g.save();g.translate(x*(j>3?0.8:1),y-(j>3?2.1:0));d(g);g.restore()}}))}
+    for(let j=0;j<n;j++){const [x,y]=GSLOT[j&3];g.save();g.translate(x*(j>3?0.8:1),y-(j>3?2.1:0));d(g);g.restore()}},n?GSC:1))}

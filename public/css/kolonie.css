@@ -76,3 +76,5 @@ body[data-mode="stress"] .eco-only,body[data-mode="eco"] .stress-only{display:no
 .srow.zero{color:var(--muted);opacity:.6}
 .sval{font-variant-numeric:tabular-nums;text-align:right}
 #stockPl{border-left-width:6px}
+#tip{position:absolute;pointer-events:none;z-index:5;font-size:13px;white-space:nowrap;padding:4px 8px;border-radius:6px;
+  background:color-mix(in srgb,var(--panel) 94%,transparent);color:var(--ink);border:1px solid var(--line);box-shadow:0 2px 6px rgba(0,0,0,.2)}

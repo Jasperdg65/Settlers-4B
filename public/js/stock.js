@@ -16,12 +16,13 @@ function newStack(tile,gd,pl,bi){
   if(s>=G.tile.length)for(const k of ['tile','good','cnt','pl','bld']){const a=new G[k].constructor(G[k].length*2);a.set(G[k]);G[k]=a}
   G.tile[s]=tile;G.good[s]=gd;G.cnt[s]=0;G.pl[s]=pl;G.bld[s]=bi;world.stk[tile]=s+1;return s;
 }
-/* stapelplekken: vrije, beloopbare tegels rond het gebouw, dichtst bij de deur eerst; ingang en paden blijven vrij */
+/* stapelplekken: vrije, beloopbare tegels vóór en naast het gebouw (rijen erachter vallen weg achter het plaatje),
+   dichtst bij de deur eerst; ingang en paden blijven vrij */
 function bldSlots(bi){
   const b=world.blds[bi];if(b.slots)return b.slots;
   const {W,H,walk,bldAt,obj,path}=world,fp=BTYPES[b.type].fp;
   const want=CFG.slots[b.type]||CFG.slots.anders,R=CFG.slotRadius[b.type]||CFG.slotRadius.anders,dx=b.x+0.5,dy=b.y+1.5,c=[];
-  for(let y=b.y+fp[2]-R;y<=b.y+fp[3]+R;y++)for(let x=b.x+fp[0]-R;x<=b.x+fp[1]+R;x++){
+  for(let y=b.y+1;y<=b.y+fp[3]+R;y++)for(let x=b.x+fp[0]-R;x<=b.x+fp[1]+R;x++){
     if(x<1||y<1||x>=W-1||y>=H-1)continue;const i=y*W+x;
     if(!walk[i]||bldAt[i]||obj[i]||path[i])continue;
     if(Math.abs(x-b.x)<=1&&y>=b.y+1&&y<=b.y+2)continue;
@@ -37,6 +38,7 @@ function addGoods(bi,gd,n){
   for(const i of sl){if(n<=0)break;if(st[i])continue;const s=newStack(i,gd,b.p,bi),a=Math.min(M,n);G.cnt[s]=a;n-=a}
   stockVer++;return n;
 }
+function stackLabel(s){return `${G.cnt[s]}× ${GOODS[G.good[s]].n} · ${BTYPES[world.blds[G.bld[s]].type].name.replace(/ \(.*\)/,'')}, speler ${G.pl[s]+1}`}
 function stockTotals(p){const t=new Uint32Array(GOODS.length);for(let s=0;s<G.n;s++)if(G.cnt[s]&&G.pl[s]===p)t[G.good[s]]+=G.cnt[s];return t}
 
 /* ---------- Paneel 'Voorraad' ---------- */

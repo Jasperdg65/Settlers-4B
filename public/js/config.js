@@ -6,7 +6,7 @@ const CFG={
   stackMax:8,                    // goederen per stapel
   /* stapelplekken per gebouw; burcht en pakhuis zijn opslag, de rest heeft een paar plekken bij de deur */
   slots:{burcht:40,pakhuis:32,anders:4},
-  slotRadius:{burcht:6,pakhuis:5,anders:3},
+  slotRadius:{burcht:9,pakhuis:7,anders:3},
   /* startvoorraad in de burcht, keuze 'Startvoorraad' vermenigvuldigt */
   startFactor:{weinig:0.5,normaal:1,veel:2},
   startStock:{
