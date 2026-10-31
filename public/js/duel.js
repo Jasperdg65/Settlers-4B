@@ -76,7 +76,7 @@ function endDuel(k,w){
   const d=DUELS[k];DUELS[k]=null;
   const [win,lose]=w<0?[d.a,d.b]:[d.b,d.a],r=d.ret[w<0?0:1];
   S.du[win]=S.du[lose]=0;
-  armyGo(win,r[0],r[1],AIM.IDLE);
+  armyGo(win,r[0],r[1],AIM.IDLE);S.fat[win]=Math.min(1,S.fat[win]+CFG.duel.winTire);
   S.ko[lose]=1;S.fat[lose]=1;
   const h=healerSpot(lose);armyGo(lose,h[0],h[1],AIM.HEAL);
   const nm=i=>`speler ${S.pl[i]+1} (${LVLNAME[S.lvl[i]]})`;

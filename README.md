@@ -359,6 +359,11 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   kort na elkaar = camera erheen; rechtsklik op een vijandelijke krachtpatser = de dichtstbijzijnde
   geselecteerde daagt hem uit; rechtsklik op de grond = lopen in opstelling; rechts slepen = schuiven;
   Esc = niets geselecteerd. Tooltip boven een krachtpatser: kracht, vermoeidheid, gevoed, uitgeschakeld.
+- Aanraken (tablet, telefoon; `CFG.touch`): één vinger = schuiven, twee vingers = knijpend zoomen;
+  tik op een eigen eenheid = erbij selecteren (nog eens = eruit); tik met een selectie op een vijandelijke
+  krachtpatser = uitdagen, op de grond = lopen; vasthouden en slepen = selectierechthoek; vasthouden op
+  een eenheid = alle van dat type in beeld; knop 'Niets geselecteerd'. Een tik toont ook de tooltip.
+  In bouwmodus: eerste tik bekijkt de plek, tweede tik op dezelfde plek bouwt of breekt af.
 - Opdrachten gaan in een wachtrij (`ARMY.cmd`) en worden in de volgende tick uitgevoerd; de
   selectie zelf is alleen weergave. De duels hebben een eigen toevalsgenerator (`drand`, seed van
   de wereld): dezelfde wereld met dezelfde opdrachten geeft dezelfde afloop.
@@ -368,7 +373,10 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   toevalsterm, en schuift de stand −1..+1; de sprite toont stand 1–9 en het balkje erboven
   schuift mee in beide spelerkleuren. Met de huidige getallen duurt een gelijk duel gemiddeld
   ongeveer 9 s; medior wint van junior in ongeveer 3 op de 4, senior van junior in 9 op de 10.
-- Afloop: de winnaar loopt terug naar waar hij stond en is iets vermoeider (herstelt in rust);
+- Afloop: de winnaar loopt terug naar waar hij stond en krijgt er `winTire` (0,2) vermoeidheid bij,
+  bovenop wat het duel zelf kostte; herstel in rust gaat langzaam (`rest`, van vol naar fris ruim
+  8 minuten). Volle vermoeidheid kost 60% kracht, dus een uitgeputte senior verliest van een frisse
+  junior: wie de ene na de andere aanval afslaat, raakt op (meestal binnen 3–5 aanvallen);
   de verliezer loopt doorschijnend en langzamer naar de dichtstbijzijnde eigen heler (zonder heler:
   de eigen burcht) en is daar `CFG.duel.outTicks` (30 s) uitgeschakeld.
 - Markering boven geselecteerden: capsule in gezondheids-/vermoeidheidskleur (groen, geel,

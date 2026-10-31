@@ -87,6 +87,9 @@ const CFG={
     spacing:0.8,                   // afstand in de opstelling bij een loopopdracht (tegels)
     groupTap:350,                  // ms: twee keer dezelfde groeptoets binnen deze tijd centreert de camera
   },
+  /* aanraakbediening (input.js): ms vasthouden voor een selectierechthoek, pixels bewegen voordat het slepen is,
+     extra marge in pixels rond een figuur voor een vinger, ms dat de tooltip na een tik blijft staan */
+  touch:{hold:350,slop:10,pick:14,tipMs:3000},
   /* armpje drukken (duel.js). Kracht = level[niveau] × (gevoed ? 1 : hungry) × (1 + harmony × (2 × harmoniemeter − 1))
      × (1 − fatigue × vermoeidheid). Per tick schuift de duelstand (−1 links wint … +1 rechts wint) met
      krachtverschil / krachtsom × push, plus een golvende toevalsterm v (v = v × keep + toeval × noise). */
@@ -95,10 +98,11 @@ const CFG={
     hungry:0.75,                   // kracht als hij niet gevoed is
     harmony:0.3,                   // invloed van de harmoniemeter (0..1, 0,5 = neutraal): ±30%
     harmonyStart:0.5,              // TIJDELIJK tot mijlpaal 7: vaste harmoniemeter per speler
-    fatigue:0.35,                  // krachtverlies bij volle vermoeidheid
+    fatigue:0.6,                   // krachtverlies bij volle vermoeidheid (een uitgeputte senior is zwakker dan een frisse junior)
     push:0.025,keep:0.95,noise:0.02,
     tire:0.0012,                   // vermoeidheid erbij per duel-tick (beide deelnemers)
-    rest:0.0004,                   // herstel per tick als hij niet duelleert
+    rest:0.0001,                   // herstel per tick als hij niet duelleert (van vol naar fris: ruim 8 minuten)
+    winTire:0.2,                   // vermoeidheid erbij voor de winnaar na elk duel: wie vaak wint, raakt op
     maxTicks:1200,                 // daarna wint wie op dat moment voorstaat
     meetTicks:600,                 // zo lang mogen beide over het lopen naar de tafel doen
     seat:0.34,                     // halve afstand tussen de deelnemers in tegels (past bij de duel-sprite)

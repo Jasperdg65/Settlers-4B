@@ -10,7 +10,8 @@ const startColonists=()=>{if(mode()==='duel'){spawnDuelTest();world.stk=null;wor
 const colonistTarget=()=>mode()==='eco'?world.starts.length*CFG.eco.colonistsPerPlayer:+$('count').value;
 function regenerate(){
   document.body.dataset.mode=mode();
-  $('hint').textContent=mode()==='duel'?'Links slepen of klikken: selecteren · rechtsklik: uitdagen of lopen · rechts slepen om te schuiven · scrollen om te zoomen':'Slepen om te schuiven · scrollen of +/− om te zoomen · WASD/pijltjes';
+  $('hint').textContent=touchFirst?(mode()==='duel'?'Tik: selecteren, daarna tik: uitdagen of lopen · vasthouden en slepen: rechthoek · één vinger: schuiven · twee vingers: zoomen':'Eén vinger: schuiven · twee vingers: zoomen · tik: info'):
+    mode()==='duel'?'Links slepen of klikken: selecteren · rechtsklik: uitdagen of lopen · rechts slepen om te schuiven · scrollen om te zoomen':'Slepen om te schuiven · scrollen of +/− om te zoomen · WASD/pijltjes';
   const o={seed:$('seed').value||'kolonie',size:+$('size').value,shape:$('shape').value,players:+$('players').value,
     water:+$('water').value,mount:+$('mount').value,trees:+$('trees').value};
   world=generate(o);chunks.clear();buildMini();
@@ -28,6 +29,7 @@ $('count').addEventListener('change',()=>{if(mode()==='stress')startColonists()}
 $('mode').onchange=regenerate;
 $('duelTest').onclick=()=>{$('mode').value='duel';regenerate();running=true;acc=0;$('pause').textContent='Pauze'};
 $('armyPl').onchange=ev=>{ARMY.p=+ev.target.value;ARMY.sel=[]};
+$('selNone').onclick=()=>{ARMY.sel=[]};
 $('stock').onchange=()=>{if(world&&world.stk)startColonists()};
 
 makeTrees();makeNature();makeAnimals();makeUnits(PCOL);

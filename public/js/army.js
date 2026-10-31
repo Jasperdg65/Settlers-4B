@@ -108,11 +108,12 @@ function runCmd(c){
 /* ---------- Selecteren en opdrachten geven (alleen weergave en invoer) ---------- */
 /* schermpositie (CSS-pixels) van de voeten van eenheid i */
 function unitScreen(i){const {H}=world,X=S.x[i],Y=S.y[i];return [(X*TW-Y*TW/2+H*TW/2-cam.x)*cam.z+vw/2,(Y*TH-hAt(X,Y)-cam.y)*cam.z+vh/2]}
-/* eenheid onder de muis (figuur ongeveer 10 × 19 wereldpixels boven de voeten), of −1; duelleerders zitten in de duel-sprite */
-function pickUnit(mx,my){
+/* eenheid onder de muis (figuur ongeveer 10 × 19 wereldpixels boven de voeten, pad = extra marge in pixels voor een vinger),
+   of −1; duelleerders zitten in de duel-sprite */
+function pickUnit(mx,my,pad=0){
   let best=-1,bd=Infinity;const z=cam.z;
   for(let i=0;i<S.n;i++){if(S.ast[i]===AS.DUEL)continue;const [sx,sy]=unitScreen(i);
-    if(Math.abs(mx-sx)>5*z||my<sy-19*z||my>sy+2*z)continue;const d=Math.hypot(mx-sx,my-sy+9*z);if(d<bd){bd=d;best=i}}
+    if(Math.abs(mx-sx)>5*z+pad||my<sy-19*z-pad||my>sy+2*z+pad)continue;const d=Math.hypot(mx-sx,my-sy+9*z);if(d<bd){bd=d;best=i}}
   return best;
 }
 /* selecteerbaar: eigen krachtpatsers, helers en muzikanten (het leger trekt samen op) */
@@ -132,8 +133,8 @@ function selectRect(b){
   ARMY.sel=hit.sort((a,b)=>a[0]-b[0]).slice(0,CFG.army.maxSelect).map(h=>h[1]);
 }
 /* rechtsklik: op een vijandelijke krachtpatser = uitdagen, anders = daarheen lopen */
-function armyOrder(mx,my){
-  if(!ARMY.sel.length)return;const u=pickUnit(mx,my),ids=ARMY.sel.slice();
+function armyOrder(mx,my,pad=0){
+  if(!ARMY.sel.length)return;const u=pickUnit(mx,my,pad),ids=ARMY.sel.slice();
   if(u>=0&&S.role[u]===2&&S.pl[u]!==ARMY.p){ARMY.cmd.push({t:'duel',ids,j:u});ARMY.ping={x:S.x[u],y:S.y[u],t:tNow,c:'#ffd27a'};return}
   const t=screenToTile(mx,my);if(t.x<1||t.y<1||t.x>world.W-2||t.y>world.H-2)return;
   ARMY.cmd.push({t:'move',ids,x:t.x,y:t.y});ARMY.ping={x:t.x,y:t.y,t:tNow,c:'#ffffff'};
