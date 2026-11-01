@@ -12,7 +12,7 @@ const CFG={
   startStock:{
     boomstam:16,plank:40,steen:32,
     brood:12,stoofpot:8,notenmix:8,water:8,
-    bijl:2,zaag:2,houweel:4,hamer:6,schop:4,zeis:3,
+    bijl:2,zaag:2,houweel:4,hamer:6,schop:4,zeis:4,
   },
   eco:{colonistsPerPlayer:40},   // kolonisten per speler bij de start in economiemodus; meer komen er uit woonhuizen (CFG.pop)
   /* routes (A*): kosten per stap = afstand × terrein × object × (voetpad) + hoogteverschil × up/down */
@@ -174,7 +174,7 @@ const CFG={
     test:{levels:[1,2,3,1,2,3],gap:7,healers:[1,2],musicians:[[3],[1]]},
   },
   /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
-  territory:{burcht:20,wachttoren:20},
+  territory:{burcht:20,wachttoren:13},
   /* zichtbare grens: lijn in spelerkleur, inset = afstand tot de tegelrand (in tegels), breedte in beeldpunten op het scherm */
   /* rook uit de schoorsteen (alleen beeld): werkplaatsen roken zolang ze een batch maken (b.run), woningen en hutten
      af en toe: elke 'home'[0] ms een poosje van 'home'[1] ms. 'period' = levensduur van een wolkje, 'rise' = stijghoogte;

@@ -508,6 +508,8 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 - **Tijdelijk tot 6c**: een wachttoren wordt bemand door een *wachter* (beroep zonder gereedschap,
   gewone vrije drager). In 6c nemen krachtpatsers dat over. De torens van het startdorp zijn
   meteen bemand.
+- Straal: burcht 20, wachttoren 13 (`CFG.territory`), zodat een toren een stap vooruit is en geen tweede burcht.
+  Een startgebied is zo'n 1.500 tegels; een nieuwe toren aan de rand voegt er rond de 240 toe.
 - Gebouwen op land dat verloren gaat blijven staan en werken door; er kan daar alleen niet meer
   gebouwd worden. Ook een bouwplaats wordt afgebouwd: een toren die zo buiten de grens klaarkomt,
   geeft na bemanning het gebied terug.
@@ -519,7 +521,7 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 - Mijnen van het startdorp staan bij voorkeur binnen het gebied, en altijd met erts binnen het
   bereik van de mijnwerker (`CFG.prod[mijn].area`, dezelfde telling als `findOre`). Ligt het erts
   niet binnen het gebied, dan staat de mijn buiten de grens; dragers komen er gewoon (routes kijken
-  niet naar gebied), dus voedsel en erts gaan heen en weer (in 12 testkaarten 28 van de 139 mijnen).
+  niet naar gebied), dus voedsel en erts gaan heen en weer (in 12 testkaarten 39 van de 139 mijnen, vooral goudmijnen).
 
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 
