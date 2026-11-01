@@ -175,6 +175,7 @@ const CFG={
   /* rook uit de schoorsteen (alleen beeld): werkplaatsen roken zolang ze een batch maken (b.run), woningen en hutten
      af en toe: elke 'home'[0] ms een poosje van 'home'[1] ms. 'period' = levensduur van een wolkje, 'rise' = stijghoogte;
      geschilderde gebouwen schalen de wolkjes met hun breedte / refW */
+  unloadWarnTicks:1200,   // na zoveel ticks (1 minuut) vraagt herladen of sluiten om bevestiging (ui.js)
   smoke:{puffs:3,period:2800,rise:16,alpha:0.6,refW:40,home:[9000,3200]},
   border:{inset:0.14,width:2.2,minWidth:0.6,alpha:0.9},
 };

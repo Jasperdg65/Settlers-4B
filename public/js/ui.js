@@ -36,3 +36,5 @@ makeTrees();makeNature();makeCrops();makeAnimals();makeUnits(PCOL);
 regenerate();running=true;
 loadManifest().then(()=>{loadTextures();loadNature();loadUnits3D();loadCustom().then(()=>{buildGallery();refreshCustomUI()})});
 requestAnimationFrame(frame);
+/* er is nog geen savegame: herladen of sluiten tijdens een lopend spel eerst laten bevestigen (de browser toont zijn eigen vraag) */
+addEventListener('beforeunload',ev=>{if(world&&world.made&&tickNo>CFG.unloadWarnTicks){ev.preventDefault();ev.returnValue=''}});
