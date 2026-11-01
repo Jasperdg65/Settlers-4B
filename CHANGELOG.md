@@ -7,6 +7,9 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 
 ### Toegevoegd
 - **Vakmensen in 3D**: 17 beroepen lopen met hun eigen 3D-figuur en loopclip (houthakker, boer, bakker, smid, …).
+  Aan het werk staan houthakker, steenhouwer, bosbouwer, boer, tuinier, plukker, graver en bouwer in hun eigen
+  werkhouding met gereedschap (de boer maait of zaait, de bosbouwer graaft en plant).
+- Geschilderde molenwieken (3D-model, 24 draaistanden) in plaats van de getekende.
 - Bouwmenu: rechtsboven in elk vakje hoeveel je van dat gebouw hebt.
 - **Mijlpaal 7: harmonie.** Een meter van 0 tot 100 bovenaan het paneel Productie. Voederplaats (met
   dierenverzorger en graan), dierenweide (jonge dieren) en bloemenweide verhogen hem; een lege voederplaats en

@@ -1,5 +1,5 @@
 {
-  "_uitleg": "Instellingen voor tools/render_sprites.py. Maten in modeleenheden (Blender, z omhoog, voorkant naar -y). Zie docs/techniek/renderstraat.md. Een model met \"clip\" speelt zijn eigen loopclip af (geen nagebootste scharnieren).",
+  "_uitleg": "Instellingen voor tools/render_sprites.py. Maten in modeleenheden (Blender, z omhoog, voorkant naar -y). Zie docs/techniek/renderstraat.md. Een model met \"clip\" speelt zijn eigen loopclip af (geen nagebootste scharnieren); een model met \"static\" is een vaste houding (de werkhoudingen), \"extra\" zijn losse GLB's die erbij komen (het gereedschap).",
   "sizes": [24, 48, 96],
   "refHeight": 2.05,
   "supersample": 2,
@@ -29,6 +29,9 @@
   "anims": {"idle": 1, "walk": 8, "fight": 6},
   "duels": {
     "armdrukken": {"glb": "bron/modellen/duels/armpje_drukken_L{l}_R{r}.glb", "out": "units/armdrukken", "levels": [1, 2, 3], "standen": 9, "rotate": 90}
+  },
+  "spinners": {
+    "molenwieken": {"glb": "bron/molen wieken/molen_wieken.glb", "rotator": "WIEKEN_ROTATOR", "out": "effects/molenwieken", "yaw": -20, "view": 6.2, "radius": 2.875, "symmetry": 4, "frames": 24, "cols": 6, "sizes": [64, 128, 256]}
   },
   "animalRig": {"gait": "quad", "scale": 1.0, "legTop": 0.95, "swing": 24, "bob": 0.02, "hop": 0.12, "tilt": 10, "roll": 3},
   "animals": {
@@ -68,6 +71,17 @@
     "ambacht_molenaar": {"glb": "bron/ambachten/modellen/molenaar_lopen.glb", "out": "units/ambacht_molenaar", "anims": ["idle", "walk"], "clip": "Walk"},
     "ambacht_bakker": {"glb": "bron/ambachten/modellen/bakker_lopen.glb", "out": "units/ambacht_bakker", "anims": ["idle", "walk"], "clip": "Walk"},
     "ambacht_smelter": {"glb": "bron/ambachten/modellen/smelter_lopen.glb", "out": "units/ambacht_smelter", "anims": ["idle", "walk"], "clip": "Walk"},
-    "ambacht_smid": {"glb": "bron/ambachten/modellen/smid_lopen.glb", "out": "units/ambacht_smid", "anims": ["idle", "walk"], "clip": "Walk"}
+    "ambacht_smid": {"glb": "bron/ambachten/modellen/smid_lopen.glb", "out": "units/ambacht_smid", "anims": ["idle", "walk"], "clip": "Walk"},
+    "werk_houthakker_hakken": {"glb": "bron/modellen/houthakker_hakken.glb", "extra": ["bron/modellen/houthakker_hakken_gereedschap.glb"], "out": "units/werk_houthakker_hakken", "anims": ["idle"], "static": true},
+    "werk_steenhouwer_slaan": {"glb": "bron/modellen/steenhouwer_slaan.glb", "extra": ["bron/modellen/steenhouwer_slaan_gereedschap.glb"], "out": "units/werk_steenhouwer_slaan", "anims": ["idle"], "static": true},
+    "werk_bosbouwer_graven": {"glb": "bron/modellen/bosbouwer_graven.glb", "extra": ["bron/modellen/bosbouwer_graven_gereedschap.glb"], "out": "units/werk_bosbouwer_graven", "anims": ["idle"], "static": true},
+    "werk_bosbouwer_planten": {"glb": "bron/modellen/bosbouwer_planten.glb", "extra": ["bron/modellen/bosbouwer_planten_gereedschap.glb"], "out": "units/werk_bosbouwer_planten", "anims": ["idle"], "static": true},
+    "werk_boer_maaien": {"glb": "bron/modellen/boer_maaien.glb", "extra": ["bron/modellen/boer_maaien_gereedschap.glb"], "out": "units/werk_boer_maaien", "anims": ["idle"], "static": true},
+    "werk_boer_zaaien": {"glb": "bron/modellen/boer_zaaien.glb", "extra": ["bron/modellen/boer_zaaien_gereedschap.glb"], "out": "units/werk_boer_zaaien", "anims": ["idle"], "static": true},
+    "werk_tuinier_verzorgen": {"glb": "bron/modellen/tuinier_verzorgen.glb", "extra": ["bron/modellen/tuinier_verzorgen_gereedschap.glb"], "out": "units/werk_tuinier_verzorgen", "anims": ["idle"], "static": true},
+    "werk_tuinier_oogsten": {"glb": "bron/modellen/tuinier_oogsten.glb", "extra": ["bron/modellen/tuinier_oogsten_gereedschap.glb"], "out": "units/werk_tuinier_oogsten", "anims": ["idle"], "static": true},
+    "werk_plukker_plukken": {"glb": "bron/modellen/plukker_plukken.glb", "extra": ["bron/modellen/plukker_plukken_gereedschap.glb"], "out": "units/werk_plukker_plukken", "anims": ["idle"], "static": true},
+    "werk_graver_egaliseren": {"glb": "bron/modellen/graver_egaliseren.glb", "extra": ["bron/modellen/graver_egaliseren_gereedschap.glb"], "out": "units/werk_graver_egaliseren", "anims": ["idle"], "static": true},
+    "werk_bouwer_timmeren": {"glb": "bron/modellen/bouwer_timmeren.glb", "extra": ["bron/modellen/bouwer_timmeren_gereedschap.glb"], "out": "units/werk_bouwer_timmeren", "anims": ["idle"], "static": true}
   }
 }

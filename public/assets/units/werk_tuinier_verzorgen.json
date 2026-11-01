@@ -1,0 +1,303 @@
+{
+ "model": "tuinier_verzorgen.glb",
+ "key": "werk_tuinier_verzorgen",
+ "dirs": 8,
+ "dirNote": "0 = oost (schermrechts), met de klok mee per 45 graden; 2 = zuid (naar de kijker)",
+ "anims": {
+  "idle": 1
+ },
+ "refHeight": 2.05,
+ "sizes": [
+  {
+   "px": 24,
+   "file": "units/werk_tuinier_verzorgen_24.webp",
+   "mask": "units/werk_tuinier_verzorgen_24_mask.webp",
+   "w": 27,
+   "h": 240,
+   "frames": [
+    {
+     "anim": "idle",
+     "dir": 0,
+     "i": 0,
+     "x": 0,
+     "y": 0,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    },
+    {
+     "anim": "idle",
+     "dir": 1,
+     "i": 0,
+     "x": 0,
+     "y": 30,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    },
+    {
+     "anim": "idle",
+     "dir": 2,
+     "i": 0,
+     "x": 0,
+     "y": 60,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    },
+    {
+     "anim": "idle",
+     "dir": 3,
+     "i": 0,
+     "x": 0,
+     "y": 90,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    },
+    {
+     "anim": "idle",
+     "dir": 4,
+     "i": 0,
+     "x": 0,
+     "y": 120,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    },
+    {
+     "anim": "idle",
+     "dir": 5,
+     "i": 0,
+     "x": 0,
+     "y": 150,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    },
+    {
+     "anim": "idle",
+     "dir": 6,
+     "i": 0,
+     "x": 0,
+     "y": 180,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    },
+    {
+     "anim": "idle",
+     "dir": 7,
+     "i": 0,
+     "x": 0,
+     "y": 210,
+     "w": 27,
+     "h": 30,
+     "ax": 10.5,
+     "ay": 25.37
+    }
+   ]
+  },
+  {
+   "px": 48,
+   "file": "units/werk_tuinier_verzorgen_48.webp",
+   "mask": "units/werk_tuinier_verzorgen_48_mask.webp",
+   "w": 54,
+   "h": 480,
+   "frames": [
+    {
+     "anim": "idle",
+     "dir": 0,
+     "i": 0,
+     "x": 0,
+     "y": 0,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    },
+    {
+     "anim": "idle",
+     "dir": 1,
+     "i": 0,
+     "x": 0,
+     "y": 60,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    },
+    {
+     "anim": "idle",
+     "dir": 2,
+     "i": 0,
+     "x": 0,
+     "y": 120,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    },
+    {
+     "anim": "idle",
+     "dir": 3,
+     "i": 0,
+     "x": 0,
+     "y": 180,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    },
+    {
+     "anim": "idle",
+     "dir": 4,
+     "i": 0,
+     "x": 0,
+     "y": 240,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    },
+    {
+     "anim": "idle",
+     "dir": 5,
+     "i": 0,
+     "x": 0,
+     "y": 300,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    },
+    {
+     "anim": "idle",
+     "dir": 6,
+     "i": 0,
+     "x": 0,
+     "y": 360,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    },
+    {
+     "anim": "idle",
+     "dir": 7,
+     "i": 0,
+     "x": 0,
+     "y": 420,
+     "w": 54,
+     "h": 60,
+     "ax": 21.0,
+     "ay": 50.74
+    }
+   ]
+  },
+  {
+   "px": 96,
+   "file": "units/werk_tuinier_verzorgen_96.webp",
+   "mask": "units/werk_tuinier_verzorgen_96_mask.webp",
+   "w": 108,
+   "h": 960,
+   "frames": [
+    {
+     "anim": "idle",
+     "dir": 0,
+     "i": 0,
+     "x": 0,
+     "y": 0,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    },
+    {
+     "anim": "idle",
+     "dir": 1,
+     "i": 0,
+     "x": 0,
+     "y": 120,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    },
+    {
+     "anim": "idle",
+     "dir": 2,
+     "i": 0,
+     "x": 0,
+     "y": 240,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    },
+    {
+     "anim": "idle",
+     "dir": 3,
+     "i": 0,
+     "x": 0,
+     "y": 360,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    },
+    {
+     "anim": "idle",
+     "dir": 4,
+     "i": 0,
+     "x": 0,
+     "y": 480,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    },
+    {
+     "anim": "idle",
+     "dir": 5,
+     "i": 0,
+     "x": 0,
+     "y": 600,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    },
+    {
+     "anim": "idle",
+     "dir": 6,
+     "i": 0,
+     "x": 0,
+     "y": 720,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    },
+    {
+     "anim": "idle",
+     "dir": 7,
+     "i": 0,
+     "x": 0,
+     "y": 840,
+     "w": 108,
+     "h": 120,
+     "ax": 42.0,
+     "ay": 101.48
+    }
+   ]
+  }
+ ]
+}

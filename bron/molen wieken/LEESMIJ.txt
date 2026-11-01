@@ -1,0 +1,47 @@
+TERRANA — LOSSE MOLENWIEKEN V1
+
+Vier gedetailleerde houten wieken met open hekwerk bij de naaf,
+licht gebolde zeildoeken, eiken roeden, ijzeren banden en messing bouten.
+Losse set, zonder molengebouw, gebaseerd op de aangeleverde schermafbeelding.
+
+BESTANDEN
+molen_wieken.glb: stilstaande set. Laat de spelengine de wieken draaien.
+molen_wieken_draaiend.glb: dezelfde set met ingebouwde clip Spin.
+molen_wieken.png: transparante voorbeeldafbeelding, geen benodigde texture.
+molen_wieken.jpg: voorbeeld op donkere achtergrond.
+molen_wieken_preview.gif: versneld bewegend voorbeeld.
+broncode/: generator en hulpmiddelen voor verdere bewerking.
+
+PLAATSING VOOR DE SPEL-AI
+Alle kleuren en materialen zitten in de GLB. Geen textures nodig.
+Oorsprong (0,0,0) is het middelpunt van de naaf.
+De wieken liggen in het lokale XY-vlak. De voorzijde is +Z.
+De as steekt naar achteren uit langs -Z. Rotatie om de lokale Z-as.
+Object WIEKEN_ROTATOR bevat de complete roterende set.
+
+Diameter in rust circa 5,72 modeleeneenheden; benodigde vrije draairuimte
+circa 5,75. Kies een uniforme schaal: gewenste diameter gedeeld door 5,75.
+Voorbeeld: gewenste diameter 2,3 -> schaal ongeveer 0,40.
+Plaats het middelpunt op de ashoogte van de bestaande molen en draai de
+volledige groep naar de richting van de molengevel. Houd de wieken vóór
+het gebouw; controleer dat de armen bij een volle omwenteling vrij blijven.
+Verberg of verwijder de simpele bestaande wieken om dubbele sets te voorkomen.
+
+ROTATIE
+Gebruik één van beide mogelijkheden, niet tegelijk:
+1. Statische GLB: verhoog de lokale rotatie.z elk frame met delta*0,524
+   voor ongeveer één omwenteling per 12 seconden.
+2. Geanimeerde GLB: speel de clip Spin herhaald af en update de animatiemixer.
+   Duur 12 seconden voor één volledige omwenteling; afspeelsnelheid is instelbaar.
+   Met negatieve afspeelsnelheid of negatieve rotatie kan de richting omkeren.
+
+De originele GLB van het molengebouw was niet beschikbaar; de exacte schaal,
+aslocatie en oriëntatie moeten dus in het spel worden afgestemd.
+Bestanden en loopsluiting gecontroleerd en lokaal gerenderd, nog niet getest
+in de uiteindelijke spelengine. De GIF draait sneller dan de ingebouwde clip.
+
+BRONCODE
+Vereist Python 3, numpy en Pillow. Voor de nette previewrenderer ook gcc.
+Vanuit broncode/: gcc -O2 -shared -fPIC raster.c -o raster.so -lm
+Daarna: python maak_wieken.py
+De generator schrijft de GLB's en previews in dezelfde broncode-map.

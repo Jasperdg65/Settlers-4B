@@ -202,8 +202,31 @@ Wat het script doet (instellingen in `tools/sprites.json`):
   de clip), waarop de voeten het dichtst bij elkaar staan.
 - Uitvoer zoals de andere poppetjes (`units/ambacht_<beroep>_<px>.webp` + masker + JSON), ~12 minuten per model.
 - In het spel (`job3D` in `js/units3d.js`): het model van `CFG.jobs[job].k`; geladen pas als zo'n vakman voor het eerst
-  getekend wordt (samen ruim 10 MB). Zonder model (dierenverzorger) blijft het getekende figuurtje. Werkhoudingen
-  (`bron/modellen/<beroep>_<houding>.glb`) zijn nog niet in gebruik: aan het werk staat de vakman stil.
+  getekend wordt (samen ruim 10 MB). Zonder model (dierenverzorger) blijft het getekende figuurtje.
+
+**Werkhoudingen** (`werk_<beroep>_<houding>` in `models`, `"static": true`, `"extra"`)
+
+- Bron: `bron/modellen/<beroep>_<houding>.glb` (alleen de figuur, met lege nodes GRIP_LEFT/GRIP_RIGHT) en
+  `<beroep>_<houding>_gereedschap.glb` (werktuig, boompje of mand, al op zijn plek bij de houding); overzicht in
+  `bron/modellen/beroepen.json` en `LEESMIJ_werkhoudingen.txt`. 11 houdingen voor 8 beroepen, zonder animatie.
+- `static`: de hiërarchie blijft heel, er wordt niets bewogen; alleen `idle` in 8 richtingen. `extra`: losse GLB's die
+  op hun eigen plek mee worden ingeladen (hier het gereedschap). Een paar minuten per houding.
+- In het spel (`work3D` in `js/units3d.js`, tabel `WORK3D`): de houding zolang de vakman buiten werkt (`ST.GATHER`) of op
+  een bouwplaats (`ST.WORK`). Akker: rijp = oogsten (boer maaien, tuinier oogsten), anders zaaien of verzorgen; de
+  bosbouwer graaft de eerste helft van zijn werktijd en plant de tweede. Ook lui geladen. Zonder houding (bv. mijnwerker,
+  binnen aan het werk) blijft de stilstand van het loopmodel.
+
+**Molenwieken** (`spinners` in `tools/sprites.json`, `tools/render_wieken.py`)
+
+- Bron: `bron/molen wieken/molen_wieken.glb` (vier wieken met zeildoek en hekwerk; oorsprong = naaf, as naar de kijker,
+  object `WIEKEN_ROTATOR` draait). Zelfde camera en licht als de poppetjes; `render_wieken.py` gebruikt de hulpfuncties
+  van `render_sprites.py`.
+- De wieken zijn viervoudig symmetrisch, dus een kwartslag is genoeg: `frames` (24) standen, linksom gezien van voren.
+  `yaw` (−20°) draait ze iets naar links, zoals de molen. Per maat (64, 128, 256 px per beeld) één WebP van 6 × 4
+  beelden, plus `effects/molenwieken.json` (met `view` en `radius`: hoe groot de wieken in het beeld zijn); in het
+  manifest onder `spinners`. Een paar minuten in totaal.
+- In het spel (`loop.js`, `SAILS` uit `assets.js`): op de naaf (`hub`) van de molen, even lang als de getekende wieken
+  (`CFG.mill.arm`), stand uit de tijd (`CFG.mill.turn`), maat naar zoom × schermdichtheid. Zonder blad: de getekende wieken.
 
 **Dieren** (`animals` en `animalRig` in `tools/sprites.json`)
 

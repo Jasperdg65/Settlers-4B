@@ -58,68 +58,69 @@ bron/adviseur/Adviseur bezorgd.png,"adviseur (2D, hoofd)",,,,,staat alleen op de
 bron/adviseur/Adviseur nadenkend.png,"adviseur (2D, hoofd)",,,,,staat alleen op de server (.gitignore); transparante achtergrond; uitdrukking: nadenkend
 bron/adviseur/Adviseur perkament.png,"adviseur (2D, rol)",,,,,staat alleen op de server (.gitignore); transparante achtergrond; 9-slice rol voor border-image
 bron/adviseur/Adviseur tevreden.png,"adviseur (2D, hoofd)",,,,,staat alleen op de server (.gitignore); transparante achtergrond; uitdrukking: tevreden
-bron/ambachten/LEESMIJ.txt,documentatie,,,,,niet in git
-bron/ambachten/manifest.json,gegevens,,,,,niet in git
-bron/ambachten/validatie.json,gegevens,,,,,niet in git
-bron/ambachten/broncode/maak_ambachten.py,bouwscript (Python/C) van de aangeleverde modellen,,,,,niet in git
-bron/ambachten/broncode/maak_loopanimatie.py,bouwscript (Python/C) van de aangeleverde modellen,,,,,niet in git
-bron/ambachten/broncode/preview.py,bouwscript (Python/C) van de aangeleverde modellen,,,,,niet in git
-bron/ambachten/broncode/raster.c,bouwscript (Python/C) van de aangeleverde modellen,,,,,niet in git
-bron/ambachten/modellen/bakker_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/boer_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/bosbouwer_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/bouwer_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/droger_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/graver_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/houthakker_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/kok_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/mijnwerker_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/molenaar_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/plukker_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/smelter_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/smid_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/steenhouwer_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/tuinier_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/waterhaler_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/modellen/zager_lopen.glb,3D-model met loopclip Walk (GLB),,,,,niet in git; aangeleverd; zie bron/ambachten/LEESMIJ.txt
-bron/ambachten/voorbeelden/bakker_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/bakker_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/boer_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/boer_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/boer_lopen_preview.gif,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/bosbouwer_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/bosbouwer_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/bouwer_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/bouwer_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/droger_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/droger_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/graver_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/graver_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/houthakker_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/houthakker_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/kok_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/kok_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/mijnwerker_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/mijnwerker_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/molenaar_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/molenaar_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/overzicht_17_ambachten.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/plukker_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/plukker_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/smelter_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/smelter_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/smid_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/smid_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/steenhouwer_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/steenhouwer_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/tuinier_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/tuinier_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/waterhaler_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/waterhaler_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/zager_lopen.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git
-bron/ambachten/voorbeelden/zager_lopen.png,voorbeeldbeeld (aangeleverd),,,,,niet in git
+bron/ambachten/LEESMIJ.txt,documentatie,,2026-11-01,,,
+bron/ambachten/manifest.json,gegevens,,2026-11-01,,,
+bron/ambachten/validatie.json,gegevens,,2026-11-01,,,
+bron/ambachten/broncode/maak_ambachten.py,bouwscript (Python/C) van de aangeleverde modellen,,2026-11-01,,,
+bron/ambachten/broncode/maak_loopanimatie.py,bouwscript (Python/C) van de aangeleverde modellen,,2026-11-01,,,
+bron/ambachten/broncode/preview.py,bouwscript (Python/C) van de aangeleverde modellen,,2026-11-01,,,
+bron/ambachten/broncode/raster.c,bouwscript (Python/C) van de aangeleverde modellen,,2026-11-01,,,
+bron/ambachten/modellen/bakker_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/boer_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/bosbouwer_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/bouwer_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/droger_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/graver_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/houthakker_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/kok_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/mijnwerker_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/molenaar_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/plukker_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/smelter_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/smid_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/steenhouwer_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/tuinier_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/waterhaler_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/modellen/zager_lopen.glb,3D-model met loopclip Walk (GLB),,2026-11-01,,,aangeleverd; zie bron/ambachten/LEESMIJ.txt
+bron/ambachten/voorbeelden/bakker_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/bakker_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/boer_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/boer_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/boer_lopen_preview.gif,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/bosbouwer_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/bosbouwer_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/bouwer_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/bouwer_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/droger_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/droger_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/graver_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/graver_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/houthakker_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/houthakker_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/kok_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/kok_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/mijnwerker_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/mijnwerker_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/molenaar_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/molenaar_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/overzicht_17_ambachten.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/plukker_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/plukker_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/smelter_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/smelter_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/smid_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/smid_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/steenhouwer_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/steenhouwer_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/tuinier_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/tuinier_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/waterhaler_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/waterhaler_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/zager_lopen.jpg,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
+bron/ambachten/voorbeelden/zager_lopen.png,voorbeeldbeeld (aangeleverd),,2026-11-01,,,
 bron/modellen/LEESMIJ.txt,documentatie,,2026-10-31,,,
 bron/modellen/LEESMIJ_dieren.txt,documentatie,,2026-10-31,,,
+bron/modellen/LEESMIJ_werkhoudingen.txt,documentatie,,,,,niet in git
 bron/modellen/THREE_LICENSE.txt,documentatie,,,,,niet in git
 bron/modellen/ambachten_3D_openen.html,3D-bekijkpagina (Three.js r160),,,,,niet in git
 bron/modellen/ambachten_bron.blend,3D-bron (Blender),Blender 4.5,,,,niet in git
@@ -281,6 +282,18 @@ bron/modellen/standen/armpje_drukken_06.glb,3D-model (GLB),Blender 4.5 (build_kr
 bron/modellen/standen/armpje_drukken_07.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
 bron/modellen/standen/armpje_drukken_08.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
 bron/modellen/standen/armpje_drukken_09.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/molen wieken/LEESMIJ.txt,documentatie,,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/molen_wieken.glb,3D-model molenwieken (GLB),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/molen_wieken.jpg,voorbeeldbeeld (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/molen_wieken.png,voorbeeldbeeld (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/molen_wieken_draaiend.glb,3D-model molenwieken (GLB),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/molen_wieken_preview.gif,afspeelvoorbeeld (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/validatie.json,gegevens,,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/broncode/maak_ambachten.py,bouwscript (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/broncode/maak_loopanimatie.py,bouwscript (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/broncode/maak_wieken.py,bouwscript (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/broncode/preview.py,bouwscript (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
+bron/molen wieken/broncode/raster.c,bouwscript (aangeleverd),,,,,niet in git; aangeleverd; zie bron/molen wieken/LEESMIJ.txt
 bron/rook/LEESMIJ.txt,documentatie,,2026-11-01,,,
 bron/rook/rook_01.png,rookanimatie (2D),,2026-11-01,,,
 bron/rook/rook_02.png,rookanimatie (2D),,2026-11-01,,,
@@ -348,6 +361,10 @@ public/assets/dieren/vos.json,atlasgegevens (dier),Blender 4.5 (tools/render_spr
 public/assets/dieren/vos_24.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vos
 public/assets/dieren/vos_48.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vos
 public/assets/dieren/vos_96.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vos
+public/assets/effects/molenwieken.json,draaistanden molenwieken (json),Blender 4.5 (tools/render_wieken.py),,,"24 standen over een kwartslag, 2× gerenderd en verkleind",model: bron/molen wieken/molen_wieken.glb
+public/assets/effects/molenwieken_128.webp,draaistanden molenwieken (webp),Blender 4.5 (tools/render_wieken.py),,,"24 standen over een kwartslag, 2× gerenderd en verkleind",model: bron/molen wieken/molen_wieken.glb
+public/assets/effects/molenwieken_256.webp,draaistanden molenwieken (webp),Blender 4.5 (tools/render_wieken.py),,,"24 standen over een kwartslag, 2× gerenderd en verkleind",model: bron/molen wieken/molen_wieken.glb
+public/assets/effects/molenwieken_64.webp,draaistanden molenwieken (webp),Blender 4.5 (tools/render_wieken.py),,,"24 standen over een kwartslag, 2× gerenderd en verkleind",model: bron/molen wieken/molen_wieken.glb
 public/assets/effects/rook.webp,effect-spriteblad (webp),tools/build-images.php (Imagick),2026-11-01,,"alle beelden op één kader bijgesneden, 96 px breed per beeld, WebP q80",bron: bron/rook/rook_spriteblad.png
 public/assets/nature/appel0.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 144 px, WebP q80",bron: bron/Boom8.png
 public/assets/nature/appel1.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 144 px, WebP q80",bron: bron/Boom10.png
@@ -384,125 +401,125 @@ public/assets/ui/adviseur/hoofd_tevreden_1x.webp,"interface (webp, 1x)",tools/bu
 public/assets/ui/adviseur/hoofd_tevreden_2x.webp,"interface (webp, 2x)",tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op het gezamenlijke kader van de drie hoofden, 352 px breed, WebP q82",bron: bron/adviseur/Adviseur tevreden.png
 public/assets/ui/adviseur/rol_1x.webp,"interface (webp, 1x)",tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, 480 px breed, WebP q82",bron: bron/adviseur/Adviseur perkament.png
 public/assets/ui/adviseur/rol_2x.webp,"interface (webp, 2x)",tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, 960 px breed, WebP q82",bron: bron/adviseur/Adviseur perkament.png
-public/assets/units/ambacht_bakker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
-public/assets/units/ambacht_bakker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
-public/assets/units/ambacht_bakker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
-public/assets/units/ambacht_bakker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
-public/assets/units/ambacht_bakker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
-public/assets/units/ambacht_bakker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
-public/assets/units/ambacht_bakker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
-public/assets/units/ambacht_boer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
-public/assets/units/ambacht_boer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
-public/assets/units/ambacht_boer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
-public/assets/units/ambacht_boer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
-public/assets/units/ambacht_boer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
-public/assets/units/ambacht_boer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
-public/assets/units/ambacht_boer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
-public/assets/units/ambacht_bosbouwer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
-public/assets/units/ambacht_bosbouwer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
-public/assets/units/ambacht_bosbouwer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
-public/assets/units/ambacht_bosbouwer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
-public/assets/units/ambacht_bosbouwer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
-public/assets/units/ambacht_bosbouwer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
-public/assets/units/ambacht_bosbouwer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
-public/assets/units/ambacht_bouwer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
-public/assets/units/ambacht_bouwer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
-public/assets/units/ambacht_bouwer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
-public/assets/units/ambacht_bouwer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
-public/assets/units/ambacht_bouwer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
-public/assets/units/ambacht_bouwer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
-public/assets/units/ambacht_bouwer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
-public/assets/units/ambacht_droger.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
-public/assets/units/ambacht_droger_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
-public/assets/units/ambacht_droger_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
-public/assets/units/ambacht_droger_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
-public/assets/units/ambacht_droger_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
-public/assets/units/ambacht_droger_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
-public/assets/units/ambacht_droger_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
-public/assets/units/ambacht_graver.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
-public/assets/units/ambacht_graver_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
-public/assets/units/ambacht_graver_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
-public/assets/units/ambacht_graver_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
-public/assets/units/ambacht_graver_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
-public/assets/units/ambacht_graver_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
-public/assets/units/ambacht_graver_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
-public/assets/units/ambacht_houthakker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
-public/assets/units/ambacht_houthakker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
-public/assets/units/ambacht_houthakker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
-public/assets/units/ambacht_houthakker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
-public/assets/units/ambacht_houthakker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
-public/assets/units/ambacht_houthakker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
-public/assets/units/ambacht_houthakker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
-public/assets/units/ambacht_kok.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
-public/assets/units/ambacht_kok_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
-public/assets/units/ambacht_kok_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
-public/assets/units/ambacht_kok_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
-public/assets/units/ambacht_kok_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
-public/assets/units/ambacht_kok_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
-public/assets/units/ambacht_kok_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
-public/assets/units/ambacht_mijnwerker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
-public/assets/units/ambacht_mijnwerker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
-public/assets/units/ambacht_mijnwerker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
-public/assets/units/ambacht_mijnwerker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
-public/assets/units/ambacht_mijnwerker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
-public/assets/units/ambacht_mijnwerker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
-public/assets/units/ambacht_mijnwerker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
-public/assets/units/ambacht_molenaar.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
-public/assets/units/ambacht_molenaar_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
-public/assets/units/ambacht_molenaar_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
-public/assets/units/ambacht_molenaar_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
-public/assets/units/ambacht_molenaar_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
-public/assets/units/ambacht_molenaar_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
-public/assets/units/ambacht_molenaar_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
-public/assets/units/ambacht_plukker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
-public/assets/units/ambacht_plukker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
-public/assets/units/ambacht_plukker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
-public/assets/units/ambacht_plukker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
-public/assets/units/ambacht_plukker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
-public/assets/units/ambacht_plukker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
-public/assets/units/ambacht_plukker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
-public/assets/units/ambacht_smelter.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
-public/assets/units/ambacht_smelter_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
-public/assets/units/ambacht_smelter_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
-public/assets/units/ambacht_smelter_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
-public/assets/units/ambacht_smelter_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
-public/assets/units/ambacht_smelter_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
-public/assets/units/ambacht_smelter_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
-public/assets/units/ambacht_smid.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
-public/assets/units/ambacht_smid_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
-public/assets/units/ambacht_smid_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
-public/assets/units/ambacht_smid_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
-public/assets/units/ambacht_smid_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
-public/assets/units/ambacht_smid_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
-public/assets/units/ambacht_smid_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
-public/assets/units/ambacht_steenhouwer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
-public/assets/units/ambacht_steenhouwer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
-public/assets/units/ambacht_steenhouwer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
-public/assets/units/ambacht_steenhouwer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
-public/assets/units/ambacht_steenhouwer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
-public/assets/units/ambacht_steenhouwer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
-public/assets/units/ambacht_steenhouwer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
-public/assets/units/ambacht_tuinier.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
-public/assets/units/ambacht_tuinier_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
-public/assets/units/ambacht_tuinier_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
-public/assets/units/ambacht_tuinier_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
-public/assets/units/ambacht_tuinier_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
-public/assets/units/ambacht_tuinier_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
-public/assets/units/ambacht_tuinier_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
-public/assets/units/ambacht_waterhaler.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
-public/assets/units/ambacht_waterhaler_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
-public/assets/units/ambacht_waterhaler_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
-public/assets/units/ambacht_waterhaler_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
-public/assets/units/ambacht_waterhaler_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
-public/assets/units/ambacht_waterhaler_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
-public/assets/units/ambacht_waterhaler_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
-public/assets/units/ambacht_zager.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
-public/assets/units/ambacht_zager_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
-public/assets/units/ambacht_zager_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
-public/assets/units/ambacht_zager_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
-public/assets/units/ambacht_zager_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
-public/assets/units/ambacht_zager_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
-public/assets/units/ambacht_zager_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
+public/assets/units/ambacht_bakker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
+public/assets/units/ambacht_bakker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
+public/assets/units/ambacht_bakker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
+public/assets/units/ambacht_bakker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
+public/assets/units/ambacht_bakker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
+public/assets/units/ambacht_bakker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
+public/assets/units/ambacht_bakker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bakker
+public/assets/units/ambacht_boer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
+public/assets/units/ambacht_boer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
+public/assets/units/ambacht_boer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
+public/assets/units/ambacht_boer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
+public/assets/units/ambacht_boer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
+public/assets/units/ambacht_boer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
+public/assets/units/ambacht_boer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_boer
+public/assets/units/ambacht_bosbouwer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
+public/assets/units/ambacht_bosbouwer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
+public/assets/units/ambacht_bosbouwer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
+public/assets/units/ambacht_bosbouwer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
+public/assets/units/ambacht_bosbouwer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
+public/assets/units/ambacht_bosbouwer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
+public/assets/units/ambacht_bosbouwer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bosbouwer
+public/assets/units/ambacht_bouwer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
+public/assets/units/ambacht_bouwer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
+public/assets/units/ambacht_bouwer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
+public/assets/units/ambacht_bouwer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
+public/assets/units/ambacht_bouwer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
+public/assets/units/ambacht_bouwer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
+public/assets/units/ambacht_bouwer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_bouwer
+public/assets/units/ambacht_droger.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
+public/assets/units/ambacht_droger_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
+public/assets/units/ambacht_droger_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
+public/assets/units/ambacht_droger_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
+public/assets/units/ambacht_droger_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
+public/assets/units/ambacht_droger_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
+public/assets/units/ambacht_droger_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_droger
+public/assets/units/ambacht_graver.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
+public/assets/units/ambacht_graver_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
+public/assets/units/ambacht_graver_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
+public/assets/units/ambacht_graver_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
+public/assets/units/ambacht_graver_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
+public/assets/units/ambacht_graver_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
+public/assets/units/ambacht_graver_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_graver
+public/assets/units/ambacht_houthakker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
+public/assets/units/ambacht_houthakker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
+public/assets/units/ambacht_houthakker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
+public/assets/units/ambacht_houthakker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
+public/assets/units/ambacht_houthakker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
+public/assets/units/ambacht_houthakker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
+public/assets/units/ambacht_houthakker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_houthakker
+public/assets/units/ambacht_kok.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
+public/assets/units/ambacht_kok_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
+public/assets/units/ambacht_kok_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
+public/assets/units/ambacht_kok_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
+public/assets/units/ambacht_kok_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
+public/assets/units/ambacht_kok_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
+public/assets/units/ambacht_kok_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_kok
+public/assets/units/ambacht_mijnwerker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
+public/assets/units/ambacht_mijnwerker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
+public/assets/units/ambacht_mijnwerker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
+public/assets/units/ambacht_mijnwerker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
+public/assets/units/ambacht_mijnwerker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
+public/assets/units/ambacht_mijnwerker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
+public/assets/units/ambacht_mijnwerker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_mijnwerker
+public/assets/units/ambacht_molenaar.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
+public/assets/units/ambacht_molenaar_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
+public/assets/units/ambacht_molenaar_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
+public/assets/units/ambacht_molenaar_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
+public/assets/units/ambacht_molenaar_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
+public/assets/units/ambacht_molenaar_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
+public/assets/units/ambacht_molenaar_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_molenaar
+public/assets/units/ambacht_plukker.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
+public/assets/units/ambacht_plukker_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
+public/assets/units/ambacht_plukker_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
+public/assets/units/ambacht_plukker_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
+public/assets/units/ambacht_plukker_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
+public/assets/units/ambacht_plukker_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
+public/assets/units/ambacht_plukker_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_plukker
+public/assets/units/ambacht_smelter.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
+public/assets/units/ambacht_smelter_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
+public/assets/units/ambacht_smelter_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
+public/assets/units/ambacht_smelter_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
+public/assets/units/ambacht_smelter_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
+public/assets/units/ambacht_smelter_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
+public/assets/units/ambacht_smelter_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smelter
+public/assets/units/ambacht_smid.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
+public/assets/units/ambacht_smid_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
+public/assets/units/ambacht_smid_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
+public/assets/units/ambacht_smid_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
+public/assets/units/ambacht_smid_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
+public/assets/units/ambacht_smid_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
+public/assets/units/ambacht_smid_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_smid
+public/assets/units/ambacht_steenhouwer.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
+public/assets/units/ambacht_steenhouwer_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
+public/assets/units/ambacht_steenhouwer_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
+public/assets/units/ambacht_steenhouwer_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
+public/assets/units/ambacht_steenhouwer_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
+public/assets/units/ambacht_steenhouwer_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
+public/assets/units/ambacht_steenhouwer_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_steenhouwer
+public/assets/units/ambacht_tuinier.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
+public/assets/units/ambacht_tuinier_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
+public/assets/units/ambacht_tuinier_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
+public/assets/units/ambacht_tuinier_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
+public/assets/units/ambacht_tuinier_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
+public/assets/units/ambacht_tuinier_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
+public/assets/units/ambacht_tuinier_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_tuinier
+public/assets/units/ambacht_waterhaler.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
+public/assets/units/ambacht_waterhaler_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
+public/assets/units/ambacht_waterhaler_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
+public/assets/units/ambacht_waterhaler_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
+public/assets/units/ambacht_waterhaler_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
+public/assets/units/ambacht_waterhaler_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
+public/assets/units/ambacht_waterhaler_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_waterhaler
+public/assets/units/ambacht_zager.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
+public/assets/units/ambacht_zager_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
+public/assets/units/ambacht_zager_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
+public/assets/units/ambacht_zager_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
+public/assets/units/ambacht_zager_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
+public/assets/units/ambacht_zager_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
+public/assets/units/ambacht_zager_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-11-01,,"gerenderd uit bron/ambachten/modellen/ met de eigen Walk-clip, 2× gerenderd en verkleind",model: ambacht_zager
 public/assets/units/armdrukken.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
 public/assets/units/armdrukken_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
 public/assets/units/armdrukken_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
@@ -587,3 +604,80 @@ public/assets/units/muzikant_senior_48.webp,spriteatlas (figuur),Blender 4.5 (to
 public/assets/units/muzikant_senior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
 public/assets/units/muzikant_senior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
 public/assets/units/muzikant_senior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
+public/assets/units/werk_boer_maaien.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_maaien
+public/assets/units/werk_boer_maaien_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_maaien
+public/assets/units/werk_boer_maaien_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_maaien
+public/assets/units/werk_boer_maaien_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_maaien
+public/assets/units/werk_boer_maaien_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_maaien
+public/assets/units/werk_boer_maaien_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_maaien
+public/assets/units/werk_boer_maaien_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_maaien
+public/assets/units/werk_boer_zaaien.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_zaaien
+public/assets/units/werk_boer_zaaien_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_zaaien
+public/assets/units/werk_boer_zaaien_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_zaaien
+public/assets/units/werk_boer_zaaien_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_zaaien
+public/assets/units/werk_boer_zaaien_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_zaaien
+public/assets/units/werk_boer_zaaien_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_zaaien
+public/assets/units/werk_boer_zaaien_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_boer_zaaien
+public/assets/units/werk_bosbouwer_graven.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_graven
+public/assets/units/werk_bosbouwer_graven_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_graven
+public/assets/units/werk_bosbouwer_graven_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_graven
+public/assets/units/werk_bosbouwer_graven_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_graven
+public/assets/units/werk_bosbouwer_graven_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_graven
+public/assets/units/werk_bosbouwer_graven_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_graven
+public/assets/units/werk_bosbouwer_graven_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_graven
+public/assets/units/werk_bosbouwer_planten.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_planten
+public/assets/units/werk_bosbouwer_planten_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_planten
+public/assets/units/werk_bosbouwer_planten_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_planten
+public/assets/units/werk_bosbouwer_planten_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_planten
+public/assets/units/werk_bosbouwer_planten_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_planten
+public/assets/units/werk_bosbouwer_planten_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_planten
+public/assets/units/werk_bosbouwer_planten_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bosbouwer_planten
+public/assets/units/werk_bouwer_timmeren.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bouwer_timmeren
+public/assets/units/werk_bouwer_timmeren_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bouwer_timmeren
+public/assets/units/werk_bouwer_timmeren_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bouwer_timmeren
+public/assets/units/werk_bouwer_timmeren_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bouwer_timmeren
+public/assets/units/werk_bouwer_timmeren_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bouwer_timmeren
+public/assets/units/werk_bouwer_timmeren_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bouwer_timmeren
+public/assets/units/werk_bouwer_timmeren_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_bouwer_timmeren
+public/assets/units/werk_graver_egaliseren.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_graver_egaliseren
+public/assets/units/werk_graver_egaliseren_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_graver_egaliseren
+public/assets/units/werk_graver_egaliseren_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_graver_egaliseren
+public/assets/units/werk_graver_egaliseren_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_graver_egaliseren
+public/assets/units/werk_graver_egaliseren_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_graver_egaliseren
+public/assets/units/werk_graver_egaliseren_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_graver_egaliseren
+public/assets/units/werk_graver_egaliseren_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_graver_egaliseren
+public/assets/units/werk_houthakker_hakken.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_houthakker_hakken
+public/assets/units/werk_houthakker_hakken_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_houthakker_hakken
+public/assets/units/werk_houthakker_hakken_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_houthakker_hakken
+public/assets/units/werk_houthakker_hakken_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_houthakker_hakken
+public/assets/units/werk_houthakker_hakken_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_houthakker_hakken
+public/assets/units/werk_houthakker_hakken_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_houthakker_hakken
+public/assets/units/werk_houthakker_hakken_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_houthakker_hakken
+public/assets/units/werk_plukker_plukken.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_plukker_plukken
+public/assets/units/werk_plukker_plukken_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_plukker_plukken
+public/assets/units/werk_plukker_plukken_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_plukker_plukken
+public/assets/units/werk_plukker_plukken_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_plukker_plukken
+public/assets/units/werk_plukker_plukken_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_plukker_plukken
+public/assets/units/werk_plukker_plukken_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_plukker_plukken
+public/assets/units/werk_plukker_plukken_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_plukker_plukken
+public/assets/units/werk_steenhouwer_slaan.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_steenhouwer_slaan
+public/assets/units/werk_steenhouwer_slaan_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_steenhouwer_slaan
+public/assets/units/werk_steenhouwer_slaan_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_steenhouwer_slaan
+public/assets/units/werk_steenhouwer_slaan_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_steenhouwer_slaan
+public/assets/units/werk_steenhouwer_slaan_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_steenhouwer_slaan
+public/assets/units/werk_steenhouwer_slaan_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_steenhouwer_slaan
+public/assets/units/werk_steenhouwer_slaan_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_steenhouwer_slaan
+public/assets/units/werk_tuinier_oogsten.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_oogsten
+public/assets/units/werk_tuinier_oogsten_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_oogsten
+public/assets/units/werk_tuinier_oogsten_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_oogsten
+public/assets/units/werk_tuinier_oogsten_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_oogsten
+public/assets/units/werk_tuinier_oogsten_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_oogsten
+public/assets/units/werk_tuinier_oogsten_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_oogsten
+public/assets/units/werk_tuinier_oogsten_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_oogsten
+public/assets/units/werk_tuinier_verzorgen.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
+public/assets/units/werk_tuinier_verzorgen_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
+public/assets/units/werk_tuinier_verzorgen_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
+public/assets/units/werk_tuinier_verzorgen_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
+public/assets/units/werk_tuinier_verzorgen_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
+public/assets/units/werk_tuinier_verzorgen_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
+public/assets/units/werk_tuinier_verzorgen_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen

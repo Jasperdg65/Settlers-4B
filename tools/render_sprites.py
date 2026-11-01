@@ -168,13 +168,16 @@ def pose(rig, anim, i, R):
         arms[sword].rotation_euler.x = math.radians(R['fight'][i])
 
 
-def clip_rig(objs, new):
-    """model met een eigen loopclip (m['clip'], bv. de ambachten): de hiërarchie blijft heel, alles hangt onder Root"""
+def clip_rig(objs, new, anim=True):
+    """model met een eigen loopclip (m['clip'], bv. de ambachten) of een vaste houding (m['static'], de werkhoudingen):
+    de hiërarchie blijft heel, alles hangt onder Root"""
     root = empty('Root', (0, 0, 0))
     for o in new:
         if o.parent is None:
             attach(o, root)
     acts = [o.animation_data.action for o in new if o.animation_data and o.animation_data.action]
+    if not anim:
+        return root, 0, 0
     if not acts:
         raise SystemExit('geen animatie in het model')
     f0 = min(a.frame_range[0] for a in acts)
@@ -310,10 +313,15 @@ def render_model(key, m):
     check_disk()
     sc, cam, ppu, res = setup_scene()
     before = set(sc.objects)
-    objs = load_model(os.path.join(ROOT, m['glb']), m.get('hide', ()), keep_hierarchy='clip' in m)
+    whole = 'clip' in m or m.get('static')
+    objs = load_model(os.path.join(ROOT, m['glb']), m.get('hide', ()), keep_hierarchy=whole)
+    for g in m.get('extra', ()):  # m['extra']: losse GLB's erbij, op hun eigen plek (bv. het gereedschap bij een werkhouding)
+        load_model(os.path.join(ROOT, g), keep_hierarchy=True)
+    if m.get('extra'):
+        objs = [o for o in sc.objects if o not in before and o.type == 'MESH']
     R = {**CFG['rig'], **m.get('rig', {})}  # eigen rig per model gaat voor de algemene
-    if 'clip' in m:  # eigen loopclip: geen nagebootste scharnieren
-        root, f0, f1 = clip_rig(objs, [o for o in sc.objects if o not in before])
+    if whole:  # eigen loopclip of vaste houding: geen nagebootste scharnieren
+        root, f0, f1 = clip_rig(objs, [o for o in sc.objects if o not in before], anim='clip' in m)
         rig = (root, root, {}, {}, -1, {'legs': {-1: [], 1: []}, 'arms': {-1: [], 1: []}, 'body': []})
     else:
         rig = build_rig(objs, R, m.get('body', ()))
@@ -332,7 +340,7 @@ def render_model(key, m):
         for (a, i) in frames:
             if 'clip' in m:
                 clip_pose(sc, a, i, f0, f1, m.get('idle', 0.25))
-            else:
+            elif not m.get('static'):
                 pose(rig, a, i, R)
             bpy.context.view_layer.update()
             # m['points']: punten op de romp (modelmaten), per beeld naar render-px; bv. 'hold' = waar het goed ligt
@@ -625,16 +633,17 @@ def render_animal(key, m):
     return os.path.relpath(jpath, ASSETS), file_hash(written)
 
 
-done, duels, animals = {}, {}, {}
-for k in KEYS:
-    if k in CFG['models']:
-        done[k] = render_model(k, CFG['models'][k])
-    elif k in CFG.get('duels', {}):
-        duels[k] = render_duel(k, CFG['duels'][k])
-    elif k in CFG.get('animals', {}):
-        animals[k] = render_animal(k, CFG['animals'][k])
-    else:
-        raise SystemExit(f'Onbekende sleutel {k}: niet in models, duels of animals van tools/sprites.json')
-if not TEST:
-    register(done, duels, animals)
-print('KLAAR', ', '.join(list(done) + list(duels) + list(animals)))
+if __name__ == '__main__':  # ook te importeren voor de hulpfuncties (tools/render_wieken.py)
+    done, duels, animals = {}, {}, {}
+    for k in KEYS:
+        if k in CFG['models']:
+            done[k] = render_model(k, CFG['models'][k])
+        elif k in CFG.get('duels', {}):
+            duels[k] = render_duel(k, CFG['duels'][k])
+        elif k in CFG.get('animals', {}):
+            animals[k] = render_animal(k, CFG['animals'][k])
+        else:
+            raise SystemExit(f'Onbekende sleutel {k}: niet in models, duels of animals van tools/sprites.json')
+    if not TEST:
+        register(done, duels, animals)
+    print('KLAAR', ', '.join(list(done) + list(duels) + list(animals)))

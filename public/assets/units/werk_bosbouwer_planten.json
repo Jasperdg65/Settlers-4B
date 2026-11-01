@@ -1,0 +1,303 @@
+{
+ "model": "bosbouwer_planten.glb",
+ "key": "werk_bosbouwer_planten",
+ "dirs": 8,
+ "dirNote": "0 = oost (schermrechts), met de klok mee per 45 graden; 2 = zuid (naar de kijker)",
+ "anims": {
+  "idle": 1
+ },
+ "refHeight": 2.05,
+ "sizes": [
+  {
+   "px": 24,
+   "file": "units/werk_bosbouwer_planten_24.webp",
+   "mask": "units/werk_bosbouwer_planten_24_mask.webp",
+   "w": 27,
+   "h": 248,
+   "frames": [
+    {
+     "anim": "idle",
+     "dir": 0,
+     "i": 0,
+     "x": 0,
+     "y": 0,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    },
+    {
+     "anim": "idle",
+     "dir": 1,
+     "i": 0,
+     "x": 0,
+     "y": 31,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    },
+    {
+     "anim": "idle",
+     "dir": 2,
+     "i": 0,
+     "x": 0,
+     "y": 62,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    },
+    {
+     "anim": "idle",
+     "dir": 3,
+     "i": 0,
+     "x": 0,
+     "y": 93,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    },
+    {
+     "anim": "idle",
+     "dir": 4,
+     "i": 0,
+     "x": 0,
+     "y": 124,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    },
+    {
+     "anim": "idle",
+     "dir": 5,
+     "i": 0,
+     "x": 0,
+     "y": 155,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    },
+    {
+     "anim": "idle",
+     "dir": 6,
+     "i": 0,
+     "x": 0,
+     "y": 186,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    },
+    {
+     "anim": "idle",
+     "dir": 7,
+     "i": 0,
+     "x": 0,
+     "y": 217,
+     "w": 27,
+     "h": 31,
+     "ax": 10.5,
+     "ay": 27.37
+    }
+   ]
+  },
+  {
+   "px": 48,
+   "file": "units/werk_bosbouwer_planten_48.webp",
+   "mask": "units/werk_bosbouwer_planten_48_mask.webp",
+   "w": 54,
+   "h": 496,
+   "frames": [
+    {
+     "anim": "idle",
+     "dir": 0,
+     "i": 0,
+     "x": 0,
+     "y": 0,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    },
+    {
+     "anim": "idle",
+     "dir": 1,
+     "i": 0,
+     "x": 0,
+     "y": 62,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    },
+    {
+     "anim": "idle",
+     "dir": 2,
+     "i": 0,
+     "x": 0,
+     "y": 124,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    },
+    {
+     "anim": "idle",
+     "dir": 3,
+     "i": 0,
+     "x": 0,
+     "y": 186,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    },
+    {
+     "anim": "idle",
+     "dir": 4,
+     "i": 0,
+     "x": 0,
+     "y": 248,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    },
+    {
+     "anim": "idle",
+     "dir": 5,
+     "i": 0,
+     "x": 0,
+     "y": 310,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    },
+    {
+     "anim": "idle",
+     "dir": 6,
+     "i": 0,
+     "x": 0,
+     "y": 372,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    },
+    {
+     "anim": "idle",
+     "dir": 7,
+     "i": 0,
+     "x": 0,
+     "y": 434,
+     "w": 54,
+     "h": 62,
+     "ax": 21.0,
+     "ay": 54.74
+    }
+   ]
+  },
+  {
+   "px": 96,
+   "file": "units/werk_bosbouwer_planten_96.webp",
+   "mask": "units/werk_bosbouwer_planten_96_mask.webp",
+   "w": 108,
+   "h": 992,
+   "frames": [
+    {
+     "anim": "idle",
+     "dir": 0,
+     "i": 0,
+     "x": 0,
+     "y": 0,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    },
+    {
+     "anim": "idle",
+     "dir": 1,
+     "i": 0,
+     "x": 0,
+     "y": 124,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    },
+    {
+     "anim": "idle",
+     "dir": 2,
+     "i": 0,
+     "x": 0,
+     "y": 248,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    },
+    {
+     "anim": "idle",
+     "dir": 3,
+     "i": 0,
+     "x": 0,
+     "y": 372,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    },
+    {
+     "anim": "idle",
+     "dir": 4,
+     "i": 0,
+     "x": 0,
+     "y": 496,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    },
+    {
+     "anim": "idle",
+     "dir": 5,
+     "i": 0,
+     "x": 0,
+     "y": 620,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    },
+    {
+     "anim": "idle",
+     "dir": 6,
+     "i": 0,
+     "x": 0,
+     "y": 744,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    },
+    {
+     "anim": "idle",
+     "dir": 7,
+     "i": 0,
+     "x": 0,
+     "y": 868,
+     "w": 108,
+     "h": 124,
+     "ax": 42.0,
+     "ay": 109.48
+    }
+   ]
+  }
+ ]
+}

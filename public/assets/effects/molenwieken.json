@@ -1,0 +1,23 @@
+{
+ "model": "molen_wieken.glb",
+ "key": "molenwieken",
+ "frames": 24,
+ "cols": 6,
+ "turn": 90.0,
+ "view": 6.2,
+ "radius": 2.875,
+ "sizes": [
+  {
+   "px": 64,
+   "file": "effects/molenwieken_64.webp"
+  },
+  {
+   "px": 128,
+   "file": "effects/molenwieken_128.webp"
+  },
+  {
+   "px": 256,
+   "file": "effects/molenwieken_256.webp"
+  }
+ ]
+}

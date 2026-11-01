@@ -165,3 +165,4 @@ tools/.render-tmp
 # offline 3D-bekijkpagina's (5–10 MB elk, met Three.js); blijven lokaal
 /bron/modellen/*_3D_openen.html
 /bron/modellen/THREE_LICENSE.txt
+__pycache__/

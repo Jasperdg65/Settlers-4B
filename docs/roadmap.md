@@ -30,8 +30,9 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 
 - De adviseur (klaar, 2026-11-01): regels in `CFG.advisor`, module `js/advisor.js`. Later: instellingen per account,
   meer regels (bijvoorbeeld harmonie, buren), een definitieve naam.
-- Vakmensen in 3D (klaar: 17 loopmodellen uit `bron/ambachten/`). Nog: werkhoudingen (`bron/modellen/`), een model
-  voor de dierenverzorger, en wat een vakman draagt op een vast punt in de hand.
+- Vakmensen in 3D (klaar: 17 loopmodellen uit `bron/ambachten/` en 11 werkhoudingen voor 8 beroepen uit `bron/modellen/`).
+  Nog: werkanimatie (de houdingen staan stil), een model voor de dierenverzorger, en wat een vakman draagt op een
+  vast punt in de hand.
 - Krachtpatsers selecteren en sturen in het eigen dorp (nu alleen in de Duel-test).
 - Helers en muzikanten in het dorp.
 - Sprite-atlas voor kolonisten en dieren (prestaties, zie [techniek/architectuur.md](techniek/architectuur.md)).

@@ -1,0 +1,104 @@
+{
+  "professions": 8,
+  "poses": [
+    {
+      "file": "houthakker_hakken.glb",
+      "equipment_file": "houthakker_hakken_gereedschap.glb",
+      "label": "Houthakker · boom hakken",
+      "profession": "houthakker",
+      "tool": "bijl",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "steenhouwer_slaan.glb",
+      "equipment_file": "steenhouwer_slaan_gereedschap.glb",
+      "label": "Steenhouwer · steen bewerken",
+      "profession": "steenhouwer",
+      "tool": "houweel",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "bosbouwer_graven.glb",
+      "equipment_file": "bosbouwer_graven_gereedschap.glb",
+      "label": "Bosbouwer · gat graven",
+      "profession": "bosbouwer",
+      "tool": "schop",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "bosbouwer_planten.glb",
+      "equipment_file": "bosbouwer_planten_gereedschap.glb",
+      "label": "Bosbouwer · boompje planten",
+      "profession": "bosbouwer",
+      "tool": "jong boompje",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "boer_maaien.glb",
+      "equipment_file": "boer_maaien_gereedschap.glb",
+      "label": "Boer · maaien",
+      "profession": "boer",
+      "tool": "zeis",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "boer_zaaien.glb",
+      "equipment_file": "boer_zaaien_gereedschap.glb",
+      "label": "Boer · zaaien",
+      "profession": "boer",
+      "tool": "zaaizak",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "tuinier_verzorgen.glb",
+      "equipment_file": "tuinier_verzorgen_gereedschap.glb",
+      "label": "Tuinier · water geven",
+      "profession": "tuinier",
+      "tool": "gieter",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "tuinier_oogsten.glb",
+      "equipment_file": "tuinier_oogsten_gereedschap.glb",
+      "label": "Tuinier · oogsten",
+      "profession": "tuinier",
+      "tool": "oogstmand",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "plukker_plukken.glb",
+      "equipment_file": "plukker_plukken_gereedschap.glb",
+      "label": "Plukker · bessen plukken",
+      "profession": "plukker",
+      "tool": "mand",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "graver_egaliseren.glb",
+      "equipment_file": "graver_egaliseren_gereedschap.glb",
+      "label": "Graver · grond egaliseren",
+      "profession": "graver",
+      "tool": "schop",
+      "tool_included": false,
+      "animated": false
+    },
+    {
+      "file": "bouwer_timmeren.glb",
+      "equipment_file": "bouwer_timmeren_gereedschap.glb",
+      "label": "Bouwer · timmeren",
+      "profession": "bouwer",
+      "tool": "hamer",
+      "tool_included": false,
+      "animated": false
+    }
+  ]
+}

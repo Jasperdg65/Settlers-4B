@@ -142,10 +142,15 @@ function draw(){
           ctx.fillStyle=gr;ctx.beginPath();ctx.arc(gx,gy,7*sc,0,6.283);ctx.fill();
           ctx.fillStyle=`rgba(255,${200+fl*40|0},120,${0.9*fl})`;ctx.beginPath();ctx.ellipse(gx,gy+0.6*sc,1.4*sc,0.9*sc,0,0,6.283);ctx.fill()}
         const hubP=cust?(s.hub?[bx-s.ax+s.hub[0]*s.w,by-s.ay+s.hub[1]*s.h,s.sail]:null):(bt.hub?[bx+bt.hub[0]*sc,by+bt.hub[1]*sc,sc]:null);
-        if(hubP){let sc=hubP[2];const hx=hubP[0],hy=hubP[1],ang=tNow*0.0011+b.seed*6;
+        if(hubP&&SAILS){const M=CFG.mill,side=M.arm*hubP[2]*SAILS.view/SAILS.radius,need=side*cam.z*(devicePixelRatio||1);
+          /* geschilderde wieken: draaistand uit het spriteblad (de standen beslaan een kwartslag), maat naar de zoom */
+          const z=SAILS.sizes.find(s=>s.px>=need)||SAILS.sizes[SAILS.sizes.length-1],q=SAILS.turn*Math.PI/180;
+          const f=Math.floor(((tNow*M.turn+b.seed*6)%q)/q*SAILS.frames)%SAILS.frames,p=z.px;
+          ctx.drawImage(z.c,(f%SAILS.cols)*p,(f/SAILS.cols|0)*p,p,p,hubP[0]-side/2,hubP[1]-side/2,side,side)}
+        else if(hubP){let sc=hubP[2];const hx=hubP[0],hy=hubP[1],ang=tNow*CFG.mill.turn+b.seed*6;
           ctx.save();ctx.translate(hx,hy);
           for(let k=0;k<4;k++){ctx.save();ctx.rotate(ang+k*Math.PI/2);
-            ctx.strokeStyle='#5e4128';ctx.lineWidth=0.7*sc;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-15*sc);ctx.stroke();
+            ctx.strokeStyle='#5e4128';ctx.lineWidth=0.7*sc;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-CFG.mill.arm*sc);ctx.stroke();
             ctx.fillStyle='rgba(240,232,212,.95)';ctx.fillRect(0.4*sc,-14.5*sc,3*sc,11*sc);
             ctx.strokeStyle='#7d5a38';ctx.lineWidth=0.3*sc;ctx.strokeRect(0.4*sc,-14.5*sc,3*sc,11*sc);
             for(let q=1;q<4;q++){ctx.beginPath();ctx.moveTo(0.4*sc,(-14.5+q*2.75)*sc);ctx.lineTo(3.4*sc,(-14.5+q*2.75)*sc);ctx.stroke()}
@@ -206,8 +211,10 @@ function draw(){
         if(!j||kp&&!S.lvl[k]){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);const d=S.d8[k];
           const r=drawUnit3D(c?CARRY3D.carry:CARRY3D.free,moving?'walk':'idle',d,animF+k,S.pl[k],ux,uy,zd);
           if(r){q='';if(c&&d!==6&&r.fr.pts){const h=r.fr.pts.hold;blit(carrySprite(c-1),ux+(h[0]-r.fr.ax)*r.k,uy+(h[1]-r.fr.ay)*r.k-1.2)}continue}}
-        /* vakman: 3D-model van zijn beroep; aan het werk (graven, kappen, …) staat hij stil tot er werkhoudingen zijn;
+        /* vakman: 3D-model van zijn beroep; aan het werk in zijn werkhouding (work3D), anders stil;
            wat hij naar huis brengt, draagt hij voor zijn borst */
+        const wm=j&&!kp?work3D(k,j):null;
+        if(wm&&drawUnit3D(wm,'idle',S.d8[k],0,S.pl[k],ux,uy,zd)){q='';continue}
         const jm=j&&!kp?job3D(j):null;
         if(jm){const walks=S.x[k]!==S.px[k]||S.y[k]!==S.py[k];if(walks)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);
           const r=drawUnit3D(jm,running&&walks?'walk':'idle',S.d8[k],animF+k,S.pl[k],ux,uy,zd);

@@ -1,0 +1,36 @@
+ACHT BEROEPEN - ELF STATISCHE WERKHOUDINGEN
+
+De hoofdmodellen bevatten GEEN gereedschap en GEEN grond of werkobject.
+Het spel kan het gereedschap zelf toevoegen. Elk model heeft twee lege nodes:
+GRIP_RIGHT en GRIP_LEFT, op de handposities, als startpunt voor bevestiging.
+De oriëntatie moet per gereedschap in de game worden ingesteld. De figuren
+hebben nog geen skeleton, skinning of werkanimaties; dit zijn statische poses.
+
+Houthakker: hakken. Steenhouwer: slaan. Bosbouwer: graven en planten.
+Boer: maaien en zaaien. Tuinier: water geven en oogsten.
+Plukker: plukken. Graver: egaliseren. Bouwer: timmeren.
+
+Elke <beroep>_<houding>.glb is uitsluitend het personage.
+Elke <beroep>_<houding>_gereedschap.glb is een losse optionele set van
+bijbehorende werktuigen of gedragen voorwerpen, inclusief boompje/mand.
+Die set staat al op de plaats van de werkhouding ten opzichte van de
+personage-oorsprong; het is geen object met de oorsprong bij het handvat.
+Voor socketgebruik: verschuif de oorsprong naar de gewenste GRIP-node.
+
+Open ambachten_3D_openen.html in een browser. Draai door te slepen en zoom
+met het muiswiel. Gereedschap staat standaard UIT; zet het aan ter controle.
+Download GLB slaat uitsluitend de geselecteerde werker met de gekozen
+spelerkleur op. De losse werktuigen zijn afzonderlijk aanwezig in deze map.
+TEAM_-materialen zijn voor spelerkleur; huid, vilt, broek en metaal apart.
+
+De PNGs tonen een voorbeeld met gereedschap en werkcontext en hebben een
+transparante achtergrond. Die context zit niet in de personage-GLBs.
+ambachten_bron.blend bevat alle werkers, los gereedschap en werkobjecten
+in afzonderlijke WERKER_, GEREEDSCHAP_ en WERKOBJECT_ verzamelroots.
+build_ambachten.py en worker_helpers.py zijn de reproduceerbare Blenderbron.
+
+TECHNIEK
+Blender 4.5; GLB glTF 2.0; Y omhoog, voorzijde +Z; hoogte circa 2 eenheden.
+Echte 3D-geometrie, geen platte afbeeldingen. Geen UV-texturen of LODs.
+Deze gedetailleerde bronmodellen zijn nog niet geoptimaliseerd voor grote
+menigten. De offline viewer bevat Three.js r160 (MIT), zie THREE_LICENSE.txt.

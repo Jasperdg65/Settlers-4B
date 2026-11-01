@@ -226,4 +226,7 @@ const CFG={
      elke every ms een nieuw pufje, frameMs per beeld, een volledig beeld w wereldpixels breed bij een getekend gebouw (geschilderde
      gebouwen: × breedte/refW). Zonder spriteblad: puffs cirkels per period ms. */
   smoke:{frameMs:90,every:480,w:28,alpha:0.95,puffs:3,period:2800,rise:16,circleAlpha:0.6,refW:40},
+  /* molenwieken (loop.js): arm = lengte van een wiek in wereldpixels bij schaal 1 (× sc of sail), turn = draaisnelheid in
+     radialen per ms (0.0011 = een omwenteling in ruim 5,7 s). Geschilderde wieken: assets/effects/molenwieken_*.webp. */
+  mill:{arm:15,turn:0.0011},
 };

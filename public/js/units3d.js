@@ -14,10 +14,24 @@ const CARRY3D={free:'drager_leeg',carry:'drager_kist'};
 /* vakmensen: model 'ambacht_<beroep>' (bron/ambachten, met een eigen loopclip). Die laden pas als zo'n vakman voor het eerst
    getekend wordt (samen ruim 10 MB); tot dan, en voor beroepen zonder model, blijft het getekende figuurtje. */
 const JOB3D_LOAD={};
-function job3D(job){
-  const key='ambacht_'+CFG.jobs[job].k;if(U3D[key])return key;
+function lazy3D(key){
+  if(U3D[key])return key;
   if(UNIT3D_IMGS[key]&&!JOB3D_LOAD[key])JOB3D_LOAD[key]=loadSheets({[key]:UNIT3D_IMGS[key]},U3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-vakman');
   return null;
+}
+const job3D=job=>lazy3D('ambacht_'+CFG.jobs[job].k);
+/* werkhoudingen (bron/modellen, vaste houding met gereedschap): model 'werk_<beroep>_<houding>' terwijl een vakman buiten
+   werkt (ST.GATHER) of op een bouwplaats (ST.WORK). Op een akker: 'oogst' als die rijp is, anders 'zaai'; een lijst = de
+   werktijd in gelijke stukken (de bosbouwer graaft eerst en plant dan). Beroepen zonder houding houden hun stilstand. */
+const WORK3D={houthakker:'hakken',steenhouwer:'slaan',bosbouwer:['graven','planten'],boer:{oogst:'maaien',zaai:'zaaien'},
+  tuinier:{oogst:'oogsten',zaai:'verzorgen'},plukker:'plukken',graver:'egaliseren',bouwer:'timmeren'};
+function work3D(k,job){
+  const st=S.st[k];if(st!==ST.GATHER&&st!==ST.WORK)return null;
+  const jk=CFG.jobs[job].k;let w=WORK3D[jk];if(!w)return null;
+  if(Array.isArray(w)){const b=world.blds[S.dst[k]],tot=b&&CFG.prod[b.type]?CFG.prod[b.type].work:1;
+    w=w[Math.min(w.length-1,Math.floor((1-S.wait[k]/tot)*w.length))]}
+  else if(typeof w==='object')w=world.obj[S.src[k]]===7?w.oogst:w.zaai;
+  return lazy3D('werk_'+jk+'_'+w);
 }
 /* duel-sprites (manifest.duels): per maat F[niveau links][niveau rechts][stand 1–9]; zelfde schaal als de poppetjes */
 async function loadSheets(imgs,out,index,what){
@@ -34,7 +48,7 @@ async function loadSheets(imgs,out,index,what){
 }
 const put3=(F,a,b,c,f)=>(((F[a]||(F[a]=[]))[b]||(F[a][b]=[]))[c]=f);
 async function loadUnits3D(){
-  const now=Object.fromEntries(Object.entries(UNIT3D_IMGS).filter(([k])=>!k.startsWith('ambacht_')));   // vakmensen: later (job3D)
+  const now=Object.fromEntries(Object.entries(UNIT3D_IMGS).filter(([k])=>!/^(ambacht|werk)_/.test(k)));   // vakmensen: later (lazy3D)
   await Promise.all([loadSheets(now,U3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-poppetje'),
     loadSheets(DUEL3D_IMGS,D3D,(F,f)=>put3(F,f.lvlL,f.lvlR,f.stand,f),'duel-sprite'),
     loadSheets(ANIMAL3D_IMGS,A3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-dier')]);

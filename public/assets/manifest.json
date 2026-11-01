@@ -607,6 +607,50 @@
         "ambacht_smid": {
             "json": "units/ambacht_smid.json",
             "v": "0f1e922eac"
+        },
+        "werk_houthakker_hakken": {
+            "json": "units/werk_houthakker_hakken.json",
+            "v": "698fdf9b2f"
+        },
+        "werk_steenhouwer_slaan": {
+            "json": "units/werk_steenhouwer_slaan.json",
+            "v": "00d08fb842"
+        },
+        "werk_bosbouwer_graven": {
+            "json": "units/werk_bosbouwer_graven.json",
+            "v": "32cc7a9efd"
+        },
+        "werk_bosbouwer_planten": {
+            "json": "units/werk_bosbouwer_planten.json",
+            "v": "81d34051ed"
+        },
+        "werk_boer_maaien": {
+            "json": "units/werk_boer_maaien.json",
+            "v": "c07d0d8ddf"
+        },
+        "werk_boer_zaaien": {
+            "json": "units/werk_boer_zaaien.json",
+            "v": "d8809b3a7c"
+        },
+        "werk_tuinier_verzorgen": {
+            "json": "units/werk_tuinier_verzorgen.json",
+            "v": "7c4bcfd880"
+        },
+        "werk_tuinier_oogsten": {
+            "json": "units/werk_tuinier_oogsten.json",
+            "v": "12058f7dab"
+        },
+        "werk_plukker_plukken": {
+            "json": "units/werk_plukker_plukken.json",
+            "v": "eca14da619"
+        },
+        "werk_graver_egaliseren": {
+            "json": "units/werk_graver_egaliseren.json",
+            "v": "4734c21565"
+        },
+        "werk_bouwer_timmeren": {
+            "json": "units/werk_bouwer_timmeren.json",
+            "v": "455e413aa1"
         }
     },
     "duels": {
@@ -696,6 +740,12 @@
             "w": 480,
             "h": 176,
             "v": "9abb4d3a"
+        }
+    },
+    "spinners": {
+        "molenwieken": {
+            "json": "effects/molenwieken.json",
+            "v": "1d9b3d07bf"
         }
     }
 }
