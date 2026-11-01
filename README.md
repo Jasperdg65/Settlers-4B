@@ -502,8 +502,10 @@ de tempel met de natuurgebeurtenissen.
 - De grens is altijd zichtbaar: een lijn in spelerkleur op de grond (onder bomen en gebouwen),
   iets naar binnen, zodat twee buren elk hun eigen lijn houden; ook op het minikaartje. Tooltip
   van een toren: bemand of onbemand; paneel Productie: "Wachttoren ×3 · 2 bemand · gebied 2.722 tegels".
-- Mijnen van het startdorp staan bij voorkeur binnen het gebied. Ligt het erts er niet, dan staat
-  de mijn net buiten de grens en werkt gewoon (in 12 testkaarten 24 van de 936 startgebouwen).
+- Mijnen van het startdorp staan bij voorkeur binnen het gebied, en altijd met erts binnen het
+  bereik van de mijnwerker (`CFG.prod[mijn].area`, dezelfde telling als `findOre`). Ligt het erts
+  niet binnen het gebied, dan staat de mijn buiten de grens; dragers komen er gewoon (routes kijken
+  niet naar gebied), dus voedsel en erts gaan heen en weer (in 12 testkaarten 28 van de 139 mijnen).
 
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 
