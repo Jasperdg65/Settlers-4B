@@ -1,5 +1,5 @@
 {
-  "_uitleg": "Instellingen voor tools/render_sprites.py. Maten in modeleenheden (Blender, z omhoog, voorkant naar -y). Zie README, kopje 3D-poppetjes.",
+  "_uitleg": "Instellingen voor tools/render_sprites.py. Maten in modeleenheden (Blender, z omhoog, voorkant naar -y). Zie docs/techniek/renderstraat.md. Een model met \"clip\" speelt zijn eigen loopclip af (geen nagebootste scharnieren).",
   "sizes": [24, 48, 96],
   "refHeight": 2.05,
   "supersample": 2,
@@ -51,6 +51,23 @@
     "drager_leeg": {"glb": "bron/modellen/drager.glb", "out": "units/drager_leeg", "anims": ["idle", "walk"], "hide": ["Cargo"],
       "rig": {"hip": 0.92, "shoulder": [0.36, 0.0, 1.43], "armRest": 52, "armSwing": 18}},
     "drager_kist": {"glb": "bron/modellen/drager.glb", "out": "units/drager_kist", "anims": ["idle", "walk"], "body": ["Cargo"], "hide": ["Cargo_sack"],
-      "rig": {"hip": 0.92, "shoulder": [0.36, 0.0, 1.43], "armSwing": 0}, "points": {"hold": [0.0, -0.55, 1.42]}}
+      "rig": {"hip": 0.92, "shoulder": [0.36, 0.0, 1.43], "armSwing": 0}, "points": {"hold": [0.0, -0.55, 1.42]}},
+    "ambacht_graver": {"glb": "bron/ambachten/modellen/graver_lopen.glb", "out": "units/ambacht_graver", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_bouwer": {"glb": "bron/ambachten/modellen/bouwer_lopen.glb", "out": "units/ambacht_bouwer", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_houthakker": {"glb": "bron/ambachten/modellen/houthakker_lopen.glb", "out": "units/ambacht_houthakker", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_bosbouwer": {"glb": "bron/ambachten/modellen/bosbouwer_lopen.glb", "out": "units/ambacht_bosbouwer", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_zager": {"glb": "bron/ambachten/modellen/zager_lopen.glb", "out": "units/ambacht_zager", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_steenhouwer": {"glb": "bron/ambachten/modellen/steenhouwer_lopen.glb", "out": "units/ambacht_steenhouwer", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_mijnwerker": {"glb": "bron/ambachten/modellen/mijnwerker_lopen.glb", "out": "units/ambacht_mijnwerker", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_boer": {"glb": "bron/ambachten/modellen/boer_lopen.glb", "out": "units/ambacht_boer", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_tuinier": {"glb": "bron/ambachten/modellen/tuinier_lopen.glb", "out": "units/ambacht_tuinier", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_plukker": {"glb": "bron/ambachten/modellen/plukker_lopen.glb", "out": "units/ambacht_plukker", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_waterhaler": {"glb": "bron/ambachten/modellen/waterhaler_lopen.glb", "out": "units/ambacht_waterhaler", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_kok": {"glb": "bron/ambachten/modellen/kok_lopen.glb", "out": "units/ambacht_kok", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_droger": {"glb": "bron/ambachten/modellen/droger_lopen.glb", "out": "units/ambacht_droger", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_molenaar": {"glb": "bron/ambachten/modellen/molenaar_lopen.glb", "out": "units/ambacht_molenaar", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_bakker": {"glb": "bron/ambachten/modellen/bakker_lopen.glb", "out": "units/ambacht_bakker", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_smelter": {"glb": "bron/ambachten/modellen/smelter_lopen.glb", "out": "units/ambacht_smelter", "anims": ["idle", "walk"], "clip": "Walk"},
+    "ambacht_smid": {"glb": "bron/ambachten/modellen/smid_lopen.glb", "out": "units/ambacht_smid", "anims": ["idle", "walk"], "clip": "Walk"}
   }
 }

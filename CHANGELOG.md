@@ -6,6 +6,8 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 ## 2026-11-01
 
 ### Toegevoegd
+- **Vakmensen in 3D**: 17 beroepen lopen met hun eigen 3D-figuur en loopclip (houthakker, boer, bakker, smid, …).
+- Bouwmenu: rechtsboven in elk vakje hoeveel je van dat gebouw hebt.
 - **Mijlpaal 7: harmonie.** Een meter van 0 tot 100 bovenaan het paneel Productie. Voederplaats (met
   dierenverzorger en graan), dierenweide (jonge dieren) en bloemenweide verhogen hem; een lege voederplaats en
   kaalslag verlagen hem. Gevolgen voor groei, nieuwe bewoners, duelkracht en dieren bij ertsaders.

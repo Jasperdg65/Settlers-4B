@@ -1,0 +1,66 @@
+TERRANA — LOOPMODELLEN V1 — 1 NOVEMBER 2026
+
+INHOUD
+17 echte 3D GLB-modellen met een ingebouwde Walk-loopclip.
+Per ambacht een transparante PNG en een JPG als voorbeeld.
+Een GIF toont de loopcyclus van de boer. De PNG/JPG zijn stilstaande previews,
+geen spritesheets en geen benodigde texturen. Kleuren zitten in de GLB.
+
+BESTAANDE ACHT
+Houthakker, steenhouwer, bosbouwer, boer, tuinier, plukker, graver, bouwer.
+Deze gebruiken ieder hun eigen aangeleverde model. Werkhoudingen zijn omgezet
+naar een losse loophouding. Oorspronkelijke bestanden zijn niet overschreven.
+Bij ambachten met meerdere werkhoudingen is één loopvariant gemaakt.
+
+NIEUWE NEGEN
+Molenaar, bakker, kok, smid, smelter, mijnwerker, zager, droger, waterhaler.
+Deze delen het lichaam en gezicht van de boer en hebben passende mutsen,
+hoeden en/of schorten. Het zijn varianten op dezelfde modulaire basis.
+Er zijn geen gereedschappen toegevoegd. GRIP_LEFT en GRIP_RIGHT blijven
+beschikbaar als bevestigingspunten en bewegen met de armen mee.
+
+VOOR DE SPEL-AI
+Formaat: glTF 2.0 binary (.glb), zelfstandig, geen losse textures nodig.
+Clipnaam: Walk. Duur: 1 seconde. Speel herhaald af tijdens verplaatsen.
+In-place: de clip verplaatst het model niet vooruit; de game bestuurt de positie.
+Voorzijde: +Z. Boven: +Y. Bronafmetingen behouden (hoogte ongeveer 2 eenheden).
+Probeer een loopsnelheid van circa 0,7 eenheid/seconde en stem deze af in game.
+Verander de afspeelsnelheid samen met de verplaatsingssnelheid om voetglijden
+te beperken. De voetbodem ligt op circa Y=0,005.
+
+Dit zijn animaties van rigide lichaamsdelen met schouder-, elleboog-, heup-
+en kniedraaipunten. Geen skinning of humanoid bottenrig. Een glTF-speler die
+node-transforms animeert kan de Walk-clip afspelen. Humanoid-retargeting en
+skelet-specifieke systemen werken niet zonder verdere rigging.
+
+Voor Three.js: laad met GLTFLoader, maak een AnimationMixer op gltf.scene,
+zoek de clip Walk in gltf.animations, start die en voer mixer.update(delta)
+iedere frame uit. De standaard LoopRepeat kan worden gebruikt.
+
+VALIDATIE
+Alle 17 bestanden zijn programmatisch gecontroleerd op bereikbaarheid van
+nodes, buffer- en meshverwijzingen, geldige animatiewaarden, naadloze begin-
+en eindstanden en voetposities. De animatie is in een lokaal gerenderde
+preview bekeken. Nog niet getest in jouw daadwerkelijke spelengine.
+Dit is een eerste set; afspeelsnelheid en eventuele kleine doorsnijdingen
+moeten in de uiteindelijke gamecamera worden beoordeeld.
+
+MAPINDELING
+modellen/: de 17 GLB-bestanden voor het spel.
+voorbeelden/: transparante PNG en JPG per ambacht, overzicht en loop-GIF.
+manifest.json: lijst van modellen en clipgegevens.
+validatie.json: resultaten van de uitgevoerde controles.
+broncode/: generators en previewrenderer voor verdere bewerking.
+
+REPRODUCEREN (OPTIONEEL)
+Vereist Python 3, numpy en Pillow. Voor de nette previewrenderer ook gcc.
+Plaats de oorspronkelijke GLB-bestanden in een map upload/ naast deze
+uitgepakte pakketmap. De broncode verwacht de 8 oorspronkelijke namen:
+houthakker_hakken.glb, steenhouwer_slaan.glb, bosbouwer_graven.glb,
+boer_maaien.glb, tuinier_oogsten.glb, plukker_plukken.glb,
+graver_egaliseren.glb, bouwer_timmeren.glb.
+Vanuit de pakketmap:
+python broncode/maak_loopanimatie.py ../upload/boer_maaien.glb broncode/boer_lopen.glb
+gcc -O2 -shared -fPIC broncode/raster.c -o broncode/raster.so -lm
+python broncode/maak_ambachten.py
+De generator zet modellen en previews in gegenereerd/.

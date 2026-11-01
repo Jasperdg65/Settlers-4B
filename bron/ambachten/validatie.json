@@ -1,0 +1,138 @@
+[
+  {
+    "file": "bakker_lopen.glb",
+    "nodes": 76,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "boer_lopen.glb",
+    "nodes": 74,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "bosbouwer_lopen.glb",
+    "nodes": 74,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "bouwer_lopen.glb",
+    "nodes": 76,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "droger_lopen.glb",
+    "nodes": 76,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "graver_lopen.glb",
+    "nodes": 73,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "houthakker_lopen.glb",
+    "nodes": 73,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "kok_lopen.glb",
+    "nodes": 77,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "mijnwerker_lopen.glb",
+    "nodes": 74,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "molenaar_lopen.glb",
+    "nodes": 76,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "plukker_lopen.glb",
+    "nodes": 75,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "smelter_lopen.glb",
+    "nodes": 77,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "smid_lopen.glb",
+    "nodes": 76,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "steenhouwer_lopen.glb",
+    "nodes": 76,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "tuinier_lopen.glb",
+    "nodes": 78,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "waterhaler_lopen.glb",
+    "nodes": 74,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  },
+  {
+    "file": "zager_lopen.glb",
+    "nodes": 76,
+    "channels": 8,
+    "duration": 1,
+    "minimum_foot_y": 0.005,
+    "checks": "passed"
+  }
+]

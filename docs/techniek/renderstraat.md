@@ -193,6 +193,18 @@ Wat het script doet (instellingen in `tools/sprites.json`):
 - `nice tools/blender/blender -b -P tools/render_sprites.py -- armdrukken` (~8 min);
   met `--test` alleen niveau 1 tegen 1, standen 1, 5 en 9.
 
+**Vakmensen met een eigen loopclip** (`ambacht_<beroep>` in `models`, `"clip": "Walk"`)
+
+- Bron: `bron/ambachten/modellen/<beroep>_lopen.glb` (17 beroepen, met LEESMIJ, voorbeelden en broncode). Rigide
+  onderdelen in een hiërarchie met een eigen clip Walk van 1 s (24 beelden), in-place, voorkant −y na import.
+- Met `clip` laat de renderstraat de hiërarchie heel (geen losse onderdelen, geen nagebootste scharnieren) en
+  speelt de clip af: `walk` = 8 beelden gelijk verdeeld over de clip, `idle` = het moment `idle` (standaard 0,25 van
+  de clip), waarop de voeten het dichtst bij elkaar staan.
+- Uitvoer zoals de andere poppetjes (`units/ambacht_<beroep>_<px>.webp` + masker + JSON), ~12 minuten per model.
+- In het spel (`job3D` in `js/units3d.js`): het model van `CFG.jobs[job].k`; geladen pas als zo'n vakman voor het eerst
+  getekend wordt (samen ruim 10 MB). Zonder model (dierenverzorger) blijft het getekende figuurtje. Werkhoudingen
+  (`bron/modellen/<beroep>_<houding>.glb`) zijn nog niet in gebruik: aan het werk staat de vakman stil.
+
 **Dieren** (`animals` en `animalRig` in `tools/sprites.json`)
 
 - Bron: `bron/modellen/build_dieren.py` (hert, konijn, vos, vogeltje; elk staand en rustend als losse

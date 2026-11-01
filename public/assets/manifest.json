@@ -539,6 +539,74 @@
         "muzikant_3": {
             "json": "units/muzikant_senior.json",
             "v": "fad17b0110"
+        },
+        "ambacht_graver": {
+            "json": "units/ambacht_graver.json",
+            "v": "72ecb4883f"
+        },
+        "ambacht_bouwer": {
+            "json": "units/ambacht_bouwer.json",
+            "v": "4645d4a309"
+        },
+        "ambacht_houthakker": {
+            "json": "units/ambacht_houthakker.json",
+            "v": "faf2ac7d72"
+        },
+        "ambacht_bosbouwer": {
+            "json": "units/ambacht_bosbouwer.json",
+            "v": "b1d0b472d1"
+        },
+        "ambacht_zager": {
+            "json": "units/ambacht_zager.json",
+            "v": "4898378341"
+        },
+        "ambacht_steenhouwer": {
+            "json": "units/ambacht_steenhouwer.json",
+            "v": "e7b88df75a"
+        },
+        "ambacht_mijnwerker": {
+            "json": "units/ambacht_mijnwerker.json",
+            "v": "53801db6f0"
+        },
+        "ambacht_boer": {
+            "json": "units/ambacht_boer.json",
+            "v": "a03a06cc5e"
+        },
+        "ambacht_tuinier": {
+            "json": "units/ambacht_tuinier.json",
+            "v": "986c3dde21"
+        },
+        "ambacht_plukker": {
+            "json": "units/ambacht_plukker.json",
+            "v": "b15c1a62bc"
+        },
+        "ambacht_waterhaler": {
+            "json": "units/ambacht_waterhaler.json",
+            "v": "f3ae448a54"
+        },
+        "ambacht_kok": {
+            "json": "units/ambacht_kok.json",
+            "v": "493f0531ce"
+        },
+        "ambacht_droger": {
+            "json": "units/ambacht_droger.json",
+            "v": "7d2bc9372b"
+        },
+        "ambacht_molenaar": {
+            "json": "units/ambacht_molenaar.json",
+            "v": "8673ffc902"
+        },
+        "ambacht_bakker": {
+            "json": "units/ambacht_bakker.json",
+            "v": "00b7fdc06e"
+        },
+        "ambacht_smelter": {
+            "json": "units/ambacht_smelter.json",
+            "v": "b3bac907d8"
+        },
+        "ambacht_smid": {
+            "json": "units/ambacht_smid.json",
+            "v": "0f1e922eac"
         }
     },
     "duels": {

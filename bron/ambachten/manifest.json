@@ -1,0 +1,96 @@
+{
+  "format": "glTF 2.0 binary",
+  "animation": "Walk",
+  "duration_seconds": 1,
+  "in_place": true,
+  "forward_axis": "+Z",
+  "up_axis": "+Y",
+  "rig": "rigid node hierarchy (no skinned skeleton)",
+  "professions": [
+    {
+      "id": "houthakker",
+      "name": "Houthakker",
+      "file": "houthakker_lopen.glb"
+    },
+    {
+      "id": "steenhouwer",
+      "name": "Steenhouwer",
+      "file": "steenhouwer_lopen.glb"
+    },
+    {
+      "id": "bosbouwer",
+      "name": "Bosbouwer",
+      "file": "bosbouwer_lopen.glb"
+    },
+    {
+      "id": "boer",
+      "name": "Boer",
+      "file": "boer_lopen.glb"
+    },
+    {
+      "id": "tuinier",
+      "name": "Tuinier",
+      "file": "tuinier_lopen.glb"
+    },
+    {
+      "id": "plukker",
+      "name": "Plukker",
+      "file": "plukker_lopen.glb"
+    },
+    {
+      "id": "graver",
+      "name": "Graver",
+      "file": "graver_lopen.glb"
+    },
+    {
+      "id": "bouwer",
+      "name": "Bouwer",
+      "file": "bouwer_lopen.glb"
+    },
+    {
+      "id": "molenaar",
+      "name": "Molenaar",
+      "file": "molenaar_lopen.glb"
+    },
+    {
+      "id": "bakker",
+      "name": "Bakker",
+      "file": "bakker_lopen.glb"
+    },
+    {
+      "id": "kok",
+      "name": "Kok",
+      "file": "kok_lopen.glb"
+    },
+    {
+      "id": "smid",
+      "name": "Smid",
+      "file": "smid_lopen.glb"
+    },
+    {
+      "id": "smelter",
+      "name": "Smelter",
+      "file": "smelter_lopen.glb"
+    },
+    {
+      "id": "mijnwerker",
+      "name": "Mijnwerker",
+      "file": "mijnwerker_lopen.glb"
+    },
+    {
+      "id": "zager",
+      "name": "Zager",
+      "file": "zager_lopen.glb"
+    },
+    {
+      "id": "droger",
+      "name": "Droger",
+      "file": "droger_lopen.glb"
+    },
+    {
+      "id": "waterhaler",
+      "name": "Waterhaler",
+      "file": "waterhaler_lopen.glb"
+    }
+  ]
+}

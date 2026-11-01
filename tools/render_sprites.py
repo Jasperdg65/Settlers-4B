@@ -168,6 +168,27 @@ def pose(rig, anim, i, R):
         arms[sword].rotation_euler.x = math.radians(R['fight'][i])
 
 
+def clip_rig(objs, new):
+    """model met een eigen loopclip (m['clip'], bv. de ambachten): de hiërarchie blijft heel, alles hangt onder Root"""
+    root = empty('Root', (0, 0, 0))
+    for o in new:
+        if o.parent is None:
+            attach(o, root)
+    acts = [o.animation_data.action for o in new if o.animation_data and o.animation_data.action]
+    if not acts:
+        raise SystemExit('geen animatie in het model')
+    f0 = min(a.frame_range[0] for a in acts)
+    f1 = max(a.frame_range[1] for a in acts)
+    return root, f0, f1
+
+
+def clip_pose(sc, anim, i, f0, f1, idle=0.25):
+    """walk: CFG.anims.walk beelden gelijk verdeeld over de clip (het laatste beeld = het eerste, dus niet meegenomen);
+    idle: het moment 'idle' (deel van de clip) waarop de voeten het dichtst bij elkaar staan"""
+    f = f0 + (f1 - f0) * (i / CFG['anims']['walk'] if anim == 'walk' else idle)
+    sc.frame_set(int(f), subframe=f - int(f))
+
+
 def set_dir(root, d):
     a = d * 360 / CFG['dirs']  # schermhoek, 0 = oost, met de klok mee (zuid = naar de kijker)
     root.rotation_euler = (0, 0, math.radians(90 - a))
@@ -288,9 +309,14 @@ def file_hash(paths):
 def render_model(key, m):
     check_disk()
     sc, cam, ppu, res = setup_scene()
-    objs = load_model(os.path.join(ROOT, m['glb']), m.get('hide', ()))
+    before = set(sc.objects)
+    objs = load_model(os.path.join(ROOT, m['glb']), m.get('hide', ()), keep_hierarchy='clip' in m)
     R = {**CFG['rig'], **m.get('rig', {})}  # eigen rig per model gaat voor de algemene
-    rig = build_rig(objs, R, m.get('body', ()))
+    if 'clip' in m:  # eigen loopclip: geen nagebootste scharnieren
+        root, f0, f1 = clip_rig(objs, [o for o in sc.objects if o not in before])
+        rig = (root, root, {}, {}, -1, {'legs': {-1: [], 1: []}, 'arms': {-1: [], 1: []}, 'body': []})
+    else:
+        rig = build_rig(objs, R, m.get('body', ()))
     orig, mask = prep_materials(objs)
     frames = [(a, i) for a in m['anims'] for i in range(CFG['anims'][a])]
     dirs = list(range(CFG['dirs']))
@@ -304,7 +330,10 @@ def render_model(key, m):
     for d in dirs:
         set_dir(rig[0], d)
         for (a, i) in frames:
-            pose(rig, a, i, R)
+            if 'clip' in m:
+                clip_pose(sc, a, i, f0, f1, m.get('idle', 0.25))
+            else:
+                pose(rig, a, i, R)
             bpy.context.view_layer.update()
             # m['points']: punten op de romp (modelmaten), per beeld naar render-px; bv. 'hold' = waar het goed ligt
             pts[d, a, i] = {k: (lambda v: (v.x * res, (1 - v.y) * res))(world_to_camera_view(sc, cam, rig[1].matrix_world @ Vector(p)))

@@ -11,6 +11,14 @@ const ROLE3D={0:['drager_leeg','drager_leeg','drager_leeg'],          // rol Dra
   4:['heler_1','heler_2','heler_3'],5:['muzikant_1','muzikant_2','muzikant_3']};   // heler en muzikant (fluit, harp, doedelzak)
 /* economie: vrije drager zonder kist, drager met een goed met kist (het goed zelf tekent loop.js op punt 'hold') */
 const CARRY3D={free:'drager_leeg',carry:'drager_kist'};
+/* vakmensen: model 'ambacht_<beroep>' (bron/ambachten, met een eigen loopclip). Die laden pas als zo'n vakman voor het eerst
+   getekend wordt (samen ruim 10 MB); tot dan, en voor beroepen zonder model, blijft het getekende figuurtje. */
+const JOB3D_LOAD={};
+function job3D(job){
+  const key='ambacht_'+CFG.jobs[job].k;if(U3D[key])return key;
+  if(UNIT3D_IMGS[key]&&!JOB3D_LOAD[key])JOB3D_LOAD[key]=loadSheets({[key]:UNIT3D_IMGS[key]},U3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-vakman');
+  return null;
+}
 /* duel-sprites (manifest.duels): per maat F[niveau links][niveau rechts][stand 1–9]; zelfde schaal als de poppetjes */
 async function loadSheets(imgs,out,index,what){
   await Promise.all(Object.entries(imgs).map(async([key,d])=>{try{
@@ -26,7 +34,8 @@ async function loadSheets(imgs,out,index,what){
 }
 const put3=(F,a,b,c,f)=>(((F[a]||(F[a]=[]))[b]||(F[a][b]=[]))[c]=f);
 async function loadUnits3D(){
-  await Promise.all([loadSheets(UNIT3D_IMGS,U3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-poppetje'),
+  const now=Object.fromEntries(Object.entries(UNIT3D_IMGS).filter(([k])=>!k.startsWith('ambacht_')));   // vakmensen: later (job3D)
+  await Promise.all([loadSheets(now,U3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-poppetje'),
     loadSheets(DUEL3D_IMGS,D3D,(F,f)=>put3(F,f.lvlL,f.lvlR,f.stand,f),'duel-sprite'),
     loadSheets(ANIMAL3D_IMGS,A3D,(F,f)=>put3(F,f.anim,f.dir,f.i,f),'3D-dier')]);
   if(Object.keys(U3D).length&&typeof buildGallery==='function'&&$('people').children.length)buildGallery();

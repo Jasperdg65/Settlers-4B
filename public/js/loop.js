@@ -206,6 +206,12 @@ function draw(){
         if(!j||kp&&!S.lvl[k]){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);const d=S.d8[k];
           const r=drawUnit3D(c?CARRY3D.carry:CARRY3D.free,moving?'walk':'idle',d,animF+k,S.pl[k],ux,uy,zd);
           if(r){q='';if(c&&d!==6&&r.fr.pts){const h=r.fr.pts.hold;blit(carrySprite(c-1),ux+(h[0]-r.fr.ax)*r.k,uy+(h[1]-r.fr.ay)*r.k-1.2)}continue}}
+        /* vakman: 3D-model van zijn beroep; aan het werk (graven, kappen, …) staat hij stil tot er werkhoudingen zijn;
+           wat hij naar huis brengt, draagt hij voor zijn borst */
+        const jm=j&&!kp?job3D(j):null;
+        if(jm){const walks=S.x[k]!==S.px[k]||S.y[k]!==S.py[k];if(walks)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);
+          const r=drawUnit3D(jm,running&&walks?'walk':'idle',S.d8[k],animF+k,S.pl[k],ux,uy,zd);
+          if(r){q='';if(c&&S.d8[k]!==6)blit(carrySprite(c-1),ux+(S.dir[k]?-2.6:2.6),uy-UNIT3D_H*0.42);continue}}
         if(c){blit(UNITC[1][S.vr[k]][S.pl[k]][fr],ux,uy);blit(carrySprite(c-1),ux+(S.dir[k]?-3.5:3.5),uy-7.9)}
         else blit(j&&!(kp&&!S.lvl[k])?jobSprite(j,S.vr[k],S.pl[k],fr):UNITC[0][S.vr[k]][S.pl[k]][fr],ux,uy)}
       else{const m3=ROLE3D[S.role[k]];
