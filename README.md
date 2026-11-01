@@ -330,10 +330,10 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 9 | Computerburen met een eigen dorp: zelfde regels en economie als de speler, in een Web Worker, met karakter | later |
 | 10 | Handel: marktplaats, handelaar met handkar of bootje, ruilvenster, ruilverhouding volgens schaarste | later |
 | 11 | Diplomatie: relatieniveau en geheugen per buur, geschenken, afspraken, samen mediteren, feesten en feesttoernooien, vrede met vaste grenzen | later |
-| 12 | Hoofddoel: Tempel van Vrede en Welvaart op neutraal terrein (bouwfasen, bijdrage per speler, gezamenlijke winst; modus "vrij spel" zonder tempel) en natuurgebeurtenissen: droogte, strenge winter, overstroming | later |
+| 12 | Hoofddoel: Tuin van verbondenheid op neutraal terrein (bouwfasen, bijdrage per speler, gezamenlijke winst; modus "vrij spel" zonder tuin) en natuurgebeurtenissen: droogte, strenge winter, overstroming | later |
 
 Bouwvolgorde na de economie (mijlpaal 5–7): eerst computerburen, dan handel, dan diplomatie, dan
-de tempel met de natuurgebeurtenissen.
+de Tuin van verbondenheid met de natuurgebeurtenissen.
 
 **Ontwerpnotitie: speelvorm solo tegen computerburen (nog niet bouwen)**
 
@@ -346,7 +346,7 @@ de tempel met de natuurgebeurtenissen.
   korte, leesbare uitleg voor de speler ("We hebben veel steen over maar komen brood tekort").
 - **Geheugen** per buur: eerlijk handelen, nagekomen afspraken en hulp bij natuurrampen verbeteren
   de relatie; een gebroken afspraak verslechtert hem een tijd.
-- Bijdrage aan de tempel naar vermogen en karakter.
+- Bijdrage aan de Tuin van verbondenheid naar vermogen en karakter.
 - De startrelaties verschillen; sommige buren moeten gewonnen worden.
 - **Moeilijkheidsgraad**: hoe zelfstandig de buren zijn en hoe snel ze vertrouwen geven.
 
@@ -372,10 +372,15 @@ de tempel met de natuurgebeurtenissen.
 
 **Ontwerpnotitie: hoofddoel en samenspel (nog niet bouwen)**
 
-- Hoofddoel: de spelers bouwen samen een **Tempel van Vrede en Welvaart** op neutraal terrein.
-  De bouw gaat in fasen (fundering, zuilen, dak, versiering), elk met een eigen goederenmix. De
-  bijdrage per speler is zichtbaar; als de tempel af is, winnen alle spelers samen.
-- Optionele modus **vrij spel**: hetzelfde spel zonder tempeldoel.
+- Hoofddoel: de spelers bouwen samen de **Tuin van verbondenheid** op neutraal terrein.
+  De bouw gaat in fasen (bijvoorbeeld fundering en terrassen, trappen en vijvers, paviljoens,
+  beplanting en de olijfboom in de handen), elk met een eigen goederenmix. De bijdrage per speler
+  is zichtbaar; als de tuin af is, winnen alle spelers samen.
+- Beeld: `bron/Tuin van verbondenheid.png` (nog niet in het manifest). Op een rond terrassenplein
+  staat een olijfboom die door twee stenen handen wordt gedragen, met vijvers en paviljoens. De
+  vier trappen hebben de kleuren van de vier spelers (rood, blauw, geel, groen). Idee: elke speler
+  bouwt zijn eigen trap en kwart, zodat je zijn bijdrage op de kaart ziet.
+- Optionele modus **vrij spel**: hetzelfde spel zonder de tuin als doel.
 - Kaartgenerator: een schuif **onderlinge afhankelijkheid** verdeelt grondstoffen bewust ongelijk
   over de spelers (de een heeft veel steen, de ander ijzer of vruchtbare grond), zodat handel nodig is.
 - **Handel**: een marktplaats met een handelaar die met een handkar over land of met een bootje over
@@ -389,15 +394,15 @@ de tempel met de natuurgebeurtenissen.
 
 **Wat het hoofddoel vraagt van de opbouw** (houden we nu al rekening mee)
 
-- Spelmodus als wereldinstelling (`world.goal`: tempel of vrij), gekozen bij het genereren; de
-  tempel is een eigen gebouwtype dat niemand bezit (`b.p` = neutraal) en dat alleen op
+- Spelmodus als wereldinstelling (`world.goal`: tuin of vrij), gekozen bij het genereren; de
+  tuin is een eigen gebouwtype dat niemand bezit (`b.p` = neutraal) en dat alleen op
   neutraal terrein kan staan.
 - Kaartgenerator: neutraal terrein in het midden of tussen de startplekken (in `world.own` een
   eigen waarde, nooit te claimen); de grondstofverdeling per startplek komt uit een instelling
   `interdep` (0 = eerlijk, 1 = sterk ongelijk) die de ertsaders, steen, bos en vruchtbare grond
   per speler weegt. Deterministisch uit de seed.
-- Tempel: per fase een lijst goederen en aantallen in de config (`CFG.temple`), en per speler
-  per goed wat hij heeft gebracht (`temple.gave[p][goed]`). Dragers brengen goederen erheen
+- Tuin: per fase een lijst goederen en aantallen in de config (`CFG.tuin`), en per speler
+  per goed wat hij heeft gebracht (`tuin.gave[p][goed]`). Dragers brengen goederen erheen
   zoals naar een bouwplaats; de planner kent het als vraag.
 - Relaties als matrix `world.rel[p][q]` (getal met drempels voor de niveaus uit de config), met
   bijdragen per bron (handel, geschenk, meditatie, feest, toernooi, geschil), net als de
