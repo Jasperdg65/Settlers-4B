@@ -586,5 +586,48 @@
             "fy": 1.0107,
             "v": "9f79ea43"
         }
+    },
+    "ui": {
+        "adviseur_tevreden": {
+            "src": "adviseur/Adviseur tevreden.png",
+            "file": "ui/adviseur/hoofd_tevreden",
+            "px": 176,
+            "kader": "adviseur",
+            "w": 176,
+            "h": 168,
+            "v": "0cf89a80"
+        },
+        "adviseur_bezorgd": {
+            "src": "adviseur/Adviseur bezorgd.png",
+            "file": "ui/adviseur/hoofd_bezorgd",
+            "px": 176,
+            "kader": "adviseur",
+            "w": 176,
+            "h": 168,
+            "v": "e81447be"
+        },
+        "adviseur_nadenkend": {
+            "src": "adviseur/Adviseur nadenkend.png",
+            "file": "ui/adviseur/hoofd_nadenkend",
+            "px": 176,
+            "kader": "adviseur",
+            "w": 176,
+            "h": 168,
+            "v": "69f2b79a"
+        },
+        "adviseur_rol": {
+            "src": "adviseur/Adviseur perkament.png",
+            "file": "ui/adviseur/rol",
+            "px": 480,
+            "slice": [
+                19.7,
+                8.8,
+                23.3,
+                9.3
+            ],
+            "w": 480,
+            "h": 176,
+            "v": "9abb4d3a"
+        }
     }
 }

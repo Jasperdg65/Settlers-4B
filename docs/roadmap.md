@@ -28,6 +28,8 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 
 ## Daarnaast
 
+- De adviseur (klaar, 2026-11-01): regels in `CFG.advisor`, module `js/advisor.js`. Later: instellingen per account,
+  meer regels (bijvoorbeeld harmonie, buren), een definitieve naam.
 - 3D-ambachtsmodellen (houthakker, steenhouwer, bosbouwer, boer, tuinier, plukker, graver, bouwer;
   `bron/modellen/`) in het spel, met werkhoudingen; daarna de schermafbeeldingen opnieuw.
 - Krachtpatsers selecteren en sturen in het eigen dorp (nu alleen in de Duel-test).

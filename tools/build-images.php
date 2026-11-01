@@ -11,6 +11,10 @@
 // anker (ax, ay in pixels van een bron-cel) overal gelijk blijft, en geschaald naar px breed per beeld.
 // In het manifest komen fw, fh (beeldmaat in het blad), sw (bijgesneden breedte / celbreedte) en
 // fx, fy (anker als fractie van het bijgesneden beeld).
+// Interface (ui, bv. de adviseur): src in bron/<map>/, bijgesneden op de zichtbare pixels en geschreven als
+// <file>_1x.webp (px breed) en <file>_2x.webp (2 × px). Regels met dezelfde 'kader' krijgen hetzelfde
+// bijsnijkader (de vereniging van wat zichtbaar is), zodat ze bij het wisselen niet verspringen.
+// In het manifest komen w, h (maat van 1x) en v.
 // Gebouwen en natuur worden bijgesneden op de zichtbare inhoud (alfa boven
 // de drempel). Texturen (naadloos) worden vierkant geschaald naar px×px
 // zonder bijsnijden, met behoud van de naadloze randen.
@@ -114,6 +118,54 @@ foreach (['buildings', 'nature', 'textures'] as $group) {
     }
     unset($d);
 }
+
+$manifest['ui'] ??= [];
+$visible = function (Imagick $img) use ($alpha) {   // [x0, y0, x1, y1] van de zichtbare pixels
+    $m = clone $img;
+    $m->separateImageChannel(Imagick::CHANNEL_ALPHA);
+    $m->thresholdImage($alpha / 255 * Imagick::getQuantum());
+    $m->trimImage(0);
+    $g = $m->getImagePage();
+    return [$g['x'], $g['y'], $g['x'] + $m->getImageWidth(), $g['y'] + $m->getImageHeight()];
+};
+$frames = [];   // kader per groep
+foreach ($manifest['ui'] as $key => $d) {
+    if (empty($d['kader']) || !is_file("$root/bron/" . $d['src'])) continue;
+    $b = $visible(new Imagick("$root/bron/" . $d['src']));
+    $f = $frames[$d['kader']] ?? $b;
+    $frames[$d['kader']] = [min($f[0], $b[0]), min($f[1], $b[1]), max($f[2], $b[2]), max($f[3], $b[3])];
+}
+foreach ($manifest['ui'] as $key => &$d) {
+    if ($only && !in_array($key, $only, true)) continue;
+    $src = "$root/bron/" . $d['src'];
+    if (!is_file($src)) { echo "$key: bron ontbreekt ($src)\n"; $errors++; continue; }
+    $img = new Imagick($src);
+    $img->setImageAlphaChannel(Imagick::ALPHACHANNEL_ACTIVATE);
+    [$x0, $y0, $x1, $y1] = !empty($d['kader']) ? $frames[$d['kader']] : $visible($img);
+    $img->cropImage($x1 - $x0, $y1 - $y0, $x0, $y0);
+    $img->setImagePage(0, 0, 0, 0);
+    $hash = '';
+    foreach ([1, 2] as $k) {
+        $c = clone $img;
+        $c->resizeImage($d['px'] * $k, 0, Imagick::FILTER_LANCZOS, 1);
+        $c->setImageFormat('webp');
+        $c->setImageCompressionQuality((int) ($opt['quality'] ?? 82));
+        $c->setOption('webp:alpha-quality', '100');
+        $c->setOption('webp:method', '6');
+        $blob = $c->getImageBlob();
+        $hash .= md5($blob);
+        printf("%-20s %-28s kader %dx%d+%d+%d -> %dx%d (%dx) %6d B\n", $key, basename($src), $x1 - $x0, $y1 - $y0, $x0, $y0, $c->getImageWidth(), $c->getImageHeight(), $k, strlen($blob));
+        if ($k === 1) { $w1 = $c->getImageWidth(); $h1 = $c->getImageHeight(); }
+        if (!$opt['dry-run']) {
+            $dest = "$out/" . $d['file'] . "_{$k}x.webp";
+            @mkdir(dirname($dest), 0775, true);
+            file_put_contents($dest, $blob);
+        }
+    }
+    if (!$opt['dry-run'] && !$opt['out']) { $d['w'] = $w1; $d['h'] = $h1; $d['v'] = substr(md5($hash), 0, 8); }
+    $done++;
+}
+unset($d);
 
 $manifest['effects'] ??= [];
 foreach ($manifest['effects'] as $key => &$d) {

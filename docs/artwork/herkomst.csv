@@ -54,6 +54,10 @@ bron/Woonhuis.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
 bron/Zand.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
 bron/gras.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
 bron/kolonie-fase1.html,referentie (eerste spelversie),,2026-10-30,,,
+bron/adviseur/Adviseur bezorgd.png,"adviseur (2D, hoofd)",,,,,staat alleen op de server (.gitignore); transparante achtergrond; uitdrukking: bezorgd
+bron/adviseur/Adviseur nadenkend.png,"adviseur (2D, hoofd)",,,,,staat alleen op de server (.gitignore); transparante achtergrond; uitdrukking: nadenkend
+bron/adviseur/Adviseur perkament.png,"adviseur (2D, rol)",,,,,staat alleen op de server (.gitignore); transparante achtergrond; 9-slice rol voor border-image
+bron/adviseur/Adviseur tevreden.png,"adviseur (2D, hoofd)",,,,,staat alleen op de server (.gitignore); transparante achtergrond; uitdrukking: tevreden
 bron/modellen/LEESMIJ.txt,documentatie,,2026-10-31,,,
 bron/modellen/LEESMIJ_dieren.txt,documentatie,,2026-10-31,,,
 bron/modellen/THREE_LICENSE.txt,documentatie,,,,,niet in git
@@ -312,6 +316,14 @@ public/assets/textures/grass.webp,grondtextuur (webp),tools/build-images.php (Im
 public/assets/textures/rock.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Rotsgrond.png
 public/assets/textures/sand.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Zand.png
 public/assets/textures/shallow.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Ondiepwater.png
+public/assets/ui/adviseur/hoofd_bezorgd_1x.webp,"interface (webp, 1x)",tools/build-images.php (Imagick),,,"bijgesneden op het gezamenlijke kader van de drie hoofden, 176 px breed, WebP q82",bron: bron/adviseur/Adviseur bezorgd.png
+public/assets/ui/adviseur/hoofd_bezorgd_2x.webp,"interface (webp, 2x)",tools/build-images.php (Imagick),,,"bijgesneden op het gezamenlijke kader van de drie hoofden, 352 px breed, WebP q82",bron: bron/adviseur/Adviseur bezorgd.png
+public/assets/ui/adviseur/hoofd_nadenkend_1x.webp,"interface (webp, 1x)",tools/build-images.php (Imagick),,,"bijgesneden op het gezamenlijke kader van de drie hoofden, 176 px breed, WebP q82",bron: bron/adviseur/Adviseur nadenkend.png
+public/assets/ui/adviseur/hoofd_nadenkend_2x.webp,"interface (webp, 2x)",tools/build-images.php (Imagick),,,"bijgesneden op het gezamenlijke kader van de drie hoofden, 352 px breed, WebP q82",bron: bron/adviseur/Adviseur nadenkend.png
+public/assets/ui/adviseur/hoofd_tevreden_1x.webp,"interface (webp, 1x)",tools/build-images.php (Imagick),,,"bijgesneden op het gezamenlijke kader van de drie hoofden, 176 px breed, WebP q82",bron: bron/adviseur/Adviseur tevreden.png
+public/assets/ui/adviseur/hoofd_tevreden_2x.webp,"interface (webp, 2x)",tools/build-images.php (Imagick),,,"bijgesneden op het gezamenlijke kader van de drie hoofden, 352 px breed, WebP q82",bron: bron/adviseur/Adviseur tevreden.png
+public/assets/ui/adviseur/rol_1x.webp,"interface (webp, 1x)",tools/build-images.php (Imagick),,,"bijgesneden op zichtbare pixels, 480 px breed, WebP q82",bron: bron/adviseur/Adviseur perkament.png
+public/assets/ui/adviseur/rol_2x.webp,"interface (webp, 2x)",tools/build-images.php (Imagick),,,"bijgesneden op zichtbare pixels, 960 px breed, WebP q82",bron: bron/adviseur/Adviseur perkament.png
 public/assets/units/armdrukken.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
 public/assets/units/armdrukken_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
 public/assets/units/armdrukken_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken

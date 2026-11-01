@@ -5,7 +5,7 @@
   Nederlands komt op `/handleiding/`, een andere taal op `/handleiding/<taal>/`.
 - `maak.js [taal ...]`: maakt de pagina('s). Opmaakcodes in `bron.html`:
   - `{{uitdrukking}}`: waarde uit het spel, bijvoorbeeld `{{CFG.prod.zagerij.ticks}}`. Hulpjes:
-    `sec(ticks)` (“8 seconden”), `naam(gebouw)`, `goed(sleutel)`, `kosten(gebouw)`, `getal(n)`, `lijst([...])`.
+    `sec(ticks)` (“8 seconden”), `naam(gebouw)`, `goed(sleutel)`, `kosten(gebouw)`, `getal(n)`, `lijst([...])`, `tekst(sleutel)` (tekst uit `public/lang/<taal>.js`, bv. `tekst('adv.naam')`).
   - `<!--gen:soort args-->`: `kosten <gebouwen>`, `keten <gebouwen>` (SVG-schema), `startvoorraad`, `beroepen`,
     `dorp`, `gebouwen`, `goederen`.
   - `<!--shot:naam|bijschrift-->`: `img/<taal>/naam.jpg` uit `schermen.js`.

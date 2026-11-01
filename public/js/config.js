@@ -181,6 +181,23 @@ const CFG={
      dus verbruikt); ze vraagt hoogstens hall.stock van elk stuk tegelijk. Rekruten zijn vrije dragers (carry.keepFree blijven over). */
   army:{crew:{wachttoren:2},startCrew:1,train:800,upTicks:1200,up:{2:{helm:1},3:{schild:1,polsband:1}},
     hall:{keep:2,keeps:[0,2,4,8],stock:2}},
+  /* de adviseur (advisor.js): één advies tegelijk, hoogste prio eerst; showSec = hoe lang een advies hoogstens blijft staan.
+     Per regel: soort (tip, waarschuwing, belangrijk, compliment), cool = afkoeltijd in seconden voordat dezelfde regel weer mag,
+     wait = hoe lang de voorwaarde al moet gelden (s), min = drempel; expr (tevreden, bezorgd, nadenkend) alleen als die afwijkt
+     van de soort. "Alleen belangrijk" toont alleen de soort belangrijk. Complimenten komen één keer per wereld. */
+  advisor:{showSec:45,prio:{compliment:1,tip:1,waarschuwing:2,belangrijk:3},
+    expr:{tip:'nadenkend',waarschuwing:'bezorgd',belangrijk:'bezorgd',compliment:'tevreden'},
+    rules:{
+      voedselOp:{soort:'belangrijk',cool:180},
+      materiaal:{soort:'belangrijk',cool:180},
+      gereedschap:{soort:'waarschuwing',cool:180},
+      voedselLaag:{soort:'waarschuwing',cool:300,min:6},
+      mijnLeeg:{soort:'waarschuwing',cool:300},
+      vakman:{soort:'tip',cool:180,wait:60},
+      dragers:{soort:'tip',cool:300,wait:30},
+      torenLeeg:{soort:'tip',cool:240,wait:60},
+      houtketen:{soort:'compliment'},brood:{soort:'compliment'},toren:{soort:'compliment'},
+    }},
   /* zichtbare grens: lijn in spelerkleur, inset = afstand tot de tegelrand (in tegels), breedte in beeldpunten op het scherm */
   border:{inset:0.14,width:2.2,minWidth:0.6,alpha:0.9},
   unloadWarnTicks:1200,   // na zoveel ticks (1 minuut) vraagt herladen of sluiten om bevestiging (ui.js)

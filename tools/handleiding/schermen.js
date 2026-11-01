@@ -1,5 +1,5 @@
 /* Schermafbeeldingen voor de handleiding uit het echte spel, in vaste scènes (vaste seed, vaste ticks, vaste camera),
-   zodat ze na elke wijziging opnieuw te maken zijn:  node tools/handleiding/schermen.js [--taal=nl] [scène ...]
+   zodat ze na elke wijziging opnieuw te maken zijn (de adviseur staat uit, behalve in zijn eigen scène):  node tools/handleiding/schermen.js [--taal=nl] [scène ...]
    Het spel draait in de gekozen taal (?lang=), dus tooltips en panelen staan in die taal.
    Schrijft public/handleiding/img/<taal>/<scène>.jpg en de goederen-icoontjes public/handleiding/img/goed/<goed>.png. */
 const fs=require('fs'),path=require('path');
@@ -30,7 +30,9 @@ window.HB={
     return best},
   geladen(){return Object.values(CUSTOM).filter(c=>c.spr).length>=Object.keys(DEFAULT_IMGS).length&&Object.keys(DEFAULT_IMGS).length>0},
   goederen(){return GOODS.map((g,i)=>[g.k,goodSprite(i,4).c.toDataURL('image/png')])},
-};1`;
+  /* de adviseur staat uit in alle scènes behalve zijn eigen (niet bewaard: alleen ADV.opt in het geheugen) */
+  stil(){ADV.opt.mode='uit';advHide();return 1},
+};HB.stil();1`;
 
 async function main(){
   const kies=ARG.filter(a=>!a.startsWith('--'));fs.mkdirSync(path.join(OUT,'goed'),{recursive:true});fs.mkdirSync(SHOT,{recursive:true});
@@ -88,6 +90,15 @@ async function main(){
     const mi=await ev("(()=>{const b=world.blds.find(b=>b.p===0&&b.type==='ijzermijn')||world.blds.find(b=>b.p===0&&/mijn$/.test(b.type));return [b.x,b.y]})()");
     await ev(`showOres=true;$('ores').checked=true;HB.cam(${mi[0]},${mi[1]},1.6);1`);await weg();await foto('ertsen',await kaart(900,560));
     await ev("showOres=false;$('ores').checked=false;1");
+
+    /* 7b. de adviseur: verder spelen tot hij een waarschuwing geeft; uitsnede rechtsonder in het speelveld */
+    if(!kies.length||kies.includes('adviseur')){
+      const k=await ev(`(()=>{ADV.opt.mode='alles';const s=world.starts[0];HB.cam(s.cx+3,s.cy+2,1.3);
+        for(let n=0;n<900;n++){for(let k=0;k<20;k++)tick();advisorTick();if(ADV.cur&&CFG.advisor.rules[ADV.cur.k].soort==='waarschuwing')return ADV.cur.k}return null})()`);
+      if(k){await weg();const [l,t,W,H]=await ev('HB.canvas()');await foto('adviseur',[Math.round(l+W-820),Math.round(t+H-470),820,470])}
+      else console.log('   adviseur: geen waarschuwing gevonden');
+      await ev('HB.stil()');
+    }
 
     /* 8. de hele wereld van bovenaf (grondvlakken worden een paar per beeld gemaakt: even wachten) */
     if(!kies.length||kies.includes('wereld')){await ev(`HB.cam(world.W/2,world.H/2,0.21);1`);await weg();await sleep(9000);await foto('wereld',await kaart(1000,620))}

@@ -33,6 +33,7 @@ public/                 webroot (Apache-alias /settlers4b)
     input.js            overzichtskaart, muis, toetsen
     assets.js           laadt assets/manifest.json
     textures.js         grondtexturen: loadTextures(), renderTexTiles()
+    advisor.js          de adviseur: adviesregels (CFG.advisor), rol en hoofd rechtsonder, instellingen
     custom.js           geschilderde sprites laden, galerij en werkbank
     ui.js               bediening en opstarten
   assets/

@@ -47,6 +47,14 @@ schoorsteenopening) gelijk blijft, en schaalt ze naar `px` breed. Het zet zelf `
 In het spel start elke `CFG.smoke.every` ms een nieuw pufje met `frameMs` per beeld; lukt
 het laden niet, dan blijven de getekende cirkels.
 
+Interface (`ui`, nu de adviseur): bron in `bron/adviseur/`, uitvoer `<file>_1x.webp` (`px` breed) en
+`<file>_2x.webp`. Regels met dezelfde `kader` (de drie hoofden) worden op één gezamenlijk kader bijgesneden,
+zodat het hoofd bij het wisselen van uitdrukking niet verspringt. De rol (`adviseur_rol`) is een 9-slice voor
+CSS `border-image`: `slice` (boven, rechts, onder, links, in procenten van het beeld) houdt de vier hoeken
+met de krullen vast, de randen en het midden rekken mee met de tekst. Procenten gelden voor 1x en 2x gelijk;
+de randbreedtes in `kolonie.css` zijn slice × maat van de 1x-rol (480 × 176). Het spel zet `?v=` uit het
+manifest achter elke url (de map `assets/` wordt een jaar gecachet).
+
 **Bewerkte webp's:** bij burcht, kazerne en wachttoren zijn de rode wimpels
 uit de webp geknipt (het spel tekent de vlag zelf in spelerkleur). Ze hebben
 daarom `keep` en worden niet opnieuw uit `bron/` gemaakt. Lever je een nieuwe

@@ -36,7 +36,8 @@ function maakTaal(taal){
   const VILLAGE=SP.get('VILLAGE');
   TX=require(path.join(__dirname,taal,'teksten.js'))({CFG,naam,goed,lijst,getal});
   const KOMT=[];
-  const helpers={CFG,GOODS,GI,BTYPES,naam,goed,lijst,getal,VILLAGE,sec:TX.sec,kosten:TX.kosten,meer:TX.meer};
+  const tekst=k=>SP.get('t')(k);   // een tekst uit public/lang/<taal>.js, bv. tekst('adv.naam')
+  const helpers={CFG,GOODS,GI,BTYPES,naam,goed,lijst,getal,VILLAGE,tekst,sec:TX.sec,kosten:TX.kosten,meer:TX.meer};
   const reken=e=>Function(...Object.keys(helpers),'return ('+e+')')(...Object.values(helpers));
   const bldImg=t=>manifest.buildings[t]?`../assets/buildings/${t}.webp`:null;
   const bldPic=t=>{const s=bldImg(t);return s?`<img src="${s}" alt="${esc(naam(t))}" loading="lazy">`:''};

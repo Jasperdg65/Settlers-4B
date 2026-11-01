@@ -29,6 +29,8 @@ beslissing in het spel of de README kwam); de beslissing zelf kan iets eerder ge
 | 2026-11-01 | Rook alleen uit bakkerij, gaarkeuken en smelterijen, en alleen terwijl ze werken. Geschilderde rookwolkjes in plaats van cirkels. | Verwarming is bij hardwerkende gebouwen niet nodig; rook laat zien dat een gebouw werkt. |
 | 2026-11-01 | Krachtpatsers komen uit de krachthal en bemannen de torens (de tijdelijke wachter vervalt). Niveau 2 met een helm, niveau 3 met schild en polsband; de krachthal houdt een instelbare reserve aan. | Mijlpaal 6c. De getallen (2 per toren, reserve 2, 40 s opleiden, 60 s trainen) zijn een eerste voorstel. |
 | 2026-11-01 | Projectdossier in `docs/` (Markdown, in git, niet via het web bereikbaar); de README verwijst ernaar. | Ontwerp, beslissingen en planning op één vaste plek, los van de technische README. |
+| 2026-11-01 | **De adviseur** ("Meester Wout", naam voorlopig): één advies tegelijk, belangrijkste eerst, met afkoeltijd; drie uitdrukkingen (bezorgd bij waarschuwingen, nadenkend bij tips, tevreden bij complimenten); instelbaar (alles, alleen belangrijk, uit, en per soort "niet meer tonen"), nu bewaard in de browser. | Spelers helpen zonder te betuttelen; wat hij zegt, volgt uit de regels in de config, zodat het spel en zijn adviezen niet uit elkaar lopen. |
+| 2026-11-01 | De adviseur maakt geen geluid. | Nog niet gevraagd; een belletje kan later, met een eigen instelling. |
 
 **Opmerking bij de niveauregel:** in eerdere notities stond voor de krachtpatser ook "kale helm,
 helm met piek, hanenkam in spelerkleur", en in de opdracht voor de handleiding "kale helm, piek,

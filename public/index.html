@@ -90,6 +90,13 @@
   </section>
 
   <section class="eco-only">
+    <h2 data-t="adv.titel"></h2>
+    <label><span data-t="adv.stand"></span><select id="advMode"><option value="alles" data-t="adv.alles"></option><option value="belangrijk" data-t="adv.belangrijk"></option><option value="uit" data-t="adv.uit"></option></select></label>
+    <p class="note" id="advMuted"></p>
+    <div class="btns"><button id="advUnmute" data-t="adv.weer" hidden></button></div>
+  </section>
+
+  <section class="eco-only">
     <h2>Voorraad en productie</h2>
     <label>Speler<select id="stockPl"></select></label>
     <h3>Productie</h3>
@@ -121,6 +128,15 @@
   <canvas id="view"></canvas>
   <div id="tip" hidden></div>
   <div class="hint" id="hint">Slepen om te schuiven · scrollen of +/− om te zoomen · WASD/pijltjes</div>
+  <div id="adviseur" class="adviseur" role="status" aria-live="polite" hidden>
+    <div class="adv-rol">
+      <b class="adv-naam"></b>
+      <p class="adv-tekst"></p>
+      <div class="adv-knoppen"><button class="adv-toon" data-t="adv.toon"></button><button class="adv-boek" data-t="adv.boek"></button><button class="adv-ok" data-t="adv.ok"></button></div>
+      <button class="adv-stil" data-t="adv.stil"></button>
+    </div>
+    <div class="adv-hoofd"><img data-expr="nadenkend" alt=""><img data-expr="bezorgd" alt=""><img data-expr="tevreden" alt=""></div>
+  </div>
   <div class="zoom"><button id="zin" aria-label="Inzoomen">+</button><button id="zout" aria-label="Uitzoomen">−</button></div>
 </main>
 
@@ -151,6 +167,7 @@
 <script src="js/assets.js"></script>
 <script src="js/textures.js"></script>
 <script src="js/custom.js"></script>
+<script src="js/advisor.js"></script>
 <script src="js/ui.js"></script>
 </body>
 </html>

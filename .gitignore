@@ -1,5 +1,6 @@
 # Originele PNG's: groot, staan alleen op de server
 /bron/*.png
+/bron/adviseur/*.png
 
 # Database en echte config
 /data/*
