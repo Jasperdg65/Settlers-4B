@@ -266,10 +266,6 @@
             "w": 62,
             "ax": 0.5,
             "ay": 0.9,
-            "smoke": [
-                0.679,
-                0.035
-            ],
             "src": "Bonenakker.png",
             "px": 400
         },
@@ -278,10 +274,6 @@
             "w": 62,
             "ax": 0.5,
             "ay": 0.9,
-            "smoke": [
-                0.66,
-                0.03
-            ],
             "src": "Plukkershut.png",
             "px": 400
         }
@@ -587,6 +579,24 @@
         "eend": {
             "json": "dieren/eend.json",
             "v": "d580c2cd11"
+        }
+    },
+    "effects": {
+        "rook": {
+            "src": "rook/rook_spriteblad.png",
+            "file": "effects/rook.webp",
+            "cols": 4,
+            "rows": 4,
+            "cell": 256,
+            "px": 96,
+            "ax": 128,
+            "ay": 230,
+            "fw": 96,
+            "fh": 117,
+            "sw": 0.6016,
+            "fx": 0.3506,
+            "fy": 1.0107,
+            "v": "9f79ea43"
         }
     }
 }

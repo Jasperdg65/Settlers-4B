@@ -1,0 +1,162 @@
+{
+  "image": "rook_spriteblad.png",
+  "columns": 4,
+  "rows": 4,
+  "frame_size": [
+    256,
+    256
+  ],
+  "duration_ms": 1440,
+  "order": "row-major",
+  "anchor_normalized": [
+    0.5,
+    0.9
+  ],
+  "note": "Speel 1 t/m 16. Voor continue rook: start iedere 480 ms een nieuwe instantie; maximaal 3 overlappende pufjes.",
+  "frames": [
+    {
+      "index": 0,
+      "file": "rook_01.png",
+      "x": 0,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 1,
+      "file": "rook_02.png",
+      "x": 256,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 2,
+      "file": "rook_03.png",
+      "x": 512,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 3,
+      "file": "rook_04.png",
+      "x": 768,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 4,
+      "file": "rook_05.png",
+      "x": 0,
+      "y": 256,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 5,
+      "file": "rook_06.png",
+      "x": 256,
+      "y": 256,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 6,
+      "file": "rook_07.png",
+      "x": 512,
+      "y": 256,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 7,
+      "file": "rook_08.png",
+      "x": 768,
+      "y": 256,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 8,
+      "file": "rook_09.png",
+      "x": 0,
+      "y": 512,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 9,
+      "file": "rook_10.png",
+      "x": 256,
+      "y": 512,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 10,
+      "file": "rook_11.png",
+      "x": 512,
+      "y": 512,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 11,
+      "file": "rook_12.png",
+      "x": 768,
+      "y": 512,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 12,
+      "file": "rook_13.png",
+      "x": 0,
+      "y": 768,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 13,
+      "file": "rook_14.png",
+      "x": 256,
+      "y": 768,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 14,
+      "file": "rook_15.png",
+      "x": 512,
+      "y": 768,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    },
+    {
+      "index": 15,
+      "file": "rook_16.png",
+      "x": 768,
+      "y": 768,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 90
+    }
+  ]
+}

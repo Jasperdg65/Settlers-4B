@@ -183,7 +183,7 @@ const BTYPES={
   wapensmid:{name:t('bld.wapensmid'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#e6d6b4',roof:'slate',timber:true});chimney(g,5.4,-16,5);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<4;k++)line(g,[9+k*1.3,0.4,9.4+k*1.3,-6],'#c8c8c4',0.5)}},
-  boerderij:{name:t('bld.boerderij'),fp:[-2,2,-2,0],sc:1.7,box:[52,34,30,29],smoke:[6.2,-18],draw:(g)=>{
+  boerderij:{name:t('bld.boerderij'),fp:[-2,2,-2,0],sc:1.7,box:[52,34,30,29],draw:(g)=>{
     ground(g,22,11);wheat(g,-27,-12,1.6,5);
     line(g,[-22,-2.5,-22,-8.6],'#6b4a2b',0.5);line(g,[-23.6,-7,-20.4,-7],'#6b4a2b',0.5);circ(g,-22,-9.4,0.9,'#d9b06a');poly(g,[-23.4,-9.6,-20.6,-9.6,-22,-10.8],'#8a5a34');
     poly(g,[-21.6,-7.2,-20.2,-7.2,-20.6,-4,-22,-4],'#7d4b3a');

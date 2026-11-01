@@ -1,0 +1,22 @@
+ROOK UIT DE SCHOORSTEEN
+
+16 losse PNG-beelden van 256 x 256 px met transparantie.
+rook_spriteblad.png bevat dezelfde beelden als 4 x 4 raster, 1024 x 1024 px.
+Volgorde: links naar rechts, daarna de volgende rij; rook_01 t/m rook_16.
+Alle frames hebben gelijk formaat: houd dezelfde positie en schaal aan.
+Speel circa 90 ms per beeld af (totale duur 1,44 seconde).
+Voor doorlopende rook: start elke 480 ms een nieuwe instantie op dezelfde
+schoorsteenpositie. Drie overlappende pufjes geven een doorlopende stroom.
+
+Het bevestigingspunt van het beeld is x=128, y=230 pixels (linksboven = 0,0).
+Plaats dit punt boven de schoorsteenopening. Schaal het hele beeld bijvoorbeeld
+naar 32-48 wereldpixels breed en stem dit af op het gebouw. Het zichtbare
+wolklichaam is veel smaller dan het volledige transparante frame.
+Gewone alpha-over blending; geen additive blend. Geen grondschaduw.
+Gebruik de alfawaarden uit de PNG ook voor het uitfaden.
+
+Open rook_voorbeeld.html voor een offline afspeelvoorbeeld. Dit gebruikt
+exact dezelfde PNG-frames, achtergronden en afspeelsnelheid zijn instelbaar.
+rook_animatie.json bevat celposities, volgorde, duur en een ankeradvies.
+De frames zijn een gestileerde beeldreeks; timing en plaatsing in de engine
+kun je verder op het formaat van jouw gebouwen afstellen.

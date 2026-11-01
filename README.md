@@ -90,7 +90,7 @@ Een regel in het manifest:
 | `w` (gebouwen) / `h` (natuur) | breedte/hoogte op de kaart in spel-eenheden |
 | `ax`, `ay` | ankerpunt als fractie van breedte/hoogte (voet van het gebouw/de boom) |
 | `flag`, `hub`, `sail` | vlagpositie, molenas en wiekgrootte (fracties van het beeld) |
-| `smoke` | schoorsteentop (fractie van het beeld); rook volgens `CFG.smoke`: werkplaatsen alleen tijdens een batch, woningen en hutten af en toe |
+| `smoke` | schoorsteentop (fractie van het beeld); rook volgens `CFG.smoke`: werkplaatsen alleen tijdens een batch, woningen af en toe. Alleen bij gebouwen die stoken: niet bij veldwerk (akkers, moestuin, droogschuur, plukkershut) en kleine buitenhuisjes (houthakker, bosbouwer, steenhouwer) |
 | `src` | bron-PNG in `bron/` |
 | `px` | doelmaat bij genereren: breedte in pixels (gebouwen) of hoogte (natuur) |
 | `v` | inhoudshash; wordt door `build-images.php` gezet, voor cache-busting |
@@ -98,6 +98,14 @@ Een regel in het manifest:
 
 Texturen (`textures`) hebben alleen `file`, `src`, `px` (512) en `v`. De
 sleutels deep, shallow, sand, grass, rock en aarde (paden) zijn alle zes nodig.
+
+Effecten (`effects`) zijn spritebladen. `rook` komt uit `bron/rook/rook_spriteblad.png`
+(4 × 4 beelden van 256 px, met LEESMIJ en afspeelvoorbeeld): `build-images.php` snijdt alle
+beelden op hetzelfde kader bij, zodat het anker (`ax`, `ay` in bronpixels, boven de
+schoorsteenopening) gelijk blijft, en schaalt ze naar `px` breed. Het zet zelf `fw`, `fh`
+(beeldmaat in het blad), `sw` (bijgesneden breedte / celbreedte) en `fx`, `fy` (anker als fractie).
+In het spel start elke `CFG.smoke.every` ms een nieuw pufje met `frameMs` per beeld; lukt
+het laden niet, dan blijven de getekende cirkels.
 
 **Bewerkte webp's:** bij burcht, kazerne en wachttoren zijn de rode wimpels
 uit de webp geknipt (het spel tekent de vlag zelf in spelerkleur). Ze hebben

@@ -6,6 +6,11 @@
 //   px   doelmaat in pixels: breedte voor gebouwen (standaard 420),
 //        hoogte voor natuur (standaard 4× h)
 //   keep handmatig bewerkte webp (bv. wimpel eruit geknipt): wordt overgeslagen
+// Effecten (effects, bv. rook): src is een spriteblad (cols × rows cellen van cell px) in bron/<map>/.
+// Alle cellen worden op hetzelfde kader bijgesneden (de vereniging van wat zichtbaar is), zodat het
+// anker (ax, ay in pixels van een bron-cel) overal gelijk blijft, en geschaald naar px breed per beeld.
+// In het manifest komen fw, fh (beeldmaat in het blad), sw (bijgesneden breedte / celbreedte) en
+// fx, fy (anker als fractie van het bijgesneden beeld).
 // Gebouwen en natuur worden bijgesneden op de zichtbare inhoud (alfa boven
 // de drempel). Texturen (naadloos) worden vierkant geschaald naar px×px
 // zonder bijsnijden, met behoud van de naadloze randen.
@@ -40,7 +45,8 @@ $done = 0;
 $skipped = 0;
 $errors = 0;
 foreach (['buildings', 'nature', 'textures'] as $group) {
-    foreach ($manifest[$group] ?? [] as $key => &$d) {
+    $manifest[$group] ??= [];   // ?? [] in de foreach zelf zou een kopie geven: dan komt v nooit in het manifest
+    foreach ($manifest[$group] as $key => &$d) {
         if ($only && !in_array($key, $only, true)) continue;
         if (!empty($d['keep']) && !$opt['force']) {
             echo "$key: overgeslagen ({$d['keep']}; --force om toch te maken)\n";
@@ -108,6 +114,58 @@ foreach (['buildings', 'nature', 'textures'] as $group) {
     }
     unset($d);
 }
+
+$manifest['effects'] ??= [];
+foreach ($manifest['effects'] as $key => &$d) {
+    if ($only && !in_array($key, $only, true)) continue;
+    $src = "$root/bron/" . $d['src'];
+    if (!is_file($src)) { echo "$key: bron ontbreekt ($src)\n"; $errors++; continue; }
+    $sheet = new Imagick($src);
+    $sheet->setImageAlphaChannel(Imagick::ALPHACHANNEL_ACTIVATE);
+    [$cols, $rows, $cell, $px] = [$d['cols'], $d['rows'], $d['cell'], $d['px']];
+    $x0 = $y0 = $cell; $x1 = $y1 = 0;
+    for ($i = 0; $i < $cols * $rows; $i++) {
+        $c = clone $sheet;
+        $c->cropImage($cell, $cell, ($i % $cols) * $cell, intdiv($i, $cols) * $cell);
+        $c->setImagePage(0, 0, 0, 0);
+        $c->separateImageChannel(Imagick::CHANNEL_ALPHA);
+        $c->thresholdImage($alpha / 255 * Imagick::getQuantum());
+        $c->trimImage(0);
+        $g = $c->getImagePage();
+        if ($c->getImageWidth() < 2) continue;   // leeg beeld
+        $x0 = min($x0, $g['x']); $y0 = min($y0, $g['y']);
+        $x1 = max($x1, $g['x'] + $c->getImageWidth()); $y1 = max($y1, $g['y'] + $c->getImageHeight());
+    }
+    $cw = $x1 - $x0; $ch = $y1 - $y0;
+    $fw = $px; $fh = (int) round($ch * $px / $cw);
+    $out_img = new Imagick();
+    $out_img->newImage($fw * $cols, $fh * $rows, 'transparent');
+    for ($i = 0; $i < $cols * $rows; $i++) {
+        $c = clone $sheet;
+        $c->cropImage($cw, $ch, ($i % $cols) * $cell + $x0, intdiv($i, $cols) * $cell + $y0);
+        $c->setImagePage(0, 0, 0, 0);
+        $c->resizeImage($fw, $fh, Imagick::FILTER_LANCZOS, 1);
+        $out_img->compositeImage($c, Imagick::COMPOSITE_COPY, ($i % $cols) * $fw, intdiv($i, $cols) * $fh);
+    }
+    $out_img->setImageFormat('webp');
+    $out_img->setImageCompressionQuality((int) ($opt['quality'] ?? 80));
+    $out_img->setOption('webp:alpha-quality', '100');
+    $out_img->setOption('webp:method', '6');
+    $blob = $out_img->getImageBlob();
+    printf("%-12s %-22s kader %dx%d+%d+%d -> %dx%d per beeld %6d B\n", $key, basename($src), $cw, $ch, $x0, $y0, $fw, $fh, strlen($blob));
+    if (!$opt['dry-run']) {
+        $dest = "$out/" . $d['file'];
+        @mkdir(dirname($dest), 0775, true);
+        file_put_contents($dest, $blob);
+        if (!$opt['out']) {
+            $d['fw'] = $fw; $d['fh'] = $fh; $d['sw'] = round($cw / $cell, 4);
+            $d['fx'] = round(($d['ax'] - $x0) / $cw, 4); $d['fy'] = round(($d['ay'] - $y0) / $ch, 4);
+            $d['v'] = substr(md5($blob), 0, 8);
+        }
+    }
+    $done++;
+}
+unset($d);
 
 if (!$opt['dry-run'] && !$opt['out'] && $done) {
     file_put_contents($manifestFile, json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
