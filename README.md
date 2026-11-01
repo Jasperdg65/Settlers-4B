@@ -331,6 +331,7 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 10 | Handel: marktplaats, handelaar met handkar of bootje, ruilvenster, ruilverhouding volgens schaarste | later |
 | 11 | Diplomatie: relatieniveau en geheugen per buur, geschenken, afspraken, samen mediteren, feesten en feesttoernooien, vrede met vaste grenzen | later |
 | 12 | Hoofddoel: Tuin van verbondenheid op neutraal terrein (bouwfasen, bijdrage per speler, gezamenlijke winst; modus "vrij spel" zonder tuin) en natuurgebeurtenissen: droogte, strenge winter, overstroming | later |
+| 13 | Opslaan en laden van de hele wereld (automatisch en handmatig, ook als bestand), pas als het spel bijna klaar is; tot die tijd vraagt de browser om bevestiging bij herladen of sluiten | later |
 
 Bouwvolgorde na de economie (mijlpaal 5–7): eerst computerburen, dan handel, dan diplomatie, dan
 de Tuin van verbondenheid met de natuurgebeurtenissen.
