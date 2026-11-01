@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kolonie – handleiding</title>
+<meta name="description" content="Handleiding van Kolonie: een vreedzaam bouwspel over samenwerking, zorg en harmonie.">
+<!-- gemaakt door tools/handleiding/maak.js uit tools/handleiding/bron.html; niet met de hand bewerken -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,500;0,700;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="handleiding.css?v=1793515327">
+</head>
+<body>
+<header class="kop">
+  <a class="merk" href="#welkom"><img src="../favicon.svg" alt="Kolonie" width="28" height="28"><span>Kolonie</span><small>handleiding</small></a>
+  <div class="zoek" role="search">
+    <input id="zoek" type="search" placeholder="Zoeken in de handleiding…  ( / )" autocomplete="off" aria-label="Zoeken in de handleiding">
+    <ol id="treffers" class="treffers" hidden></ol>
+  </div>
+  <a class="knop" href="kolonie-handleiding.pdf" download>PDF</a>
+  <a class="knop" href="../">Naar het spel</a>
+</header>
+
+<div class="opzet">
+  <nav class="inhoud" aria-label="Inhoudsopgave">
+    <details open><summary>Inhoud</summary><ol class="toc"><li><a href="#welkom-in-kolonie">Welkom in Kolonie</a><ol><li><a href="#wat-voor-spel-is-dit">Wat voor spel is dit?</a></li><li><a href="#waarin-kolonie-anders-is">Waarin Kolonie anders is</a></li><li><a href="#hoe-ver-is-het-spel">Hoe ver is het spel?</a></li><li><a href="#zo-gebruik-je-deze-handleiding">Zo gebruik je deze handleiding</a></li></ol></li><li><a href="#eerste-stappen">Eerste stappen</a><ol><li><a href="#een-wereld-maken">Een wereld maken</a></li><li><a href="#rondkijken">Rondkijken</a></li><li><a href="#kijken-wat-er-gebeurt">Kijken wat er gebeurt</a></li><li><a href="#bouwen">Bouwen</a></li><li><a href="#je-eerste-houtketen">Je eerste houtketen</a></li></ol></li><li><a href="#je-dorp">Je dorp</a></li><li><a href="#grondstoffen-en-ketens">Grondstoffen en ketens</a></li><li><a href="#natuur-en-dieren">Natuur en dieren</a></li><li><a href="#harmonie-komt-eraan">Harmonie</a></li><li><a href="#school-en-hunnebed-komt-eraan">School en hunnebed</a></li><li><a href="#krachtpatsers-en-muzikanten">Krachtpatsers en muzikanten</a></li><li><a href="#buren-komt-eraan">Buren</a></li><li><a href="#de-tuin-van-verbondenheid">De Tuin van Verbondenheid</a></li><li><a href="#de-kaartgenerator">De kaartgenerator</a></li><li><a href="#toetsen-en-tips">Toetsen en tips</a></li><li class="bijl"><a href="#alle-gebouwen" data-letter="A">Alle gebouwen</a></li><li class="bijl"><a href="#alle-goederen" data-letter="B">Alle goederen</a></li></ol></details>
+  </nav>
+
+  <main id="tekst">
+    <section class="voorblad">
+      <img class="scherm voorblad-beeld" src="../assets/buildings/burcht.webp" alt="De burcht"><img loading="lazy" class="druk voorblad-beeld" src="img/druk/burcht.jpg" alt="De burcht">
+      <h1>Kolonie</h1>
+      <p class="ondertitel">Handleiding voor vreedzame bouwers</p>
+      <p class="versie">Bijgewerkt op 1 november 2026</p>
+    </section>
+    <section class="drukinhoud"><h2 class="geen-toc">Inhoud</h2><ol class="toc"><li><a href="#welkom-in-kolonie">Welkom in Kolonie</a><ol><li><a href="#wat-voor-spel-is-dit">Wat voor spel is dit?</a></li><li><a href="#waarin-kolonie-anders-is">Waarin Kolonie anders is</a></li><li><a href="#hoe-ver-is-het-spel">Hoe ver is het spel?</a></li><li><a href="#zo-gebruik-je-deze-handleiding">Zo gebruik je deze handleiding</a></li></ol></li><li><a href="#eerste-stappen">Eerste stappen</a><ol><li><a href="#een-wereld-maken">Een wereld maken</a></li><li><a href="#rondkijken">Rondkijken</a></li><li><a href="#kijken-wat-er-gebeurt">Kijken wat er gebeurt</a></li><li><a href="#bouwen">Bouwen</a></li><li><a href="#je-eerste-houtketen">Je eerste houtketen</a></li></ol></li><li><a href="#je-dorp">Je dorp</a></li><li><a href="#grondstoffen-en-ketens">Grondstoffen en ketens</a></li><li><a href="#natuur-en-dieren">Natuur en dieren</a></li><li><a href="#harmonie-komt-eraan">Harmonie</a></li><li><a href="#school-en-hunnebed-komt-eraan">School en hunnebed</a></li><li><a href="#krachtpatsers-en-muzikanten">Krachtpatsers en muzikanten</a></li><li><a href="#buren-komt-eraan">Buren</a></li><li><a href="#de-tuin-van-verbondenheid">De Tuin van Verbondenheid</a></li><li><a href="#de-kaartgenerator">De kaartgenerator</a></li><li><a href="#toetsen-en-tips">Toetsen en tips</a></li><li class="bijl"><a href="#alle-gebouwen" data-letter="A">Alle gebouwen</a></li><li class="bijl"><a href="#alle-goederen" data-letter="B">Alle goederen</a></li></ol></section>
+<!-- Bron van de handleiding. Na wijzigen: node tools/handleiding/maak.js (zie tools/handleiding/LEESMIJ.md). -->
+
+<section class="hoofdstuk" id="welkom">
+<h2 id="welkom-in-kolonie">Welkom in Kolonie</h2>
+
+<img class="scherm vignet" src="../assets/buildings/woonhuis.webp" alt="Woonhuis"><img loading="lazy" class="druk vignet" src="img/druk/woonhuis.jpg" alt="Woonhuis">
+<p class="intro">Na een lange tocht zet een klein volk zijn karren neer op een groene heuvel. Er is een bos, een beek, een paar rotsen vol steen, en verderop wonen buren die net als jij een nieuw begin zoeken. Niemand hier wil veroveren. Iedereen wil wonen, werken, eten, en het liefst een beetje plezier maken.</p>
+
+<p>Dat is Kolonie: een bouwspel over samenwerking, zorg en harmonie. Je begint met een burcht, een klein startdorp en 40 kolonisten. Van daaruit groeit je dorp tot een levendige gemeenschap die hout zaagt, brood bakt, gereedschap smeedt en met de buren en de natuur samenleeft.</p>
+
+<p>Het grote doel deel je met iedereen op de kaart: samen leggen jullie de <b>Tuin van Verbondenheid</b> aan, een terrassentuin met vijvers, paviljoens en in het midden een olijfboom die door twee stenen handen wordt gedragen. Elke speler bouwt zijn eigen trap naar het midden. Is de tuin af, dan heeft iedereen gewonnen. <span class="komt" title="De Tuin van Verbondenheid als gezamenlijk einddoel (mijlpaal 12)">Komt eraan</span></p>
+
+<figure class="shot"><a href="img/dorp.jpg" target="_blank" title="Groot bekijken"><img src="img/dorp.jpg?v=1793515211" alt="Een startdorp na een paar minuten: rond de burcht wonen en werken de eerste kolonisten. De rode stippellijn is de grens van je gebied." loading="lazy"></a><figcaption>Een startdorp na een paar minuten: rond de burcht wonen en werken de eerste kolonisten. De rode stippellijn is de grens van je gebied.</figcaption></figure>
+
+<h3 id="wat-voor-spel-is-dit">Wat voor spel is dit?</h3>
+<p>Kolonie is een rustig bouw- en economiespel. Jij beslist <i>wat</i> er gebouwd wordt en <i>waar</i>; je bewoners zoeken zelf uit <i>wie</i> wat doet. Dragers brengen planken naar bouwplaatsen, een houthakker gaat het bos in zodra hij een bijl heeft, en een bakker begint pas te bakken als er meel en water bij zijn deur liggen. Je hoeft dus niet elke kolonist aan het handje te nemen. Je zorgt voor de juiste gebouwen op de juiste plek en kijkt hoe het dorp tot leven komt.</p>
+<p>Je bewoners zijn harde werkers, maar geen gedachtelezers: zonder zagerij geen planken, zonder smidse geen nieuwe bijlen. Een groot deel van het plezier zit in het uitpuzzelen van zulke ketens. Daar helpt deze handleiding bij.</p>
+
+<h3 id="waarin-kolonie-anders-is">Waarin Kolonie anders is</h3>
+<ul>
+  <li><b>Geen oorlog.</b> Onenigheid wordt beslecht met armpje drukken. Wie verliest, gaat even uitrusten bij de heler en doet daarna gewoon weer mee. Er valt niemand.</li>
+  <li><b>Een plantaardige wereld.</b> Je volk eet brood, stoofpot van peulvruchten en groente, en een fruit-notenmix. Dieren zijn hier buren, geen voorraad: de herten grazen rustig tussen je huizen en de konijnen huppelen gewoon door.</li>
+  <li><b>Samen in plaats van tegen elkaar.</b> Je buren zijn geen vijanden om weg te vagen. Je handelt met ze, sluit afspraken en bouwt samen aan de tuin. <span class="komt" title="Computerburen met een eigen karakter (mijlpaal 9)">Komt eraan</span></li>
+  <li><b>De natuur doet mee.</b> Bossen groeien terug als je ze verzorgt, en akkers hebben tijd nodig om te rijpen. Later komen droogte, strenge winters en overstromingen erbij. <span class="komt" title="Natuurgebeurtenissen: droogte, winter, overstroming">Komt eraan</span></li>
+</ul>
+
+<h3 id="hoe-ver-is-het-spel">Hoe ver is het spel?</h3>
+<p>Kolonie wordt nog gebouwd, en deze handleiding groeit mee. Om eerlijk te zijn over wat je nu al kunt doen, staat er bij alles wat nog niet in het spel zit een label <span class="komt">Komt eraan</span>, met een korte beschrijving van het plan.</p>
+<div class="naast">
+  <div class="kader"><span class="titel">Nu al te spelen</span>
+    <ul>
+      <li>wereld maken met eigen instellingen</li>
+      <li>bouwen en afbreken, met egaliseren</li>
+      <li>dragers, beroepen en gereedschap</li>
+      <li>hout, steen, voedsel en metaal</li>
+      <li>woonhuizen met nieuwe bewoners</li>
+      <li>gebied en grens door bemande torens</li>
+      <li>armpje drukken in de Duel-test</li>
+    </ul></div>
+  <div class="kader straks"><span class="titel">In aanbouw</span>
+    <ul>
+      <li>krachthal en krachtpatsers in het dorp</li>
+      <li>harmonie, school en hunnebed</li>
+      <li>computerburen, handel en diplomatie</li>
+      <li>de Tuin van Verbondenheid</li>
+      <li>natuurgebeurtenissen</li>
+      <li>opslaan en laden</li>
+    </ul></div>
+</div>
+
+<div class="kader let"><span class="titel">Let op: nog niet opslaan</span>
+<p>Kolonie kan je wereld nog niet bewaren. Herlaad je de pagina of sluit je het tabblad, dan begint alles opnieuw. Na de eerste minuut vraagt je browser daarom eerst of je het zeker weet. Open deze handleiding dus gerust in een eigen tabblad; dat doet de knop in het spel ook. <span class="komt" title="Opslaan en laden van de hele wereld">Komt eraan</span></p>
+</div>
+
+<h3 id="zo-gebruik-je-deze-handleiding">Zo gebruik je deze handleiding</h3>
+<p>Ben je nieuw, lees dan eerst <a href="#eerste-stappen">Eerste stappen</a>: daarna kun je meteen aan de slag. De andere hoofdstukken zijn om in te grasduinen of om iets op te zoeken. Typ een woord in het zoekveld bovenaan (of druk op <kbd>/</kbd>) en je springt direct naar de juiste plek. In het spel opent <kbd>F1</kbd> of de knop <i>Handleiding</i> deze pagina.</p>
+<p>Alle getallen in de tabellen en schema's komen rechtstreeks uit het spel. Verandert er iets aan de balans, dan klopt de handleiding na de volgende update weer vanzelf. De schermafbeeldingen zijn ook echt: ze worden automatisch gemaakt in een vaste wereld met de seed <i>vathorst</i>.</p>
+</section>
+
+
+<section class="hoofdstuk" id="eerste-stappen">
+<h2 id="eerste-stappen">Eerste stappen</h2>
+
+<img class="scherm vignet" src="../assets/buildings/houthakker.webp" alt="Houthakker"><img loading="lazy" class="druk vignet" src="img/druk/houthakker.jpg" alt="Houthakker">
+<p class="intro">In dit hoofdstuk maak je een wereld, leer je rondkijken, zet je je eerste gebouw neer en zie je hoe hout uit het bos als planken op de bouwplaats belandt. Reken op een kwartiertje, inclusief een kop thee terwijl de zagerij draait.</p>
+
+<h3 id="een-wereld-maken">Een wereld maken</h3>
+<div class="naast">
+  <figure class="shot"><a href="img/paneel-wereld.jpg" target="_blank" title="Groot bekijken"><img src="img/paneel-wereld.jpg?v=1793515417" alt="De instellingen bovenaan de zijbalk." loading="lazy"></a><figcaption>De instellingen bovenaan de zijbalk.</figcaption></figure>
+  <div>
+    <p>Links in het spel staat de zijbalk. Bovenaan kies je hoe je wereld eruitziet:</p>
+    <ul>
+      <li><b>Seed</b>: de naam van je wereld. Dezelfde seed geeft altijd precies dezelfde wereld, handig om een mooie kaart te bewaren of met iemand te delen. De dobbelsteen kiest een willekeurige.</li>
+      <li><b>Grootte</b>: van 128 tot 384 tegels in het vierkant.</li>
+      <li><b>Landvorm</b>: een continent, eilanden of binnenland met meren.</li>
+      <li><b>Spelers</b>: 2 tot 8 startplekken, elk met een eigen kleur.</li>
+      <li><b>Waterniveau, Gebergte en Bosdichtheid</b>: schuif tot de wereld je bevalt.</li>
+      <li><b>Modus</b>: kies <i>Economie</i> om te spelen. <i>Stresstest</i> en <i>Duel-test</i> zijn proefmodi.</li>
+      <li><b>Startvoorraad</b>: hoeveel er in je burcht ligt (zie de tabel hieronder).</li>
+    </ul>
+    <p>Klik op <b>Genereer wereld</b> en daarna op <b>Start</b>. Met <b>Pauze</b> zet je de tijd stil (je kunt dan gewoon rondkijken en bouwopdrachten geven), en <b>Snelheid</b> laat de tijd 1×, 2× of 4× zo snel lopen.</p>
+  </div>
+</div>
+
+<h4>Wat er bij de start in je burcht ligt</h4>
+<table class="tabel smal"><thead><tr><th>Goed</th><th class="n">Weinig</th><th class="n">Normaal</th><th class="n">Veel</th></tr></thead><tbody><tr><td><img class="gi" src="img/goed/boomstam.png" alt="Boomstam" loading="lazy">Boomstam</td><td class="n">8</td><td class="n">16</td><td class="n">32</td></tr><tr><td><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">Plank</td><td class="n">20</td><td class="n">40</td><td class="n">80</td></tr><tr><td><img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">Steen</td><td class="n">16</td><td class="n">32</td><td class="n">64</td></tr><tr><td><img class="gi" src="img/goed/brood.png" alt="Brood" loading="lazy">Brood</td><td class="n">6</td><td class="n">12</td><td class="n">24</td></tr><tr><td><img class="gi" src="img/goed/stoofpot.png" alt="Stoofpot" loading="lazy">Stoofpot</td><td class="n">4</td><td class="n">8</td><td class="n">16</td></tr><tr><td><img class="gi" src="img/goed/notenmix.png" alt="Fruit-notenmix" loading="lazy">Fruit-notenmix</td><td class="n">4</td><td class="n">8</td><td class="n">16</td></tr><tr><td><img class="gi" src="img/goed/water.png" alt="Water" loading="lazy">Water</td><td class="n">4</td><td class="n">8</td><td class="n">16</td></tr><tr><td><img class="gi" src="img/goed/bijl.png" alt="Bijl" loading="lazy">Bijl</td><td class="n">1</td><td class="n">2</td><td class="n">4</td></tr><tr><td><img class="gi" src="img/goed/zaag.png" alt="Zaag" loading="lazy">Zaag</td><td class="n">1</td><td class="n">2</td><td class="n">4</td></tr><tr><td><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">Houweel</td><td class="n">2</td><td class="n">4</td><td class="n">8</td></tr><tr><td><img class="gi" src="img/goed/hamer.png" alt="Hamer" loading="lazy">Hamer</td><td class="n">3</td><td class="n">6</td><td class="n">12</td></tr><tr><td><img class="gi" src="img/goed/schop.png" alt="Schop" loading="lazy">Schop</td><td class="n">2</td><td class="n">4</td><td class="n">8</td></tr><tr><td><img class="gi" src="img/goed/zeis.png" alt="Zeis" loading="lazy">Zeis</td><td class="n">2</td><td class="n">3</td><td class="n">6</td></tr></tbody></table>
+
+<h4>Je startdorp</h4>
+<p>Je begint niet met lege handen. Rond de burcht staat al een klein dorp, en in de bergen vlakbij liggen drie mijnen klaar:</p>
+<ul class="dorp"><li><img class="scherm" src="../assets/buildings/burcht.webp" alt="Burcht" loading="lazy"><img class="druk" src="img/druk/burcht.jpg" alt="Burcht" loading="lazy"><span>Burcht</span></li><li><img class="scherm" src="../assets/buildings/ijzersmelterij.webp" alt="IJzersmelterij" loading="lazy"><img class="druk" src="img/druk/ijzersmelterij.jpg" alt="IJzersmelterij" loading="lazy"><span>IJzersmelterij</span></li><li><img class="scherm" src="../assets/buildings/goudsmelterij.webp" alt="Goudsmelterij" loading="lazy"><img class="druk" src="img/druk/goudsmelterij.jpg" alt="Goudsmelterij" loading="lazy"><span>Goudsmelterij</span></li><li><img class="scherm" src="../assets/buildings/wapensmid.webp" alt="Uitrustingsmaker" loading="lazy"><img class="druk" src="img/druk/wapensmid.jpg" alt="Uitrustingsmaker" loading="lazy"><span>Uitrustingsmaker</span></li><li><img class="scherm" src="../assets/buildings/pakhuis.webp" alt="Pakhuis" loading="lazy"><img class="druk" src="img/druk/pakhuis.jpg" alt="Pakhuis" loading="lazy"><span>Pakhuis</span></li><li><img class="scherm" src="../assets/buildings/woonhuis.webp" alt="Woonhuis" loading="lazy"><img class="druk" src="img/druk/woonhuis.jpg" alt="Woonhuis" loading="lazy"><span>3 × Woonhuis</span></li><li><img class="scherm" src="../assets/buildings/houthakker.webp" alt="Houthakker" loading="lazy"><img class="druk" src="img/druk/houthakker.jpg" alt="Houthakker" loading="lazy"><span>2 × Houthakker</span></li><li><img class="scherm" src="../assets/buildings/bakkerij.webp" alt="Bakkerij" loading="lazy"><img class="druk" src="img/druk/bakkerij.jpg" alt="Bakkerij" loading="lazy"><span>Bakkerij</span></li><li><img class="scherm" src="../assets/buildings/molen.webp" alt="Molen" loading="lazy"><img class="druk" src="img/druk/molen.jpg" alt="Molen" loading="lazy"><span>Molen</span></li><li><img class="scherm" src="../assets/buildings/boerderij.webp" alt="Boerderij" loading="lazy"><img class="druk" src="img/druk/boerderij.jpg" alt="Boerderij" loading="lazy"><span>Boerderij</span></li><li><img class="scherm" src="../assets/buildings/waterput.webp" alt="Waterput" loading="lazy"><img class="druk" src="img/druk/waterput.jpg" alt="Waterput" loading="lazy"><span>Waterput</span></li><li><img class="scherm" src="../assets/buildings/smidse.webp" alt="Smidse" loading="lazy"><img class="druk" src="img/druk/smidse.jpg" alt="Smidse" loading="lazy"><span>Smidse</span></li><li><img class="scherm" src="../assets/buildings/zagerij.webp" alt="Zagerij" loading="lazy"><img class="druk" src="img/druk/zagerij.jpg" alt="Zagerij" loading="lazy"><span>Zagerij</span></li><li><img class="scherm" src="../assets/buildings/bosbouwer.webp" alt="Bosbouwer" loading="lazy"><img class="druk" src="img/druk/bosbouwer.jpg" alt="Bosbouwer" loading="lazy"><span>Bosbouwer</span></li><li><img class="scherm" src="../assets/buildings/steenhouwer.webp" alt="Steenhouwer" loading="lazy"><img class="druk" src="img/druk/steenhouwer.jpg" alt="Steenhouwer" loading="lazy"><span>Steenhouwer</span></li><li><img class="scherm" src="../assets/buildings/kazerne.webp" alt="Krachthal" loading="lazy"><img class="druk" src="img/druk/kazerne.jpg" alt="Krachthal" loading="lazy"><span>Krachthal</span></li><li><img class="scherm" src="../assets/buildings/wachttoren.webp" alt="Wachttoren" loading="lazy"><img class="druk" src="img/druk/wachttoren.jpg" alt="Wachttoren" loading="lazy"><span>2 × Wachttoren</span></li><li><img class="scherm" src="../assets/buildings/kolenmijn.webp" alt="Kolenmijn" loading="lazy"><img class="druk" src="img/druk/kolenmijn.jpg" alt="Kolenmijn" loading="lazy"><span>Kolenmijn</span></li><li><img class="scherm" src="../assets/buildings/ijzermijn.webp" alt="IJzermijn" loading="lazy"><img class="druk" src="img/druk/ijzermijn.jpg" alt="IJzermijn" loading="lazy"><span>IJzermijn</span></li><li><img class="scherm" src="../assets/buildings/goudmijn.webp" alt="Goudmijn" loading="lazy"><img class="druk" src="img/druk/goudmijn.jpg" alt="Goudmijn" loading="lazy"><span>Goudmijn</span></li></ul>
+
+<h3 id="rondkijken">Rondkijken</h3>
+<p>De wereld is groot, dus eerst even leren lopen, of eigenlijk: zweven.</p>
+<table class="tabel toetsen">
+  <thead><tr><th>Wat</th><th>Muis en toetsenbord</th><th>Tablet of telefoon</th></tr></thead>
+  <tbody>
+    <tr><td>Schuiven</td><td>slepen met de linkermuisknop, of <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> en de pijltjes</td><td>slepen met één vinger</td></tr>
+    <tr><td>Zoomen</td><td>scrollwiel, of de knoppen <kbd>+</kbd> en <kbd>−</kbd> rechtsonder</td><td>knijpen met twee vingers</td></tr>
+    <tr><td>Snel ergens heen</td><td>klikken of slepen op de overzichtskaart onderaan de zijbalk</td><td>tikken op de overzichtskaart</td></tr>
+    <tr><td>Informatie</td><td>met de muis over de kaart bewegen</td><td>tikken</td></tr>
+  </tbody>
+</table>
+<p>Ver uitgezoomd zie je je hele streek, met kolonisten als gekleurde stipjes. Ingezoomd zie je de rook uit de schoorsteen van een bakkerij die aan het werk is, en dragers die een kist met planken sjouwen. Met het vinkje <i>Toon ertsen in bergen</i> komen de ertsaders in het gebergte als gekleurde stipjes tevoorschijn: zwart voor kolen, roestbruin voor ijzer en geel voor goud.</p>
+
+<h3 id="kijken-wat-er-gebeurt">Kijken wat er gebeurt</h3>
+<p>Beweeg de muis over de kaart en er verschijnt een kaartje met uitleg: wat voor grond het is, wie er staat, en bij een gebouw wat het doet, wat het nodig heeft en waar het op wacht. <i>“Houthakker · speler 1 · wacht op een vakman”</i> betekent bijvoorbeeld dat het gebouw klaar is, maar dat er nog niemand met een bijl in woont.</p>
+<div class="naast">
+  <figure class="shot"><a href="img/paneel-productie.jpg" target="_blank" title="Groot bekijken"><img src="img/paneel-productie.jpg?v=1793515425" alt="Het paneel Productie: per soort gebouw wat er gemaakt is en waar het op wacht." loading="lazy"></a><figcaption>Het paneel Productie: per soort gebouw wat er gemaakt is en waar het op wacht.</figcaption></figure>
+  <div>
+    <p>In de zijbalk staat onder <b>Voorraad en productie</b> alles op een rij. <i>Productie</i> vertelt per soort gebouw hoeveel er gemaakt is en waar het op wacht. <i>Voorraad</i> telt alles wat je volk bezit, ook wat dragers op dat moment in hun armen hebben. Onder <b>Meting</b> zie je hoeveel kolonisten er zijn en hoeveel dragers het druk hebben.</p>
+    <p>Je bewoners hoef je niet één voor één aan te sturen: ze zoeken zelf werk. Selecteren en sturen doe je alleen met krachtpatsers. Dat kan nu nog alleen in de Duel-test (zie hoofdstuk 8). <span class="komt" title="Krachtpatsers selecteren en sturen in het eigen dorp">Komt eraan</span></p>
+  </div>
+</div>
+
+<div class="kader straks"><span class="titel">Voor wie speel je?</span>
+<p>Boven het bouwpaneel staat <b>Bouwen als</b>. Nu kun je daar nog voor elke speler bouwen, handig om te proberen. Later speel jij de rode speler en worden de andere kleuren computerburen met een eigen karakter. <span class="komt" title="Eén vaste speler; de andere kleuren worden computerburen">Komt eraan</span></p>
+</div>
+
+<h3 id="bouwen">Bouwen</h3>
+<p>Onder <b>Bouwen</b> staat een knop voor elk gebouw, met de kosten in planken en stenen. Klik op een gebouw en beweeg over de kaart: een groene voetafdruk betekent dat het past, een rode dat het niet kan. Het kaartje zegt dan waarom. Een klik zet een bouwplaats neer. Met <kbd>Esc</kbd> of de rechtermuisknop stop je met bouwen.</p>
+<figure class="shot"><a href="img/bouwen-ja.jpg" target="_blank" title="Groot bekijken"><img src="img/bouwen-ja.jpg?v=1793515215" alt="Een houthakker aan de bosrand: de voetafdruk is groen, en de witte stippellijn laat zien hoe ver hij straks het bos in gaat." loading="lazy"></a><figcaption>Een houthakker aan de bosrand: de voetafdruk is groen, en de witte stippellijn laat zien hoe ver hij straks het bos in gaat.</figcaption></figure>
+
+<p>Waarom iets niet past, staat in het kaartje. Dit zijn de redenen die je tegenkomt:</p>
+<ul>
+  <li><b>buiten eigen gebied</b>: je bouwt alleen binnen je eigen grens (de stippellijn in je kleur);</li>
+  <li><b>verkeerde ondergrond</b>: gebouwen staan op gras, mijnen op rots of gebergte;</li>
+  <li><b>er staat een boom of steen in de weg</b>: laat eerst de houthakker of steenhouwer zijn werk doen;</li>
+  <li><b>te steil</b>: de bouwplaats mag niet te veel hoogteverschil hebben;</li>
+  <li><b>rondom moet het beloopbaar zijn</b>, <b>voor de ingang van een ander gebouw</b>, <b>er liggen goederen in de weg</b> of <b>bezet door een ander gebouw</b>: schuif een stukje op.</li>
+</ul>
+<figure class="shot"><a href="img/bouwen-nee.jpg" target="_blank" title="Groot bekijken"><img src="img/bouwen-nee.jpg?v=1793515220" alt="Buiten de grens kan het niet. Wil je verder, bouw dan eerst een wachttoren aan de rand van je gebied." loading="lazy"></a><figcaption>Buiten de grens kan het niet. Wil je verder, bouw dan eerst een wachttoren aan de rand van je gebied.</figcaption></figure>
+
+<h4>Van bouwplaats tot gebouw</h4>
+<ol>
+  <li><b>Egaliseren.</b> Gravers met een schop maken de grond vlak. Hoe hobbeliger de plek, hoe langer dat duurt. Er werken er hoogstens 2 tegelijk.</li>
+  <li><b>Materiaal.</b> Dragers brengen planken en stenen uit de opslag naar de bouwplaats.</li>
+  <li><b>Bouwen.</b> Bouwers met een hamer verwerken het materiaal stuk voor stuk; het balkje boven de bouwplaats loopt vol.</li>
+  <li><b>Intrekken.</b> Is het gebouw klaar, dan haalt een vrije drager het juiste gereedschap uit de voorraad en wordt hij vakman. Hij loopt naar de deur, gaat naar binnen, en het vlaggetje gaat omhoog.</li>
+</ol>
+<figure class="shot"><a href="img/bouwplaats.jpg" target="_blank" title="Groot bekijken"><img src="img/bouwplaats.jpg?v=1793515227" alt="Een zagerij in aanbouw: twee gravers maken de grond vlak, dragers komen al met planken aan." loading="lazy"></a><figcaption>Een zagerij in aanbouw: twee gravers maken de grond vlak, dragers komen al met planken aan.</figcaption></figure>
+
+<div class="kader tip"><span class="titel">Tip</span>
+<p>Er blijven altijd minstens 8 vrije dragers over die niet omgeschoold worden. Zonder dragers ligt alles stil, hoe mooi je gebouwen ook zijn. Blijft een gebouw <i>wachten op een vakman</i>, kijk dan of er nog gereedschap in de voorraad ligt; zie de tabel met beroepen in hoofdstuk 3.</p>
+</div>
+
+<p><b>Afbreken</b> doe je met de knop <i>Afbreken</i> onder het bouwpaneel: klik daarna op een gebouw of bouwplaats. Je krijgt de helft van het verwerkte materiaal terug, naar beneden afgerond. De burcht blijft altijd staan.</p>
+
+<h3 id="je-eerste-houtketen">Je eerste houtketen</h3>
+<p>Planken zijn het brood van de bouwer. Gelukkig heeft je startdorp al een kleine houtketen. Zo werkt hij:</p>
+<figure class="keten"><svg viewBox="0 0 1080 450" role="img" aria-label="Productieketen: Houthakker, Bosbouwer, Zagerij, Steenhouwer"><defs><marker id="kop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="kop"/></marker></defs><path class="pijl" d="M211,225 C270,225 270,150 329,150" marker-end="url(#kop)"/><g class="etiket"><rect x="248.8" y="175.5" width="42.4" height="24" rx="12"/><text x="254.8" y="192.5">boom</text></g><path class="pijl" d="M481,150 C540,150 540,225 599,225" marker-end="url(#kop)"/><g class="etiket"><rect x="496.6" y="175.5" width="86.8" height="24" rx="12"/><image href="img/goed/boomstam.png" x="500.6" y="178.5" width="18" height="18"/><text x="520.6" y="192.5">Boomstam</text></g><path class="pijl" d="M135,134 L135,166" marker-end="url(#kop)"/><g class="etiket"><rect x="75.80000000000001" y="138" width="118.39999999999999" height="24" rx="12"/><text x="81.80000000000001" y="155">plant boompjes</text></g><path class="pijl" d="M751,225 C810,225 810,225 869,225" marker-end="url(#kop)"/><g class="etiket"><rect x="778" y="213" width="64" height="24" rx="12"/><image href="img/goed/plank.png" x="782" y="216" width="18" height="18"/><text x="802" y="230">Plank</text></g><path class="pijl" d="M211,375 C270,375 270,300 329,300" marker-end="url(#kop)"/><g class="etiket"><rect x="229.8" y="325.5" width="80.39999999999999" height="24" rx="12"/><text x="235.8" y="342.5">steenblok</text></g><path class="pijl" d="M481,300 C540,300 540,300 599,300 L751,300 C810,300 810,225 869,225" marker-end="url(#kop)"/><g class="etiket"><rect x="508" y="288" width="64" height="24" rx="12"/><image href="img/goed/steen.png" x="512" y="291" width="18" height="18"/><text x="532" y="305">Steen</text></g><g class="knoop"><title>Houthakker</title><rect x="325" y="91" width="160" height="118" rx="12"/><image href="../assets/buildings/houthakker.webp" x="335" y="97" width="140" height="82" preserveAspectRatio="xMidYMax meet"/><text x="405" y="198" text-anchor="middle">Houthakker</text></g><g class="knoop"><title>Bosbouwer</title><rect x="55" y="16" width="160" height="118" rx="12"/><image href="../assets/buildings/bosbouwer.webp" x="65" y="22" width="140" height="82" preserveAspectRatio="xMidYMax meet"/><text x="135" y="123" text-anchor="middle">Bosbouwer</text></g><g class="knoop"><title>Zagerij</title><rect x="595" y="166" width="160" height="118" rx="12"/><image href="../assets/buildings/zagerij.webp" x="605" y="172" width="140" height="82" preserveAspectRatio="xMidYMax meet"/><text x="675" y="273" text-anchor="middle">Zagerij</text></g><g class="knoop"><title>Steenhouwer</title><rect x="325" y="241" width="160" height="118" rx="12"/><image href="../assets/buildings/steenhouwer.webp" x="335" y="247" width="140" height="82" preserveAspectRatio="xMidYMax meet"/><text x="405" y="348" text-anchor="middle">Steenhouwer</text></g><g class="knoop natuur"><title>Bos</title><rect x="55" y="166" width="160" height="118" rx="12"/><image href="../assets/nature/eik0.webp" x="65" y="172" width="140" height="82" preserveAspectRatio="xMidYMax meet"/><text x="135" y="273" text-anchor="middle">Bos</text></g><g class="knoop opslag"><title>Voorraad</title><rect x="865" y="166" width="160" height="118" rx="12"/><image href="../assets/buildings/burcht.webp" x="875" y="172" width="140" height="82" preserveAspectRatio="xMidYMax meet"/><text x="945" y="273" text-anchor="middle">Voorraad</text></g><g class="knoop natuur"><title>Steenblokken</title><rect x="55" y="316" width="160" height="118" rx="12"/><image href="../assets/nature/rots1.webp" x="65" y="322" width="140" height="82" preserveAspectRatio="xMidYMax meet"/><text x="135" y="423" text-anchor="middle">Steenblokken</text></g></svg></figure>
+<ul>
+  <li>De <b>houthakker</b> loopt het bos in tot 10 tegels van zijn hut, hakt een boom om en brengt de boomstam naar zijn deur. Appelbomen laat hij staan; die zijn voor de plukker.</li>
+  <li>De <b>bosbouwer</b> plant boompjes binnen 7 tegels. Na 5 minuten is zo'n boompje een volwassen boom. Zet hem naast een houthakker en het bos raakt nooit op.</li>
+  <li>De <b>zagerij</b> zaagt van één boomstam 2 planken, in 8 seconden.</li>
+  <li>De <b>steenhouwer</b> hakt steen uit de steenblokken binnen 10 tegels. Een blok geeft 8 stenen en is dan op, dus zet hem bij een flinke rotspartij.</li>
+</ul>
+<p>Dragers brengen de boomstammen van de houthakker naar de zagerij, en de planken en stenen naar de burcht of het pakhuis. Daarvoor hoef jij niets te doen.</p>
+<figure class="shot"><a href="img/houthakker.jpg" target="_blank" title="Groot bekijken"><img src="img/houthakker.jpg?v=1793515233" alt="Beweeg je over een houthakker, dan zie je zijn werkgebied en wat hij aan het doen is." loading="lazy"></a><figcaption>Beweeg je over een houthakker, dan zie je zijn werkgebied en wat hij aan het doen is.</figcaption></figure>
+
+<table class="tabel"><thead><tr><th>Gebouw</th><th class="n">Planken</th><th class="n">Stenen</th><th>Wie werkt er</th><th>Wat het doet</th></tr></thead><tbody><tr><td><span class="bcel"><img class="scherm" src="../assets/buildings/houthakker.webp" alt="Houthakker" loading="lazy"><img class="druk" src="img/druk/houthakker.jpg" alt="Houthakker" loading="lazy"><b>Houthakker</b></span></td><td class="n">2</td><td class="n">2</td><td>Houthakker <span class="tool"><img class="gi" src="img/goed/bijl.png" alt="Bijl" loading="lazy">bijl</span></td><td>Hakt bomen binnen 10 tegels en maakt er boomstam van. Laat appelbomen staan voor de plukker.</td></tr><tr><td><span class="bcel"><img class="scherm" src="../assets/buildings/bosbouwer.webp" alt="Bosbouwer" loading="lazy"><img class="druk" src="img/druk/bosbouwer.jpg" alt="Bosbouwer" loading="lazy"><b>Bosbouwer</b></span></td><td class="n">2</td><td class="n">2</td><td>Bosbouwer <span class="tool"><img class="gi" src="img/goed/schop.png" alt="Schop" loading="lazy">schop</span></td><td>Plant boompjes binnen 7 tegels; na 5 minuten zijn het volwassen bomen.</td></tr><tr><td><span class="bcel"><img class="scherm" src="../assets/buildings/zagerij.webp" alt="Zagerij" loading="lazy"><img class="druk" src="img/druk/zagerij.jpg" alt="Zagerij" loading="lazy"><b>Zagerij</b></span></td><td class="n">3</td><td class="n">3</td><td>Zager <span class="tool"><img class="gi" src="img/goed/zaag.png" alt="Zaag" loading="lazy">zaag</span></td><td>Maakt van boomstam 2 × plank, in 8 seconden.</td></tr><tr><td><span class="bcel"><img class="scherm" src="../assets/buildings/steenhouwer.webp" alt="Steenhouwer" loading="lazy"><img class="druk" src="img/druk/steenhouwer.jpg" alt="Steenhouwer" loading="lazy"><b>Steenhouwer</b></span></td><td class="n">2</td><td class="n">2</td><td>Steenhouwer <span class="tool"><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">houweel</span></td><td>Hakt steen uit steenblokken binnen 10 tegels. Een blok is na 8 stuks op.</td></tr></tbody></table>
+
+<div class="kader tip"><span class="titel">Niet hamsteren</span>
+<p>Heeft je volk 24 of meer van iets, dan stopt het gebouw dat het maakt even. Het kaartje zegt dan <i>“genoeg boomstam op voorraad”</i>. Zo blijven je dragers vrij voor nuttiger werk. Gaat de voorraad omlaag, dan gaat het gebouw vanzelf weer aan de slag.</p>
+</div>
+
+<h4>Een tweede houtketen bouwen</h4>
+<ol>
+  <li>Zoek een bos binnen je gebied. Hoe meer bomen binnen de stippellijn van de houthakker, hoe beter.</li>
+  <li>Zet de houthakker aan de bosrand en een bosbouwer er vlakbij.</li>
+  <li>Een tweede zagerij mag dichter bij de burcht staan: kortere wegen voor de planken.</li>
+  <li>Kijk in het paneel Productie of alles op gang komt. Wacht een gebouw op een vakman, dan is er een bijl, zaag of schop nodig. Die maakt de smidse (hoofdstuk 4).</li>
+</ol>
+<p>Gefeliciteerd: je dorp draait. Tijd om je bewoners beter te leren kennen.</p>
+</section>
+
+
+<section class="hoofdstuk wordt" id="je-dorp">
+<h2 id="je-dorp">Je dorp</h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Over bewoners en dragers, hoe een drager vakman wordt door gereedschap op te halen, woonhuizen en nieuwe bewoners, opslag en stapels.</p>
+<table class="tabel"><thead><tr><th>Beroep</th><th>Gereedschap</th><th>Werkt in</th></tr></thead><tbody><tr><td><b>Graver</b></td><td><img class="gi" src="img/goed/schop.png" alt="Schop" loading="lazy">Schop</td><td>bouwplaatsen (egaliseren)</td></tr><tr><td><b>Bouwer</b></td><td><img class="gi" src="img/goed/hamer.png" alt="Hamer" loading="lazy">Hamer</td><td>bouwplaatsen (bouwen)</td></tr><tr><td><b>Houthakker</b></td><td><img class="gi" src="img/goed/bijl.png" alt="Bijl" loading="lazy">Bijl</td><td>Houthakker</td></tr><tr><td><b>Bosbouwer</b></td><td><img class="gi" src="img/goed/schop.png" alt="Schop" loading="lazy">Schop</td><td>Bosbouwer</td></tr><tr><td><b>Zager</b></td><td><img class="gi" src="img/goed/zaag.png" alt="Zaag" loading="lazy">Zaag</td><td>Zagerij</td></tr><tr><td><b>Steenhouwer</b></td><td><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">Houweel</td><td>Steenhouwer</td></tr><tr><td><b>Mijnwerker</b></td><td><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">Houweel</td><td>Kolenmijn, IJzermijn en Goudmijn</td></tr><tr><td><b>Boer</b></td><td><img class="gi" src="img/goed/zeis.png" alt="Zeis" loading="lazy">Zeis</td><td>Boerderij en Bonenakker</td></tr><tr><td><b>Tuinier</b></td><td><span class="zacht">geen</span></td><td>Moestuin</td></tr><tr><td><b>Plukker</b></td><td><span class="zacht">geen</span></td><td>Plukkershut</td></tr><tr><td><b>Waterhaler</b></td><td><span class="zacht">geen</span></td><td>Waterput</td></tr><tr><td><b>Kok</b></td><td><span class="zacht">geen</span></td><td>Gaarkeuken</td></tr><tr><td><b>Droger</b></td><td><span class="zacht">geen</span></td><td>Droogschuur</td></tr><tr><td><b>Molenaar</b></td><td><span class="zacht">geen</span></td><td>Molen</td></tr><tr><td><b>Bakker</b></td><td><span class="zacht">geen</span></td><td>Bakkerij</td></tr><tr><td><b>Smelter</b></td><td><span class="zacht">geen</span></td><td>IJzersmelterij en Goudsmelterij</td></tr><tr><td><b>Smid</b></td><td><span class="zacht">geen</span></td><td>Smidse en Uitrustingsmaker</td></tr><tr><td><b>Wachter</b></td><td><span class="zacht">geen</span></td><td>Wachttoren</td></tr></tbody></table>
+</section>
+
+<section class="hoofdstuk wordt" id="grondstoffen-en-ketens">
+<h2 id="grondstoffen-en-ketens">Grondstoffen en ketens</h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Hout, steen, de drie maaltijden (brood, stoofpot en fruit-notenmix), mijnen met de lievelingskost van de mijnwerkers, smelterijen, smidse en uitrustingsmaker. Elke keten met een eigen schema.</p>
+</section>
+
+<section class="hoofdstuk wordt" id="natuur-en-dieren">
+<h2 id="natuur-en-dieren">Natuur en dieren</h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Bosbouw, akkers en vruchten, en de wilde dieren. Voederbakken en de dierenverzorger staan nog in het ontwerp. <span class="komt" title="Voederbakken en dierenverzorger">Komt eraan</span></p>
+</section>
+
+<section class="hoofdstuk wordt" id="harmonie">
+<h2 id="harmonie-komt-eraan">Harmonie <span class="komt" title="Harmoniemeter: verhogen en effecten (mijlpaal 7)">Komt eraan</span></h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Hoe je de harmonie verhoogt en wat dat oplevert.</p>
+</section>
+
+<section class="hoofdstuk wordt" id="school-en-hunnebed">
+<h2 id="school-en-hunnebed-komt-eraan">School en hunnebed <span class="komt" title="School (opleiding instellen) en hunnebed (samen mediteren met dieren)">Komt eraan</span></h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i></p>
+</section>
+
+<section class="hoofdstuk wordt" id="krachtpatsers-en-muzikanten">
+<h2 id="krachtpatsers-en-muzikanten">Krachtpatsers en muzikanten</h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Niveaus, armpje drukken, het krachtbalkje, de heler, muzikanten, en hoe torens je gebied geven.</p>
+</section>
+
+<section class="hoofdstuk wordt" id="buren">
+<h2 id="buren-komt-eraan">Buren <span class="komt" title="Computerburen, handel en diplomatie (mijlpaal 9 tot 11)">Komt eraan</span></h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Handel, diplomatie en de karakters van de computerburen.</p>
+</section>
+
+<section class="hoofdstuk wordt" id="tuin-van-verbondenheid">
+<h2 id="de-tuin-van-verbondenheid">De Tuin van Verbondenheid</h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Het gezamenlijke einddoel, de bouwfasen en ieders bijdrage.</p>
+</section>
+
+<section class="hoofdstuk wordt" id="kaartgenerator">
+<h2 id="de-kaartgenerator">De kaartgenerator</h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Alle instellingen van de wereld, en later de editor. <span class="komt" title="Kaarteditor">Komt eraan</span></p>
+</section>
+
+<section class="hoofdstuk wordt" id="toetsen-en-tips">
+<h2 id="toetsen-en-tips">Toetsen en tips</h2>
+<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Alle toetsen op een rij, ook de groepen <kbd>Ctrl</kbd>+<kbd>1</kbd>…<kbd>9</kbd>, en tips voor een soepel draaiend dorp.</p>
+</section>
+
+<section class="hoofdstuk bijlage" id="alle-gebouwen">
+<h2 class="bijlage" id="alle-gebouwen" data-letter="A">Alle gebouwen</h2>
+<p>Elk gebouw met zijn plaatje, de bouwkosten in planken en stenen, wie er werkt en wat het doet. Deze bijlage komt rechtstreeks uit het spel.</p>
+<div class="kaarten"><article class="gkaart"><img class="scherm" src="../assets/buildings/burcht.webp" alt="Burcht" loading="lazy"><img class="druk" src="img/druk/burcht.jpg" alt="Burcht" loading="lazy"><h4>Burcht (hoofdkwartier)</h4>
+        <p class="kost">kan niet gebouwd worden</p>
+        <p class="wie">–</p><p>Hoofdkwartier en grote opslag (40 stapelplekken). Geeft gebied in een straal van 20 tegels.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/woonhuis.webp" alt="Woonhuis" loading="lazy"><img class="druk" src="img/druk/woonhuis.jpg" alt="Woonhuis" loading="lazy"><h4>Woonhuis</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">bewoners</p><p>Krijgt tot 6 nieuwe bewoners, elk voor één maaltijd: brood, stoofpot of fruit-notenmix.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/houthakker.webp" alt="Houthakker" loading="lazy"><img class="druk" src="img/druk/houthakker.jpg" alt="Houthakker" loading="lazy"><h4>Houthakker</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">2</p>
+        <p class="wie">Houthakker <span class="tool"><img class="gi" src="img/goed/bijl.png" alt="Bijl" loading="lazy">bijl</span></p><p>Hakt bomen binnen 10 tegels en maakt er boomstam van. Laat appelbomen staan voor de plukker.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/bosbouwer.webp" alt="Bosbouwer" loading="lazy"><img class="druk" src="img/druk/bosbouwer.jpg" alt="Bosbouwer" loading="lazy"><h4>Bosbouwer</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">2</p>
+        <p class="wie">Bosbouwer <span class="tool"><img class="gi" src="img/goed/schop.png" alt="Schop" loading="lazy">schop</span></p><p>Plant boompjes binnen 7 tegels; na 5 minuten zijn het volwassen bomen.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/zagerij.webp" alt="Zagerij" loading="lazy"><img class="druk" src="img/druk/zagerij.jpg" alt="Zagerij" loading="lazy"><h4>Zagerij</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">Zager <span class="tool"><img class="gi" src="img/goed/zaag.png" alt="Zaag" loading="lazy">zaag</span></p><p>Maakt van boomstam 2 × plank, in 8 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/steenhouwer.webp" alt="Steenhouwer" loading="lazy"><img class="druk" src="img/druk/steenhouwer.jpg" alt="Steenhouwer" loading="lazy"><h4>Steenhouwer</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">2</p>
+        <p class="wie">Steenhouwer <span class="tool"><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">houweel</span></p><p>Hakt steen uit steenblokken binnen 10 tegels. Een blok is na 8 stuks op.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/pakhuis.webp" alt="Pakhuis" loading="lazy"><img class="druk" src="img/druk/pakhuis.jpg" alt="Pakhuis" loading="lazy"><h4>Pakhuis</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">–</p><p>Extra opslag met 32 stapelplekken, handig ver van de burcht.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/kazerne.webp" alt="Krachthal" loading="lazy"><img class="druk" src="img/druk/kazerne.jpg" alt="Krachthal" loading="lazy"><h4>Krachthal</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">4 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">5</p>
+        <p class="wie">–</p><p>Traint kolonisten tot krachtpatsers. <span class="komt" title="Krachthal die krachtpatsers traint (mijlpaal 6c)">Komt eraan</span></p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/wachttoren.webp" alt="Wachttoren" loading="lazy"><img class="druk" src="img/druk/wachttoren.jpg" alt="Wachttoren" loading="lazy"><h4>Wachttoren</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">Wachter</p><p>Geeft gebied in een straal van 20 tegels, zolang er iemand in woont.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/bakkerij.webp" alt="Bakkerij" loading="lazy"><img class="druk" src="img/druk/bakkerij.jpg" alt="Bakkerij" loading="lazy"><h4>Bakkerij</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">Bakker</p><p>Maakt van meel en water 2 × brood, in 10 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/smidse.webp" alt="Smidse" loading="lazy"><img class="druk" src="img/druk/smidse.jpg" alt="Smidse" loading="lazy"><h4>Smidse</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">4 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">5</p>
+        <p class="wie">Smid</p><p>Maakt bijl, zaag, houweel, hamer, schop en zeis, telkens in 15 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/molen.webp" alt="Molen" loading="lazy"><img class="druk" src="img/druk/molen.jpg" alt="Molen" loading="lazy"><h4>Molen</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">Molenaar</p><p>Maakt van graan meel, in 6 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/kolenmijn.webp" alt="Kolenmijn" loading="lazy"><img class="druk" src="img/druk/kolenmijn.jpg" alt="Kolenmijn" loading="lazy"><h4>Kolenmijn</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">1</p>
+        <p class="wie">Mijnwerker <span class="tool"><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">houweel</span></p><p>Haalt kolen uit de berg (binnen 3 tegels); de mijnwerker eet er brood bij.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/ijzermijn.webp" alt="IJzermijn" loading="lazy"><img class="druk" src="img/druk/ijzermijn.jpg" alt="IJzermijn" loading="lazy"><h4>IJzermijn</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">1</p>
+        <p class="wie">Mijnwerker <span class="tool"><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">houweel</span></p><p>Haalt ijzererts uit de berg (binnen 3 tegels); de mijnwerker eet er stoofpot bij.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/goudmijn.webp" alt="Goudmijn" loading="lazy"><img class="druk" src="img/druk/goudmijn.jpg" alt="Goudmijn" loading="lazy"><h4>Goudmijn</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">1</p>
+        <p class="wie">Mijnwerker <span class="tool"><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy">houweel</span></p><p>Haalt gouderts uit de berg (binnen 3 tegels); de mijnwerker eet er fruit-notenmix bij.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/ijzersmelterij.webp" alt="IJzersmelterij" loading="lazy"><img class="druk" src="img/druk/ijzersmelterij.jpg" alt="IJzersmelterij" loading="lazy"><h4>IJzersmelterij</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">4 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">5</p>
+        <p class="wie">Smelter</p><p>Maakt van ijzererts en kolen ijzer, in 12 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/goudsmelterij.webp" alt="Goudsmelterij" loading="lazy"><img class="druk" src="img/druk/goudsmelterij.jpg" alt="Goudsmelterij" loading="lazy"><h4>Goudsmelterij</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">4 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">5</p>
+        <p class="wie">Smelter</p><p>Maakt van gouderts en kolen goud, in 12 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/wapensmid.webp" alt="Uitrustingsmaker" loading="lazy"><img class="druk" src="img/druk/wapensmid.jpg" alt="Uitrustingsmaker" loading="lazy"><h4>Uitrustingsmaker</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">4 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">5</p>
+        <p class="wie">Smid</p><p>Maakt helm, schild en polsband, telkens in 15 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/boerderij.webp" alt="Boerderij" loading="lazy"><img class="druk" src="img/druk/boerderij.jpg" alt="Boerderij" loading="lazy"><h4>Boerderij</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">Boer <span class="tool"><img class="gi" src="img/goed/zeis.png" alt="Zeis" loading="lazy">zeis</span></p><p>Zaait en oogst graan op akkers binnen 6 tegels (rijp na 3 minuten).</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/bonenakker.webp" alt="Bonenakker" loading="lazy"><img class="druk" src="img/druk/bonenakker.jpg" alt="Bonenakker" loading="lazy"><h4>Bonenakker</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">1</p>
+        <p class="wie">Boer <span class="tool"><img class="gi" src="img/goed/zeis.png" alt="Zeis" loading="lazy">zeis</span></p><p>Zaait en oogst peulvruchten op akkers binnen 4 tegels (rijp na 2,5 minuten).</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/moestuin.webp" alt="Moestuin" loading="lazy"><img class="druk" src="img/druk/moestuin.jpg" alt="Moestuin" loading="lazy"><h4>Moestuin</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">1</p>
+        <p class="wie">Tuinier</p><p>Zaait en oogst groente op akkers binnen 4 tegels (rijp na 2 minuten).</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/plukkershut.webp" alt="Plukkershut" loading="lazy"><img class="druk" src="img/druk/plukkershut.jpg" alt="Plukkershut" loading="lazy"><h4>Plukkershut</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">2 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">1</p>
+        <p class="wie">Plukker</p><p>Plukt fruit en noten van bomen en struiken binnen 9 tegels.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/waterput.webp" alt="Waterput" loading="lazy"><img class="druk" src="img/druk/waterput.jpg" alt="Waterput" loading="lazy"><h4>Waterput</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">1 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">2</p>
+        <p class="wie">Waterhaler</p><p>Maakt water, elke 7 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/gaarkeuken.webp" alt="Gaarkeuken" loading="lazy"><img class="druk" src="img/druk/gaarkeuken.jpg" alt="Gaarkeuken" loading="lazy"><h4>Gaarkeuken</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">3</p>
+        <p class="wie">Kok</p><p>Maakt van peulvruchten, groente en water 2 × stoofpot, in 10 seconden.</p></article><article class="gkaart"><img class="scherm" src="../assets/buildings/droogschuur.webp" alt="Droogschuur" loading="lazy"><img class="druk" src="img/druk/droogschuur.jpg" alt="Droogschuur" loading="lazy"><h4>Droogschuur</h4>
+        <p class="kost"><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy">3 &nbsp; <img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy">1</p>
+        <p class="wie">Droger</p><p>Maakt van fruit en noten 2 × fruit-notenmix, in 10 seconden.</p></article></div>
+</section>
+
+<section class="hoofdstuk bijlage" id="alle-goederen">
+<h2 class="bijlage" id="alle-goederen" data-letter="B">Alle goederen</h2>
+<p>Alles wat je volk kan maken, dragen en gebruiken, met wie het maakt en waarvoor het nodig is.</p>
+<h4>Bouwmaterialen</h4><table class="tabel"><thead><tr><th>Goed</th><th>Gemaakt door</th><th>Nodig voor</th></tr></thead><tbody><tr><td><img class="gi" src="img/goed/boomstam.png" alt="Boomstam" loading="lazy"><b>Boomstam</b></td><td>Houthakker</td><td>Zagerij</td></tr><tr><td><img class="gi" src="img/goed/plank.png" alt="Plank" loading="lazy"><b>Plank</b></td><td>Zagerij</td><td>Smidse, Uitrustingsmaker en bouwen</td></tr><tr><td><img class="gi" src="img/goed/steen.png" alt="Steen" loading="lazy"><b>Steen</b></td><td>Steenhouwer</td><td>bouwen</td></tr></tbody></table><h4>Voedsel</h4><table class="tabel"><thead><tr><th>Goed</th><th>Gemaakt door</th><th>Nodig voor</th></tr></thead><tbody><tr><td><img class="gi" src="img/goed/graan.png" alt="Graan" loading="lazy"><b>Graan</b></td><td>Boerderij</td><td>Molen</td></tr><tr><td><img class="gi" src="img/goed/meel.png" alt="Meel" loading="lazy"><b>Meel</b></td><td>Molen</td><td>Bakkerij</td></tr><tr><td><img class="gi" src="img/goed/brood.png" alt="Brood" loading="lazy"><b>Brood</b></td><td>Bakkerij</td><td>Kolenmijn en Woonhuis</td></tr><tr><td><img class="gi" src="img/goed/water.png" alt="Water" loading="lazy"><b>Water</b></td><td>Waterput</td><td>Bakkerij en Gaarkeuken</td></tr><tr><td><img class="gi" src="img/goed/peulvruchten.png" alt="Peulvruchten" loading="lazy"><b>Peulvruchten</b></td><td>Bonenakker</td><td>Gaarkeuken</td></tr><tr><td><img class="gi" src="img/goed/groente.png" alt="Groente" loading="lazy"><b>Groente</b></td><td>Moestuin</td><td>Gaarkeuken</td></tr><tr><td><img class="gi" src="img/goed/fruit.png" alt="Fruit" loading="lazy"><b>Fruit</b></td><td>Plukkershut</td><td>Droogschuur</td></tr><tr><td><img class="gi" src="img/goed/noten.png" alt="Noten" loading="lazy"><b>Noten</b></td><td>Plukkershut</td><td>Droogschuur</td></tr><tr><td><img class="gi" src="img/goed/stoofpot.png" alt="Stoofpot" loading="lazy"><b>Stoofpot</b></td><td>Gaarkeuken</td><td>IJzermijn en Woonhuis</td></tr><tr><td><img class="gi" src="img/goed/notenmix.png" alt="Fruit-notenmix" loading="lazy"><b>Fruit-notenmix</b></td><td>Droogschuur</td><td>Goudmijn en Woonhuis</td></tr></tbody></table><h4>Grondstoffen</h4><table class="tabel"><thead><tr><th>Goed</th><th>Gemaakt door</th><th>Nodig voor</th></tr></thead><tbody><tr><td><img class="gi" src="img/goed/kolen.png" alt="Kolen" loading="lazy"><b>Kolen</b></td><td>Kolenmijn</td><td>IJzersmelterij en Goudsmelterij</td></tr><tr><td><img class="gi" src="img/goed/ijzererts.png" alt="IJzererts" loading="lazy"><b>IJzererts</b></td><td>IJzermijn</td><td>IJzersmelterij</td></tr><tr><td><img class="gi" src="img/goed/gouderts.png" alt="Gouderts" loading="lazy"><b>Gouderts</b></td><td>Goudmijn</td><td>Goudsmelterij</td></tr></tbody></table><h4>Metalen</h4><table class="tabel"><thead><tr><th>Goed</th><th>Gemaakt door</th><th>Nodig voor</th></tr></thead><tbody><tr><td><img class="gi" src="img/goed/ijzer.png" alt="IJzer" loading="lazy"><b>IJzer</b></td><td>IJzersmelterij</td><td>Smidse en Uitrustingsmaker</td></tr><tr><td><img class="gi" src="img/goed/goud.png" alt="Goud" loading="lazy"><b>Goud</b></td><td>Goudsmelterij</td><td>Uitrustingsmaker</td></tr></tbody></table><h4>Gereedschap</h4><table class="tabel"><thead><tr><th>Goed</th><th>Gemaakt door</th><th>Nodig voor</th></tr></thead><tbody><tr><td><img class="gi" src="img/goed/bijl.png" alt="Bijl" loading="lazy"><b>Bijl</b></td><td>Smidse</td><td>gereedschap van de houthakker</td></tr><tr><td><img class="gi" src="img/goed/zaag.png" alt="Zaag" loading="lazy"><b>Zaag</b></td><td>Smidse</td><td>gereedschap van de zager</td></tr><tr><td><img class="gi" src="img/goed/houweel.png" alt="Houweel" loading="lazy"><b>Houweel</b></td><td>Smidse</td><td>gereedschap van de steenhouwer en gereedschap van de mijnwerker</td></tr><tr><td><img class="gi" src="img/goed/hamer.png" alt="Hamer" loading="lazy"><b>Hamer</b></td><td>Smidse</td><td>gereedschap van de bouwer</td></tr><tr><td><img class="gi" src="img/goed/schop.png" alt="Schop" loading="lazy"><b>Schop</b></td><td>Smidse</td><td>gereedschap van de graver en gereedschap van de bosbouwer</td></tr><tr><td><img class="gi" src="img/goed/zeis.png" alt="Zeis" loading="lazy"><b>Zeis</b></td><td>Smidse</td><td>gereedschap van de boer</td></tr></tbody></table><h4>Uitrusting</h4><table class="tabel"><thead><tr><th>Goed</th><th>Gemaakt door</th><th>Nodig voor</th></tr></thead><tbody><tr><td><img class="gi" src="img/goed/helm.png" alt="Helm" loading="lazy"><b>Helm</b></td><td>Uitrustingsmaker</td><td>krachtpatsers <span class="komt" title="Uitrusting (helm, schild, polsband) voor krachtpatsers">Komt eraan</span></td></tr><tr><td><img class="gi" src="img/goed/schild.png" alt="Schild" loading="lazy"><b>Schild</b></td><td>Uitrustingsmaker</td><td>krachtpatsers <span class="komt" title="Uitrusting (helm, schild, polsband) voor krachtpatsers">Komt eraan</span></td></tr><tr><td><img class="gi" src="img/goed/polsband.png" alt="Polsband" loading="lazy"><b>Polsband</b></td><td>Uitrustingsmaker</td><td>krachtpatsers <span class="komt" title="Uitrusting (helm, schild, polsband) voor krachtpatsers">Komt eraan</span></td></tr></tbody></table>
+</section>
+
+  </main>
+</div>
+<script src="handleiding.js?v=1793514988"></script>
+</body>
+</html>

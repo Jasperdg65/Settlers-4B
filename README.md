@@ -711,6 +711,38 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
 - **Vraag**: alleen werkplaatsen en mijnen vragen goederen (hun invoer, `CFG.prod`); het tijdelijke
   verbruik (`CFG.temp`) is in mijlpaal 5c vervallen.
 
+## Handleiding
+
+`public/handleiding/` is een losse pagina (in het spel: knop *Handleiding* of F1) met een printbare pdf.
+De tekst staat in `tools/handleiding/bron.html`; tabellen, ketenschema's en getallen worden uit de
+config en het manifest gemaakt. Na elke wijziging aan spel of tekst:
+
+```
+node tools/handleiding/schermen.js    # schermafbeeldingen uit vaste scènes (seed vathorst), headless Chrome
+node tools/handleiding/maak.js        # index.html uit bron.html + config + manifest
+node tools/handleiding/pdf.js         # kolonie-handleiding.pdf (print-CSS), headless Chrome
+```
+
+Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.md` voor de opmaakcodes.
+
+**Komt eraan** (automatisch bijgehouden uit de labels in de handleiding):
+
+<!-- komt:begin -->
+- De Tuin van Verbondenheid als gezamenlijk einddoel (mijlpaal 12)
+- Computerburen met een eigen karakter (mijlpaal 9)
+- Natuurgebeurtenissen: droogte, winter, overstroming
+- Opslaan en laden van de hele wereld
+- Krachtpatsers selecteren en sturen in het eigen dorp
+- Eén vaste speler; de andere kleuren worden computerburen
+- Voederbakken en dierenverzorger
+- Harmoniemeter: verhogen en effecten (mijlpaal 7)
+- School (opleiding instellen) en hunnebed (samen mediteren met dieren)
+- Computerburen, handel en diplomatie (mijlpaal 9 tot 11)
+- Kaarteditor
+- Krachthal die krachtpatsers traint (mijlpaal 6c)
+- Uitrusting (helm, schild, polsband) voor krachtpatsers
+<!-- komt:end -->
+
 ## Prestaties
 
 - `?prof=1` achter de URL toont rechtsboven fps, frametijd en ms per tekenonderdeel;

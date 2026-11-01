@@ -90,3 +90,6 @@ button.wide{width:100%;margin:0 0 10px}
 .bb.on small{color:inherit}
 #njobs{grid-column:1/-1;text-align:left;font-size:13px;line-height:1.35}
 .pv3d{margin-top:6px}.pv3d canvas{display:block;border-radius:6px;max-width:100%}
+a.handleiding{display:block;text-align:center;text-decoration:none;margin:-8px 0 16px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;
+  color:var(--ink);background:var(--field);font-size:14px}
+a.handleiding:hover{border-color:var(--accent)}

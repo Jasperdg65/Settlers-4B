@@ -168,13 +168,13 @@ const BTYPES={
   kolenmijn:{name:'Kolenmijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:1,draw:(g)=>{
     ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
     for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][1-1])}},
-  ijzermijn:{name:'Ijzermijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:2,draw:(g)=>{
+  ijzermijn:{name:'IJzermijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:2,draw:(g)=>{
     ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
     for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][2-1])}},
   goudmijn:{name:'Goudmijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:3,draw:(g)=>{
     ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
     for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][3-1])}},
-  ijzersmelterij:{name:'Ijzersmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
+  ijzersmelterij:{name:'IJzersmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#c9bfae',roof:'slate',stone:true});chimney(g,5.4,-16,6);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<3;k++)box(g,8+k*2.2,10+k*2.2,0.6,1,1.4,'#8d8f94')}},
   goudsmelterij:{name:'Goudsmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
