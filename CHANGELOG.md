@@ -6,7 +6,7 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 ## 2026-11-01
 
 ### Toegevoegd
-- **De adviseur**, Meester Wout: rechtsonder in beeld, met adviezen over voedsel, bouwplaatsen, gereedschap, lege
+- **De adviseur**, Milo: rechtsonder in beeld, met adviezen over voedsel, bouwplaatsen, gereedschap, lege
   gebouwen, mijnen, dragers en torens, en complimenten bij je eerste planken, brood en toren. Knoppen *Laat zien*,
   *Handleiding* en *Begrepen*; instelbaar in de zijbalk. Ook in hoofdstuk 2 van de handleiding.
 - **Mijlpaal 6c: krachthal.** Leidt vrije dragers op tot krachtpatser en traint ze met helm (niveau 2) of

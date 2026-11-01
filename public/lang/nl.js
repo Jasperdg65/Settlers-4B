@@ -17,7 +17,7 @@ TALEN.nl={
   "toren.paneel":"{m} bemand · {n} krachtpatsers ({niveaus})",
   "toren.wacht":"{n} wacht op krachtpatsers",
   "toren.gebiedPaneel":"gebied {n} tegels",
-  "adv.naam":"Meester Wout",
+  "adv.naam":"Milo",   // in elke taal dezelfde naam: niet vertalen
   "adv.titel":"Adviseur",
   "adv.stand":"Adviezen",
   "adv.alles":"Alles",

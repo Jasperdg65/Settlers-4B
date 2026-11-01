@@ -47,7 +47,7 @@ Kolonie wordt meertalig: Nederlands (brontaal), Engels, Frans, Duits en Spaans.
   `<script>` in `index.html`; voor de handleiding `tools/handleiding/xx/bron.html` en `xx/teksten.js` (zelfde velden als
   `nl/teksten.js`). De handleiding komt dan op `/handleiding/xx/`, met een taalkeuze bovenaan, en `schermen.js --taal=xx`
   maakt de schermafbeeldingen in die taal.
-- **Woordenlijst**: eigen begrippen (krachtpatser, krachthal, heler, hunnebed, Tuin van Verbondenheid, lievelingskost)
+- **Woordenlijst**: de adviseur heet in elke taal Milo (`adv.naam` niet vertalen). Eigen begrippen (krachtpatser, krachthal, heler, hunnebed, Tuin van Verbondenheid, lievelingskost)
   krijgen per taal één vaste vertaling, vast te leggen in de taalbestanden voordat de handleiding wordt vertaald.
 
 ## Handleiding
