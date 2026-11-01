@@ -1,6 +1,6 @@
 # Visie
 
-Kolonie is een vreedzaam bouwspel in de browser, over samenwerking, zorg en harmonie. Het is een eigen
+Terrana is een vreedzaam bouwspel in de browser, over samenwerking, zorg en harmonie. Het is een eigen
 spel, geïnspireerd door het genre van de klassieke kolonie-bouwspellen: je bouwt een dorp, zet
 productieketens op en laat je kolonisten zelf het werk zoeken. Teksten en beelden uit bestaande
 spellen nemen we niet over, ook niet in parafrase.

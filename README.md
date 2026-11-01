@@ -1,6 +1,6 @@
-# Settlers 4B – Kolonie
+# Terrana
 
-Browsergame "Kolonie", een vreedzaam bouwspel over samenwerking, zorg en harmonie, op
+Browsergame "Terrana" (projectnaam Settlers 4B, eerst "Kolonie"), een vreedzaam bouwspel over samenwerking, zorg en harmonie, op
 https://doc.dgol.eu/settlers4b/. Plain HTML, CSS en JavaScript, met een kleine PHP-API (SQLite) voor
 maps en savegames.
 
@@ -29,7 +29,7 @@ Ontwerp, beslissingen en planning staan in [`docs/`](docs/) (niet via het web be
 
 ## Talen
 
-Kolonie wordt meertalig: Nederlands (brontaal), Engels, Frans, Duits en Spaans.
+Terrana wordt meertalig: Nederlands (brontaal), Engels, Frans, Duits en Spaans.
 
 - **Taalbestanden**: `public/lang/<taal>.js` vult `TALEN.<taal>` met vaste sleutels (`bld.houthakker`, `goed.plank`,
   `job.boer`, `ter.3`, …). `js/i18n.js` kiest de taal (`?lang=xx`, anders de vorige keuze, anders de browsertaal,
