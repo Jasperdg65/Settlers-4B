@@ -174,55 +174,353 @@
 </section>
 
 
-<section class="hoofdstuk wordt" id="je-dorp">
+<section class="hoofdstuk" id="je-dorp">
 <h2>Je dorp</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Over bewoners en dragers, hoe een drager vakman wordt door gereedschap op te halen, woonhuizen en nieuwe bewoners, opslag en stapels.</p>
+
+<img class="vignet" src="../assets/buildings/pakhuis.webp" alt="Pakhuis">
+<p class="intro">Een dorp is meer dan een verzameling daken. Het zijn mensen die sjouwen, zagen, bakken en elkaar helpen. In dit hoofdstuk leer je wie er in je dorp wonen, hoe ze aan hun werk komen en hoe je dorp groeit.</p>
+
+<h3>Kolonisten en dragers</h3>
+<p>Je begint met {{CFG.eco.colonistsPerPlayer}} kolonisten. Wie geen vast beroep heeft, is <b>drager</b>. Dragers zijn het bloed van je economie: ze brengen goederen van waar ze liggen naar waar ze nodig zijn. Een drager met een kist in zijn armen is onderweg; een drager die rustig rondkuiert, wacht op werk.</p>
+<p>Je geeft dragers geen opdrachten. Een planner kijkt een paar keer per seconde wat elk gebouw mist en stuurt de dichtstbijzijnde vrije drager naar het dichtstbijzijnde stuk dat niemand anders al komt halen. Daardoor loopt het vanzelf, maar het helpt wel als je gebouwen niet te ver uit elkaar zet. Een korte weg is een snelle weg.</p>
+<p>Lopen gaat over gras het makkelijkst. Bossen, rotsgrond en vooral het gebergte maken een tocht langer, net als heuvel op. Vanuit de burcht lopen al voetpaden naar de gebouwen van je startdorp; daarover gaat het net wat lichter. [[komt:Paadjes die vanzelf ontstaan waar veel gelopen wordt]]</p>
+
+<h3>Goederen liggen op de grond</h3>
+<p>In Kolonie zie je je voorraad gewoon liggen. Alles ligt in stapels van hoogstens {{CFG.stackMax}} stuks naast de deur van een gebouw. Een werkplaats heeft {{CFG.slots.anders}} stapelplekken. De burcht heeft er {{CFG.slots.burcht}} en een pakhuis {{CFG.slots.pakhuis}}: dat zijn je opslagplaatsen.</p>
+<ul>
+  <li>Wat een werkplaats maakt en zelf niet nodig heeft, brengen dragers naar de dichtstbijzijnde opslag met ruimte, tenzij een ander gebouw er al om vraagt. Dan gaat het meteen daarheen.</li>
+  <li>Is de opslag bij een deur vol, dan staat dat gebouw stil (<i>“opslag bij de deur vol”</i>). Een pakhuis vlakbij lost dat op.</li>
+  <li>Het paneel <i>Voorraad</i> telt alles wat je volk bezit, ook wat dragers op dat moment dragen.</li>
+</ul>
+
+<h3>Beroepen en gereedschap</h3>
+<p>Staat er een nieuw werkgebouw, dan zoekt het dorp een vakman. Eerst een werkloze vakman met het juiste beroep; anders wordt een vrije drager omgeschoold. Voor de meeste beroepen haalt hij eerst het juiste gereedschap uit de voorraad. Een houthakker zonder bijl is tenslotte maar een man die naar bomen kijkt.</p>
 <!--gen:beroepen-->
+<p>Er blijven altijd {{CFG.carry.keepFree}} vrije dragers per speler over: zonder dragers ligt alles stil. Breek je een werkgebouw af, dan komt de vakman naar buiten en houdt hij zijn beroep. Bouw je later weer zo'n gebouw, dan gaat hij er meteen in.</p>
+<div class="kader tip"><span class="titel">Tip</span>
+<p>Raakt je gereedschap op, dan blijven nieuwe gebouwen <i>wachten op een vakman</i>. Houd daarom een smidse aan de gang (hoofdstuk 4). Gravers en bouwers hebben een schop en een hamer nodig; die zijn er vanaf het begin, maar met veel bouwplaatsen tegelijk kun je er nooit genoeg van hebben.</p>
+</div>
+
+<h3>Woonhuizen en nieuwe bewoners</h3>
+<p>Een dorp groeit door woonhuizen. Een voltooid woonhuis krijgt in de loop van de tijd tot {{CFG.pop.house}} nieuwe bewoners. Elke {{sec(CFG.pop.every)}} komt er een bij, als er een maaltijd bij de deur ligt: {{lijst(CFG.pop.food.map(k=>goed(k).toLowerCase()),'of')}}. Die maaltijd is dan op. De nieuwe bewoner begint als vrije drager.</p>
+<p>Je startdorp heeft drie woonhuizen, samen goed voor {{3*CFG.pop.house}} nieuwe bewoners. Wil je verder groeien, bouw er dan meer, en zorg dat er eten is (hoofdstuk 4). Het paneel <i>Productie</i> laat zien hoeveel bewoners er al zijn bijgekomen en hoeveel huizen op eten wachten.</p>
+<div class="kader straks"><span class="titel">Straks</span>
+<p>Nu kost alleen een geboorte eten. Later gaan bewoners ook gewoon eten, en kun je in een school laten leren (hoofdstuk 7). [[komt:Bewoners die doorlopend eten]]</p>
+</div>
 </section>
 
-<section class="hoofdstuk wordt" id="grondstoffen-en-ketens">
+
+<section class="hoofdstuk" id="grondstoffen-en-ketens">
 <h2>Grondstoffen en ketens</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Hout, steen, de drie maaltijden (brood, stoofpot en fruit-notenmix), mijnen met de lievelingskost van de mijnwerkers, smelterijen, smidse en uitrustingsmaker. Elke keten met een eigen schema.</p>
+
+<img class="vignet" src="../assets/buildings/bakkerij.webp" alt="Bakkerij">
+<p class="intro">Bijna niets komt in één stap tot stand. Graan wordt meel, meel wordt brood, en brood geeft een mijnwerker de kracht om kolen te hakken waarmee ijzer gesmolten wordt. Zulke reeksen heten ketens. Hier vind je ze allemaal, met een schema per keten.</p>
+
+<h3>Hout en steen</h3>
+<p>De houtketen en de steenhouwer zag je al in <a href="#je-eerste-houtketen">Eerste stappen</a>. Planken en stenen zijn je bouwmaterialen; zonder die twee komt er geen enkel gebouw bij.</p>
+
+<h3>Een plantaardige keuken</h3>
+<p>In Kolonie eet niemand vlees of vis. Dat is geen gemis maar een keuze: de dieren in je streek zijn buren, en je volk weet heerlijk te koken met wat het land geeft. Er zijn drie maaltijden. Elk is goed voor een nieuwe bewoner, en elke mijnwerker heeft er een als lievelingskost.</p>
+
+<h4>Brood</h4>
+<!--gen:keten boerderij molen waterput bakkerij-->
+<p>De boer zaait graan op de akkers rond zijn boerderij en oogst het na {{sec(CFG.nature.crop[1])}}. De molen maalt er meel van, de waterput haalt water, en de bakker bakt van meel en water {{CFG.prod.bakkerij.out.brood}} broden. Je startdorp heeft deze hele keten al.</p>
+
+<h4>Stoofpot</h4>
+<!--gen:keten bonenakker moestuin waterput gaarkeuken-->
+<p>Op de bonenakker groeien peulvruchten (rijp na {{sec(CFG.nature.crop[2])}}), in de moestuin groente (na {{sec(CFG.nature.crop[3])}}). De gaarkeuken maakt van peulvruchten, groente en water {{CFG.prod.gaarkeuken.out.stoofpot}} pannen stoofpot. Bonenakker en moestuin hebben weinig ruimte nodig: hun akkers liggen binnen {{CFG.prod.moestuin.area}} tegels.</p>
+
+<h4>Fruit-notenmix</h4>
+<!--gen:keten plukkershut droogschuur-->
+<p>De plukker zoekt binnen {{CFG.prod.plukkershut.area}} tegels appelbomen en bessenstruiken voor fruit en hazelaars voor noten, om en om. Een geplukte boom of struik draagt na {{sec(CFG.nature.regrow)}} weer vruchten. In de droogschuur worden fruit en noten tot {{CFG.prod.droogschuur.out.notenmix}} zakjes fruit-notenmix. Zet de plukkershut dus in een bos met veel struiken.</p>
+
+<!--gen:kosten boerderij molen waterput bakkerij bonenakker moestuin gaarkeuken plukkershut droogschuur-->
+
+<div class="kader tip"><span class="titel">Water is overal</span>
+<p>Een waterput mag op elke plek met gras, ook ver van een meer: hij haalt grondwater omhoog. Hij maakt elke {{sec(CFG.prod.waterput.ticks)}} een emmer water. Een bakkerij die doorwerkt, gebruikt er elke {{sec(CFG.prod.bakkerij.ticks)}} één, en een gaarkeuken ook. Voor een bakkerij is één put dus ruim genoeg; draaien bakkerij en gaarkeuken allebei volop, zet er dan een tweede put bij.</p>
+</div>
+
+<h3>Mijnen en lievelingskost</h3>
+<p>In de bergen zitten ertsaders: kolen, ijzer en goud. Zet het vinkje <i>Toon ertsen in bergen</i> aan om ze te zien. Een mijn staat op rotsgrond of gebergte en haalt erts uit de ader binnen {{CFG.prod.kolenmijn.area}} tegels. Elke ertstegel bevat {{CFG.prod.mineUnits}} stuks; is een ader leeg, dan meldt de mijn <i>“geen ijzer meer in de buurt”</i> en is het tijd voor een nieuwe plek.</p>
+<!--shot:ertsen|Met “Toon ertsen in bergen” zie je de aders: zwart voor kolen, roestbruin voor ijzer, geel voor goud.-->
+<p>Mijnwerk maakt hongerig. Een mijnwerker eet elke maaltijd, maar met zijn lievelingskost werkt hij dubbel zo lang door:</p>
+<!--gen:lievelingskost-->
+<p>Je startdorp bakt alleen brood, dus in het begin draaien de ijzer- en goudmijn op brood. Bouw je een gaarkeuken en een droogschuur, dan halen ze met hetzelfde eten twee keer zoveel erts naar boven.</p>
+
+<h3>Metaal, gereedschap en uitrusting</h3>
+<!--gen:keten kolenmijn ijzermijn ijzersmelterij goudmijn goudsmelterij smidse wapensmid-->
+<ul>
+  <li>De <b>ijzersmelterij</b> en <b>goudsmelterij</b> maken van erts en kolen ijzer of goud. Kolen zijn dus dubbel nodig: houd de kolenmijn goed gevoed.</li>
+  <li>De <b>smidse</b> maakt van ijzer en een plank gereedschap: {{lijst(Object.keys(CFG.prod.smidse.recipes).map(k=>goed(k).toLowerCase()))}}.</li>
+  <li>De <b>uitrustingsmaker</b> maakt helmen, schilden en polsbanden: statusuitrusting voor krachtpatsers, geen wapens. Hij stopt al bij {{CFG.prod.wapensmid.enough}} stuks van elk, want uitrusting is pas straks nodig. [[komt:Uitrusting (helm, schild, polsband) voor krachtpatsers]]</li>
+</ul>
+<p>Smidse en uitrustingsmaker maken vanzelf wat je het minst hebt. Wil je iets anders, kies dan in het paneel <i>Productie</i> bij <i>maakt</i> een vast product. Dat geldt voor al die gebouwen van je volk tegelijk.</p>
+<!--gen:kosten kolenmijn ijzermijn goudmijn ijzersmelterij goudsmelterij smidse wapensmid-->
+
+<h3>Wanneer een gebouw stilstaat</h3>
+<p>Het kaartje van een gebouw zegt altijd waarom het niets doet. De meest voorkomende:</p>
+<ul>
+  <li><b>wacht op een vakman</b>: er is geen gereedschap of geen vrije drager (hoofdstuk 3);</li>
+  <li><b>wacht op meel</b> (of een ander goed): de keten ervoor hapert, kijk daar eerst;</li>
+  <li><b>genoeg … op voorraad</b>: je hebt er {{CFG.prod.enough}} of meer, het gebouw rust even;</li>
+  <li><b>opslag bij de deur vol</b>: zet een pakhuis in de buurt;</li>
+  <li><b>het gewas groeit nog</b>: geduld, de akker is bijna rijp.</li>
+</ul>
 </section>
 
-<section class="hoofdstuk wordt" id="natuur-en-dieren">
+
+<section class="hoofdstuk" id="natuur-en-dieren">
 <h2>Natuur en dieren</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Bosbouw, akkers en vruchten, en de wilde dieren. Voederbakken en de dierenverzorger staan nog in het ontwerp. [[komt:Voederbakken en dierenverzorger]]</p>
+
+<img class="vignet" src="../assets/buildings/bosbouwer.webp" alt="Bosbouwer">
+<p class="intro">Je dorp leeft van het land, en het land leeft mee. Bossen groeien terug, akkers rijpen, struiken dragen opnieuw vrucht, en tussen dat alles lopen de dieren hun eigen weg.</p>
+
+<h3>Bossen</h3>
+<p>Een houthakker laat een stronk achter. Na {{sec(CFG.nature.stump)}} is die vergaan en kan er weer iets groeien. De bosbouwer plant boompjes op vrije plekken binnen {{CFG.prod.bosbouwer.area}} tegels, maar nooit te dicht op elkaar: staan er al {{CFG.nature.plantNear}} bomen direct naast een plek, dan slaat hij die over. Na {{sec(CFG.nature.grow)}} is een boompje een volwassen boom. Houthakker en bosbouwer samen houden een bos eindeloos op peil.</p>
+
+<h3>Akkers, struiken en steen</h3>
+<ul>
+  <li><b>Akkers</b> worden gezaaid op vrij gras of weelderig gras, niet op paden of bij gebouwen. Graan is rijp na {{sec(CFG.nature.crop[1])}}, peulvruchten na {{sec(CFG.nature.crop[2])}}, groente na {{sec(CFG.nature.crop[3])}}. Over een akker kun je gewoon lopen.</li>
+  <li><b>Vruchtbomen en struiken</b> dragen na het plukken opnieuw, na {{sec(CFG.nature.regrow)}}.</li>
+  <li><b>Steenblokken en ertsaders</b> raken wel op. Plan je steenhouwer en je mijnen dus bij een flinke voorraad.</li>
+</ul>
+
+<h3>Wilde dieren</h3>
+<p>Herten grazen aan de bosrand, konijnen huppelen rond, eenden dobberen op het water, en af en toe sluipt er een vos voorbij. Ze doen niemand kwaad en niemand doet hun kwaad. Hoeveel er zijn, hangt af van de grootte van je wereld:</p>
+<!--gen:dieren-->
+
+<div class="kader straks"><span class="titel">Straks: zorgen voor dieren</span>
+<p>Een dierenverzorger vult voederbakken met wat het land geeft. Bij gevulde voederbakken blijven dieren in de buurt en krijgen ze jongen, en dat maakt je volk gelukkiger (zie <a href="#harmonie">Harmonie</a>). Een lege voederbak of een kaalgekapt bos doet juist pijn. [[komt:Voederbakken en dierenverzorger]]</p>
+</div>
 </section>
 
-<section class="hoofdstuk wordt" id="harmonie">
+
+<section class="hoofdstuk" id="harmonie">
 <h2>Harmonie [[komt:Harmoniemeter: verhogen en effecten (mijlpaal 7)]]</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Hoe je de harmonie verhoogt en wat dat oplevert.</p>
+
+<p class="intro">Harmonie is hoe goed je volk zich voelt in zijn streek. Het is een meter van 0 tot 100 per speler, en hij wordt het kloppend hart van Kolonie. Dit hoofdstuk beschrijft het ontwerp; in het spel staat de meter nu nog vast op het midden.</p>
+
+<h3>Wat de harmonie verhoogt</h3>
+<ul>
+  <li>gevulde voederbakken met een dierenverzorger, en een dierenweide;</li>
+  <li>aangeplant bos en bloemenweides;</li>
+  <li>een school en samen mediteren bij het hunnebed (hoofdstuk 7);</li>
+  <li>kleine dingen, zoals dragers die in hun vrije tijd met elkaar picknicken of een hert aaien.</li>
+</ul>
+<h3>Wat hem verlaagt</h3>
+<ul>
+  <li>lege voederbakken;</li>
+  <li>kaalslag: bos weghakken zonder bosbouwer.</li>
+</ul>
+<h3>Wat hij oplevert</h3>
+<ul>
+  <li>krachtpatsers met meer moed en kracht. Dit werkt nu al: in een duel telt de harmonie mee tot {{Math.round(CFG.duel.harmony*100)}}% erbij of eraf;</li>
+  <li>akkers en bomen die sneller groeien, en meer nieuwe bewoners;</li>
+  <li>bij een hoge harmonie blijven dieren staan bij ertsaders: een vriendelijke wenk waar je moet graven.</li>
+</ul>
 </section>
 
-<section class="hoofdstuk wordt" id="school-en-hunnebed">
+
+<section class="hoofdstuk" id="school-en-hunnebed">
 <h2>School en hunnebed [[komt:School (opleiding instellen) en hunnebed (samen mediteren met dieren)]]</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i></p>
+
+<p class="intro">Twee bijzondere plekken maken je dorp wijzer en rustiger. Ze staan in het ontwerp en komen in een volgende versie.</p>
+
+<h3>De school</h3>
+<p>In de school geeft een leraar les. Per school stel je in:</p>
+<ul>
+  <li>hoeveel leerlingen er tegelijk mogen (2 tot 10);</li>
+  <li>hoe lang de opleiding duurt: kort, middel of lang, voor het niveau basis, gevorderd of meester;</li>
+  <li>of ook bewoners met een beroep mogen leren. Die werken dan tijdelijk niet.</li>
+</ul>
+<p>Leerlingen eten wel maar werken niet. Daarna werken ze sneller in hun vak, worden helers en muzikanten beter, en een meester draagt het meest bij aan de harmonie.</p>
+
+<h3>Het hunnebed</h3>
+<p>Een hunnebed is een bouwwerk van grote stenen, op een rustige plek ver van lawaaiige werkplaatsen als de smidse, de zagerij en de mijnen. Af en toe komen vrije bewoners er in een kring zitten om samen te mediteren. Dieren uit de buurt komen erbij liggen, zeker als er gevulde voederbakken in de buurt staan. Zolang de meditatie duurt, stijgt de harmonie, meer naarmate er meer mensen en dieren meedoen. Je stelt zelf in hoeveel tijd je bewoners daaraan mogen besteden.</p>
 </section>
 
-<section class="hoofdstuk wordt" id="krachtpatsers-en-muzikanten">
+
+<section class="hoofdstuk" id="krachtpatsers-en-muzikanten">
 <h2>Krachtpatsers en muzikanten</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Niveaus, armpje drukken, het krachtbalkje, de heler, muzikanten, en hoe torens je gebied geven.</p>
+
+<img class="vignet" src="../assets/buildings/kazerne.webp" alt="Krachthal">
+<p class="intro">Ook in een vreedzame wereld zijn er weleens meningsverschillen: over een grens, of gewoon over wie de sterkste is op het feest. Die worden beslecht met armpje drukken. Wie verliest, rust even uit en doet daarna weer mee. Er valt niemand.</p>
+
+<div class="kader straks"><span class="titel">Nu nog in de Duel-test</span>
+<p>Krachtpatsers, helers en muzikanten kun je nu proberen in de modus <i>Duel-test</i> (knop in de zijbalk). In het dorp komen ze uit de krachthal en bemannen ze je torens. [[komt:Krachthal die krachtpatsers traint (mijlpaal 6c)]]</p>
+</div>
+
+<h3>Niveaus</h3>
+<table class="tabel">
+  <thead><tr><th>Niveau</th><th>Krachtpatser</th><th>Muzikant</th><th>Heler</th></tr></thead>
+  <tbody>
+    <tr><td><b>1 · junior</b></td><td>kale helm</td><td>vilten muts, fluit</td><td>kap</td></tr>
+    <tr><td><b>2 · medior</b></td><td>helm met messing punt</td><td>muts met speld, harp</td><td>kap met voorhoofdsring</td></tr>
+    <tr><td><b>3 · senior</b></td><td>helm met kam in je kleur</td><td>grote veer, doedelzak</td><td>bladerkrans met lint in je kleur</td></tr>
+  </tbody>
+</table>
+<p>Een medior is {{Math.round((CFG.duel.level[2]-1)*100)}}% sterker dan een junior, een senior {{Math.round((CFG.duel.level[3]-1)*100)}}%. Boven een geselecteerde eenheid zie je een capsule in zijn gezondheidskleur, met één tot drie koperen stipjes voor zijn niveau.</p>
+
+<h3>Armpje drukken</h3>
+<!--shot:duel|Een duel in de Duel-test: twee mediors aan tafel, het balkje erboven laat zien wie aan de winnende hand is.-->
+<p>Selecteer je krachtpatsers en klik met de rechtermuisknop op een krachtpatser van een andere kleur. De sterkste van jouw selectie neemt de uitdaging aan. Ze lopen naar een tafeltje tussen hen in, gaan zitten en beginnen te drukken. Het <b>krachtbalkje</b> boven de tafel kleurt in beider kleuren en schuift mee met de stand.</p>
+<p>Wie wint, hangt af van:</p>
+<ul>
+  <li><b>niveau</b>: de basiskracht;</li>
+  <li><b>vermoeidheid</b>: elk duel put uit, en een winnaar wordt extra moe. Volledig uitgeput kost het {{Math.round(CFG.duel.fatigue*100)}}% kracht. Herstellen gaat langzaam;</li>
+  <li><b>muziek</b>: een eigen muzikant in de buurt maakt {{Math.round(CFG.duel.music.bonus*100)}}% sterker;</li>
+  <li><b>harmonie</b>: het welzijn van je volk (hoofdstuk 6);</li>
+  <li><b>gevoed zijn</b>: een hongerige krachtpatser drukt met {{Math.round(CFG.duel.hungry*100)}}% van zijn kracht.</li>
+</ul>
+<p>Bij bijna gelijke kracht is het spannend en duurt een duel zo'n twintig seconden. Is de een duidelijk sterker, dan is het snel beslist. Na {{sec(CFG.duel.maxTicks)}} wint wie voorstaat.</p>
+
+<h3>De heler</h3>
+<p>De verliezer loopt wat doorschijnend en langzamer naar de dichtstbijzijnde heler van zijn kleur (zonder heler: naar de burcht) en rust daar {{sec(CFG.duel.outTicks)}} uit. Daarna doet hij weer mee, al is hij nog wat moe. Een heler trekt gewoon mee met zijn groep.</p>
+
+<h3>Muzikanten</h3>
+<p>Een muzikant speelt zijn krachtpatsers moed in. Hoe hoger zijn niveau, hoe verder zijn muziek draagt: met de fluit {{CFG.duel.music.range[1]}} tegels, met de harp {{CFG.duel.music.range[2]}}, met de doedelzak {{CFG.duel.music.range[3]}}. Twee muzikanten maken niet dubbel zo sterk. Selecteer je een muzikant, dan zie je zijn bereik als stippellijn.</p>
+
+<h3>Torens en gebied</h3>
+<p>Je gebied komt van bemande gebouwen. De burcht geeft een straal van {{CFG.territory.burcht}} tegels, en elke bemande wachttoren {{CFG.territory.wachttoren}}. Een toren telt pas als er iemand in woont; tot dan geeft hij nog geen land. Binnen je grens mag je bouwen. Je ziet de grens als stippellijn in je kleur, ook op de overzichtskaart.</p>
+<!--shot:grens|Van verder weg: de grenzen van je gebied rond de burcht en de wachttorens.-->
+<ul>
+  <li>Waar twee gebieden elkaar raken, houdt het oudste bemande gebouw het land. Een nieuwe toren neemt dus nooit land van een buur af.</li>
+  <li>Breek je een bemande toren af, dan <b>verdwijnt het land</b> dat hij gaf. Het kaartje waarschuwt je vooraf: hoeveel tegels je verliest en welke gebouwen dan buiten je grens komen.</li>
+  <li>Gebouwen buiten je grens blijven staan en werken door. Je kunt daar alleen niets nieuws bouwen. Ook een bouwplaats wordt gewoon afgemaakt; is dat een toren, dan krijg je het land terug zodra hij bemand is.</li>
+</ul>
+<div class="kader straks"><span class="titel">Nu nog</span>
+<p>Een wachttoren wordt nu bemand door een <i>wachter</i>, een gewone drager. Straks wonen er krachtpatsers in, en kan een buur je toren uitdagen. Wie de toren met armpje drukken wint, neemt hem over. [[komt:Torens bemand door krachtpatsers, uitdagen en overnemen]]</p>
+</div>
+
+<h3>Groepen</h3>
+<p>In de Duel-test sla je een selectie op met <kbd>Ctrl</kbd>+<kbd>1</kbd> tot <kbd>9</kbd> (of <kbd>Alt</kbd>, omdat sommige browsers <kbd>Ctrl</kbd>+cijfer voor tabbladen gebruiken). Met <kbd>1</kbd> tot <kbd>9</kbd> kies je de groep weer; twee keer snel achter elkaar en de camera gaat erheen.</p>
 </section>
 
-<section class="hoofdstuk wordt" id="buren">
+
+<section class="hoofdstuk" id="buren">
 <h2>Buren [[komt:Computerburen, handel en diplomatie (mijlpaal 9 tot 11)]]</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Handel, diplomatie en de karakters van de computerburen.</p>
+
+<p class="intro">Je bent niet alleen. Rondom wonen andere volken, elk met een eigen karakter. Je speelt Kolonie alleen, tegen de computer, maar je buren voelen allesbehalve als machines. Dit hoofdstuk beschrijft het ontwerp.</p>
+
+<h3>Computerburen</h3>
+<ul>
+  <li>Ze spelen met precies dezelfde regels als jij en krijgen niets cadeau.</li>
+  <li>Elk heeft een <b>karakter</b>: gul, zuinig, trots, voorzichtig… Dat merk je aan hoe ze handelen en hoe snel ze je vertrouwen.</li>
+  <li>Ze doen zelf <b>voorstellen</b>, met uitleg: <i>“We hebben veel steen over, maar komen brood tekort.”</i></li>
+  <li>Ze hebben een <b>geheugen</b>. Eerlijk handelen, nagekomen afspraken en hulp in moeilijke tijden maken de band sterker; een gebroken belofte blijft een tijd hangen.</li>
+  <li>Niet iedere buur is meteen een vriend. Sommigen moet je voor je winnen.</li>
+  <li>Met de <b>moeilijkheidsgraad</b> stel je in hoe zelfstandig ze zijn en hoe snel ze vertrouwen geven.</li>
+</ul>
+
+<h3>Handel</h3>
+<p>Op de marktplaats woont een handelaar die met een handkar over land of met een bootje over het water naar je buren gaat. In het ruilvenster zet je je aanbod tegenover je vraag. Wat schaars is, is meer waard. Met de kaartinstelling <i>onderlinge afhankelijkheid</i> heeft niet iedere speler alles: de een zit op steen, de ander op ijzer of vruchtbare grond. Dan is handelen geen keuze maar een noodzaak, en dat is precies de bedoeling.</p>
+
+<h3>Diplomatie</h3>
+<p>Je band met een buur groeit van <i>onbekend</i> via <i>kennis</i> en <i>vriend</i> naar <i>bondgenoot</i>. Dat gaat door te handelen, geschenken te geven, samen te mediteren bij het hunnebed en samen feest te vieren, met een vriendschappelijk toernooi armpje drukken. Sluit je vrede, dan liggen de grenzen vast. Een slechte band betekent een slechtere ruil, of helemaal geen.</p>
 </section>
 
-<section class="hoofdstuk wordt" id="tuin-van-verbondenheid">
-<h2>De Tuin van Verbondenheid</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Het gezamenlijke einddoel, de bouwfasen en ieders bijdrage.</p>
+
+<section class="hoofdstuk" id="tuin-van-verbondenheid">
+<h2>De Tuin van Verbondenheid [[komt:De Tuin van Verbondenheid als gezamenlijk einddoel (mijlpaal 12)]]</h2>
+
+<p class="intro">Tussen alle startplekken in ligt een stuk neutraal land dat van niemand is. Daar leggen alle volken samen de Tuin van Verbondenheid aan: het grote doel van Kolonie.</p>
+
+<h3>De tuin</h3>
+<p>Een rond terrassenplein met vijvers, watervallen en paviljoens. In het midden draagt een paar stenen handen een oude olijfboom. Vier brede trappen leiden naar het hart van de tuin, elk in de kleur van een volk. Iedere speler bouwt zijn eigen trap en zijn eigen kwart, zodat je op de kaart ziet wie wat heeft bijgedragen.</p>
+
+<h3>Bouwen in fasen</h3>
+<p>De tuin groeit in fasen, ongeveer zo: fundering en terrassen, trappen en vijvers, paviljoens, en als laatste de beplanting en de olijfboom. Elke fase vraagt een eigen mix van goederen. Dragers brengen ze erheen zoals naar een gewone bouwplaats, en bij elke fase zie je wat iedere speler heeft gebracht.</p>
+
+<h3>Samen winnen</h3>
+<p>Is de tuin af, dan heeft iedereen gewonnen. Geen enkel volk kan het alleen, want de grondstoffen zijn over de kaart verspreid. Je computerburen dragen bij naar vermogen en naar karakter: de een gul, de ander pas als jij het goede voorbeeld geeft.</p>
+<p>Liever zonder einddoel? In de modus <b>vrij spel</b> bouw je gewoon zo lang en zo mooi als je wilt.</p>
 </section>
 
-<section class="hoofdstuk wordt" id="kaartgenerator">
+
+<section class="hoofdstuk" id="kaartgenerator">
 <h2>De kaartgenerator</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Alle instellingen van de wereld, en later de editor. [[komt:Kaarteditor]]</p>
+
+<p class="intro">Elke wereld in Kolonie wordt ter plekke gemaakt, uit een naam: de seed. Dezelfde seed met dezelfde instellingen geeft altijd precies dezelfde wereld.</p>
+<!--shot:wereld|Een hele wereld van 256 bij 256 tegels, van bovenaf: vier startdorpen met hun grens, bergen, meren en bossen.-->
+
+<h3>De instellingen</h3>
+<table class="tabel">
+  <thead><tr><th>Instelling</th><th>Wat het doet</th></tr></thead>
+  <tbody>
+    <tr><td><b>Seed</b></td><td>De naam van de wereld. De dobbelsteen kiest een willekeurige.</td></tr>
+    <tr><td><b>Grootte</b></td><td>128, 192, 256, 320 of 384 tegels in het vierkant. Groter is meer ruimte, maar ook langere wegen.</td></tr>
+    <tr><td><b>Landvorm</b></td><td><i>Continent</i>: één groot land. <i>Eilanden</i>: losse eilanden. <i>Binnenland met meren</i>: veel land met water ertussen.</td></tr>
+    <tr><td><b>Spelers</b></td><td>2 tot 8 startplekken, elk met een eigen startdorp en kleur.</td></tr>
+    <tr><td><b>Waterniveau</b></td><td>Hoeveel van de wereld onder water ligt.</td></tr>
+    <tr><td><b>Gebergte</b></td><td>Hoeveel bergen er zijn, en dus hoeveel steen en erts.</td></tr>
+    <tr><td><b>Bosdichtheid</b></td><td>Hoeveel bos er groeit.</td></tr>
+    <tr><td><b>Startvoorraad</b></td><td>Weinig, normaal of veel in de burcht (zie <a href="#eerste-stappen">Eerste stappen</a>).</td></tr>
+  </tbody>
+</table>
+<p>Het terrein bestaat uit diep en ondiep water, strand, gras, weelderig gras, droog gras, rotsgrond, gebergte en sneeuw. Gebouwen staan op gras, mijnen op rots en gebergte. Ertsaders liggen in de bergen; met het vinkje <i>Toon ertsen in bergen</i> zie je ze.</p>
+
+<h3>Straks</h3>
+<ul>
+  <li><b>Onderlinge afhankelijkheid</b>: een schuif die de grondstoffen bewust ongelijk verdeelt, zodat volken elkaar nodig hebben. [[komt:Kaartinstelling onderlinge afhankelijkheid]]</li>
+  <li><b>Neutraal land</b> in het midden voor de Tuin van Verbondenheid.</li>
+  <li><b>Een editor</b> om een wereld met de hand bij te werken. [[komt:Kaarteditor]]</li>
+</ul>
 </section>
 
-<section class="hoofdstuk wordt" id="toetsen-en-tips">
+
+<section class="hoofdstuk" id="toetsen-en-tips">
 <h2>Toetsen en tips</h2>
-<p class="zacht"><i>Dit hoofdstuk wordt in de volgende stap geschreven.</i> Alle toetsen op een rij, ook de groepen <kbd>Ctrl</kbd>+<kbd>1</kbd>…<kbd>9</kbd>, en tips voor een soepel draaiend dorp.</p>
+
+<h3>Altijd</h3>
+<table class="tabel toetsen">
+  <thead><tr><th>Toets of muis</th><th>Wat het doet</th></tr></thead>
+  <tbody>
+    <tr><td>slepen met de linkermuisknop</td><td>de kaart schuiven</td></tr>
+    <tr><td><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> of de pijltjes</td><td>de kaart schuiven</td></tr>
+    <tr><td>scrollwiel, <kbd>+</kbd> en <kbd>−</kbd> rechtsonder</td><td>zoomen</td></tr>
+    <tr><td>klikken op de overzichtskaart</td><td>daarheen springen</td></tr>
+    <tr><td>muis over de kaart</td><td>informatie over tegel, gebouw of stapel</td></tr>
+    <tr><td><kbd>F1</kbd></td><td>deze handleiding (in een nieuw tabblad)</td></tr>
+  </tbody>
+</table>
+<h3>Bij het bouwen</h3>
+<table class="tabel toetsen">
+  <thead><tr><th>Toets of muis</th><th>Wat het doet</th></tr></thead>
+  <tbody>
+    <tr><td>klik op een gebouw in het paneel Bouwen</td><td>bouwmodus voor dat gebouw</td></tr>
+    <tr><td>klik op de kaart</td><td>bouwplaats neerzetten (of afbreken in de afbreekmodus)</td></tr>
+    <tr><td><kbd>Esc</kbd> of de rechtermuisknop</td><td>stoppen met bouwen of afbreken</td></tr>
+  </tbody>
+</table>
+<h3>In de Duel-test</h3>
+<table class="tabel toetsen">
+  <thead><tr><th>Toets of muis</th><th>Wat het doet</th></tr></thead>
+  <tbody>
+    <tr><td>klikken / slepen met de linkermuisknop</td><td>één eenheid / een rechthoek selecteren</td></tr>
+    <tr><td><kbd>Shift</kbd>+klik</td><td>alle eigen krachtpatsers van dat niveau in beeld</td></tr>
+    <tr><td>rechtsklik op een andere kleur</td><td>uitdagen tot armpje drukken</td></tr>
+    <tr><td>rechtsklik op de grond</td><td>erheen lopen, in opstelling</td></tr>
+    <tr><td>rechts slepen</td><td>de kaart schuiven</td></tr>
+    <tr><td><kbd>Ctrl</kbd>/<kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>9</kbd></td><td>selectie opslaan als groep</td></tr>
+    <tr><td><kbd>1</kbd>…<kbd>9</kbd>, twee keer snel</td><td>groep kiezen, en de camera erheen</td></tr>
+  </tbody>
+</table>
+<h3>In de handleiding</h3>
+<p><kbd>/</kbd> springt naar het zoekveld, <kbd>↑</kbd> en <kbd>↓</kbd> lopen door de treffers en <kbd>Enter</kbd> opent er een.</p>
+
+<h3>Op een tablet of telefoon</h3>
+<p>Eén vinger schuift, twee vingers zoomen en een tik geeft informatie. In de bouwmodus bekijkt de eerste tik de plek en bouwt een tweede tik op dezelfde plek. In de Duel-test selecteert een tik een eenheid, en tik je daarna op een andere kleur of op de grond om uit te dagen of te lopen. Vasthouden en slepen trekt een rechthoek.</p>
+
+<h3>Tips voor een soepel dorp</h3>
+<ul>
+  <li><b>Kort is snel.</b> Zet werkplaatsen dicht bij hun grondstoffen en bij elkaar: elke stap die een drager niet hoeft te lopen, is winst.</li>
+  <li><b>Een pakhuis halverwege</b> scheelt veel heen-en-weer, zeker bij mijnen in de bergen.</li>
+  <li><b>Houthakker en bosbouwer zijn een duo.</b> Een houthakker zonder bosbouwer laat een kale vlakte achter.</li>
+  <li><b>Kijk naar het knelpunt.</b> Staat een gebouw te wachten, kijk dan in het paneel Productie waar de keten hapert, en begin daar.</li>
+  <li><b>Gereedschap is groei.</b> Zonder bijl geen houthakker, zonder houweel geen mijnwerker. Houd een smidse aan het werk.</li>
+  <li><b>Lievelingskost loont.</b> Een gaarkeuken en een droogschuur verdubbelen wat je ijzer- en goudmijn met hetzelfde eten opleveren.</li>
+  <li><b>Kijk voor je afbreekt.</b> Een bemande toren afbreken kost land. Het kaartje zegt hoeveel.</li>
+</ul>
 </section>
 
 <section class="hoofdstuk bijlage" id="alle-gebouwen">

@@ -15,11 +15,11 @@ const TALEN=fs.readdirSync(__dirname).filter(d=>fs.existsSync(path.join(__dirnam
 
 /* gebouwplaatje in print: kleine jpg op wit (taalneutraal, gedeeld) */
 const DRUK=path.join(IMG,'druk');
-function drukJpg(t){const src=path.join(PUB,'assets/buildings',t+'.webp'),dst=path.join(DRUK,t+'.jpg');
+function drukJpg(t,map='buildings'){const src=path.join(PUB,'assets',map,t+'.webp'),dst=path.join(DRUK,(map==='buildings'?'':map+'-')+t+'.jpg');
   if(!fs.existsSync(dst)||fs.statSync(dst).mtimeMs<fs.statSync(src).mtimeMs){fs.mkdirSync(DRUK,{recursive:true});
     require('child_process').execFileSync('php',['-r',`$i=imagecreatefromwebp($argv[1]);$w=360;$h=(int)round(imagesy($i)*$w/imagesx($i));$o=imagecreatetruecolor($w,$h);
       imagefill($o,0,0,imagecolorallocate($o,255,255,255));imagecopyresampled($o,$i,0,0,0,0,$w,$h,imagesx($i),imagesy($i));imagejpeg($o,$argv[2],84);`,src,dst])}
-  return `img/druk/${t}.jpg`}
+  return `img/druk/${path.basename(dst)}`}
 /* elk <img> van een gebouw krijgt een tweeling voor print (de css toont er steeds één) */
 const drukTweeling=h=>h.replace(/<img\b[^>]*\bsrc="\.\.\/assets\/buildings\/(\w+)\.webp"[^>]*>/g,(m,t)=>{
   const cls=c=>/class="/.test(m)?m.replace(/class="/,`class="${c} `):m.replace('<img',`<img class="${c}"`);
@@ -89,6 +89,15 @@ function maakTaal(taal){
         h+=`<tr><td>${ikoon(g.k)}<b>${esc(g.n)}</b></td><td>${maak[g.k]?lijst([...maak[g.k]]):`<span class="zacht">${TX.startvoorraad}</span>`}</td><td>${nodig[g.k]?lijst([...nodig[g.k]]):'<span class="zacht">–</span>'}</td></tr>`});
       return h+'</tbody></table>';
     },
+    lievelingskost(){
+      return `<table class="tabel smal"><thead><tr><th>${K.mijn}</th><th>${K.liefst}</th><th>${K.ookGoed}</th></tr></thead><tbody>`+
+        Object.keys(CFG.mineFood).filter(t=>BTYPES[t]).map(t=>`<tr><td>${bldCel(t)}</td><td>${ikoon(CFG.mineFood[t])}<b>${goed(CFG.mineFood[t])}</b> <span class="zacht">(${TX.rondes(CFG.prod.mineFav)})</span></td><td>`+
+          CFG.prod.mineMeals.filter(k=>k!==CFG.mineFood[t]).map(k=>ikoon(k)+goed(k)).join(', ')+` <span class="zacht">(${TX.rondes(1)})</span></td></tr>`).join('')+'</tbody></table>';
+    },
+    dieren(){
+      return `<table class="tabel smal"><thead><tr><th>${K.dier}</th><th>${K.waar}</th><th class="n">${K.hoogstens}</th></tr></thead><tbody>`+
+        CFG.animals.map(a=>`<tr><td><b>${esc(SP.get(`t('dier.${a.k}')`))}</b></td><td>${a.water?TX.opWater:TX.opLand}</td><td class="n">${getal(a.max)}</td></tr>`).join('')+'</tbody></table>';
+    },
     /* productieketen als SVG: knooppunten zijn de gebouwplaatjes, pijlen dragen het goed */
     keten(args){
       const N=new Map(),E=[],KT=TX.keten;
@@ -98,12 +107,18 @@ function maakTaal(taal){
       for(const t of args)node(t,{label:naam(t),img:bldImg(t)});
       for(const t of args){const pc=CFG.prod[t]||{};
         if(pc.gather==='plant'){node('bos',{label:KT.bos,img:NAT.tree[2],nat:1});E.push([t,'bos',KT.plant,null,1])}
+        else if(pc.gather==='farm'){const g=pc.out;node('akker'+pc.crop,{label:KT.akker,img:goedImg(g),nat:1,klein:1});E.push(['akker'+pc.crop,t,KT.oogst,null])}
         else if(NAT[pc.gather]){const [id,l,img,lab]=NAT[pc.gather];node(id,{label:l,img,nat:1});E.push([id,t,lab,null])}
         if(pc.mine){node('erts'+pc.mine,{label:KT.ertsader,img:'../assets/nature/rots0.webp',nat:1});E.push(['erts'+pc.mine,t,KT.erts,null])}
         const outs=[pc.out,pc.out2].filter(x=>typeof x==='string');for(const r of recipes(t))outs.push(...Object.keys(r.out));
         for(const g of new Set(outs)){const users=args.filter(u=>recipes(u).some(r=>g in r.in));
           if(users.length)for(const u of users)E.push([t,u,goed(g),g]);
           else{node('voorraad',{label:KT.voorraad,img:bldImg('burcht'),store:1});E.push([t,'voorraad',goed(g),g])}}}
+      /* meerdere goederen over dezelfde pijl: één label, de groepsnaam als ze uit één groep komen (zes stuks gereedschap) */
+      {const per=new Map();for(const e of E){const k=e[0]+'>'+e[1];if(!per.has(k))per.set(k,[]);per.get(k).push(e)}
+        E.length=0;for(const l of per.values()){if(l.length===1||!l[0][3]){E.push(...l);continue}
+          const gs=l.map(e=>GOODS[GI[e[3]]]),een=gs.every(g=>g.gr===gs[0].gr);
+          E.push([l[0][0],l[0][1],een?gs[0].grn:gs.map(g=>g.n).join(', '),l[0][3]])}}
       /* lagen: langste pad vanaf de bronnen, de voorraad altijd rechts; planten (bosbouwer → bos) telt niet mee:
          de planter staat in dezelfde kolom, boven het bos */
       const L=new Map([...N.keys()].map(k=>[k,0]));
@@ -131,10 +146,14 @@ function maakTaal(taal){
         s+=`<g class="etiket"><rect x="${lx-tw/2}" y="${ly-12}" width="${tw}" height="24" rx="12"/>${gi?`<image href="${gi}" x="${lx-tw/2+4}" y="${ly-9}" width="18" height="18"/>`:''}<text x="${lx-tw/2+(gi?24:6)}" y="${ly+5}">${esc(lab)}</text></g>`}
       for(const [k,n] of N){const [x,y]=pos.get(k);
         s+=`<g class="knoop${n.nat?' natuur':''}${n.store?' opslag':''}"><title>${esc(n.label)}</title><rect x="${x-W0/2}" y="${y-H0/2}" width="${W0}" height="${H0}" rx="12"/>`+
-          (n.img?`<image href="${n.img}" x="${x-W0/2+10}" y="${y-H0/2+6}" width="${W0-20}" height="${H0-36}" preserveAspectRatio="xMidYMax meet"/>`:'')+
+          (n.img?(n.klein?`<image href="${n.img}" x="${x-30}" y="${y-H0/2+18}" width="60" height="48" preserveAspectRatio="xMidYMid meet"/>`
+            :`<image href="${n.img}" x="${x-W0/2+10}" y="${y-H0/2+6}" width="${W0-20}" height="${H0-36}" preserveAspectRatio="xMidYMax meet"/>`):'')+
           `<text x="${x}" y="${y+H0/2-11}" text-anchor="middle">${esc(n.label)}</text></g>`}
-      return `<figure class="keten"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(KT.aria(args.map(naam).join(', ')))}">`+
-        `<defs><marker id="kop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="kop"/></marker></defs>${s}</svg></figure>`;
+      const svg=(inh,cls)=>`<svg class="${cls}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(KT.aria(args.map(naam).join(', ')))}">`+
+        `<defs><marker id="kop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="kop"/></marker></defs>${inh}</svg>`;
+      /* printversie met kleine jpg's op wit in plaats van de transparante webp's */
+      const druk=s.replace(/href="\.\.\/assets\/(buildings|nature)\/(\w+)\.webp"/g,(m,map,k)=>`href="${drukJpg(k,map)}"`);
+      return `<figure class="keten">${svg(s,'scherm')}${svg(druk,'druk')}</figure>`;
     },
   };
 

@@ -1,6 +1,6 @@
 "use strict";
 /* Nederlands: de brontaal. Elke sleutel hier moet ook in de andere talen staan (tools/talen.js controleert dat).
-   Sleutels: bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument. */
+   Sleutels: bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier. */
 TALEN.nl={
   "taal.naam":"Nederlands",
   "bld.burcht":"Burcht (hoofdkwartier)",
@@ -116,6 +116,11 @@ TALEN.nl={
   "niveau.1":"junior",
   "niveau.2":"medior",
   "niveau.3":"senior",
+  "dier.hert":"Hert",
+  "dier.konijn":"Konijn",
+  "dier.eend":"Eend",
+  "dier.vos":"Vos",
+  "dier.vogel":"Vogel",
   "instrument.1":"fluit",
   "instrument.2":"harp",
   "instrument.3":"doedelzak",

@@ -42,7 +42,7 @@ async function main(){
     const muis=async(x,y)=>{await cmd('Input.dispatchMouseEvent',{type:'mouseMoved',x,y});await sleep(400)};
     const weg=async()=>{await muis(5,890);await ev('hoverTile=null;showTip("");1')};
     const foto=async(naam,clip)=>{if(kies.length&&!kies.includes(naam))return;await sleep(900);
-      const r=await cmd('Page.captureScreenshot',{format:'jpeg',quality:82,clip:{x:clip[0],y:clip[1],width:clip[2],height:clip[3],scale:1}});
+      const r=await cmd('Page.captureScreenshot',{format:'jpeg',quality:76,clip:{x:clip[0],y:clip[1],width:clip[2],height:clip[3],scale:1}});
       fs.writeFileSync(path.join(SHOT,naam+'.jpg'),Buffer.from(r.result.data,'base64'));console.log('  ',naam)};
     /* kaartuitsnede: het middelste deel van het speelveld */
     const kaart=async(w=980,h=600)=>{const [l,t,W,H]=await ev('HB.canvas()');return [Math.round(l+(W-w)/2),Math.round(t+(H-h)/2),w,h]};
@@ -83,6 +83,23 @@ async function main(){
     await foto('paneel-wereld',await zij('aside',640));
     await foto('paneel-bouwen',await zij('#buildList',620));
     await ev("refreshProduction&&refreshProduction();1");await sleep(1200);await foto('paneel-productie',await zij('#prodList',520));
+
+    /* 7. ertsen in de bergen (vinkje 'Toon ertsen'), bij een mijn van speler 1 */
+    const mi=await ev("(()=>{const b=world.blds.find(b=>b.p===0&&b.type==='ijzermijn')||world.blds.find(b=>b.p===0&&/mijn$/.test(b.type));return [b.x,b.y]})()");
+    await ev(`showOres=true;$('ores').checked=true;HB.cam(${mi[0]},${mi[1]},1.6);1`);await weg();await foto('ertsen',await kaart(900,560));
+    await ev("showOres=false;$('ores').checked=false;1");
+
+    /* 8. de hele wereld van bovenaf (grondvlakken worden een paar per beeld gemaakt: even wachten) */
+    if(!kies.length||kies.includes('wereld')){await ev(`HB.cam(world.W/2,world.H/2,0.21);1`);await weg();await sleep(9000);await foto('wereld',await kaart(1000,620))}
+
+    /* 9. armpje drukken in de Duel-test: twee mediors van speler 1 en 2, een paar seconden bezig */
+    const du=await ev(`(()=>{$('mode').value='duel';startColonists();running=false;
+      const a=[],b=[];for(let i=0;i<S.n;i++)if(S.role[i]===2&&S.lvl[i]===2)(S.pl[i]===0?a:b).push(i);
+      order({p:0,t:'duel',ids:[a[0]],j:b[0]});
+      for(let k=0;k<20*20&&!DUELS.some(d=>d&&d.live);k++)tick();for(let k=0;k<20*4;k++)tick();
+      ARMY.sel=[];for(let i=0;i<S.n;i++)if(S.pl[i]===0&&!S.du[i]&&S.role[i]>=2)ARMY.sel.push(i);
+      const d=DUELS.find(Boolean);return d?[d.x,d.y]:null})()`);
+    if(du){await ev(`HB.cam(${du[0]-1},${du[1]},3.4);1`);await weg();await foto('duel',await kaart(900,560))}
 
     if(B.fouten.length)console.log('JS-fouten in het spel:',B.fouten.slice(0,5));
   }finally{B.close()}

@@ -763,13 +763,17 @@ Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.
 - Opslaan en laden van de hele wereld
 - Krachtpatsers selecteren en sturen in het eigen dorp
 - Eén vaste speler; de andere kleuren worden computerburen
+- Paadjes die vanzelf ontstaan waar veel gelopen wordt
+- Bewoners die doorlopend eten
+- Uitrusting (helm, schild, polsband) voor krachtpatsers
 - Voederbakken en dierenverzorger
 - Harmoniemeter: verhogen en effecten (mijlpaal 7)
 - School (opleiding instellen) en hunnebed (samen mediteren met dieren)
-- Computerburen, handel en diplomatie (mijlpaal 9 tot 11)
-- Kaarteditor
 - Krachthal die krachtpatsers traint (mijlpaal 6c)
-- Uitrusting (helm, schild, polsband) voor krachtpatsers
+- Torens bemand door krachtpatsers, uitdagen en overnemen
+- Computerburen, handel en diplomatie (mijlpaal 9 tot 11)
+- Kaartinstelling onderlinge afhankelijkheid
+- Kaarteditor
 <!-- komt:end -->
 
 ## Prestaties

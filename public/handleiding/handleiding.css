@@ -204,5 +204,5 @@ figcaption{font:14.5px/1.45 var(--ui);color:var(--zacht);margin-top:8px}
 }
 
 /* gebouwplaatjes: transparante webp op het scherm, kleine jpg op wit in print (maak.js zet ze allebei neer) */
-img.druk{display:none}
-@media print{img.scherm{display:none!important}.gkaart>img.druk,.voorblad-beeld.druk,.vignet.druk,.dorp img.druk{display:block}.bcel img.druk{display:inline-block}}
+img.druk,.keten svg.druk{display:none}
+@media print{img.scherm,.keten svg.scherm{display:none!important}.keten svg.druk{display:block}.gkaart>img.druk,.voorblad-beeld.druk,.vignet.druk,.dorp img.druk{display:block}.bcel img.druk{display:inline-block}}
