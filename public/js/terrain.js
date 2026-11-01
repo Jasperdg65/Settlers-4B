@@ -29,7 +29,7 @@ const ORECOL=['','#222','#b8622f','#f2c230','#e8e05a'];
 const PCOL=['#d33b3b','#2f6fd6','#e6b422','#3aa457','#9b4fc9','#e07a26','#22b0ad','#e05aa0'];
 const TREE_NAMES=[0,1,2,3,4].map(i=>t('boom.'+i));
 const TW=16,TH=8,HP=96,CH=32;
-const VILLAGE=['ijzersmelterij','goudsmelterij','wapensmid','pakhuis','woonhuis','houthakker','bakkerij','molen','boerderij','waterput','smidse','woonhuis','zagerij','houthakker','bosbouwer','steenhouwer','kazerne','woonhuis','wachttoren','wachttoren'];
+const VILLAGE=['kazerne','ijzersmelterij','goudsmelterij','wapensmid','pakhuis','woonhuis','houthakker','bakkerij','molen','boerderij','waterput','smidse','woonhuis','zagerij','houthakker','bosbouwer','steenhouwer','woonhuis','wachttoren','wachttoren'];   // de grote krachthal eerst, anders is er geen vlakke plek meer
 
 function quantile(arr,q){const c=Float32Array.from(arr).sort();return c[Math.min(c.length-1,Math.floor(q*c.length))]}
 
@@ -176,7 +176,7 @@ function generate(o){
       /* de bosbouwer zo dicht mogelijk bij de eerste houthakker, zodat het bos rond die houthakker weer aangroeit */
       const want=type==='houthakker'?1:type==='steenhouwer'?2:0,hk=type==='bosbouwer'&&blds.find(o=>o.type==='houthakker'&&o.p===p);
       let best=null,bs=-Infinity,tries=0;
-      for(let t=0;t<260&&tries<(want||hk?24:1);t++){
+      for(let t=0;t<(type==='kazerne'?900:260)&&tries<(want||hk?24:1);t++){
         const a=rand()*6.283,r=r0+rand()*(r1-r0),ax=Math.round(s.cx+Math.cos(a)*r),ay=Math.round(s.cy+Math.sin(a)*r);
         if(!fits(type,ax,ay,false))continue;tries++;let n=0;
         if(want)for(let dy=-8;dy<=8;dy++)for(let dx=-8;dx<=8;dx++){const x=ax+dx,y=ay+dy;if(x>0&&y>0&&x<W&&y<H&&dx*dx+dy*dy<=64&&obj[y*W+x]===want)n++}

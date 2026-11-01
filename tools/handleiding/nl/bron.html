@@ -252,7 +252,7 @@
 <ul>
   <li>De <b>ijzersmelterij</b> en <b>goudsmelterij</b> maken van erts en kolen ijzer of goud. Kolen zijn dus dubbel nodig: houd de kolenmijn goed gevoed.</li>
   <li>De <b>smidse</b> maakt van ijzer en een plank gereedschap: {{lijst(Object.keys(CFG.prod.smidse.recipes).map(k=>goed(k).toLowerCase()))}}.</li>
-  <li>De <b>uitrustingsmaker</b> maakt helmen, schilden en polsbanden: statusuitrusting voor krachtpatsers, geen wapens. Hij stopt al bij {{CFG.prod.wapensmid.enough}} stuks van elk, want uitrusting is pas straks nodig. [[komt:Uitrusting (helm, schild, polsband) voor krachtpatsers]]</li>
+  <li>De <b>uitrustingsmaker</b> maakt helmen, schilden en polsbanden: statusuitrusting voor krachtpatsers, geen wapens. De krachthal gebruikt ze om krachtpatsers een niveau hoger te trainen (hoofdstuk 8). Hij stopt al bij {{CFG.prod.wapensmid.enough}} stuks van elk, want er is maar weinig van nodig.</li>
 </ul>
 <p>Smidse en uitrustingsmaker maken vanzelf wat je het minst hebt. Wil je iets anders, kies dan in het paneel <i>Productie</i> bij <i>maakt</i> een vast product. Dat geldt voor al die gebouwen van je volk tegelijk.</p>
 <!--gen:kosten kolenmijn ijzermijn goudmijn ijzersmelterij goudsmelterij smidse wapensmid-->
@@ -346,9 +346,10 @@
 <img class="vignet" src="../assets/buildings/kazerne.webp" alt="Krachthal">
 <p class="intro">Ook in een vreedzame wereld zijn er weleens meningsverschillen: over een grens, of gewoon over wie de sterkste is op het feest. Die worden beslecht met armpje drukken. Wie verliest, rust even uit en doet daarna weer mee. Er valt niemand.</p>
 
-<div class="kader straks"><span class="titel">Nu nog in de Duel-test</span>
-<p>Krachtpatsers, helers en muzikanten kun je nu proberen in de modus <i>Duel-test</i> (knop in de zijbalk). In het dorp komen ze uit de krachthal en bemannen ze je torens. [[komt:Krachthal die krachtpatsers traint (mijlpaal 6c)]]</p>
-</div>
+<h3>De krachthal</h3>
+<p>Krachtpatsers komen uit de <b>krachthal</b>. Die haalt zelf vrije dragers binnen en leidt ze op: na {{sec(CFG.army.train)}} is een rekruut een junior. De hal houdt een <b>reserve</b> aan van {{CFG.army.hall.keep}} krachtpatsers; dat aantal kies je in het paneel <i>Productie</i> ({{lijst(CFG.army.hall.keeps.map(getal),'of')}}). Er blijven altijd {{CFG.carry.keepFree}} vrije dragers over voor het sjouwen.</p>
+<p>Met uitrusting trainen ze een niveau hoger, telkens in {{sec(CFG.army.upTicks)}}. Een junior wordt medior met een <b>helm</b>, een medior wordt senior met een <b>schild</b> en een <b>polsband</b>. Dragers brengen die van de uitrustingsmaker naar de hal, en de krachtpatser houdt ze daarna. De hal traint één krachtpatser tegelijk.</p>
+<p>Helers en muzikanten kun je nu alleen nog proberen in de modus <i>Duel-test</i> (knop in de zijbalk), net als het armpje drukken zelf. [[komt:Helers en muzikanten in het dorp]]</p>
 
 <h3>Niveaus</h3>
 <table class="tabel">
@@ -381,7 +382,7 @@
 <p>Een muzikant speelt zijn krachtpatsers moed in. Hoe hoger zijn niveau, hoe verder zijn muziek draagt: met de fluit {{CFG.duel.music.range[1]}} tegels, met de harp {{CFG.duel.music.range[2]}}, met de doedelzak {{CFG.duel.music.range[3]}}. Twee muzikanten maken niet dubbel zo sterk. Selecteer je een muzikant, dan zie je zijn bereik als stippellijn.</p>
 
 <h3>Torens en gebied</h3>
-<p>Je gebied komt van bemande gebouwen. De burcht geeft een straal van {{CFG.territory.burcht}} tegels, en elke bemande wachttoren {{CFG.territory.wachttoren}}. Een toren telt pas als er iemand in woont; tot dan geeft hij nog geen land. Binnen je grens mag je bouwen. Je ziet de grens als stippellijn in je kleur, ook op de overzichtskaart.</p>
+<p>Je gebied komt van bemande gebouwen. De burcht geeft een straal van {{CFG.territory.burcht}} tegels, en elke bemande wachttoren {{CFG.territory.wachttoren}}. Een toren telt pas als er een krachtpatser in woont; tot dan geeft hij nog geen land. Binnen je grens mag je bouwen. Je ziet de grens als stippellijn in je kleur, ook op de overzichtskaart.</p>
 <!--shot:grens|Van verder weg: de grenzen van je gebied rond de burcht en de wachttorens.-->
 <ul>
   <li>Waar twee gebieden elkaar raken, houdt het oudste bemande gebouw het land. Een nieuwe toren neemt dus nooit land van een buur af.</li>
@@ -389,7 +390,7 @@
   <li>Gebouwen buiten je grens blijven staan en werken door. Je kunt daar alleen niets nieuws bouwen. Ook een bouwplaats wordt gewoon afgemaakt; is dat een toren, dan krijg je het land terug zodra hij bemand is.</li>
 </ul>
 <div class="kader straks"><span class="titel">Nu nog</span>
-<p>Een wachttoren wordt nu bemand door een <i>wachter</i>, een gewone drager. Straks wonen er krachtpatsers in, en kan een buur je toren uitdagen. Wie de toren met armpje drukken wint, neemt hem over. [[komt:Torens bemand door krachtpatsers, uitdagen en overnemen]]</p>
+<p>Een wachttoren heeft plaats voor {{CFG.army.crew.wachttoren}} krachtpatsers. Is hij af, dan komt de dichtstbijzijnde krachtpatser er vanzelf in wonen: een die buiten rondloopt, of een uit de reserve van een krachthal. Zonder krachthal blijft een nieuwe toren dus leeg. De torens van je startdorp hebben meteen elk {{CFG.army.startCrew}} junior. Breek je een toren af, dan lopen zijn krachtpatsers naar een krachthal met plek, of naar de volgende toren die er een nodig heeft. Straks kan een buur je toren uitdagen; wie hem met armpje drukken wint, neemt hem over. [[komt:Torens uitdagen en overnemen (mijlpaal 8)]]</p>
 </div>
 
 <h3>Groepen</h3>

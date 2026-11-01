@@ -102,6 +102,7 @@ const JOBLOOK={
   droger:{hat:'#b98a55',kind:'cap',apron:'#d6b98a',item:'notenmix'},
   molenaar:{hat:'#f2ede1',kind:'cap',apron:'#e8e2d2',item:'meel'},
   bakker:{hat:'#ffffff',kind:'tall',apron:'#f4f0e6',item:'brood'},
+  krachtpatser:{hat:'#9aa0a8',kind:'helm',item:'schild'},   // alleen zonder 3D-atlas; anders het krachtpatsermodel per niveau
   smelter:{hat:'#5a4030',kind:'cap',apron:'#6b4a30',item:'kolen'},
   smid:{hat:'#3a2a20',kind:'cap',apron:'#5a3b22',item:'ijzer'},
 };

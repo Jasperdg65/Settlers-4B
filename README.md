@@ -24,6 +24,7 @@ public/                 webroot (Apache-alias /settlers4b)
     path.js             A* over het tegelraster, wachtrij met knopenbudget per tick, routecache
     transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
     build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
+    crew.js             krachthal en bemanning van torens (mijlpaal 6c)
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
     army.js             krachtpatsers: lopen, opdrachten uitvoeren, selecteren, groepen, markering (Duel-test)
     duel.js             duelmodule: kracht, duelStep (één tick van een duel), uitdagen, afloop
@@ -332,7 +333,7 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 5c | Mijnen met lievelingskost (`CFG.mineFood`) en ertstegels die opraken, smelterijen, smidse (gereedschap), uitrustingsmaker (helm, schild, polsband: statusuitrusting voor hogere niveaus), keuze wat ze maken; tijdelijk verbruik vervalt | klaar |
 | 6a | Bevolking: woonhuizen krijgen met voedsel tot 6 nieuwe bewoners (vrije dragers); start weer 40 kolonisten per speler | klaar |
 | 6b | Gebied: zichtbare grens, gebied alleen van bemande torens (tijdelijk met een wachter) | klaar |
-| 6c | Leger: krachthal traint kolonisten tot krachtpatsers (niveaus met statusuitrusting), bemanning van torens | gepland |
+| 6c | Krachthal: leidt vrije dragers op tot krachtpatsers en traint ze met uitrusting naar niveau 2 en 3; reserve instelbaar; krachtpatsers bemannen de torens (de tijdelijke wachter vervalt) | klaar |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
 | 9 | Computerburen met een eigen dorp: zelfde regels en economie als de speler, in een Web Worker, met karakter | later |
@@ -515,9 +516,8 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
   buur af. Land dat geen bemand gebouw meer dekt (de toren is afgebroken), blijft van zijn eigenaar
   maar is onbeschermd: valt het binnen de straal van een bemande toren van een ander, dan is het
   van die (ook bij een toren die later bemand raakt).
-- **Tijdelijk tot 6c**: een wachttoren wordt bemand door een *wachter* (beroep zonder gereedschap,
-  gewone vrije drager). In 6c nemen krachtpatsers dat over. De torens van het startdorp zijn
-  meteen bemand.
+- Bemanning: sinds 6c door krachtpatsers (zie hieronder). De torens van het startdorp zijn meteen
+  bemand.
 - Straal: burcht 20, wachttoren 13 (`CFG.territory`), zodat een toren een stap vooruit is en geen tweede burcht.
   Een startgebied is zo'n 1.500 tegels; een nieuwe toren aan de rand voegt er rond de 240 toe.
 - Gebouwen op land dat verloren gaat blijven staan en werken door; er kan daar alleen niet meer
@@ -557,6 +557,27 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 - De krachtpatsers hebben geen wapen; voor het duel komt een eigen armdruk-sprite (mijlpaal 3).
 - Muzikanten ondersteunen de kracht van hun groep binnen een bereik; hoe hoger hun niveau, hoe
   groter dat bereik (getallen in de config).
+
+**Krachthal en bemanning (mijlpaal 6c, `CFG.army`, js/crew.js)**
+
+- Krachtpatsers zijn kolonisten met beroep `krachtpatser` en niveau `S.lvl` (0 = rekruut in opleiding,
+  1–3). Een rekruut loopt nog als drager; vanaf niveau 1 het 3D-krachtpatsermodel van zijn niveau.
+- Krachthal (`kazerne`): haalt vrije dragers binnen tot haar reserve (`b.keep`, standaard
+  `army.hall.keep` = 2, keuze 0/2/4/8 in het paneel Productie, opdracht `keep`) vol is. Er blijven
+  altijd `carry.keepFree` vrije dragers over. Ze leidt één tegelijk op (`train`, 40 s) tot niveau 1
+  en traint daarna met uitrusting bij de deur een niveau hoger (`upTicks`, 60 s): helm → niveau 2,
+  schild + polsband → niveau 3 (`army.up`). Uitrusting wordt gedragen, dus verbruikt; de hal vraagt
+  hoogstens `hall.stock` van elk stuk.
+- Wachttoren: `army.crew.wachttoren` = 2 plaatsen. Een toren haalt de dichtstbijzijnde opgeleide
+  krachtpatser: vrij buiten of uit de reserve van een krachthal (niet wie daar net traint). Met
+  minstens één bewoner is hij bemand en geeft hij gebied. Startdorp: `startCrew` = 1 junior per toren.
+- Afbreken: wie binnen is komt naar buiten; een rekruut verliest zijn opleiding en is weer drager.
+  Losse krachtpatsers gaan naar een krachthal met plek of naar een toren die er een zoekt.
+- `b.crew` (wie binnen is), `b.otw` (onderweg), `b.trn` (wie traint). Nog niet: eten voor
+  krachtpatsers, helers en muzikanten in het dorp, krachtpatsers zelf sturen, betere bemanning
+  naar de rand verplaatsen.
+- De krachthal staat als eerste in de lijst van het startdorp: hij is groot (5 × 3) en vond
+  achteraan vaak geen vlakke plek meer.
 
 **Duel-test (krachtpatsers, mijlpaal 4)**
 
@@ -774,12 +795,11 @@ Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.
 - Krachtpatsers selecteren en sturen in het eigen dorp
 - Eén vaste speler; de andere kleuren worden computerburen
 - Bewoners die doorlopend eten
-- Uitrusting (helm, schild, polsband) voor krachtpatsers
 - Voederbakken en dierenverzorger
 - Harmoniemeter: verhogen en effecten (mijlpaal 7)
 - School (opleiding instellen) en hunnebed (samen mediteren met dieren)
-- Krachthal die krachtpatsers traint (mijlpaal 6c)
-- Torens bemand door krachtpatsers, uitdagen en overnemen
+- Helers en muzikanten in het dorp
+- Torens uitdagen en overnemen (mijlpaal 8)
 - Computerburen, handel en diplomatie (mijlpaal 9 tot 11)
 - Kaartinstelling onderlinge afhankelijkheid
 - Kaarteditor

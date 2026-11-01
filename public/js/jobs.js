@@ -34,10 +34,10 @@ function planJobs(M){
 }
 /* bij de deur: naar binnen, als het gebouw er nog is en op hem wacht */
 function enterBuilding(c){
+  if(S.job[c]===JI.krachtpatser){enterCrew(c);return}   // toren of krachthal (crew.js)
   const b=world.blds[S.dst[c]];
   if(b.dead||b.st||b.wkr!==c+1){toIdle(c);return}
   S.ins[c]=1;S.st[c]=ST.INSIDE;b.occ=1;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;
-  if(CFG.territory[b.type]){b.mt=tickNo;computeLand()}   // bemande toren: gebied erbij
 }
 /* gebouw b verdwijnt (afbreken): de bewoner komt naar buiten en is een werkloze vakman; wie onderweg is, ziet dat bij aankomst */
 function releaseWorker(b){

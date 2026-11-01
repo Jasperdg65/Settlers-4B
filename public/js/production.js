@@ -71,6 +71,7 @@ function tickProduction(){
   for(let bi=0;bi<bl.length;bi++){
     const b=bl[bi],pc=CFG.prod[b.type];
     if(b.type==='woonhuis'&&!b.dead&&!b.st){tickHouse(b,bi);continue}
+    if(b.type==='kazerne'&&!b.dead&&!b.st){tickHall(b,bi);continue}
     if(!pc||b.dead||b.st)continue;
     if(!b.occ){b.ps='wacht op een vakman';continue}
     const c=b.wkr-1;if(c<0||S.st[c]!==ST.INSIDE)continue;          // buiten aan het werk, of onderweg naar buiten
@@ -201,7 +202,7 @@ function arriveHome(c){
   if(b.dead||b.wkr!==c+1){toIdle(c);return}
   S.ins[c]=1;S.st[c]=ST.INSIDE;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;b.pt=CFG.prod[b.type].rest;
 }
-function prodLabel(b){return (CFG.prod[b.type]||b.type==='woonhuis')&&!b.st&&!b.dead&&b.ps?' · '+b.ps:''}
+function prodLabel(b){return (CFG.prod[b.type]||b.type==='woonhuis'||b.type==='kazerne')&&!b.st&&!b.dead&&b.ps?' · '+b.ps:''}
 
 /* ---------- Bevolking: woonhuizen ---------- */
 function tickHouse(b,bi){
@@ -242,9 +243,14 @@ function refreshProduction(){
   const houses=world.blds.filter(b=>b.type==='woonhuis'&&b.p===p&&!b.dead&&!b.st);
   if(houses.length){const n=houses.reduce((a,b)=>a+(b.born||0),0),hungry=houses.filter(b=>(b.born||0)<CFG.pop.house&&/voedsel/.test(b.ps)).length;
     rows.push(`<div class="prow"><b>Woonhuis ×${houses.length}</b><span>${n} van ${houses.length*CFG.pop.house} nieuwe bewoners`+(hungry?` · ${hungry} wacht op voedsel`:'')+'</span></div>')}
-  const towers=world.blds.filter(b=>b.type==='wachttoren'&&b.p===p&&!b.dead&&!b.st);
-  if(towers.length){const m=towers.filter(b=>b.occ).length,own=world.own;let n=0;if(own)for(let i=0;i<own.length;i++)if(own[i]===p+1)n++;
-    rows.push(`<div class="prow"><b>Wachttoren ×${towers.length}</b><span>${m} bemand`+(m<towers.length?` · ${towers.length-m} wacht op een wachter`:'')+` · gebied ${n.toLocaleString(LOC())} tegels</span></div>`)}
+  const lvTxt=list=>[1,2,3].map(l=>[l,list.filter(c=>S.lvl[c]===l).length]).filter(x=>x[1]).map(([l,n])=>n+'× '+LVLNAME[l].toLowerCase()).join(', ')||'–';
+  const halls=world.blds.filter(b=>b.type==='kazerne'&&b.p===p&&!b.dead&&!b.st).map(cr);
+  if(halls.length){const all=halls.flatMap(b=>b.crew),tr=all.filter(c=>!S.lvl[c]).length+halls.filter(b=>b.trn>=0&&S.lvl[b.trn]).length;
+    const sel=`<label class="pmake">${t('hal.houdt')} <select data-keep="1">`+CFG.army.hall.keeps.map(n=>`<option value="${n}"${halls[0].keep===n?' selected':''}>${n}</option>`).join('')+'</select></label>';
+    rows.push(`<div class="prow"><b>${BTYPES.kazerne.name} ×${halls.length}</b><span>${t('hal.paneel',{n:all.filter(c=>S.lvl[c]).length,niveaus:lvTxt(all)})}`+(tr?' · '+t('hal.opleiding',{n:tr}):'')+`</span>${sel}</div>`)}
+  const towers=world.blds.filter(b=>CFG.army.crew[b.type]&&b.p===p&&!b.dead&&!b.st).map(cr);
+  if(towers.length){const m=towers.filter(b=>b.occ).length,all=towers.flatMap(b=>b.crew),own=world.own;let n=0;if(own)for(let i=0;i<own.length;i++)if(own[i]===p+1)n++;
+    rows.push(`<div class="prow"><b>${BTYPES.wachttoren.name} ×${towers.length}</b><span>${t('toren.paneel',{m,n:all.length,niveaus:lvTxt(all)})}`+(m<towers.length?' · '+t('toren.wacht',{n:towers.length-m}):'')+' · '+t('toren.gebiedPaneel',{n:getal(n)})+'</span></div>')}
   for(const type in CFG.prod){
     const list=world.blds.filter(b=>b.type===type&&b.p===p&&!b.dead&&!b.st);if(!list.length)continue;
     const st={};for(const b of list){const s=b.occ?b.ps||'werkt':'wacht op een vakman';st[s]=(st[s]||0)+1}
@@ -259,5 +265,7 @@ function refreshProduction(){
   const html=rows.join('')||'<p class="note">Nog geen voltooide werkgebouwen.</p>';
   if(html!==prodShown){prodShown=html;$('prodList').innerHTML=html}
 }
-$('prodList').addEventListener('change',ev=>{const t=ev.target.dataset.type;if(!t)return;const p=+$('stockPl').value||0;
+$('prodList').addEventListener('change',ev=>{const p=+$('stockPl').value||0;
+  if(ev.target.dataset.keep){world.blds.forEach((b,bi)=>{if(b.type==='kazerne'&&b.p===p&&!b.dead)order({p,t:'keep',b:bi,n:+ev.target.value})});return}
+  const t=ev.target.dataset.type;if(!t)return;
   world.blds.forEach((b,bi)=>{if(b.type===t&&b.p===p&&!b.dead)order({p,t:'make',b:bi,make:ev.target.value})})});

@@ -56,7 +56,7 @@ const CFG={
     {k:'bakker',n:t('job.bakker'),bld:['bakkerij']},
     {k:'smelter',n:t('job.smelter'),bld:['ijzersmelterij','goudsmelterij']},
     {k:'smid',n:t('job.smid'),bld:['smidse','wapensmid']},
-    {k:'wachter',n:t('job.wachter'),bld:['wachttoren']},   // TIJDELIJK tot mijlpaal 6c: daarna bemannen krachtpatsers de toren
+    {k:'krachtpatser',n:t('job.krachtpatser')},   // opgeleid in de krachthal, bemant torens (crew.js, CFG.army)
   ],
   /* lievelingskost van mijnwerkers (de wereld is veganistisch). Een mijnwerker eet elke maaltijd uit prod.mineMeals, maar zijn
      lievelingskost is goed voor prod.mineFav rondes werk, een andere maaltijd voor één ronde (production.js, tryRecipe) */
@@ -175,13 +175,17 @@ const CFG={
   },
   /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
   territory:{burcht:20,wachttoren:13},
+  /* krachtpatsers (mijlpaal 6c, crew.js). crew = plaatsen per toren (bemand vanaf één); startCrew = krachtpatsers (niveau 1) per toren
+     van het startdorp. Krachthal: houdt standaard hall.keep krachtpatsers in reserve (keuze uit hall.keeps in het paneel Productie),
+     leidt een rekruut in train ticks op tot niveau 1 en traint in upTicks een niveau hoger met de uitrusting uit up (wordt gedragen,
+     dus verbruikt); ze vraagt hoogstens hall.stock van elk stuk tegelijk. Rekruten zijn vrije dragers (carry.keepFree blijven over). */
+  army:{crew:{wachttoren:2},startCrew:1,train:800,upTicks:1200,up:{2:{helm:1},3:{schild:1,polsband:1}},
+    hall:{keep:2,keeps:[0,2,4,8],stock:2}},
   /* zichtbare grens: lijn in spelerkleur, inset = afstand tot de tegelrand (in tegels), breedte in beeldpunten op het scherm */
-  /* rook uit de schoorsteen (alleen beeld): werkplaatsen roken zolang ze een batch maken (b.run), woningen en hutten
-     af en toe: elke 'home'[0] ms een poosje van 'home'[1] ms. 'period' = levensduur van een wolkje, 'rise' = stijghoogte;
-     geschilderde gebouwen schalen de wolkjes met hun breedte / refW */
-  unloadWarnTicks:1200,   // na zoveel ticks (1 minuut) vraagt herladen of sluiten om bevestiging (ui.js)
-  /* rook (loop.js), alleen bij bakkerij, gaarkeuken en smelterijen tijdens een batch: geschilderde wolkjes (assets/effects/rook.webp) elke every ms een nieuw pufje, frameMs per beeld, een volledig beeld w
-     wereldpixels breed bij een getekend gebouw (geschilderde gebouwen: × breedte/refW). Zonder spriteblad: puffs cirkels per period ms. */
-  smoke:{frameMs:90,every:480,w:28,alpha:0.95,puffs:3,period:2800,rise:16,circleAlpha:0.6,refW:40},
   border:{inset:0.14,width:2.2,minWidth:0.6,alpha:0.9},
+  unloadWarnTicks:1200,   // na zoveel ticks (1 minuut) vraagt herladen of sluiten om bevestiging (ui.js)
+  /* rook (loop.js), alleen bij bakkerij, gaarkeuken en smelterijen tijdens een batch: geschilderde wolkjes (assets/effects/rook.webp)
+     elke every ms een nieuw pufje, frameMs per beeld, een volledig beeld w wereldpixels breed bij een getekend gebouw (geschilderde
+     gebouwen: × breedte/refW). Zonder spriteblad: puffs cirkels per period ms. */
+  smoke:{frameMs:90,every:480,w:28,alpha:0.95,puffs:3,period:2800,rise:16,circleAlpha:0.6,refW:40},
 };

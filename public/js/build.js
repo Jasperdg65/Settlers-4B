@@ -9,9 +9,7 @@ const canBuild=t=>t!=='burcht'&&!BTYPES[t].off&&!!CFG.build.cost[t];
 function initBuild(){
   const {W,H}=world;world.own=new Uint8Array(W*H);world.sites=[];
   for(const b of world.blds){b.wk=0;b.prog=1}
-  /* de torens van het startdorp zijn meteen bemand */
-  world.blds.forEach((b,bi)=>{if(b.dead||!CFG.territory[b.type]||b.type==='burcht'||BJOB[b.type]===undefined)return;
-    const c=nearestIdle(b.p,doorTile(b),0);if(c<0)return;S.job[c]=BJOB[b.type];S.dst[c]=bi;b.wkr=c+1;enterBuilding(c)});
+  seatStartCrew();   // de torens van het startdorp zijn meteen bemand (crew.js)
   computeLand();
 }
 /* Gebied (mijlpaal 6b, CFG.territory): elke tegel binnen de straal van een bemand gebouw hoort bij het oudste daarvan.
@@ -91,7 +89,7 @@ function demolish(bi){
   const {W,ter,bldAt,bldAnchor,walk}=world,c=CFG.build.cost[b.type]||[0,0],used=b.st?b.used:c;
   fpTiles(b,i=>{bldAt[i]=0;walk[i]=ter[i]>=T.SAND&&ter[i]<=T.MOUNTAIN?1:0});bldAnchor[b.y*W+b.x]=0;world.walkVer++;
   if(b.st)world.sites.splice(world.sites.indexOf(bi),1);
-  releaseWorker(b);b.dead=1;b.st=0;b.want.fill(0);if(CFG.territory[b.type])computeLand();
+  releaseWorker(b);releaseCrew(b);b.dead=1;b.st=0;b.want.fill(0);if(CFG.territory[b.type])computeLand();
   addGoods(bi,GI.plank,Math.floor(used[0]*CFG.build.refund));addGoods(bi,GI.steen,Math.floor(used[1]*CFG.build.refund));
   const reg=[];siteRegion(BTYPES[b.type].fp,b.x,b.y,(x,y)=>reg.push(y*W+x));invalidateTiles(reg);buildMini();stockVer++;return true;
 }

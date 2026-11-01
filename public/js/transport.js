@@ -45,7 +45,7 @@ function goPath(c,st,to){S.st[c]=st;findPath(tileOf(c),to,p=>gotPath(c,p))}
 function fetchGood(c,s,bi,gd,counted){G.res[s]++;if(counted)world.blds[bi].coming[gd]++;S.cm[c]=counted;S.gd[c]=gd;S.src[c]=s;S.dst[c]=bi;S.wait[c]=0;goPath(c,ST.PATH_SRC,G.tile[s])}
 function planTransport(){
   const bl=world.blds,nb=bl.length,P=world.starts.length,M=CFG.carry.maxAssignPerRun,noIdle=new Uint8Array(P);
-  let made=planWorkers(M);made+=planJobs(M-made);
+  let made=planWorkers(M);made+=planCrew(M-made);made+=planJobs(M-made);
   for(let k=0;k<nb&&made<M;k++){
     const bi=(TR.rr+k)%nb,b=bl[bi];if(b.dead||noIdle[b.p]||b.cool>tickNo)continue;
     for(let gd=0;gd<GOODS.length&&made<M;gd++){
@@ -79,6 +79,7 @@ function gotPath(c,p){
   else if(st===ST.PATH_DST){addGoods(S.sb[c],gd,1);S.carry[c]=0} // terugleggen bij de bron
   else if(st===ST.PATH_WORK)b.wk--;
   if(b.wkr===c+1)b.wkr=0; // was op weg om hier vakman te worden
+  if(st===ST.PATH_IN&&S.job[c]===JI.krachtpatser)crewFail(c,b);
   if(S.cm[c])b.coming[gd]--;S.cm[c]=0;toIdle(c);
 }
 function arrived(c){
@@ -152,7 +153,6 @@ function tickCarriers(){
 function wantLabel(bi){
   const b=world.blds[bi];if(!b.want)return '';const r=[];
   for(let gd=0;gd<GOODS.length;gd++)if(b.want[gd])r.push(`${GOODS[gd].n} ${b.has[gd]}/${b.want[gd]}`+(b.coming[gd]?` (+${b.coming[gd]} onderweg)`:''));
-  const land=CFG.territory[b.type]&&b.type!=='burcht'&&!b.st&&!b.dead?(b.occ?' · bemand: geeft gebied':' · onbemand: nog geen gebied'):'';
-  return siteLabel(b)+prodLabel(b)+land+(r.length?(b.st?' · nog nodig: ':' · vraagt: ')+r.join(', '):'');
+  return siteLabel(b)+prodLabel(b)+crewLabel(b)+(r.length?(b.st?' · nog nodig: ':' · vraagt: ')+r.join(', '):'');
 }
 function carrierStats(){let busy=0,free=0;for(let i=0;i<S.n;i++)if(!S.job[i]){free++;if(S.st[i])busy++}return [busy,free]}

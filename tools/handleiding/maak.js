@@ -44,7 +44,7 @@ function maakTaal(taal){
   const jobVan=t=>CFG.jobs.find(j=>(j.bld||[]).includes(t));
   const recipes=t=>{const pc=CFG.prod[t];if(!pc)return [];if(pc.recipes)return Object.entries(pc.recipes).map(([k,i])=>({in:i,out:{[k]:1}}));
     if(pc.mine)return [{in:{[CFG.mineFood[t]]:1},out:pc.out}];if(pc.in)return [{in:pc.in,out:pc.out}];return []};
-  const werker=t=>{const j=jobVan(t);if(!j)return t==='woonhuis'?TX.bewoners:'–';return j.n+(j.tool?` <span class="tool">${ikoon(j.tool)}${goed(j.tool).toLowerCase()}</span>`:'')};
+  const werker=t=>{const j=jobVan(t)||((CFG.army.crew[t]||t==='kazerne')&&CFG.jobs.find(j=>j.k==='krachtpatser'));if(!j)return t==='woonhuis'?TX.bewoners:'–';return j.n+(j.tool?` <span class="tool">${ikoon(j.tool)}${goed(j.tool).toLowerCase()}</span>`:'')};
   const bldCel=t=>`<span class="bcel">${bldPic(t)}<b>${esc(naam(t))}</b></span>`;
   const K=TX.kop;
 
@@ -61,7 +61,7 @@ function maakTaal(taal){
     },
     beroepen(){
       return `<table class="tabel"><thead><tr><th>${K.beroep}</th><th>${K.gereedschap}</th><th>${K.werktIn}</th></tr></thead><tbody>`+
-        CFG.jobs.slice(1).map(j=>`<tr><td><b>${j.n}</b></td><td>${j.tool?ikoon(j.tool)+goed(j.tool):`<span class="zacht">${TX.geen}</span>`}</td><td>${j.bld?lijst(j.bld.map(naam)):(j.k==='graver'?TX.graverIn:TX.bouwerIn)}</td></tr>`).join('')+'</tbody></table>';
+        CFG.jobs.slice(1).map(j=>`<tr><td><b>${j.n}</b></td><td>${j.tool?ikoon(j.tool)+goed(j.tool):`<span class="zacht">${TX.geen}</span>`}</td><td>${j.bld?lijst(j.bld.map(naam)):j.k==='krachtpatser'?lijst(['kazerne',...Object.keys(CFG.army.crew)].map(naam)):(j.k==='graver'?TX.graverIn:TX.bouwerIn)}</td></tr>`).join('')+'</tbody></table>';
     },
     dorp(){
       const n={};for(const t of VILLAGE)n[t]=(n[t]||0)+1;for(const t of ['kolenmijn','ijzermijn','goudmijn'])n[t]=1;

@@ -1,8 +1,22 @@
 "use strict";
 /* Nederlands: de brontaal. Elke sleutel hier moet ook in de andere talen staan (tools/talen.js controleert dat).
-   Sleutels: gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier. */
+   Sleutels: hal. krachthal, toren. bemanning, gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier. */
 TALEN.nl={
   "taal.naam":"Nederlands",
+  "hal.reserve":"{n}/{max} in reserve",
+  "hal.leidtOp":"leidt een rekruut op",
+  "hal.traint":"traint een krachtpatser tot {niveau}",
+  "hal.wacht":"wacht op rekruten",
+  "hal.paneel":"{n} in reserve ({niveaus})",
+  "hal.opleiding":"{n} in opleiding",
+  "hal.houdt":"reserve",
+  "toren.bemanning":"{n}/{max} krachtpatsers",
+  "toren.onderweg":"{n} onderweg",
+  "toren.gebied":"bemand: geeft gebied",
+  "toren.geenGebied":"onbemand: nog geen gebied",
+  "toren.paneel":"{m} bemand · {n} krachtpatsers ({niveaus})",
+  "toren.wacht":"{n} wacht op krachtpatsers",
+  "toren.gebiedPaneel":"gebied {n} tegels",
   "gebied.blijft":" · je gebied blijft van jou",
   "gebied.verlies":" · LET OP: {n} tegels gaan naar een buur, want hun toren staat dichtbij",
   "gebied.buiten":"; buiten je grens komen: {lijst}",
@@ -84,7 +98,7 @@ TALEN.nl={
   "job.bakker":"Bakker",
   "job.smelter":"Smelter",
   "job.smid":"Smid",
-  "job.wachter":"Wachter",
+  "job.krachtpatser":"Krachtpatser",
   "ter.0":"Diep water",
   "ter.1":"Ondiep water",
   "ter.2":"Strand",
