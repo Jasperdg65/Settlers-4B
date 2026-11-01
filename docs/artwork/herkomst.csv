@@ -1,0 +1,398 @@
+bestand,soort,tool,datum,prompt,bewerkingen,opmerking
+bron/Aarde.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Bakkerij.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boerderij.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Bonenakker.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom1.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom10.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom2.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom3.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom4.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom5.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom6.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom7.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom8.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boom9.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boomjong.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boomkiem.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Boomstronk.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Bosbouwer.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Burcht.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Diepwater.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Droogrekken.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Gaarkeuken.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Goudertsmijn.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Goudsmelterij.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Houthakker.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Houtzagerij.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Ijzerertsmijn.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Kazerne.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Kolenmijn.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Kruidenhuis.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Moestuin.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Molen.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Ondiepwater.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Pakhuis.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Plukkershut.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Rots1.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Rots2.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Rots3.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Rots4.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Rotsgrond.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Smidse.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Staalsmelterij.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Steenhouwer.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Struikbes.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Struikbloesem.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Struikhazelnoot.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Tuin van verbondenheid.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Varen.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Wachttoren.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Wapensmidse.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Waterput.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Woonhuis.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/Zand.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/gras.png,bronbeeld (2D),,,,,staat alleen op de server (.gitignore)
+bron/kolonie-fase1.html,referentie (eerste spelversie),,2026-10-30,,,
+bron/modellen/LEESMIJ.txt,documentatie,,2026-10-31,,,
+bron/modellen/LEESMIJ_dieren.txt,documentatie,,2026-10-31,,,
+bron/modellen/THREE_LICENSE.txt,documentatie,,,,,niet in git
+bron/modellen/ambachten_3D_openen.html,3D-bekijkpagina (Three.js r160),,,,,niet in git
+bron/modellen/ambachten_bron.blend,3D-bron (Blender),Blender 4.5,,,,niet in git
+bron/modellen/ambachten_overzicht.jpg,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/ambachten_zonder_gereedschap.jpg,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/animal_helpers.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/armpje_drukken.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/armpje_drukken_animatie.gif,gegevens,,2026-10-31,,,
+bron/modellen/armpje_drukken_kleurmasker_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/armpje_drukken_voorbeeld.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/beroepen.json,gegevens,,,,,niet in git
+bron/modellen/boer_maaien.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/boer_maaien.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/boer_maaien_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/boer_maaien_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/boer_zaaien.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/boer_zaaien.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/boer_zaaien_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/boer_zaaien_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_graven.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_graven.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_graven_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_graven_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_planten.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_planten.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_planten_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bosbouwer_planten_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bouwer_timmeren.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bouwer_timmeren.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bouwer_timmeren_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/bouwer_timmeren_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/build_ambachten.py,bouwscript (Blender Python),Blender 4.5,,,,niet in git
+bron/modellen/build_dieren.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/build_drager.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/build_krachtpatsers.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/build_rollen.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/build_soldiers.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/carrier_helpers.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/character_helpers.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/dieren_3D_openen.html,3D-bekijkpagina (Three.js r160),,,,,niet in git
+bron/modellen/dieren_bron.blend,3D-bron (Blender),Blender 4.5,2026-10-31,,,
+bron/modellen/dieren_overzicht.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/drager.glb,3D-model (GLB),Blender 4.5 (build_drager.py),2026-10-31,,,
+bron/modellen/drager_bron.blend,3D-bron (Blender),Blender 4.5,2026-10-31,,,
+bron/modellen/eend_lopend.glb,3D-model (GLB),Blender 4.5,2026-10-31,,,
+bron/modellen/eend_lopend.png,voorbeeldrender,Blender 4.5,2026-10-31,,,
+bron/modellen/eend_overzicht.png,voorbeeldrender,Blender 4.5,2026-10-31,,,
+bron/modellen/eend_zwemmend.glb,3D-model (GLB),Blender 4.5,2026-10-31,,,
+bron/modellen/eend_zwemmend.png,voorbeeldrender,Blender 4.5,2026-10-31,,,
+bron/modellen/graver_egaliseren.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/graver_egaliseren.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/graver_egaliseren_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/graver_egaliseren_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/heler_junior.glb,3D-model (GLB),Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/heler_junior.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/heler_medior.glb,3D-model (GLB),Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/heler_medior.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/heler_muzikant_3D_openen.html,3D-bekijkpagina (Three.js r160),,,,,niet in git
+bron/modellen/heler_muzikant_bron.blend,3D-bron (Blender),Blender 4.5,2026-10-31,,,
+bron/modellen/heler_muzikant_overzicht.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/heler_senior.glb,3D-model (GLB),Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/heler_senior.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/hert_rustend.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/hert_rustend.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/hert_staand.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/hert_staand.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/houthakker_hakken.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/houthakker_hakken.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/houthakker_hakken_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/houthakker_hakken_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/konijn_rustend.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/konijn_rustend.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/konijn_staand.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/konijn_staand.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/krachtpatser_junior.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/krachtpatser_medior.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/krachtpatser_senior.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/krachtpatsers_bron.blend,3D-bron (Blender),Blender 4.5,2026-10-31,,,
+bron/modellen/krachtpatsers_bron.blend1,gegevens,,,,,niet in git
+bron/modellen/krachtpatsers_voorbeeld.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/muzikant_instrumenten.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/muzikant_junior.glb,3D-model (GLB),Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/muzikant_junior.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/muzikant_medior.glb,3D-model (GLB),Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/muzikant_medior.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/muzikant_senior.glb,3D-model (GLB),Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/muzikant_senior.png,voorbeeldrender,Blender 4.5 (build_rollen.py),2026-10-31,,,
+bron/modellen/normalize_grips.py,bouwscript (Blender Python),Blender 4.5,,,,niet in git
+bron/modellen/plukker_plukken.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/plukker_plukken.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/plukker_plukken_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/plukker_plukken_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/render_zonder_gereedschap.py,bouwscript (Blender Python),Blender 4.5,,,,niet in git
+bron/modellen/role_helpers.py,bouwscript (Blender Python),Blender 4.5,2026-10-31,,,
+bron/modellen/soldaat_beginner.glb,3D-model (GLB),Blender 4.5 (build_soldiers.py),2026-10-31,,,
+bron/modellen/soldaat_gemiddeld.glb,3D-model (GLB),Blender 4.5 (build_soldiers.py),2026-10-31,,,
+bron/modellen/soldaat_veteraan.glb,3D-model (GLB),Blender 4.5 (build_soldiers.py),2026-10-31,,,
+bron/modellen/soldaten_bron.blend,3D-bron (Blender),Blender 4.5,2026-10-31,,,
+bron/modellen/spelgrootte_preview.png,voorbeeldrender,Blender 4.5,2026-10-31,,,
+bron/modellen/spelwaarden_muzikant.json,gegevens,,2026-10-31,,,
+bron/modellen/standen.json,gegevens,,2026-10-31,,,
+bron/modellen/steenhouwer_slaan.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/steenhouwer_slaan.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/steenhouwer_slaan_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/steenhouwer_slaan_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_oogsten.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_oogsten.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_oogsten_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_oogsten_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_verzorgen.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_verzorgen.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_verzorgen_gereedschap.glb,3D-model (GLB),Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/tuinier_verzorgen_zonder_gereedschap.png,voorbeeldrender,Blender 4.5 (build_ambachten.py),,,,niet in git
+bron/modellen/validate_assets.py,bouwscript (Blender Python),Blender 4.5,,,,niet in git
+bron/modellen/vogel_rustend.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/vogel_rustend.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/vogel_staand.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/vogel_staand.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/vos_rustend.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/vos_rustend.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/vos_staand.glb,3D-model (GLB),Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/vos_staand.png,voorbeeldrender,Blender 4.5 (build_dieren.py),2026-10-31,,,
+bron/modellen/worker_helpers.py,bouwscript (Blender Python),Blender 4.5,,,,niet in git
+bron/modellen/duels/armpje_drukken_L1_R1.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L1_R2.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L1_R3.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L2_R1.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L2_R2.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L2_R3.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L3_R1.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L3_R2.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/duels/armpje_drukken_L3_R3.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_01.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_01_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_02.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_02_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_03.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_03_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_04.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_04_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_05.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_05_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_06.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_06_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_07.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_07_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_08.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_08_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_09.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_09_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_9_standen.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/renders/armpje_drukken_9_standen_RG.png,voorbeeldrender,Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_01.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_02.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_03.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_04.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_05.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_06.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_07.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_08.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/modellen/standen/armpje_drukken_09.glb,3D-model (GLB),Blender 4.5 (build_krachtpatsers.py),2026-10-31,,,
+bron/rook/LEESMIJ.txt,documentatie,,2026-11-01,,,
+bron/rook/rook_01.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_02.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_03.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_04.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_05.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_06.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_07.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_08.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_09.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_10.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_11.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_12.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_13.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_14.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_15.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_16.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_animatie.json,animatiegegevens,,2026-11-01,,,
+bron/rook/rook_spriteblad.png,rookanimatie (2D),,2026-11-01,,,
+bron/rook/rook_voorbeeld.html,afspeelvoorbeeld,,2026-11-01,,,
+public/assets/manifest.json,metadata,,2026-10-30,,,
+public/assets/buildings/bakkerij.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Bakkerij.png
+public/assets/buildings/boerderij.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 440 px, WebP q80",bron: bron/Boerderij.png
+public/assets/buildings/bonenakker.webp,gebouw (webp),tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, geschaald naar 400 px, WebP q80",bron: bron/Bonenakker.png
+public/assets/buildings/bosbouwer.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 400 px, WebP q80",bron: bron/Bosbouwer.png
+public/assets/buildings/burcht.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 480 px, WebP q80; daarna met de hand bewerkt: wimpel uit de webp geknipt",bron: bron/Burcht.png
+public/assets/buildings/droogschuur.webp,gebouw (webp),tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Droogrekken.png
+public/assets/buildings/gaarkeuken.webp,gebouw (webp),tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Gaarkeuken.png
+public/assets/buildings/goudmijn.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Goudertsmijn.png
+public/assets/buildings/goudsmelterij.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Goudsmelterij.png
+public/assets/buildings/houthakker.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 400 px, WebP q80",bron: bron/Houthakker.png
+public/assets/buildings/ijzermijn.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Ijzerertsmijn.png
+public/assets/buildings/ijzersmelterij.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Staalsmelterij.png
+public/assets/buildings/kazerne.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80; daarna met de hand bewerkt: wimpel uit de webp geknipt",bron: bron/Kazerne.png
+public/assets/buildings/kolenmijn.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Kolenmijn.png
+public/assets/buildings/kruidenhuis.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 400 px, WebP q80",bron: bron/Kruidenhuis.png
+public/assets/buildings/moestuin.webp,gebouw (webp),tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, geschaald naar 400 px, WebP q80",bron: bron/Moestuin.png
+public/assets/buildings/molen.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 320 px, WebP q80",bron: bron/Molen.png
+public/assets/buildings/pakhuis.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 440 px, WebP q80",bron: bron/Pakhuis.png
+public/assets/buildings/plukkershut.webp,gebouw (webp),tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, geschaald naar 400 px, WebP q80",bron: bron/Plukkershut.png
+public/assets/buildings/smidse.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Smidse.png
+public/assets/buildings/steenhouwer.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 400 px, WebP q80",bron: bron/Steenhouwer.png
+public/assets/buildings/wachttoren.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 300 px, WebP q80; daarna met de hand bewerkt: wimpel uit de webp geknipt",bron: bron/Wachttoren.png
+public/assets/buildings/wapensmid.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Wapensmidse.png
+public/assets/buildings/waterput.webp,gebouw (webp),tools/build-images.php (Imagick),2026-11-01,,"bijgesneden op zichtbare pixels, geschaald naar 240 px, WebP q80",bron: bron/Waterput.png
+public/assets/buildings/woonhuis.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 320 px, WebP q80",bron: bron/Woonhuis.png
+public/assets/buildings/zagerij.webp,gebouw (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 420 px, WebP q80",bron: bron/Houtzagerij.png
+public/assets/dieren/eend.json,atlasgegevens (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: eend
+public/assets/dieren/eend_24.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: eend
+public/assets/dieren/eend_48.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: eend
+public/assets/dieren/eend_96.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: eend
+public/assets/dieren/hert.json,atlasgegevens (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: hert
+public/assets/dieren/hert_24.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: hert
+public/assets/dieren/hert_48.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: hert
+public/assets/dieren/hert_96.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: hert
+public/assets/dieren/konijn.json,atlasgegevens (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: konijn
+public/assets/dieren/konijn_24.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: konijn
+public/assets/dieren/konijn_48.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: konijn
+public/assets/dieren/konijn_96.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: konijn
+public/assets/dieren/vogel.json,atlasgegevens (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vogel
+public/assets/dieren/vogel_24.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vogel
+public/assets/dieren/vogel_48.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vogel
+public/assets/dieren/vogel_96.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vogel
+public/assets/dieren/vos.json,atlasgegevens (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vos
+public/assets/dieren/vos_24.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vos
+public/assets/dieren/vos_48.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vos
+public/assets/dieren/vos_96.webp,spriteatlas (dier),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: vos
+public/assets/effects/rook.webp,effect-spriteblad (webp),tools/build-images.php (Imagick),2026-11-01,,"alle beelden op één kader bijgesneden, 96 px breed per beeld, WebP q80",bron: bron/rook/rook_spriteblad.png
+public/assets/nature/appel0.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 144 px, WebP q80",bron: bron/Boom8.png
+public/assets/nature/appel1.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 144 px, WebP q80",bron: bron/Boom10.png
+public/assets/nature/berk0.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 176 px, WebP q80",bron: bron/Boom5.png
+public/assets/nature/berk1.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 168 px, WebP q80",bron: bron/Boom6.png
+public/assets/nature/bes.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 56 px, WebP q80",bron: bron/Struikbes.png
+public/assets/nature/beuk0.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 176 px, WebP q80",bron: bron/Boom2.png
+public/assets/nature/beuk1.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 176 px, WebP q80",bron: bron/Boom3.png
+public/assets/nature/bloesem.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 56 px, WebP q80",bron: bron/Struikbloesem.png
+public/assets/nature/den0.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 184 px, WebP q80",bron: bron/Boom7.png
+public/assets/nature/den1.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 192 px, WebP q80",bron: bron/Boom9.png
+public/assets/nature/eik0.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 176 px, WebP q80",bron: bron/Boom1.png
+public/assets/nature/eik1.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 168 px, WebP q80",bron: bron/Boom4.png
+public/assets/nature/hazel.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 56 px, WebP q80",bron: bron/Struikhazelnoot.png
+public/assets/nature/jong.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 104 px, WebP q80",bron: bron/Boomjong.png
+public/assets/nature/kiem.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 52 px, WebP q80",bron: bron/Boomkiem.png
+public/assets/nature/rots0.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 44 px, WebP q80",bron: bron/Rots1.png
+public/assets/nature/rots1.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 36 px, WebP q80",bron: bron/Rots4.png
+public/assets/nature/rots2.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 40 px, WebP q80",bron: bron/Rots3.png
+public/assets/nature/rots3.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 60 px, WebP q80",bron: bron/Rots2.png
+public/assets/nature/stronk.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 36 px, WebP q80",bron: bron/Boomstronk.png
+public/assets/nature/varen.webp,natuur (webp),tools/build-images.php (Imagick),2026-10-30,,"bijgesneden op zichtbare pixels, geschaald naar 48 px, WebP q80",bron: bron/Varen.png
+public/assets/textures/aarde.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Aarde.png
+public/assets/textures/deep.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Diepwater.png
+public/assets/textures/grass.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/gras.png
+public/assets/textures/rock.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Rotsgrond.png
+public/assets/textures/sand.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Zand.png
+public/assets/textures/shallow.webp,grondtextuur (webp),tools/build-images.php (Imagick),2026-10-30,,"3×3 getegeld geschaald naar 512×512 (naadloos), WebP q78",bron: bron/Ondiepwater.png
+public/assets/units/armdrukken.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
+public/assets/units/armdrukken_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
+public/assets/units/armdrukken_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
+public/assets/units/armdrukken_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
+public/assets/units/armdrukken_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
+public/assets/units/armdrukken_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
+public/assets/units/armdrukken_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: armdrukken
+public/assets/units/drager_kist.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_kist
+public/assets/units/drager_kist_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_kist
+public/assets/units/drager_kist_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_kist
+public/assets/units/drager_kist_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_kist
+public/assets/units/drager_kist_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_kist
+public/assets/units/drager_kist_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_kist
+public/assets/units/drager_kist_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_kist
+public/assets/units/drager_leeg.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_leeg
+public/assets/units/drager_leeg_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_leeg
+public/assets/units/drager_leeg_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_leeg
+public/assets/units/drager_leeg_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_leeg
+public/assets/units/drager_leeg_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_leeg
+public/assets/units/drager_leeg_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_leeg
+public/assets/units/drager_leeg_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: drager_leeg
+public/assets/units/heler_junior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_junior
+public/assets/units/heler_junior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_junior
+public/assets/units/heler_junior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_junior
+public/assets/units/heler_junior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_junior
+public/assets/units/heler_junior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_junior
+public/assets/units/heler_junior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_junior
+public/assets/units/heler_junior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_junior
+public/assets/units/heler_medior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_medior
+public/assets/units/heler_medior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_medior
+public/assets/units/heler_medior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_medior
+public/assets/units/heler_medior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_medior
+public/assets/units/heler_medior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_medior
+public/assets/units/heler_medior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_medior
+public/assets/units/heler_medior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_medior
+public/assets/units/heler_senior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_senior
+public/assets/units/heler_senior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_senior
+public/assets/units/heler_senior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_senior
+public/assets/units/heler_senior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_senior
+public/assets/units/heler_senior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_senior
+public/assets/units/heler_senior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_senior
+public/assets/units/heler_senior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: heler_senior
+public/assets/units/krachtpatser_junior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_junior
+public/assets/units/krachtpatser_junior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_junior
+public/assets/units/krachtpatser_junior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_junior
+public/assets/units/krachtpatser_junior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_junior
+public/assets/units/krachtpatser_junior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_junior
+public/assets/units/krachtpatser_junior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_junior
+public/assets/units/krachtpatser_junior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_junior
+public/assets/units/krachtpatser_medior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_medior
+public/assets/units/krachtpatser_medior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_medior
+public/assets/units/krachtpatser_medior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_medior
+public/assets/units/krachtpatser_medior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_medior
+public/assets/units/krachtpatser_medior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_medior
+public/assets/units/krachtpatser_medior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_medior
+public/assets/units/krachtpatser_medior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_medior
+public/assets/units/krachtpatser_senior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_senior
+public/assets/units/krachtpatser_senior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_senior
+public/assets/units/krachtpatser_senior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_senior
+public/assets/units/krachtpatser_senior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_senior
+public/assets/units/krachtpatser_senior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_senior
+public/assets/units/krachtpatser_senior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_senior
+public/assets/units/krachtpatser_senior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: krachtpatser_senior
+public/assets/units/muzikant_junior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_junior
+public/assets/units/muzikant_junior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_junior
+public/assets/units/muzikant_junior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_junior
+public/assets/units/muzikant_junior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_junior
+public/assets/units/muzikant_junior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_junior
+public/assets/units/muzikant_junior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_junior
+public/assets/units/muzikant_junior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_junior
+public/assets/units/muzikant_medior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_medior
+public/assets/units/muzikant_medior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_medior
+public/assets/units/muzikant_medior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_medior
+public/assets/units/muzikant_medior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_medior
+public/assets/units/muzikant_medior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_medior
+public/assets/units/muzikant_medior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_medior
+public/assets/units/muzikant_medior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_medior
+public/assets/units/muzikant_senior.json,atlasgegevens (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
+public/assets/units/muzikant_senior_24.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
+public/assets/units/muzikant_senior_24_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
+public/assets/units/muzikant_senior_48.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
+public/assets/units/muzikant_senior_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
+public/assets/units/muzikant_senior_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior
+public/assets/units/muzikant_senior_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),2026-10-31,,"gerenderd uit GLB in bron/modellen/, 2× gerenderd en verkleind",model: muzikant_senior

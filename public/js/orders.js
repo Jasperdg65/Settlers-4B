@@ -5,7 +5,7 @@
    of meteen als het spel pauzeert). Zo hangt alles alleen af van de seed en de opdrachten (deterministisch, en later
    bruikbaar voor een savegame of herhaling). Elke opdracht wordt gecontroleerd alsof hij van een onbekende komt:
    speler p moet eigenaar zijn en de regels gelden voor iedereen gelijk, zonder gratis goederen.
-   Soorten nu: place {type, x, y}, demolish {b}, make {b, make} (wat een smidse maakt), keep {b, n} (reserve van een krachthal), move {ids, x, y}, duel {ids, j}. Later: handel, geschenk, afspraak (README). */
+   Soorten nu: place {type, x, y}, demolish {b}, make {b, make} (wat een smidse maakt), keep {b, n} (reserve van een krachthal), move {ids, x, y}, duel {ids, j}. Later: handel, geschenk, afspraak (docs/ontwerp/buren-en-diplomatie.md). */
 const ORDERS=[];
 function order(c){ORDERS.push(c)}
 function runOrders(){for(let k=0;k<ORDERS.length;k++)runOrder(ORDERS[k]);ORDERS.length=0}
