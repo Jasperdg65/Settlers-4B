@@ -8,6 +8,8 @@ function buildMini(){
     img.data[i*4]=t[0]*s;img.data[i*4+1]=t[1]*s;img.data[i*4+2]=t[2]*s;img.data[i*4+3]=255}
   miniBase=document.createElement('canvas');miniBase.width=W;miniBase.height=H;const g=miniBase.getContext('2d');g.putImageData(img,0,0);
   for(const b of world.blds){if(b.dead)continue;const fp=BTYPES[b.type].fp;g.fillStyle=PCOL[b.p];g.fillRect(b.x+fp[0],b.y+fp[2],fp[1]-fp[0]+1,fp[3]-fp[2]+1)}
+  const own=world.own;if(own)for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){const i=y*W+x,o=own[i];   // grens van elk gebied
+    if(o&&(own[i-1]!==o||own[i+1]!==o||own[i-W]!==o||own[i+W]!==o)){g.fillStyle=PCOL[o-1];g.fillRect(x,y,1,1)}}
 }
 function screenToTile(mx,my){
   const {W,H,hp}=world;const wx=(mx-vw/2)/cam.z+cam.x,wy=(my-vh/2)/cam.z+cam.y;

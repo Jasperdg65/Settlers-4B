@@ -322,7 +322,7 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 5b | Voedsel: boerderij (graan), bonenakker (peulvruchten), moestuin (groente) met akkers die groeien en rijpen; plukkershut (fruit van appelbomen en bessenstruiken, noten van hazelaars, groeien weer aan); waterput; molen (graan → meel), bakkerij (meel + water → brood), gaarkeuken (peulvruchten + groente + water → stoofpot), droogschuur (fruit + noten → fruit-notenmix) | klaar |
 | 5c | Mijnen met lievelingskost (`CFG.mineFood`) en ertstegels die opraken, smelterijen, smidse (gereedschap), uitrustingsmaker (helm, schild, polsband: statusuitrusting voor hogere niveaus), keuze wat ze maken; tijdelijk verbruik vervalt | klaar |
 | 6a | Bevolking: woonhuizen krijgen met voedsel tot 6 nieuwe bewoners (vrije dragers); start weer 40 kolonisten per speler | klaar |
-| 6b | Gebied: zichtbare grens, gebied alleen van bemande torens | gepland |
+| 6b | Gebied: zichtbare grens, gebied alleen van bemande torens (tijdelijk met een wachter) | klaar |
 | 6c | Leger: krachthal traint kolonisten tot krachtpatsers (niveaus met statusuitrusting), bemanning van torens | gepland |
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
@@ -487,6 +487,24 @@ de tempel met de natuurgebeurtenissen.
   "Kolonisten" telt mee.
 - Gemeten (Node): speler 1 groeit van 40 naar 58 kolonisten zodra er voedsel is (3 woonhuizen).
 
+**Gebied (mijlpaal 6b, `CFG.territory`, `CFG.border`)**
+
+- Gebied komt alleen van bemande gebouwen: de burcht (altijd bemand) en wachttorens met een
+  bewoner. `computeLand` (js/build.js) rekent `world.own` opnieuw uit zodra een toren bemand raakt of
+  verdwijnt: elke tegel hoort bij het oudste bemande gebouw dat hem in zijn straal heeft (burcht
+  eerst, dan torens op volgorde van bemannen, `b.mt`). Een nieuwe toren neemt dus nooit land van een
+  buur af; afbreken geeft het land vrij.
+- **Tijdelijk tot 6c**: een wachttoren wordt bemand door een *wachter* (beroep zonder gereedschap,
+  gewone vrije drager). In 6c nemen krachtpatsers dat over. De torens van het startdorp zijn
+  meteen bemand.
+- Gebouwen op land dat verloren gaat blijven staan en werken door; er kan daar alleen niet meer
+  gebouwd worden.
+- De grens is altijd zichtbaar: een lijn in spelerkleur op de grond (onder bomen en gebouwen),
+  iets naar binnen, zodat twee buren elk hun eigen lijn houden; ook op het minikaartje. Tooltip
+  van een toren: bemand of onbemand; paneel Productie: "Wachttoren ×3 · 2 bemand · gebied 2.722 tegels".
+- Mijnen van het startdorp staan bij voorkeur binnen het gebied. Ligt het erts er niet, dan staat
+  de mijn net buiten de grens en werkt gewoon (in 12 testkaarten 24 van de 936 startgebouwen).
+
 **Ontwerpnotitie: gevechten (nog niet bouwen)**
 
 - Het gevecht wordt een losse module (bijvoorbeeld `js/combat.js`) met één functie die een duel
@@ -571,11 +589,9 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   eerste aanvaller die de deur bereikt: `b.p` wordt de nieuwe speler, de aanvaller gaat naar binnen,
   de vlag wisselt van kleur (sprite-cache per speler), en verliezers van de oude eigenaar gaan naar
   hun eigen dichtstbijzijnde heler of burcht.
-- Gebied: `world.own` mag dan niet meer 'wie eerst komt' zijn (`claimLand`), maar moet per tegel
-  worden herberekend uit alle bemande gebouwen (dichtstbijzijnde bemande toren wint, burcht gaat
-  voor). Gevolgen bij verlies: bouwplaatsen en stapels op verloren grond (afbreken of overnemen,
-  config), routes opnieuw (`world.walkVer`), grondchunks opnieuw tekenen (`invalidateTiles`),
-  zichtbare grens bijwerken (mijlpaal 6).
+- Gebied: `computeLand` (mijlpaal 6b) rekent `world.own` al uit de bemande gebouwen (oudste bemande
+  eerst) en tekent de grens opnieuw. Bij verovering wisselt alleen `b.p` en `b.mt`; nog te bepalen:
+  wat er gebeurt met bouwplaatsen en stapels op verloren grond (afbreken of overnemen, config).
 - Opslag: aanvallen en overnames lopen via de opdrachtenwachtrij, zodat ze deterministisch
   blijven en in een savegame of replay passen.
 
@@ -679,8 +695,7 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   vrije dragers per speler over. Bij afbreken komt de bewoner naar buiten en houdt zijn beroep.
   Uiterlijk (`JOBLOOK` in `js/units.js`): de vrije drager met hoed, schort en gereedschap of een
   kenmerkend goed in de hand; sprites worden pas gemaakt als ze nodig zijn (`jobSprite`).
-- **Tijdelijk** (`CFG.territory`): eigen gebied is een straal rond de burcht en elke voltooide wachttoren
-  (vrij land, wie eerst komt; afbreken neemt geen gebied weg); de grens is alleen als stippen te zien tijdens bouwen of afbreken.
+- Eigen gebied (`CFG.territory`): straal rond de burcht en elke bemande wachttoren (zie Gebied, mijlpaal 6b).
 - **Vraag**: alleen werkplaatsen en mijnen vragen goederen (hun invoer, `CFG.prod`); het tijdelijke
   verbruik (`CFG.temp`) is in mijlpaal 5c vervallen.
 

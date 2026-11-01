@@ -7,15 +7,26 @@
    wat er nog ligt, brengen dragers naar de opslag. */
 const canBuild=t=>t!=='burcht'&&!BTYPES[t].off&&!!CFG.build.cost[t];
 function initBuild(){
-  const {W,H}=world,own=world.own=new Uint8Array(W*H);world.sites=[];
-  for(const b of world.blds){claimLand(b);b.wk=0;b.prog=1}
+  const {W,H}=world;world.own=new Uint8Array(W*H);world.sites=[];
+  for(const b of world.blds){b.wk=0;b.prog=1}
+  /* de torens van het startdorp zijn meteen bemand */
+  world.blds.forEach((b,bi)=>{if(b.dead||!CFG.territory[b.type]||b.type==='burcht'||BJOB[b.type]===undefined)return;
+    const c=nearestIdle(b.p,doorTile(b),0);if(c<0)return;S.job[c]=BJOB[b.type];S.dst[c]=bi;b.wkr=c+1;enterBuilding(c)});
+  computeLand();
 }
-/* TIJDELIJK tot mijlpaal 6 (CFG.territory): burcht en wachttorens claimen vrij land in hun straal, wie eerst komt.
-   Land van een ander blijft van die ander, en afbreken neemt niets weg: gebied gaat alleen verloren bij verovering. */
-function claimLand(b){
-  const r=CFG.territory[b.type];if(!r||b.dead||b.st)return;const {W,H,own}=world;
-  for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
-    if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1;
+/* Gebied (mijlpaal 6b, CFG.territory): elke tegel hoort bij het oudste bemande gebouw dat hem in zijn straal heeft.
+   De burcht is altijd bemand en gaat voor, daarna de torens op volgorde van bemannen (b.mt, dan index).
+   Een nieuwe toren neemt dus nooit land van een buur af; een toren zonder bemanning (afgebroken) geeft zijn land vrij.
+   Gebouwen op land dat zo verloren gaat, blijven staan en werken door; er kan daar alleen niet meer gebouwd worden. */
+function computeLand(){
+  const {W,H,own}=world;own.fill(0);
+  const L=[];world.blds.forEach((b,bi)=>{if(CFG.territory[b.type]&&!b.dead&&!b.st&&(b.type==='burcht'||b.occ))L.push(bi)});
+  const key=bi=>{const b=world.blds[bi];return b.type==='burcht'?-1:b.mt||0};
+  L.sort((a,c)=>key(a)-key(c)||a-c);
+  for(const bi of L){const b=world.blds[bi],r=CFG.territory[b.type];
+    for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
+      if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1}
+  world.landVer=(world.landVer||0)+1;if(typeof buildMini==='function'&&miniBase)buildMini();
 }
 /* tegels van de bouwplaats die geëgaliseerd worden (hoekpunten rond de voetafdruk, zoals de mapgenerator doet) */
 function siteRegion(fp,ax,ay,fn){for(let dy=fp[2]-1;dy<=fp[3]+1;dy++)for(let dx=fp[0]-1;dx<=fp[1]+1;dx++)fn(ax+dx,ay+dy,dx>=fp[0]&&dx<=fp[1]&&dy>=fp[2]&&dy<=fp[3])}
@@ -67,7 +78,7 @@ function buildStep(b,bi){
   for(const [k,gd] of [[0,GI.plank],[1,GI.steen]]){
     if(b.used[k]>=c[k])continue;const s=freeUnitAt(bi,gd);if(s<0)continue;
     takeOne(s);b.used[k]++;b.want[gd]--;b.prog=(b.used[0]+b.used[1])/(c[0]+c[1]);
-    if(b.prog>=1){b.st=0;b.prog=1;b.born=0;setWant(b);b.pt=0;b.run=0;b.ps='';b.make='auto';b.rec=null;claimLand(b);world.sites.splice(world.sites.indexOf(bi),1);invalidateTiles(b.reg);stockVer++}
+    if(b.prog>=1){b.st=0;b.prog=1;b.born=0;setWant(b);b.pt=0;b.run=0;b.ps='';b.make='auto';b.rec=null;world.sites.splice(world.sites.indexOf(bi),1);invalidateTiles(b.reg);stockVer++}
     return true;
   }
   return false;
@@ -77,7 +88,7 @@ function demolish(bi){
   const {W,ter,bldAt,bldAnchor,walk}=world,c=CFG.build.cost[b.type]||[0,0],used=b.st?b.used:c;
   fpTiles(b,i=>{bldAt[i]=0;walk[i]=ter[i]>=T.SAND&&ter[i]<=T.MOUNTAIN?1:0});bldAnchor[b.y*W+b.x]=0;world.walkVer++;
   if(b.st)world.sites.splice(world.sites.indexOf(bi),1);
-  releaseWorker(b);b.dead=1;b.st=0;b.want.fill(0);
+  releaseWorker(b);b.dead=1;b.st=0;b.want.fill(0);if(CFG.territory[b.type])computeLand();
   addGoods(bi,GI.plank,Math.floor(used[0]*CFG.build.refund));addGoods(bi,GI.steen,Math.floor(used[1]*CFG.build.refund));
   const reg=[];siteRegion(BTYPES[b.type].fp,b.x,b.y,(x,y)=>reg.push(y*W+x));invalidateTiles(reg);buildMini();stockVer++;return true;
 }
@@ -161,15 +172,28 @@ function drawSiteBars(v,blit){
       ctx.strokeText(lbl,x0+w/2,top-h-1.6*k);ctx.fillStyle='#fff';ctx.fillText(lbl,x0+w/2,top-h-1.6*k);ctx.textAlign='start'}
   }
 }
+/* grens van elk gebied, altijd zichtbaar: per speler één pad langs de tegelranden waar het land van eigenaar wisselt,
+   iets naar binnen (CFG.border.inset), zodat twee buren elk hun eigen lijn houden. Op de grond getekend, onder bomen en gebouwen. */
+function drawBorders(yMin,yMax,xr){
+  const {W,H,own,hp}=world,c=CFG.border,a=c.inset,P=[];
+  const pt=(x,y,cx,cy)=>{const sx=SX(x,y),sy=y*TH-hp[y*W+x];return [sx+(cx-sx)*a*2,sy+(cy-sy)*a*2]};
+  for(let y=Math.max(0,yMin);y<=Math.min(H-2,yMax);y++){const [xa,xb]=xr(y);
+    for(let x=Math.max(0,xa);x<=Math.min(W-2,xb);x++){const i=y*W+x,o=own[i];if(!o)continue;
+      const l=x>0&&own[i-1]===o,r=own[i+1]===o,u=y>0&&own[i-W]===o,d=own[i+W]===o;if(l&&r&&u&&d)continue;
+      const cx=SX(x+0.5,y+0.5),cy=(y+0.5)*TH-hAt(x+0.5,y+0.5),p=P[o]||(P[o]=new Path2D());
+      const A=pt(x,y,cx,cy),B=pt(x+1,y,cx,cy),C=pt(x+1,y+1,cx,cy),D=pt(x,y+1,cx,cy);
+      const seg=(m,n)=>{p.moveTo(m[0],m[1]);p.lineTo(n[0],n[1])};
+      if(!u)seg(A,B);if(!r)seg(B,C);if(!d)seg(D,C);if(!l)seg(A,D)}}
+  const w=Math.max(c.minWidth,c.width/cam.z);ctx.lineCap='round';ctx.globalAlpha=c.alpha;
+  for(let o=1;o<P.length;o++){if(!P[o])continue;
+    ctx.strokeStyle='rgba(20,14,8,.55)';ctx.lineWidth=w*1.9;ctx.stroke(P[o]);
+    ctx.strokeStyle=PCOL[o-1];ctx.lineWidth=w;ctx.stroke(P[o])}
+  ctx.globalAlpha=1;ctx.lineCap='butt';
+}
 const BUILD={mode:null,type:null,ax:0,ay:0,why:'',hover:-1};
 const buildPl=()=>+$('bldPl').value||0;
 function drawBuildOverlay(v,blit){
-  if(!BUILD.mode)return;const {W,H,own}=world,p=buildPl();
-  /* TIJDELIJK tot mijlpaal 6: grens van het eigen gebied alleen tijdens bouwen/afbreken, als stippen */
-  const yMin=Math.max(1,Math.floor(v.t/TH)-2),yMax=Math.min(H-2,Math.ceil((v.b+HP)/TH)+2);ctx.fillStyle=PCOL[p];
-  for(let y=yMin;y<=yMax;y++){const xa=Math.max(1,Math.floor((v.l-H*TW/2+y*TW/2)/TW)-2),xb=Math.min(W-2,Math.ceil((v.r-H*TW/2+y*TW/2)/TW)+2);
-    for(let x=xa;x<=xb;x++){const i=y*W+x;if(own[i]!==p+1)continue;if(own[i-1]===p+1&&own[i+1]===p+1&&own[i-W]===p+1&&own[i+W]===p+1)continue;
-      ctx.fillRect(SX(x+0.5,y+0.5)-1,(y+0.5)*TH-hAt(x+0.5,y+0.5)-1,2,2)}}
+  if(!BUILD.mode)return;const {W}=world,p=buildPl();
   if(BUILD.mode==='place'&&BUILD.type){
     const fp=BTYPES[BUILD.type].fp,ok=!BUILD.why,{ax,ay}=BUILD;if(ax+fp[0]<0||ay+fp[2]<0||ax+fp[1]>=W-1||ay+fp[3]+1>=H-1)return;
     for(let dy=fp[2];dy<=fp[3];dy++)for(let dx=fp[0];dx<=fp[1];dx++)tileQuad(ax+dx,ay+dy,ok?'rgba(70,200,90,.45)':'rgba(220,60,50,.45)',ok?'#3ec25a':'#e0463c');

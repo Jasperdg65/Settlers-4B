@@ -99,6 +99,7 @@ function draw(){
   if(showOres)for(let y=yMin;y<=yMax;y++){const [xa,xb]=xr(y);for(let x=xa;x<=xb;x++){const i=y*W+x,o=world.ore[i];if(!o||(x+y)%2)continue;
     ctx.fillStyle=ORECOL[o];ctx.fillRect(SX(x,y)-1.6,y*TH-hp[i]-1.6,3.2,3.2)}}
 
+  if(world.own)drawBorders(yMin,yMax,xr);
   if(world.sites)drawSitesGround(v);
   if(PROF){pt('water',tp);tp=performance.now()}
   /* eenheden en dieren per rij in emmers, voor juiste diepte */

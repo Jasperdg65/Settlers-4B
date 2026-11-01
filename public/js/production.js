@@ -232,6 +232,9 @@ function refreshProduction(){
   const houses=world.blds.filter(b=>b.type==='woonhuis'&&b.p===p&&!b.dead&&!b.st);
   if(houses.length){const n=houses.reduce((a,b)=>a+(b.born||0),0),hungry=houses.filter(b=>(b.born||0)<CFG.pop.house&&/voedsel/.test(b.ps)).length;
     rows.push(`<div class="prow"><b>Woonhuis ×${houses.length}</b><span>${n} van ${houses.length*CFG.pop.house} nieuwe bewoners`+(hungry?` · ${hungry} wacht op voedsel`:'')+'</span></div>')}
+  const towers=world.blds.filter(b=>b.type==='wachttoren'&&b.p===p&&!b.dead&&!b.st);
+  if(towers.length){const m=towers.filter(b=>b.occ).length,own=world.own;let n=0;if(own)for(let i=0;i<own.length;i++)if(own[i]===p+1)n++;
+    rows.push(`<div class="prow"><b>Wachttoren ×${towers.length}</b><span>${m} bemand`+(m<towers.length?` · ${towers.length-m} wacht op een wachter`:'')+` · gebied ${n.toLocaleString('nl-NL')} tegels</span></div>`)}
   for(const type in CFG.prod){
     const list=world.blds.filter(b=>b.type===type&&b.p===p&&!b.dead&&!b.st);if(!list.length)continue;
     const st={};for(const b of list){const s=b.occ?b.ps||'werkt':'wacht op een vakman';st[s]=(st[s]||0)+1}

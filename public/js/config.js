@@ -56,6 +56,7 @@ const CFG={
     {k:'bakker',n:'Bakker',bld:['bakkerij']},
     {k:'smelter',n:'Smelter',bld:['ijzersmelterij','goudsmelterij']},
     {k:'smid',n:'Smid',bld:['smidse','wapensmid']},
+    {k:'wachter',n:'Wachter',bld:['wachttoren']},   // TIJDELIJK tot mijlpaal 6c: daarna bemannen krachtpatsers de toren
   ],
   /* lievelingskost van mijnwerkers (de wereld is veganistisch); mijnen gebruiken dit vanaf mijlpaal 5 */
   mineFood:{kolenmijn:'brood',steenmijn:'brood',ijzermijn:'stoofpot',zwavelmijn:'stoofpot',goudmijn:'notenmix'},
@@ -168,6 +169,8 @@ const CFG={
        op een open veld bij burcht 1; gap = afstand tussen de twee groepen in tegels */
     test:{levels:[1,2,3,1,2,3],gap:7,healers:[1,2],musicians:[[3],[1]]},
   },
-  /* TIJDELIJK tot mijlpaal 6: eigen gebied = straal rond de burcht en elke voltooide wachttoren (nog zonder bemanning) */
+  /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
   territory:{burcht:20,wachttoren:20},
+  /* zichtbare grens: lijn in spelerkleur, inset = afstand tot de tegelrand (in tegels), breedte in beeldpunten op het scherm */
+  border:{inset:0.14,width:2.2,minWidth:0.6,alpha:0.9},
 };
