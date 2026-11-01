@@ -56,6 +56,7 @@ const CFG={
     {k:'bakker',n:t('job.bakker'),bld:['bakkerij']},
     {k:'smelter',n:t('job.smelter'),bld:['ijzersmelterij','goudsmelterij']},
     {k:'smid',n:t('job.smid'),bld:['smidse','wapensmid']},
+    {k:'dierenverzorger',n:t('job.dierenverzorger'),bld:['voederplaats']},
     {k:'krachtpatser',n:t('job.krachtpatser')},   // opgeleid in de krachthal, bemant torens (crew.js, CFG.army)
   ],
   /* lievelingskost van mijnwerkers (de wereld is veganistisch). Een mijnwerker eet elke maaltijd uit prod.mineMeals, maar zijn
@@ -70,6 +71,7 @@ const CFG={
       kolenmijn:[3,1],ijzermijn:[3,1],goudmijn:[3,1],                           // mijn
       ijzersmelterij:[4,5],goudsmelterij:[4,5],smidse:[4,5],wapensmid:[4,5],    // smelterij en smidse
       pakhuis:[3,3],woonhuis:[2,3],wachttoren:[2,3],kazerne:[4,5],
+      voederplaats:[2,1],dierenweide:[3,0],bloemenweide:[1,0],                  // harmonie (7)
     },
     maxRise:9,maxRiseMine:26,      // max hoogteverschil op de bouwplaats (mijnen staan op rots of gebergte)
     digBase:2,digPerUnit:6,        // graafwerk in beurten: digBase + (som van alle hoogteverschillen tot het gemiddelde) / digPerUnit
@@ -154,7 +156,7 @@ const CFG={
     level:[0,1,1.45,2],            // basiskracht per niveau 1–3 (index 0 ongebruikt)
     hungry:0.75,                   // kracht als hij niet gevoed is
     harmony:0.3,                   // invloed van de harmoniemeter (0..1, 0,5 = neutraal): ±30%
-    harmonyStart:0.5,              // TIJDELIJK tot mijlpaal 7: vaste harmoniemeter per speler
+    harmonyStart:0.5,              // harmoniemeter in de Duel-test (in de economie: CFG.harmony)
     fatigue:0.35,                  // krachtverlies bij volle vermoeidheid (een uitgeputte senior blijft iets sterker dan een frisse junior)
     push:0.04,keep:0.95,noise:0.01, // toeval alleen voor spanning bij bijna gelijke kracht: bij 15% meer kracht wint de sterkste
                                    // 9 op de 10 keer, bij 30% meer altijd; senior tegen junior duurt ~4 s, een gelijk duel ~23 s
@@ -181,6 +183,23 @@ const CFG={
      dus verbruikt); ze vraagt hoogstens hall.stock van elk stuk tegelijk. Rekruten zijn vrije dragers (carry.keepFree blijven over). */
   army:{crew:{wachttoren:2},startCrew:1,train:800,upTicks:1200,up:{2:{helm:1},3:{schild:1,polsband:1}},
     hall:{keep:2,keeps:[0,2,4,8],stock:2}},
+  /* harmonie (mijlpaal 7, harmony.js), in punten 0–100. Doel = start + bronnen; elke every ticks schuift de meter step punten.
+     voer: een voederplaats met dierenverzorger vult de bak met 1 food (graan) voor ticks ticks en vult bij als er minder dan
+       refill over is; gevuld geeft full punten (de beste max tellen), leeg langer dan grace ticks kost empty punten.
+     weide: een dierenweide met een gevulde voederplaats binnen r tegels geeft plus (max tellen); elke breed ticks komt er een
+       dier bij (kinds om de beurt) tot cap dieren rond de wei. bloem: plus per bloemenweide (max tellen).
+     bos: k × (aandeel bos op je gebied / aandeel bij de start − 1), begrensd tot [min, max]: kaalslag kost, aanplant helpt.
+     Gevolgen bij harmonie 0 of 100 (lineair, 50 = neutraal): groeitijd van akkers en boompjes ∓grow, tijd tot een nieuwe
+       bewoner ∓pop. ore: vanaf min houden hoogstens max dieren zich op bij een ertsader op je gebied (elke every ticks één erbij).
+     low/high: drempels voor de adviseur. */
+  harmony:{start:50,every:100,step:1,
+    voer:{food:'graan',ticks:2400,refill:600,stock:2,full:6,max:4,empty:-4,grace:1200},
+    weide:{r:8,plus:5,max:3,breed:3600,cap:6,kinds:['hert','konijn']},
+    bloem:{plus:3,max:5},
+    bos:{k:20,min:-15,max:10},
+    grow:0.2,pop:0.25,
+    ore:{min:75,every:600,max:3,margin:4},
+    low:35,high:75},
   /* de adviseur (advisor.js): één advies tegelijk, hoogste prio eerst; showSec = hoe lang een advies hoogstens blijft staan.
      Per regel: soort (tip, waarschuwing, belangrijk, compliment), cool = afkoeltijd in seconden voordat dezelfde regel weer mag,
      wait = hoe lang de voorwaarde al moet gelden (s), min = drempel; expr (tevreden, bezorgd, nadenkend) alleen als die afwijkt
@@ -196,7 +215,9 @@ const CFG={
       vakman:{soort:'tip',cool:180,wait:60},
       dragers:{soort:'tip',cool:300,wait:30},
       torenLeeg:{soort:'tip',cool:240,wait:60},
-      houtketen:{soort:'compliment'},brood:{soort:'compliment'},toren:{soort:'compliment'},
+      voerLeeg:{soort:'waarschuwing',cool:300,wait:60},
+      harmonieLaag:{soort:'waarschuwing',cool:600},
+      houtketen:{soort:'compliment'},brood:{soort:'compliment'},toren:{soort:'compliment'},harmonie:{soort:'compliment'},
     }},
   /* zichtbare grens: lijn in spelerkleur, inset = afstand tot de tegelrand (in tegels), breedte in beeldpunten op het scherm */
   border:{inset:0.14,width:2.2,minWidth:0.6,alpha:0.9},

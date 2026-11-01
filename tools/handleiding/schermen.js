@@ -100,6 +100,17 @@ async function main(){
       await ev('HB.stil()');
     }
 
+    /* 7c. harmonie: voederplaats, dierenweide en bloemenweide bij het dorp, 25 minuten verder; kaart met het paneel ernaast */
+    if(!kies.length||kies.includes('harmonie')){
+      await ev('HB.start(0)');
+      const h=await ev(`(()=>{HB.stil();const p=0,s=world.starts[0];
+        const near=(type,cx,cy,R)=>{let best=null,bd=1e9;for(let y=cy-R;y<=cy+R;y++)for(let x=cx-R;x<=cx+R;x++){if(canPlace(type,x,y,p))continue;const d=Math.hypot(x-cx,y-cy);if(d<bd){bd=d;best=[x,y]}}return best};
+        const put=(type,q)=>{if(!q)return null;order({p,t:'place',type,x:q[0],y:q[1]});runOrders();return world.blds[world.blds.length-1]};
+        const D=put('dierenweide',near('dierenweide',s.cx,s.cy,24));if(!D)return null;put('voederplaats',near('voederplaats',D.x,D.y,7));put('bloemenweide',near('bloemenweide',D.x,D.y,9));
+        for(let k=0;k<20*60*25;k++)tick();refreshProduction();return [D.x,D.y]})()`);
+      if(h){await ev(`HB.cam(${h[0]+1},${h[1]},2);1`);await weg();await foto('harmonie',await kaart(900,560))}else console.log('   harmonie: geen plek voor een dierenweide')
+    }
+
     /* 8. de hele wereld van bovenaf (grondvlakken worden een paar per beeld gemaakt: even wachten) */
     if(!kies.length||kies.includes('wereld')){await ev(`HB.cam(world.W/2,world.H/2,0.21);1`);await weg();await sleep(9000);await foto('wereld',await kaart(1000,620))}
 

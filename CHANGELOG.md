@@ -6,6 +6,9 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 ## 2026-11-01
 
 ### Toegevoegd
+- **Mijlpaal 7: harmonie.** Een meter van 0 tot 100 bovenaan het paneel Productie. Voederplaats (met
+  dierenverzorger en graan), dierenweide (jonge dieren) en bloemenweide verhogen hem; een lege voederplaats en
+  kaalslag verlagen hem. Gevolgen voor groei, nieuwe bewoners, duelkracht en dieren bij ertsaders.
 - **De adviseur**, Milo: rechtsonder in beeld, met adviezen over voedsel, bouwplaatsen, gereedschap, lege
   gebouwen, mijnen, dragers en torens, en complimenten bij je eerste planken, brood en toren. Knoppen *Laat zien*,
   *Handleiding* en *Begrepen*; instelbaar in de zijbalk. Ook in hoofdstuk 2 van de handleiding.

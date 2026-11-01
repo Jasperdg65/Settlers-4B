@@ -20,11 +20,26 @@ Mijlpaal 7; nog niet gebouwd. Hieronder wat er in de ontwerpnotities over staat.
 - Lawaaiige gebouwen (smidse, mijnen, zagerij) krijgen een eigenschap `noise` (straal); die vermindert
   het effect van het hunnebed en straks de harmonie.
 
-## Wat er al in het spel zit
+## Zo werkt het nu (mijlpaal 7, `CFG.harmony`, js/harmony.js)
 
-- De duelkracht rekent al met de harmoniemeter van de speler (`CFG.duel`), maar die staat nog vast
-  op `CFG.duel.harmonyStart` tot mijlpaal 7. Zie [krachtpatsers.md](krachtpatsers.md).
-- Dieren kennen al een rusttoestand (liggen of zitten); de toestand "ligt bij" (een doelpunt) komt nog.
+- Meter 0–100 per speler (`world.harm[p]` als 0..1). Elke `every` ticks (5 s) wordt het doel berekend:
+  `start` (50) + de som van de bronnen; de meter schuift `step` (1) punt per keer naar het doel.
+- Bronnen (`world.harmSrc[p]`), elk met een maximum aantal dat telt:
+  - **voederplaats** (gebouw, beroep dierenverzorger): vult de bak met 1 graan voor 2 minuten; gevuld +6
+    (beste 4 tellen), langer dan 1 minuut leeg −4;
+  - **dierenweide** met een gevulde voederplaats binnen 8 tegels: +5 (beste 3); elke 3 minuten een jong
+    (hert of konijn om de beurt) tot 6 dieren rond de wei;
+  - **bloemenweide**: +3 (beste 5), kost 1 plank;
+  - **bos**: 20 × (aandeel bos op het eigen gebied / aandeel bij de start − 1), begrensd tot −15..+10.
+- Gevolgen, lineair rond 50: groeitijd van akkers en boompjes ±20%, tijd tot een nieuwe bewoner ±25%,
+  duelkracht ±30% (`CFG.duel.harmony`), en vanaf 75 houden tot 3 dieren zich op bij ertsaders op het eigen
+  gebied.
+- Paneel Productie: balk met het doel als streepje en de bijdrage per bron. Adviseur: waarschuwing onder
+  35, compliment vanaf 75, en een waarschuwing bij een lege voederplaats.
+- Gemeten (Node, startdorp plus één voederplaats, dierenweide en bloemenweide): harmonie 50 → 64 in een
+  paar minuten; zes jonge dieren in 25 minuten; het startdorp zelf hakt het bos iets dunner (−1).
+- Nog niet: school en hunnebed als bron, picknicken en knuffelen, de toestand "ligt bij" voor dieren,
+  geschilderde versies van de drie gebouwen.
 
 ## Nog in te vullen
 

@@ -74,8 +74,6 @@ Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.
 - Krachtpatsers selecteren en sturen in het eigen dorp
 - Eén vaste speler; de andere kleuren worden computerburen
 - Bewoners die doorlopend eten
-- Voederbakken en dierenverzorger
-- Harmoniemeter: verhogen en effecten (mijlpaal 7)
 - School (opleiding instellen) en hunnebed (samen mediteren met dieren)
 - Helers en muzikanten in het dorp
 - Torens uitdagen en overnemen (mijlpaal 8)

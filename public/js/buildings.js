@@ -231,6 +231,32 @@ const BTYPES={
     poly(g,[-13.2,-7.6,7.2,-7.6,7.2+ox,-7.6+oy,-13.2+ox,-7.6+oy],ROOF.thatch,OUT,0.4);roofTex(g,[-13.2,-7.6],[7.2,-7.6],ox,oy,'thatch',ROOF.thatch);
     crate(g,8.4,0.8,2.4);sack(g,12.6,0.8);
   }},
+  /* harmonie (mijlpaal 7): getekend tot er geschilderde versies zijn */
+  voederplaats:{name:t('bld.voederplaats'),fp:[-1,1,-1,0],sc:1.7,box:[34,28,16,23],draw:(g)=>{
+    ground(g,16,8);const ox=4.4,oy=-5.6;
+    for(const [x,y] of [[-7,0],[7,0],[-7+ox,oy],[7+ox,oy]])line(g,[x,y,x,y-9],'#6b4a2b',0.65);
+    box(g,-5,5,0.4,2.6,3.2,'#8a5a34');poly(g,[-4.4,-2.2,4.4,-2.2,4.4+1.5,-4.1,-4.4+1.5,-4.1],'#e2c873');
+    for(let k=0;k<7;k++)circ(g,-3.4+k*1.3+((k*7)%3)*0.2,-3.1+((k*5)%3)*0.3,0.32,'#b48a2c');
+    poly(g,[-8.4,-8.6,8.4,-8.6,8.4+ox,-8.6+oy,-8.4+ox,-8.6+oy],ROOF.thatch,OUT,0.4);roofTex(g,[-8.4,-8.6],[8.4,-8.6],ox,oy,'thatch',ROOF.thatch);
+    sack(g,-10.4,0.8);sack(g,10.2,0.6);
+  }},
+  bloemenweide:{name:t('bld.bloemenweide'),fp:[-1,1,-1,0],sc:1.7,box:[38,22,18,17],draw:(g)=>{
+    const ox=6,oy=-7.6;poly(g,[-14,1,10,1,10+ox,1+oy,-14+ox,1+oy],'#7fae4a',OUT,0.3);
+    let r=7;const R=()=>(r=(r*9301+49297)%233280)/233280,F=['#e8486a','#f2d23a','#ffffff','#b46ad9','#f08a2a'];
+    for(let k=0;k<80;k++){const u=R(),v=R(),x=-13.4+u*22.8+v*ox,y=0.6+v*(oy+0.4);line(g,[x,y,x,y-1.2],'#4f7a2a',0.25);circ(g,x,y-1.4,0.55,F[k%5])}
+    ell(g,13,-1.4,2.1,2.5,'#d6a84a');for(let k=0;k<4;k++)line(g,[11.1,-0.4-k*1.1,14.9,-0.4-k*1.1],'#a87a2a',0.3);circ(g,13,0.3,0.42,'#3a2a1a');
+  }},
+  dierenweide:{name:t('bld.dierenweide'),fp:[-2,2,-2,0],sc:1.7,box:[56,34,28,27],draw:(g)=>{
+    const x0=-20,y0=1,w=40,ox=10,oy=-12.6,P=[[x0,y0],[x0+w,y0],[x0+w+ox,y0+oy],[x0+ox,y0+oy]];
+    poly(g,[P[0][0],P[0][1],P[1][0],P[1][1],P[2][0],P[2][1],P[3][0],P[3][1]],'#6f9e40',OUT,0.3);
+    let r=11;const R=()=>(r=(r*9301+49297)%233280)/233280;
+    for(let k=0;k<40;k++){const u=R(),v=R(),x=x0+1+u*(w-2)+v*ox,y=y0-0.4+v*(oy+0.8);line(g,[x-0.4,y,x,y-1.3,x+0.4,y],'#4f7a2a',0.3)}
+    const edge=(a,b,n)=>{for(let k=0;k<=n;k++){const x=a[0]+(b[0]-a[0])*k/n,y=a[1]+(b[1]-a[1])*k/n;line(g,[x,y,x,y-3.4],'#6b4a2b',0.65)}
+      for(const h of [1.3,2.8])line(g,[a[0],a[1]-h,b[0],b[1]-h],'#8a5a34',0.45)};
+    edge(P[3],P[2],8);edge(P[0],P[3],3);edge(P[1],P[2],3);
+    box(g,4,10,-3.6,1.4,1.8,'#8a5a34');ell(g,7.6,-5.2,2.7,0.5,'#4a7aa8');
+    edge(P[0],[-3,y0],3);edge([3,y0],P[1],3);   // voorkant met een opening bij de deur
+  }},
 };
 /* eigen geschilderde afbeeldingen per gebouwtype */
 const CUSTOM={};

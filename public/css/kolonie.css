@@ -125,3 +125,8 @@ a.handleiding:hover{border-color:var(--accent)}
   .adv-knoppen button{padding:5px 8px;font-size:12px}
 }
 @media (prefers-reduced-motion:reduce){.adviseur,.adv-hoofd img{transition:none}}
+
+/* harmoniemeter in het paneel Productie: balk = meter, streepje = doel */
+.hbar{position:relative;display:block;height:8px;margin:4px 0 3px;border-radius:4px;background:linear-gradient(90deg,#b5533c,#d9b44a 50%,#5f9a4a)}
+.hbar i{position:absolute;inset:0 auto 0 0;border-right:2px solid var(--ink);background:none}
+.hbar u{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--muted);text-decoration:none}

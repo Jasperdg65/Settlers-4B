@@ -67,11 +67,13 @@ function enough(b,keys){
 }
 function tickProduction(){
   if(tickNo%CFG.nature.every===0)tickNature();
+  tickHarmony();
   const bl=world.blds;
   for(let bi=0;bi<bl.length;bi++){
     const b=bl[bi],pc=CFG.prod[b.type];
     if(b.type==='woonhuis'&&!b.dead&&!b.st){tickHouse(b,bi);continue}
     if(b.type==='kazerne'&&!b.dead&&!b.st){tickHall(b,bi);continue}
+    if(b.type==='voederplaats'&&!b.dead&&!b.st){tickFeeder(b,bi);continue}
     if(!pc||b.dead||b.st)continue;
     if(!b.occ){b.ps='wacht op een vakman';continue}
     const c=b.wkr-1;if(c<0||S.st[c]!==ST.INSIDE)continue;          // buiten aan het werk, of onderweg naar buiten
@@ -182,15 +184,17 @@ function prodPath(c,p){
 }
 /* akker in de wachtrij op het moment dat hij rijp is (ingevoegd op tijd, want gewassen groeien verschillend snel) */
 function addCrop(i,t){const q=NAT.crop;let k=q.length;while(k>NAT.cropH&&q[k-1][0]>t)k--;q.splice(k,0,[t,i])}
+/* boompje idem: met de harmonie verschilt de groeitijd per speler */
+function addSap(i,t){const q=NAT.sap;let k=q.length;while(k>NAT.sapH&&q[k-1][0]>t)k--;q.splice(k,0,[t,i])}
 /* klaar met werken op de doeltegel: kappen, hakken of planten, en dan naar huis */
 function gatherDone(c){
   const b=world.blds[S.dst[c]],pc=CFG.prod[b.type],t=S.src[c],{obj}=world;world.rsv[t]=0;
   if(pc.gather==='tree'&&obj[t]===1){obj[t]=5;NAT.stump.push([tickNo+CFG.nature.stump,t]);S.carry[c]=GI[pc.out]+1}
   else if(pc.gather==='stone'&&obj[t]===2&&world.res[t]>0){if(!--world.res[t])obj[t]=0;S.carry[c]=GI[pc.out]+1}
-  else if(pc.gather==='plant'&&canPlant(t)){obj[t]=4;NAT.sap.push([tickNo+CFG.nature.grow,t])}
+  else if(pc.gather==='plant'&&canPlant(t)){obj[t]=4;addSap(t,tickNo+Math.round(CFG.nature.grow*harmDur(b.p,CFG.harmony.grow)))}   // harmonie: sneller of langzamer
   else if(pc.gather==='farm'){
     if(obj[t]===7&&world.crop[t]===pc.crop){obj[t]=0;world.crop[t]=0;S.carry[c]=GI[pc.out]+1}            // oogsten
-    else if(canSow(t)){obj[t]=6;world.crop[t]=pc.crop;addCrop(t,tickNo+CFG.nature.crop[pc.crop])}}       // zaaien
+    else if(canSow(t)){obj[t]=6;world.crop[t]=pc.crop;addCrop(t,tickNo+Math.round(CFG.nature.crop[pc.crop]*harmDur(b.p,CFG.harmony.grow)))}}       // zaaien
   else if(pc.gather==='pick'){const k=pickKind(t);
     if(k>=0&&world.pickT[t]<=tickNo){world.pickT[t]=tickNo+CFG.nature.regrow;S.carry[c]=GI[k?pc.out2:pc.out]+1;b.alt=k?0:1}}
   goPath(c,ST.P_HOME,doorTile(b));
@@ -202,7 +206,7 @@ function arriveHome(c){
   if(b.dead||b.wkr!==c+1){toIdle(c);return}
   S.ins[c]=1;S.st[c]=ST.INSIDE;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;b.pt=CFG.prod[b.type].rest;
 }
-function prodLabel(b){return (CFG.prod[b.type]||b.type==='woonhuis'||b.type==='kazerne')&&!b.st&&!b.dead&&b.ps?' · '+b.ps:''}
+function prodLabel(b){return (CFG.prod[b.type]||b.type==='woonhuis'||b.type==='kazerne'||b.type==='voederplaats')&&!b.st&&!b.dead&&b.ps?' · '+b.ps:''}
 
 /* ---------- Bevolking: woonhuizen ---------- */
 function tickHouse(b,bi){
@@ -211,7 +215,7 @@ function tickHouse(b,bi){
   if(b.pt>0){b.pt--;return}
   let s=-1;for(const k of c.food){s=freeUnitAt(bi,GI[k]);if(s>=0)break}
   if(s<0){b.ps=`${b.born}/${c.house} bewoners, wacht op voedsel`;return}
-  takeOne(s);TR.used++;b.born++;b.occ=1;b.pt=c.every;bornAt(b);
+  takeOne(s);TR.used++;b.born++;b.occ=1;b.pt=Math.round(c.every*harmDur(b.p,CFG.harmony.pop));bornAt(b);
   b.ps=`${b.born}/${c.house} bewoners`;if(b.born>=c.house)setWant(b);
 }
 /* een nieuwe vrije drager bij de deur van woonhuis b */
@@ -243,6 +247,8 @@ function refreshProduction(){
   const houses=world.blds.filter(b=>b.type==='woonhuis'&&b.p===p&&!b.dead&&!b.st);
   if(houses.length){const n=houses.reduce((a,b)=>a+(b.born||0),0),hungry=houses.filter(b=>(b.born||0)<CFG.pop.house&&/voedsel/.test(b.ps)).length;
     rows.push(`<div class="prow"><b>Woonhuis ×${houses.length}</b><span>${n} van ${houses.length*CFG.pop.house} nieuwe bewoners`+(hungry?` · ${hungry} wacht op voedsel`:'')+'</span></div>')}
+  if(world.harm){const n=harmPct(p),src=world.harmSrc[p]||{},parts=Object.entries(src).filter(([k,v])=>v).map(([k,v])=>`${t('harm.bron.'+k)} ${v>0?'+':''}${v}`);
+    rows.unshift(`<div class="prow"><b>${t('harm.titel')} ${n}</b><span class="hbar" title="${t('harm.doel',{n:world.harmT[p]})}"><i style="width:${n}%"></i><u style="left:${world.harmT[p]}%"></u></span><span>${t('harm.doel',{n:world.harmT[p]})} · ${parts.join(' · ')||t('harm.geen')}</span></div>`)}
   const lvTxt=list=>[1,2,3].map(l=>[l,list.filter(c=>S.lvl[c]===l).length]).filter(x=>x[1]).map(([l,n])=>n+'× '+LVLNAME[l].toLowerCase()).join(', ')||'–';
   const halls=world.blds.filter(b=>b.type==='kazerne'&&b.p===p&&!b.dead&&!b.st).map(cr);
   if(halls.length){const all=halls.flatMap(b=>b.crew),tr=all.filter(c=>!S.lvl[c]).length+halls.filter(b=>b.trn>=0&&S.lvl[b.trn]).length;

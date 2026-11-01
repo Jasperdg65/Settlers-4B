@@ -63,7 +63,7 @@ function spawnAnimals(){
   let landN=0,waterN=0;for(const t of ter){if(t<=T.SHALLOW)waterN++;else if(t<=T.DRY)landN++}
   const want=C.map(a=>Math.min(a.max,(a.water?waterN:landN)/a.per|0)),n=want.reduce((s,v)=>s+v,0);
   for(const k of ['x','y','px','py','tx','ty','hx','hy'])A[k]=new Float32Array(n);
-  A.type=new Uint8Array(n);A.wait=new Uint16Array(n);A.dir=new Uint8Array(n);A.d8=new Uint8Array(n);A.lie=new Uint8Array(n);A.next=new Int32Array(n);A.n=0;
+  A.type=new Uint8Array(n);A.wait=new Uint16Array(n);A.dir=new Uint8Array(n);A.d8=new Uint8Array(n);A.lie=new Uint8Array(n);A.next=new Int32Array(n);A.n=0;A.cap=n;
   for(let type=0;type<C.length;type++)for(let k=0;k<want[type];k++){
     for(let t=0;t<60;t++){
       const x=1+r()*(W-3),y=1+r()*(H-3),i=(y|0)*W+(x|0);

@@ -153,6 +153,6 @@ function tickCarriers(){
 function wantLabel(bi){
   const b=world.blds[bi];if(!b.want)return '';const r=[];
   for(let gd=0;gd<GOODS.length;gd++)if(b.want[gd])r.push(`${GOODS[gd].n} ${b.has[gd]}/${b.want[gd]}`+(b.coming[gd]?` (+${b.coming[gd]} onderweg)`:''));
-  return siteLabel(b)+prodLabel(b)+crewLabel(b)+(r.length?(b.st?' · nog nodig: ':' · vraagt: ')+r.join(', '):'');
+  return siteLabel(b)+prodLabel(b)+crewLabel(b)+meadowLabel(b)+(r.length?(b.st?' · nog nodig: ':' · vraagt: ')+r.join(', '):'');
 }
 function carrierStats(){let busy=0,free=0;for(let i=0;i<S.n;i++)if(!S.job[i]){free++;if(S.st[i])busy++}return [busy,free]}

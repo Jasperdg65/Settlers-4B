@@ -14,7 +14,7 @@ Werkwijze: in mijlpalen, elk één commit, met een stop voor beoordeling na elke
 | 6a | Bevolking: woonhuizen krijgen met voedsel tot 6 nieuwe bewoners (vrije dragers); start weer 40 kolonisten per speler | klaar |
 | 6b | Gebied: zichtbare grens, gebied alleen van bemande torens (tijdelijk met een wachter) | klaar |
 | 6c | Krachthal: leidt vrije dragers op tot krachtpatsers en traint ze met uitrusting naar niveau 2 en 3; reserve instelbaar; krachtpatsers bemannen de torens (de tijdelijke wachter vervalt) | klaar |
-| 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | gepland |
+| 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | klaar |
 | 8 | Krachtmetingen: grensgeschillen en torens (zie ontwerpnotities hieronder) | later |
 | 9 | Computerburen met een eigen dorp: zelfde regels en economie als de speler, in een Web Worker, met karakter | later |
 | 10 | Handel: marktplaats, handelaar met handkar of bootje, ruilvenster, ruilverhouding volgens schaarste | later |

@@ -10,7 +10,7 @@ function initBuild(){
   const {W,H}=world;world.own=new Uint8Array(W*H);world.sites=[];
   for(const b of world.blds){b.wk=0;b.prog=1}
   seatStartCrew();   // de torens van het startdorp zijn meteen bemand (crew.js)
-  computeLand();
+  computeLand();harmInit();
 }
 /* Gebied (mijlpaal 6b, CFG.territory): elke tegel binnen de straal van een bemand gebouw hoort bij het oudste daarvan.
    De burcht is altijd bemand en gaat voor, daarna de torens op volgorde van bemannen (b.mt, dan index).

@@ -49,7 +49,15 @@ const ADV_CHECK={
     for(const [b,bi] of advMine(p,b=>!b.st&&CFG.army.crew[b.type])){
       if(advLong('torenLeeg',bi,!b.occ&&!(b.otw>0))>advSec(R.wait))return {bi,v:{gebouw:BTYPES[b.type].name},ch:'de-krachthal'}}
     return null},
+  /* een voederplaats met dierenverzorger staat al even leeg */
+  voerLeeg(p,R){
+    for(const [b,bi] of advMine(p,b=>!b.st&&b.type==='voederplaats')){
+      if(advLong('voerLeeg',bi,b.occ&&!(b.fedUntil>tickNo))>advSec(R.wait))return {bi,v:{gebouw:BTYPES[b.type].name},ch:'wat-de-harmonie-verhoogt'}}
+    return null},
+  /* de harmonie zakt onder CFG.harmony.low */
+  harmonieLaag(p){const n=harmPct(p);return world.harm&&n<CFG.harmony.low?{bi:advBurcht(p),v:{n},ch:'harmonie'}:null},
   /* complimenten bij mijlpalen: één keer per wereld */
+  harmonie(p){const n=harmPct(p);return world.harm&&n>=CFG.harmony.high?{bi:advBurcht(p),v:{n},ch:'wat-hij-oplevert'}:null},
   houtketen(p){return world.made[p][GI.plank]>0?{bi:advFirst(p,'zagerij'),v:{},ch:'je-eerste-houtketen'}:null},
   brood(p){return world.made[p][GI.brood]>0?{bi:advFirst(p,'bakkerij'),v:{},ch:'een-plantaardige-keuken'}:null},
   toren(p){const t=world.blds.findIndex(b=>b.p===p&&!b.dead&&CFG.army.crew[b.type]&&b.occ&&b.mt>0);return t>=0?{bi:t,v:{},ch:'torens-en-gebied'}:null},

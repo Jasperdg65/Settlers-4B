@@ -23,6 +23,7 @@ public/                 webroot (Apache-alias /settlers4b)
     path.js             A* over het tegelraster, wachtrij met knopenbudget per tick, routecache
     transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
     build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
+    harmony.js          harmonie: meter, bronnen, voederplaats, dieren fokken en bij ertsaders (mijlpaal 7)
     crew.js             krachthal en bemanning van torens (mijlpaal 6c)
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
     army.js             krachtpatsers: lopen, opdrachten uitvoeren, selecteren, groepen, markering (Duel-test)

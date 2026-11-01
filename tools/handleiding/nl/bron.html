@@ -36,11 +36,12 @@
       <li>woonhuizen met nieuwe bewoners</li>
       <li>gebied en grens door bemande torens</li>
       <li>armpje drukken in de Duel-test</li>
+      <li>krachthal en krachtpatsers in het dorp</li>
+      <li>harmonie, met voederplaatsen, dierenweides en bloemenweides</li>
     </ul></div>
   <div class="kader straks"><span class="titel">In aanbouw</span>
     <ul>
-      <li>krachthal en krachtpatsers in het dorp</li>
-      <li>harmonie, school en hunnebed</li>
+      <li>school en hunnebed</li>
       <li>computerburen, handel en diplomatie</li>
       <li>de Tuin van Verbondenheid</li>
       <li>natuurgebeurtenissen</li>
@@ -295,35 +296,45 @@
 <p>Herten grazen aan de bosrand, konijnen huppelen rond, eenden dobberen op het water, en af en toe sluipt er een vos voorbij. Ze doen niemand kwaad en niemand doet hun kwaad. Hoeveel er zijn, hangt af van de grootte van je wereld:</p>
 <!--gen:dieren-->
 
-<div class="kader straks"><span class="titel">Straks: zorgen voor dieren</span>
-<p>Een dierenverzorger vult voederbakken met wat het land geeft. Bij gevulde voederbakken blijven dieren in de buurt en krijgen ze jongen, en dat maakt je volk gelukkiger (zie <a href="#harmonie">Harmonie</a>). Een lege voederbak of een kaalgekapt bos doet juist pijn. [[komt:Voederbakken en dierenverzorger]]</p>
-</div>
+<h3>Zorgen voor dieren</h3>
+<p>Bouw een <b>voederplaats</b>: een dierenverzorger vult de bak er met {{goed(CFG.harmony.voer.food).toLowerCase()}} van je boerderij. Zet er een <b>dierenweide</b> naast, binnen {{CFG.harmony.weide.r}} tegels, en er komen dieren bij: elke {{sec(CFG.harmony.weide.breed)}} een jong, tot er {{CFG.harmony.weide.cap}} rond de wei leven. Dat maakt je volk gelukkiger (zie <a href="#harmonie">Harmonie</a>). Een voederplaats die lang leeg blijft, doet juist pijn.</p>
 </section>
 
 
 <section class="hoofdstuk" id="harmonie">
-<h2>Harmonie [[komt:Harmoniemeter: verhogen en effecten (mijlpaal 7)]]</h2>
+<h2>Harmonie</h2>
 
-<p class="intro">Harmonie is hoe goed je volk zich voelt in zijn streek. Het is een meter van 0 tot 100 per speler, en hij wordt het kloppend hart van Kolonie. Dit hoofdstuk beschrijft het ontwerp; in het spel staat de meter nu nog vast op het midden.</p>
+<p class="intro">Harmonie is hoe goed je volk zich voelt in zijn streek. Het is een meter van 0 tot 100, die je ziet bovenaan het paneel <i>Productie</i>. Een volk in harmonie groeit sneller, oogst eerder en is sterker als het op armpje drukken aankomt.</p>
+
+<h3>De meter</h3>
+<p>Je begint op {{CFG.harmony.start}}. Wat je doet, zet een <b>doel</b>: {{CFG.harmony.start}} plus alles wat helpt, min alles wat pijn doet. De meter schuift daar rustig naartoe, elke {{sec(CFG.harmony.every)}} één punt, dus een goede daad zie je niet meteen en een misstap ook niet. In het paneel zie je de balk met een streepje voor het doel, en per bron wat die bijdraagt.</p>
+<!--shot:harmonie|Een dierenweide met hek, een voederplaats (links, met de gele bak) en een bloemenweide met bijenkorf naast het dorp.-->
 
 <h3>Wat de harmonie verhoogt</h3>
+<!--gen:kosten voederplaats dierenweide bloemenweide-->
 <ul>
-  <li>gevulde voederbakken met een dierenverzorger, en een dierenweide;</li>
-  <li>aangeplant bos en bloemenweides;</li>
-  <li>een school en samen mediteren bij het hunnebed (hoofdstuk 7);</li>
-  <li>kleine dingen, zoals dragers die in hun vrije tijd met elkaar picknicken of een hert aaien.</li>
+  <li><b>Een gevulde voederplaats</b>: {{CFG.harmony.voer.full}} punten. De beste {{CFG.harmony.voer.max}} tellen mee. Eén portie {{goed(CFG.harmony.voer.food).toLowerCase()}} houdt de bak {{sec(CFG.harmony.voer.ticks)}} gevuld.</li>
+  <li><b>Een dierenweide</b> met een gevulde voederplaats binnen {{CFG.harmony.weide.r}} tegels: {{CFG.harmony.weide.plus}} punten, de beste {{CFG.harmony.weide.max}} tellen mee. Rond de wei komen jonge dieren bij.</li>
+  <li><b>Een bloemenweide</b>: {{CFG.harmony.bloem.plus}} punten, de beste {{CFG.harmony.bloem.max}} tellen mee. Een bloemenweide kost alleen een plank.</li>
+  <li><b>Bos</b>: staat er meer bos op je gebied dan bij het begin, dan levert dat tot {{CFG.harmony.bos.max}} punten op. Een bosbouwer die bij je houthakker plant, houdt het bos op peil.</li>
 </ul>
+<p>Later komen er een school en samen mediteren bij het hunnebed bij (hoofdstuk 7). [[komt:School (opleiding instellen) en hunnebed (samen mediteren met dieren)]]</p>
+
 <h3>Wat hem verlaagt</h3>
 <ul>
-  <li>lege voederbakken;</li>
-  <li>kaalslag: bos weghakken zonder bosbouwer.</li>
+  <li><b>Een lege voederplaats</b>: blijft hij langer dan {{sec(CFG.harmony.voer.grace)}} leeg, dan kost dat {{-CFG.harmony.voer.empty}} punten.</li>
+  <li><b>Kaalslag</b>: wordt het bos op je gebied flink dunner dan bij het begin, dan kost dat tot {{-CFG.harmony.bos.min}} punten.</li>
 </ul>
+
 <h3>Wat hij oplevert</h3>
+<p>Bij {{CFG.harmony.start}} is alles gewoon. Daarboven gaat het beter, daaronder slechter, tot de volgende waarden bij 100 of 0:</p>
 <ul>
-  <li>krachtpatsers met meer moed en kracht. Dit werkt nu al: in een duel telt de harmonie mee tot {{Math.round(CFG.duel.harmony*100)}}% erbij of eraf;</li>
-  <li>akkers en bomen die sneller groeien, en meer nieuwe bewoners;</li>
-  <li>bij een hoge harmonie blijven dieren staan bij ertsaders: een vriendelijke wenk waar je moet graven.</li>
+  <li><b>Groei</b>: akkers en boompjes groeien tot {{Math.round(CFG.harmony.grow*100)}}% sneller (of langzamer).</li>
+  <li><b>Nieuwe bewoners</b>: een woonhuis heeft tot {{Math.round(CFG.harmony.pop*100)}}% minder (of meer) tijd nodig voor een nieuwe bewoner.</li>
+  <li><b>Krachtpatsers</b>: in een duel telt de harmonie mee tot {{Math.round(CFG.duel.harmony*100)}}% erbij of eraf.</li>
+  <li><b>Een wenk van de dieren</b>: vanaf {{CFG.harmony.ore.min}} gaan er dieren rondhangen bij ertsaders op je gebied, tot {{CFG.harmony.ore.max}} tegelijk. Kijk waar ze graag staan, en je weet waar je een mijn kunt bouwen.</li>
 </ul>
+<p>Zakt de harmonie onder {{CFG.harmony.low}}, dan waarschuwt de adviseur je. Komt hij boven {{CFG.harmony.high}}, dan krijg je een compliment.</p>
 </section>
 
 

@@ -32,6 +32,7 @@ beslissing in het spel of de README kwam); de beslissing zelf kan iets eerder ge
 | 2026-11-01 | **De adviseur** (eerst "Meester Wout"): één advies tegelijk, belangrijkste eerst, met afkoeltijd; drie uitdrukkingen (bezorgd bij waarschuwingen, nadenkend bij tips, tevreden bij complimenten); instelbaar (alles, alleen belangrijk, uit, en per soort "niet meer tonen"), nu bewaard in de browser. | Spelers helpen zonder te betuttelen; wat hij zegt, volgt uit de regels in de config, zodat het spel en zijn adviezen niet uit elkaar lopen. |
 | 2026-11-01 | De adviseur maakt geen geluid. | Nog niet gevraagd; een belletje kan later, met een eigen instelling. |
 | 2026-11-01 | De adviseur heet **Milo**, in alle talen. | Kort, vriendelijk en in het Nederlands, Engels, Frans, Duits en Spaans goed uit te spreken; één naam maakt hem herkenbaar. |
+| 2026-11-01 | Harmonie (mijlpaal 7): meter 0–100 die traag naar een doel schuift; bronnen voederplaats (graan), dierenweide, bloemenweide en bos; gevolgen voor groei (±20%), nieuwe bewoners (±25%), duelkracht (±30%) en dieren bij ertsaders vanaf 75. | Een traag reagerende meter beloont volhouden boven kunstjes. De getallen zijn een eerste voorstel. |
 
 **Opmerking bij de niveauregel:** in eerdere notities stond voor de krachtpatser ook "kale helm,
 helm met piek, hanenkam in spelerkleur", en in de opdracht voor de handleiding "kale helm, piek,
