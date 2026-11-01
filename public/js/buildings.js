@@ -217,7 +217,7 @@ const BTYPES={
     poly(g,[-5.4,-10.2,0,-13.6,5.4,-10.2,4.6,-9.6,0,-12.6,-4.6,-9.6],ROOF.wood,OUT,0.35);
     line(g,[0,-9.4,0,-6.6],'#4a3a2a',0.2);barrel(g,0,-4.4);
   }},
-  gaarkeuken:{name:t('bld.gaarkeuken'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[10.6,-1.2],draw:(g)=>{
+  gaarkeuken:{name:t('bld.gaarkeuken'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[5.4,-19],glow:[10.6,-1.2],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#efe4cc',roof:'tile',timber:true});chimney(g,4.4,-15,4.2);
     door(g,-3,3,5.2,'#6e4426');win(g,3,-5,2.6,2.4);
     for(const [x0,y0,x1,y1] of [[8.6,0.6,10.6,-4.4],[12.6,0.6,10.6,-4.4]])line(g,[x0,y0,x1,y1],'#5a3b22',0.45);

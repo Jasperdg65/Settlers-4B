@@ -219,7 +219,11 @@
             "ax": 0.5,
             "ay": 0.9,
             "src": "Gaarkeuken.png",
-            "px": 420
+            "px": 420,
+            "smoke": [
+                0.689,
+                0.03
+            ]
         },
         "droogschuur": {
             "file": "buildings/droogschuur.webp",

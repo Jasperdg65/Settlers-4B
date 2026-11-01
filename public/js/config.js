@@ -180,7 +180,7 @@ const CFG={
      af en toe: elke 'home'[0] ms een poosje van 'home'[1] ms. 'period' = levensduur van een wolkje, 'rise' = stijghoogte;
      geschilderde gebouwen schalen de wolkjes met hun breedte / refW */
   unloadWarnTicks:1200,   // na zoveel ticks (1 minuut) vraagt herladen of sluiten om bevestiging (ui.js)
-  /* rook (loop.js), alleen bij bakkerij en smelterijen tijdens een batch: geschilderde wolkjes (assets/effects/rook.webp) elke every ms een nieuw pufje, frameMs per beeld, een volledig beeld w
+  /* rook (loop.js), alleen bij bakkerij, gaarkeuken en smelterijen tijdens een batch: geschilderde wolkjes (assets/effects/rook.webp) elke every ms een nieuw pufje, frameMs per beeld, een volledig beeld w
      wereldpixels breed bij een getekend gebouw (geschilderde gebouwen: × breedte/refW). Zonder spriteblad: puffs cirkels per period ms. */
   smoke:{frameMs:90,every:480,w:28,alpha:0.95,puffs:3,period:2800,rise:16,circleAlpha:0.6,refW:40},
   border:{inset:0.14,width:2.2,minWidth:0.6,alpha:0.9},

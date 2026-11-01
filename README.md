@@ -90,7 +90,7 @@ Een regel in het manifest:
 | `w` (gebouwen) / `h` (natuur) | breedte/hoogte op de kaart in spel-eenheden |
 | `ax`, `ay` | ankerpunt als fractie van breedte/hoogte (voet van het gebouw/de boom) |
 | `flag`, `hub`, `sail` | vlagpositie, molenas en wiekgrootte (fracties van het beeld) |
-| `smoke` | schoorsteentop (fractie van het beeld). Alleen bij gebouwen die stoken (bakkerij en smelterijen), en alleen tijdens een batch; formaat en tempo in `CFG.smoke` |
+| `smoke` | schoorsteentop (fractie van het beeld). Alleen bij gebouwen die stoken (bakkerij, gaarkeuken en smelterijen), en alleen tijdens een batch; formaat en tempo in `CFG.smoke` |
 | `src` | bron-PNG in `bron/` |
 | `px` | doelmaat bij genereren: breedte in pixels (gebouwen) of hoogte (natuur) |
 | `v` | inhoudshash; wordt door `build-images.php` gezet, voor cache-busting |
