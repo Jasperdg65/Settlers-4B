@@ -41,6 +41,7 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 
 ### Opgelost
 - Bouwmodus tekende niet meer (sinds 6b).
+- Zoomen met + en − op het toetsenbord werkte niet, hoewel de hint onderin het noemde.
 - `build-images.php` zette het versienummer `v` niet in het manifest, waardoor browsers een oude
   afbeelding konden blijven tonen.
 - Bij opnieuw uitzetten van kolonisten op dezelfde kaart bleef de oude torenbemanning staan.

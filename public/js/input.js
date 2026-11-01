@@ -137,6 +137,9 @@ function zoomAt(f,mx,my){
 }
 cv.addEventListener('wheel',ev=>{ev.preventDefault();const r=cv.getBoundingClientRect();zoomAt(Math.exp(-ev.deltaY*0.0015),ev.clientX-r.left,ev.clientY-r.top)},{passive:false});
 $('zin').onclick=()=>zoomAt(1.25,vw/2,vh/2);$('zout').onclick=()=>zoomAt(0.8,vw/2,vh/2);
+/* + en − op het toetsenbord (ook = en het numerieke blok), zoals de knoppen rechtsonder */
+addEventListener('keydown',ev=>{if(ev.target.tagName==='INPUT'||ev.target.tagName==='SELECT'||ev.ctrlKey||ev.metaKey||ev.altKey)return;
+  const f={'+':1.25,'=':1.25,'-':0.8,'_':0.8}[ev.key];if(f){ev.preventDefault();zoomAt(f,vw/2,vh/2)}});
 const keys=new Set();
 addEventListener('keydown',ev=>{if(ev.target.tagName==='INPUT'&&ev.target.type==='text')return;keys.add(ev.key.toLowerCase())});
 addEventListener('keyup',ev=>keys.delete(ev.key.toLowerCase()));
