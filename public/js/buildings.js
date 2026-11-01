@@ -63,7 +63,7 @@ function wheat(g,x0,x1,y0,rows){for(let r=0;r<rows;r++){const y=y0-r*1.5;poly(g,
   for(let x=x0+r*0.8+0.4;x<x1+r*0.8;x+=0.9)line(g,[x,y,x+0.3,y-2.2],'#b8902f',0.3)}}
 
 const BTYPES={
-  burcht:{name:t('bld.burcht'),fp:[-3,3,-4,0],sc:1.7,box:[60,58,28,52],pc:true,smoke:[10.6,-34],draw:(g,pc)=>{
+  burcht:{name:t('bld.burcht'),fp:[-3,3,-4,0],sc:1.7,box:[60,58,28,52],pc:true,draw:(g,pc)=>{
     ground(g,44,14);
     g.save();g.translate(1,-10);box(g,-7,7,0,20,9,'#bdb3a2');stoneTex(g,-7,7,0,20,'#bdb3a2');
     const ox=9*0.55,oy=-9*0.7;poly(g,[-8,-20,8,-20,8+ox,-20+oy,-8+ox,-20+oy],'#a69b89',OUT,0.4);
@@ -76,7 +76,7 @@ const BTYPES={
       cone(g,x0+4.5+2.2,-19-2.8,6.4,11,ROOF.slate);}
     banner(g,-8,-10,pc,4,5.5);banner(g,8,-10,pc,4,5.5);
   }},
-  woonhuis:{name:t('bld.woonhuis'),fp:[-1,1,-2,0],sc:1.7,box:[32,32,14,28],smoke:[7.9,-19.5],draw:(g)=>{
+  woonhuis:{name:t('bld.woonhuis'),fp:[-1,1,-2,0],sc:1.7,box:[32,32,14,28],draw:(g)=>{
     ground(g,14,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#efe4cc',roof:'tile',timber:true});chimney(g,6.3,-15,3.8);
     door(g,-3,3,5.6,'#6e4426');win(g,2.6,-5,3,2.6);
     g.fillStyle='#5a7e34';g.fillRect(0.9,-4.3,3.4,0.8);for(let k=0;k<4;k++)circ(g,1.3+k*0.85,-4.5,0.45,['#d94b4b','#f2d04a','#d94b4b','#f4f0e6'][k]);
@@ -115,7 +115,7 @@ const BTYPES={
     win(g,-8,-6,2.6,2.4);win(g,8,-6,2.6,2.4);
     barrel(g,-13.6,0.8);barrel(g,-11,1.3);sack(g,-15.8,1.4);crate(g,12.6,1,2.4);crate(g,13.2,-1.4,1.8);
   }},
-  kazerne:{name:t('bld.kazerne'),fp:[-2,2,-2,0],sc:1.7,box:[46,38,23,33],pc:true,smoke:[10.3,-23],draw:(g,pc)=>{
+  kazerne:{name:t('bld.kazerne'),fp:[-2,2,-2,0],sc:1.7,box:[46,38,23,33],pc:true,draw:(g,pc)=>{
     ground(g,26,12);house(g,{w:24,h:10,d:12,ph:6,wall:'#c2b8a6',roof:'slate',stone:true});chimney(g,8.6,-18,4);
     door(g,0,3.6,6,'#4a2f1d');win(g,-7,-5.4,2.4,2.4);win(g,7,-5.4,2.4,2.4);
     for(const x of [-4,4]){g.strokeStyle='#e8d6a0';g.lineWidth=0.4;g.beginPath();g.moveTo(x-1.4,-9.4);g.lineTo(x+1.4,-9.4);g.lineTo(x+1.4,-7.6);
@@ -124,7 +124,7 @@ const BTYPES={
     for(let k=0;k<3;k++)line(g,[-17+k*0.9,0.4,-16.6+k*0.9,-5.2],'#c8c8c4',0.4);
     line(g,[14.6,0.5,14.6,-17],'#5a3b22',0.6);circ(g,14.6,-17.4,0.6,'#e5c56c');banner(g,14.6,-15.8,pc,4,5.4);
   }},
-  kruidenhuis:{off:1,name:t('bld.kruidenhuis'),fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],smoke:[6.4,-17],draw:(g)=>{
+  kruidenhuis:{off:1,name:t('bld.kruidenhuis'),fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],draw:(g)=>{
     ground(g,18,10);house(g,{w:12,h:8,d:9,ph:5,wall:'#ede2c9',roof:'thatch',timber:true});chimney(g,5,-13.4,3.2);
     door(g,-2.4,2.8,5,'#557a3e');win(g,2.6,-4.6,2.4,2.2);
     for(let r=0;r<3;r++)for(let k=0;k<4;k++){const x=8+k*1.6+r*0.8,y=1.2-r*1.4;ell(g,x,y,0.9,0.4,'#6f5236');circ(g,x,y-0.8,0.8,['#5a9a3e','#7fae4a','#9c6ac0'][r])}
@@ -148,7 +148,7 @@ const BTYPES={
     poly(g,[7.6,-2.4,14,-2.4,14.8,-3.4,8.4,-3.4],'#a87b48',OUT,0.3);line(g,[8,-2.4,8,0.4],'#7a5228',0.5);line(g,[13.6,-2.4,13.6,0.4],'#7a5228',0.5);
     for(let k=0;k<4;k++)ell(g,9.2+k*1.4,-3.9,0.75,0.5,'#d79a4a');
   }},
-  smidse:{name:t('bld.smidse'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[6.6,-21],glow:[-2.6,-3],draw:(g)=>{
+  smidse:{name:t('bld.smidse'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#b3a996',roof:'slate',stone:true});chimney(g,5.4,-16,5);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);box(g,-5,-0.4,-0.2,1.8,2,'#7c7268');
     win(g,4,-5,2.4,2.2);
@@ -217,7 +217,7 @@ const BTYPES={
     poly(g,[-5.4,-10.2,0,-13.6,5.4,-10.2,4.6,-9.6,0,-12.6,-4.6,-9.6],ROOF.wood,OUT,0.35);
     line(g,[0,-9.4,0,-6.6],'#4a3a2a',0.2);barrel(g,0,-4.4);
   }},
-  gaarkeuken:{name:t('bld.gaarkeuken'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[5.4,-19],glow:[10.6,-1.2],draw:(g)=>{
+  gaarkeuken:{name:t('bld.gaarkeuken'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[10.6,-1.2],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#efe4cc',roof:'tile',timber:true});chimney(g,4.4,-15,4.2);
     door(g,-3,3,5.2,'#6e4426');win(g,3,-5,2.6,2.4);
     for(const [x0,y0,x1,y1] of [[8.6,0.6,10.6,-4.4],[12.6,0.6,10.6,-4.4]])line(g,[x0,y0,x1,y1],'#5a3b22',0.45);
