@@ -1,22 +1,22 @@
 <!-- Bron van de handleiding. Na wijzigen: node tools/handleiding/maak.js (zie tools/handleiding/LEESMIJ.md). -->
 
 <section class="hoofdstuk" id="welkom">
-<h2>Welkom in Kolonie</h2>
+<h2>Welkom in {{tekst('spel.naam')}}</h2>
 
 <img class="vignet" src="../assets/buildings/woonhuis.webp" alt="Woonhuis">
 <p class="intro">Na een lange tocht zet een klein volk zijn karren neer op een groene heuvel. Er is een bos, een beek, een paar rotsen vol steen, en verderop wonen buren die net als jij een nieuw begin zoeken. Niemand hier wil veroveren. Iedereen wil wonen, werken, eten, en het liefst een beetje plezier maken.</p>
 
-<p>Dat is Kolonie: een bouwspel over samenwerking, zorg en harmonie. Je begint met een burcht, een klein startdorp en {{CFG.eco.colonistsPerPlayer}} kolonisten. Van daaruit groeit je dorp tot een levendige gemeenschap die hout zaagt, brood bakt, gereedschap smeedt en met de buren en de natuur samenleeft.</p>
+<p>Dat is {{tekst('spel.naam')}}: een bouwspel over samenwerking, zorg en harmonie. Je begint met een burcht, een klein startdorp en {{CFG.eco.colonistsPerPlayer}} kolonisten. Van daaruit groeit je dorp tot een levendige gemeenschap die hout zaagt, brood bakt, gereedschap smeedt en met de buren en de natuur samenleeft.</p>
 
 <p>Het grote doel deel je met iedereen op de kaart: samen leggen jullie de <b>Tuin van Verbondenheid</b> aan, een terrassentuin met vijvers, paviljoens en in het midden een olijfboom die door twee stenen handen wordt gedragen. Elke speler bouwt zijn eigen trap naar het midden. Is de tuin af, dan heeft iedereen gewonnen. [[komt:De Tuin van Verbondenheid als gezamenlijk einddoel (mijlpaal 12)]]</p>
 
 <!--shot:dorp|Een startdorp na een paar minuten: rond de burcht wonen en werken de eerste kolonisten. De rode stippellijn is de grens van je gebied.-->
 
 <h3>Wat voor spel is dit?</h3>
-<p>Kolonie is een rustig bouw- en economiespel. Jij beslist <i>wat</i> er gebouwd wordt en <i>waar</i>; je bewoners zoeken zelf uit <i>wie</i> wat doet. Dragers brengen planken naar bouwplaatsen, een houthakker gaat het bos in zodra hij een bijl heeft, en een bakker begint pas te bakken als er meel en water bij zijn deur liggen. Je hoeft dus niet elke kolonist aan het handje te nemen. Je zorgt voor de juiste gebouwen op de juiste plek en kijkt hoe het dorp tot leven komt.</p>
+<p>{{tekst('spel.naam')}} is een rustig bouw- en economiespel. Jij beslist <i>wat</i> er gebouwd wordt en <i>waar</i>; je bewoners zoeken zelf uit <i>wie</i> wat doet. Dragers brengen planken naar bouwplaatsen, een houthakker gaat het bos in zodra hij een bijl heeft, en een bakker begint pas te bakken als er meel en water bij zijn deur liggen. Je hoeft dus niet elke kolonist aan het handje te nemen. Je zorgt voor de juiste gebouwen op de juiste plek en kijkt hoe het dorp tot leven komt.</p>
 <p>Je bewoners zijn harde werkers, maar geen gedachtelezers: zonder zagerij geen planken, zonder smidse geen nieuwe bijlen. Een groot deel van het plezier zit in het uitpuzzelen van zulke ketens. Daar helpt deze handleiding bij.</p>
 
-<h3>Waarin Kolonie anders is</h3>
+<h3>Waarin {{tekst('spel.naam')}} anders is</h3>
 <ul>
   <li><b>Geen oorlog.</b> Onenigheid wordt beslecht met armpje drukken. Wie verliest, gaat even uitrusten bij de heler en doet daarna gewoon weer mee. Er valt niemand.</li>
   <li><b>Een plantaardige wereld.</b> Je volk eet brood, stoofpot van peulvruchten en groente, en een fruit-notenmix. Dieren zijn hier buren, geen voorraad: de herten grazen rustig tussen je huizen en de konijnen huppelen gewoon door.</li>
@@ -25,7 +25,7 @@
 </ul>
 
 <h3>Hoe ver is het spel?</h3>
-<p>Kolonie wordt nog gebouwd, en deze handleiding groeit mee. Om eerlijk te zijn over wat je nu al kunt doen, staat er bij alles wat nog niet in het spel zit een label <span class="komt">Komt eraan</span>, met een korte beschrijving van het plan.</p>
+<p>{{tekst('spel.naam')}} wordt nog gebouwd, en deze handleiding groeit mee. Om eerlijk te zijn over wat je nu al kunt doen, staat er bij alles wat nog niet in het spel zit een label <span class="komt">Komt eraan</span>, met een korte beschrijving van het plan.</p>
 <div class="naast">
   <div class="kader"><span class="titel">Nu al te spelen</span>
     <ul>
@@ -50,7 +50,7 @@
 </div>
 
 <div class="kader let"><span class="titel">Let op: nog niet opslaan</span>
-<p>Kolonie kan je wereld nog niet bewaren. Herlaad je de pagina of sluit je het tabblad, dan begint alles opnieuw. Na de eerste minuut vraagt je browser daarom eerst of je het zeker weet. Open deze handleiding dus gerust in een eigen tabblad; dat doet de knop in het spel ook. [[komt:Opslaan en laden van de hele wereld]]</p>
+<p>{{tekst('spel.naam')}} kan je wereld nog niet bewaren. Herlaad je de pagina of sluit je het tabblad, dan begint alles opnieuw. Na de eerste minuut vraagt je browser daarom eerst of je het zeker weet. Open deze handleiding dus gerust in een eigen tabblad; dat doet de knop in het spel ook. [[komt:Opslaan en laden van de hele wereld]]</p>
 </div>
 
 <h3>Zo gebruik je deze handleiding</h3>
@@ -193,7 +193,7 @@
 <p>Lopen gaat over gras het makkelijkst. Bossen, rotsgrond en vooral het gebergte maken een tocht langer, net als heuvel op. Vanuit de burcht lopen al voetpaden naar de gebouwen van je startdorp; daarover gaat het net wat lichter.</p>
 
 <h3>Goederen liggen op de grond</h3>
-<p>In Kolonie zie je je voorraad gewoon liggen. Alles ligt in stapels van hoogstens {{CFG.stackMax}} stuks naast de deur van een gebouw. Een werkplaats heeft {{CFG.slots.anders}} stapelplekken. De burcht heeft er {{CFG.slots.burcht}} en een pakhuis {{CFG.slots.pakhuis}}: dat zijn je opslagplaatsen.</p>
+<p>In {{tekst('spel.naam')}} zie je je voorraad gewoon liggen. Alles ligt in stapels van hoogstens {{CFG.stackMax}} stuks naast de deur van een gebouw. Een werkplaats heeft {{CFG.slots.anders}} stapelplekken. De burcht heeft er {{CFG.slots.burcht}} en een pakhuis {{CFG.slots.pakhuis}}: dat zijn je opslagplaatsen.</p>
 <ul>
   <li>Wat een werkplaats maakt en zelf niet nodig heeft, brengen dragers naar de dichtstbijzijnde opslag met ruimte, tenzij een ander gebouw er al om vraagt. Dan gaat het meteen daarheen.</li>
   <li>Is de opslag bij een deur vol, dan staat dat gebouw stil (<i>“opslag bij de deur vol”</i>). Een pakhuis vlakbij lost dat op.</li>
@@ -227,7 +227,7 @@
 <p>De houtketen en de steenhouwer zag je al in <a href="#je-eerste-houtketen">Eerste stappen</a>. Planken en stenen zijn je bouwmaterialen; zonder die twee komt er geen enkel gebouw bij.</p>
 
 <h3>Een plantaardige keuken</h3>
-<p>In Kolonie eet niemand vlees of vis. Dat is geen gemis maar een keuze: de dieren in je streek zijn buren, en je volk weet heerlijk te koken met wat het land geeft. Er zijn drie maaltijden. Elk is goed voor een nieuwe bewoner, en elke mijnwerker heeft er een als lievelingskost.</p>
+<p>In {{tekst('spel.naam')}} eet niemand vlees of vis. Dat is geen gemis maar een keuze: de dieren in je streek zijn buren, en je volk weet heerlijk te koken met wat het land geeft. Er zijn drie maaltijden. Elk is goed voor een nieuwe bewoner, en elke mijnwerker heeft er een als lievelingskost.</p>
 
 <h4>Brood</h4>
 <!--gen:keten boerderij molen waterput bakkerij-->
@@ -418,7 +418,7 @@
 <section class="hoofdstuk" id="buren">
 <h2>Buren [[komt:Computerburen, handel en diplomatie (mijlpaal 9 tot 11)]]</h2>
 
-<p class="intro">Je bent niet alleen. Rondom wonen andere volken, elk met een eigen karakter. Je speelt Kolonie alleen, tegen de computer, maar je buren voelen allesbehalve als machines. Dit hoofdstuk beschrijft het ontwerp.</p>
+<p class="intro">Je bent niet alleen. Rondom wonen andere volken, elk met een eigen karakter. Je speelt {{tekst('spel.naam')}} alleen, tegen de computer, maar je buren voelen allesbehalve als machines. Dit hoofdstuk beschrijft het ontwerp.</p>
 
 <h3>Computerburen</h3>
 <ul>
@@ -441,7 +441,7 @@
 <section class="hoofdstuk" id="tuin-van-verbondenheid">
 <h2>De Tuin van Verbondenheid [[komt:De Tuin van Verbondenheid als gezamenlijk einddoel (mijlpaal 12)]]</h2>
 
-<p class="intro">Tussen alle startplekken in ligt een stuk neutraal land dat van niemand is. Daar leggen alle volken samen de Tuin van Verbondenheid aan: het grote doel van Kolonie.</p>
+<p class="intro">Tussen alle startplekken in ligt een stuk neutraal land dat van niemand is. Daar leggen alle volken samen de Tuin van Verbondenheid aan: het grote doel van {{tekst('spel.naam')}}.</p>
 
 <h3>De tuin</h3>
 <p>Een rond terrassenplein met vijvers, watervallen en paviljoens. In het midden draagt een paar stenen handen een oude olijfboom. Vier brede trappen leiden naar het hart van de tuin, elk in de kleur van een volk. Iedere speler bouwt zijn eigen trap en zijn eigen kwart, zodat je op de kaart ziet wie wat heeft bijgedragen.</p>
@@ -458,7 +458,7 @@
 <section class="hoofdstuk" id="kaartgenerator">
 <h2>De kaartgenerator</h2>
 
-<p class="intro">Elke wereld in Kolonie wordt ter plekke gemaakt, uit een naam: de seed. Dezelfde seed met dezelfde instellingen geeft altijd precies dezelfde wereld.</p>
+<p class="intro">Elke wereld in {{tekst('spel.naam')}} wordt ter plekke gemaakt, uit een naam: de seed. Dezelfde seed met dezelfde instellingen geeft altijd precies dezelfde wereld.</p>
 <!--shot:wereld|Een hele wereld van 256 bij 256 tegels, van bovenaf: vier startdorpen met hun grens, bergen, meren en bossen.-->
 
 <h3>De instellingen</h3>

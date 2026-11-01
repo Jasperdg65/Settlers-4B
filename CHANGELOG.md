@@ -27,6 +27,7 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 - Projectdossier in `docs/`, met herkomst van alle beelden en modellen.
 
 ### Gewijzigd
+- De handleiding noemt het spel **Terrana**; de pdf heet nu `handleiding.pdf` (downloaden als `terrana-handleiding.pdf`).
 - Gebied blijft na het afbreken van een toren; alleen het deel binnen de straal van een bemande toren
   van een buur gaat naar die buur.
 - Wachttoren straal 13 (burcht 20); startvoorraad bij "normaal" 4 zeisen.

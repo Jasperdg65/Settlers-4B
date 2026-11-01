@@ -59,7 +59,7 @@ zelf schrijft); tabellen, ketenschema's, namen en getallen komen uit het spel (c
 ```
 node tools/handleiding/schermen.js    # schermafbeeldingen uit vaste scènes (seed vathorst), headless Chrome (--taal=xx)
 node tools/handleiding/maak.js        # index.html uit bron.html + config + manifest
-node tools/handleiding/pdf.js         # kolonie-handleiding.pdf (print-CSS), headless Chrome
+node tools/handleiding/pdf.js         # handleiding.pdf (print-CSS, download als <spelnaam>-handleiding.pdf), headless Chrome
 ```
 
 Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.md` voor de opmaakcodes.

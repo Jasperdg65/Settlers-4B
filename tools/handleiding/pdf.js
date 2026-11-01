@@ -1,4 +1,4 @@
-/* Maakt per taal kolonie-handleiding.pdf naast de handleidingpagina (print-CSS, headless Chrome).
+/* Maakt per taal handleiding.pdf naast de handleidingpagina (print-CSS, headless Chrome).
      node tools/handleiding/pdf.js [taal ...]        (KOLONIE_URL = adres van het spel, standaard de live site) */
 const fs=require('fs'),path=require('path');
 const {startChrome,sleep}=require('./chrome.js');
@@ -16,7 +16,7 @@ const TALEN=process.argv.slice(2).length?process.argv.slice(2):require('fs').rea
     const voet=`<div style="width:100%;font:8pt 'Source Sans 3',sans-serif;color:#8a7558;padding:0 17mm;display:flex;justify-content:space-between">
       <span>${await ev('document.body.dataset.voet')}</span><span><span class="pageNumber"></span></span></div>`;
     const r=await cmd('Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:true,headerTemplate:'<span></span>',footerTemplate:voet});
-    const uit=path.join(PUB,'handleiding',sub,'kolonie-handleiding.pdf');fs.writeFileSync(uit,Buffer.from(r.result.data,'base64'));
+    const uit=path.join(PUB,'handleiding',sub,'handleiding.pdf');fs.writeFileSync(uit,Buffer.from(r.result.data,'base64'));
     console.log('pdf '+taal+':',(fs.statSync(uit).size/1024/1024).toFixed(1),'MB');
     if(B.fouten.length)console.log('JS-fouten:',B.fouten);
   }finally{B.close();await sleep(400)}

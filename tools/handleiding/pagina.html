@@ -14,13 +14,13 @@
 </head>
 <body data-niets="{{T.niets}}" data-voet="{{T.voet}}">
 <header class="kop">
-  <a class="merk" href="#"><img src="../favicon.svg" alt="Kolonie" width="28" height="28"><span>Kolonie</span><small>{{T.sub}}</small></a>
+  <a class="merk" href="#"><img src="../favicon.svg" alt="{{T.naam}}" width="28" height="28"><span>{{T.naam}}</span><small>{{T.sub}}</small></a>
   <div class="zoek" role="search">
     <input id="zoek" type="search" placeholder="{{T.zoek}}" autocomplete="off" aria-label="{{T.zoekLabel}}">
     <ol id="treffers" class="treffers" hidden></ol>
   </div>
   {{TALEN}}
-  <a class="knop" href="kolonie-handleiding.pdf" download>{{T.pdf}}</a>
+  <a class="knop" href="handleiding.pdf" download="{{T.pdfNaam}}">{{T.pdf}}</a>
   <a class="knop" href="../">{{T.spel}}</a>
 </header>
 
@@ -32,7 +32,7 @@
   <main id="tekst">
     <section class="voorblad">
       <img class="voorblad-beeld" src="../assets/buildings/burcht.webp" alt="{{T.burcht}}">
-      <h1>Kolonie</h1>
+      <h1>{{T.naam}}</h1>
       <p class="ondertitel">{{T.ondertitel}}</p>
       <p class="versie">{{T.bijgewerkt}}</p>
     </section>

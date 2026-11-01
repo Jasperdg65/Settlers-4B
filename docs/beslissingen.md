@@ -33,6 +33,7 @@ beslissing in het spel of de README kwam); de beslissing zelf kan iets eerder ge
 | 2026-11-01 | De adviseur maakt geen geluid. | Nog niet gevraagd; een belletje kan later, met een eigen instelling. |
 | 2026-11-01 | De adviseur heet **Milo**, in alle talen. | Kort, vriendelijk en in het Nederlands, Engels, Frans, Duits en Spaans goed uit te spreken; één naam maakt hem herkenbaar. |
 | 2026-11-01 | Harmonie (mijlpaal 7): meter 0–100 die traag naar een doel schuift; bronnen voederplaats (graan), dierenweide, bloemenweide en bos; gevolgen voor groei (±20%), nieuwe bewoners (±25%), duelkracht (±30%) en dieren bij ertsaders vanaf 75. | Een traag reagerende meter beloont volhouden boven kunstjes. De getallen zijn een eerste voorstel. |
+| 2026-11-01 | Het spel heet **Terrana** (eerst "Kolonie"), in alle talen. De naam staat op één plek: `spel.naam` in `public/lang/nl.js`. De handleiding gebruikt hem al; het spel zelf, de README en de docs nog niet. | Nieuwe naam; op één plek, zodat een volgende wijziging één regel is. |
 
 **Opmerking bij de niveauregel:** in eerdere notities stond voor de krachtpatser ook "kale helm,
 helm met piek, hanenkam in spelerkleur", en in de opdracht voor de handleiding "kale helm, piek,

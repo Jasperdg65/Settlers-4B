@@ -3,6 +3,7 @@
    Sleutels: adv. adviseur, hal. krachthal, toren. bemanning, gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier. */
 TALEN.nl={
   "taal.naam":"Nederlands",
+  "spel.naam":"Terrana",   // de naam van het spel: in elke taal gelijk, niet vertalen
   "hal.reserve":"{n}/{max} in reserve",
   "hal.leidtOp":"leidt een rekruut op",
   "hal.traint":"traint een krachtpatser tot {niveau}",

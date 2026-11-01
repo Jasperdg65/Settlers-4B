@@ -40,4 +40,4 @@ requestAnimationFrame(frame);
 /* er is nog geen savegame: herladen of sluiten tijdens een lopend spel eerst laten bevestigen (de browser toont zijn eigen vraag) */
 addEventListener('beforeunload',ev=>{if(world&&world.made&&tickNo>CFG.unloadWarnTicks){ev.preventDefault();ev.returnValue=''}});
 /* F1: handleiding in een nieuw tabblad (het spel blijft doorlopen) */
-addEventListener('keydown',ev=>{if(ev.key==='F1'){ev.preventDefault();window.open('handleiding/','kolonie-handleiding')}});
+addEventListener('keydown',ev=>{if(ev.key==='F1'){ev.preventDefault();window.open('handleiding/','handleiding')}});

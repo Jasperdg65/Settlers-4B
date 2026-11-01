@@ -2,17 +2,17 @@
    Een nieuwe taal = een map naast deze (en/, fr/, …) met bron.html en een eigen teksten.js met dezelfde velden.
    Namen van gebouwen, goederen en beroepen komen niet hier vandaan maar uit public/lang/<taal>.js (via het spel). */
 module.exports=H=>{
-  const {CFG,naam,goed,lijst,getal}=H,kl=k=>goed(k).toLowerCase();
+  const {CFG,naam,goed,lijst,getal,tekst}=H,SPEL=tekst('spel.naam'),kl=k=>goed(k).toLowerCase();
   const sec=t=>{const s=t/CFG.ticksPerSec;if(s<90)return `${getal(Math.round(s*10)/10)} seconden`;const m=s/60;return `${getal(Math.round(m*10)/10)} ${m===1?'minuut':'minuten'}`};
   const meer=(n,een,veel)=>`${getal(n)} ${n===1?een:veel}`;
   const GEWAS=['','graan','peulvruchten','groente'];
   return {
     locale:'nl-NL',en:'en',of:'of',sec,meer,
     kosten:t=>{const c=CFG.build.cost[t];return `${meer(c[0],'plank','planken')} en ${meer(c[1],'steen','stenen')}`},
-    pagina:{titel:'Kolonie – handleiding',beschrijving:'Handleiding van Kolonie: een vreedzaam bouwspel over samenwerking, zorg en harmonie.',
+    pagina:{titel:`${SPEL} – handleiding`,beschrijving:`Handleiding van ${SPEL}: een vreedzaam bouwspel over samenwerking, zorg en harmonie.`,
       sub:'handleiding',zoek:'Zoeken in de handleiding…  ( / )',zoekLabel:'Zoeken in de handleiding',pdf:'PDF',spel:'Naar het spel',
       inhoud:'Inhoud',inhoudLabel:'Inhoudsopgave',ondertitel:'Handleiding voor vreedzame bouwers',bijgewerkt:d=>`Bijgewerkt op ${d}`,
-      burcht:'De burcht',niets:'Niets gevonden. Probeer een ander woord.',groot:'Groot bekijken',taal:'Taal',voet:'Kolonie · handleiding'},
+      burcht:'De burcht',niets:'Niets gevonden. Probeer een ander woord.',groot:'Groot bekijken',taal:'Taal',voet:`${SPEL} · handleiding`,naam:SPEL,pdfNaam:`${SPEL.toLowerCase()}-handleiding.pdf`},
     hoofdstuk:n=>`Hoofdstuk ${n}`,bijlage:l=>`Bijlage ${l}`,komt:'Komt eraan',schotVolgt:k=>`Schermafbeelding volgt: ${k}`,
     kop:{gebouw:'Gebouw',planken:'Planken',stenen:'Stenen',wie:'Wie werkt er',wat:'Wat het doet',goed:'Goed',weinig:'Weinig',normaal:'Normaal',veel:'Veel',
       beroep:'Beroep',gereedschap:'Gereedschap',werktIn:'Werkt in',gemaakt:'Gemaakt door',nodig:'Nodig voor',

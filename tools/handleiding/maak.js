@@ -34,9 +34,9 @@ function maakTaal(taal){
   const goed=k=>GOODS[GI[k]].n;
   let TX;const lijst=(a,w='en')=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+` ${TX[w]} `+a[a.length-1];
   const VILLAGE=SP.get('VILLAGE');
-  TX=require(path.join(__dirname,taal,'teksten.js'))({CFG,naam,goed,lijst,getal});
-  const KOMT=[];
   const tekst=k=>SP.get('t')(k);   // een tekst uit public/lang/<taal>.js, bv. tekst('adv.naam')
+  TX=require(path.join(__dirname,taal,'teksten.js'))({CFG,naam,goed,lijst,getal,tekst});
+  const KOMT=[];
   const helpers={CFG,GOODS,GI,BTYPES,naam,goed,lijst,getal,VILLAGE,tekst,sec:TX.sec,kosten:TX.kosten,meer:TX.meer};
   const reken=e=>Function(...Object.keys(helpers),'return ('+e+')')(...Object.values(helpers));
   const bldImg=t=>manifest.buildings[t]?`../assets/buildings/${t}.webp`:null;
@@ -192,7 +192,7 @@ function maakTaal(taal){
   out=drukTweeling(out);
   /* andere talen staan een map dieper: relatieve verwijzingen één niveau omhoog; de taalkeuze komt er pas daarna in */
   const DIR=taal==='nl'?OUT0:path.join(OUT0,taal);
-  if(taal!=='nl')out=out.replace(/(\s(?:src|href|srcset)=")(?!#|https?:|data:|\/|kolonie-handleiding\.pdf)/g,(m,a)=>a+'../');
+  if(taal!=='nl')out=out.replace(/(\s(?:src|href|srcset)=")(?!#|https?:|data:|\/|handleiding\.pdf)/g,(m,a)=>a+'../');
   out=out.replace('{{TALEN}}',()=>talen);
   fs.mkdirSync(DIR,{recursive:true});fs.writeFileSync(path.join(DIR,'index.html'),out);
 
