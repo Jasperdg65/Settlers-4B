@@ -75,6 +75,7 @@ TALEN.nl={
   "adv.soort.houtketen":"compliment houtketen",
   "adv.soort.brood":"compliment eerste brood",
   "adv.soort.toren":"compliment eerste toren",
+  "bouw.aantal":"{klaar} klaar, {bouw} in aanbouw",
   "gebied.blijft":" · je gebied blijft van jou",
   "gebied.verlies":" · LET OP: {n} tegels gaan naar een buur, want hun toren staat dichtbij",
   "gebied.buiten":"; buiten je grens komen: {lijst}",

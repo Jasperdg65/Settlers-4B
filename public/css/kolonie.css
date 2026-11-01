@@ -84,7 +84,9 @@ button.wide{width:100%;margin:0 0 10px}
 #tip{position:absolute;pointer-events:none;z-index:5;font-size:13px;white-space:nowrap;padding:4px 8px;border-radius:6px;
   background:color-mix(in srgb,var(--panel) 94%,transparent);color:var(--ink);border:1px solid var(--line);box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-.bb{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px;font-size:12px;line-height:1.15;font-weight:600}
+.bb{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 2px;font-size:12px;line-height:1.15;font-weight:600}
+.bb .aantal{position:absolute;top:3px;right:5px;font:700 14px/1 "Source Sans 3",system-ui,sans-serif;color:#a3a9a6}
+.bb.on .aantal{color:inherit;opacity:.8}
 .bb span{text-align:center}.bb small{font-weight:400;color:var(--muted);font-size:11px}
 .bb.on,#demolish.on{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent);color:var(--accent-ink)}
 .bb.on small{color:inherit}

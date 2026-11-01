@@ -215,9 +215,21 @@ function buildBuildPanel(){
     bt.appendChild(thumb(bldSprite(type,p,PCOL),56,42));
     const n=document.createElement('span');n.textContent=BTYPES[type].name.replace(/ \(.*\)/,'');bt.appendChild(n);
     const k=document.createElement('small');k.textContent=`${c[0]} plank · ${c[1]} steen`;bt.appendChild(k);
+    const a=document.createElement('b');a.className='aantal';bt.appendChild(a);
     bt.onclick=()=>setBuildMode(BUILD.mode==='place'&&BUILD.type===type?null:'place',type);box.appendChild(bt)}
-  setBuildMode(null);
+  setBuildMode(null);bldCountKey='';refreshBuildCounts();
 }
+/* rechtsboven in elk vakje: hoeveel van dat gebouw de speler heeft (klaar + in aanbouw); elke seconde bijgewerkt */
+let bldCountKey='';
+function refreshBuildCounts(){
+  if(!world||!world.blds||!world.own)return;const p=buildPl(),n={},s={};
+  for(const b of world.blds)if(b.p===p&&!b.dead){n[b.type]=(n[b.type]||0)+1;if(b.st)s[b.type]=(s[b.type]||0)+1}
+  const key=p+JSON.stringify(n)+JSON.stringify(s);if(key===bldCountKey)return;bldCountKey=key;
+  const L=$('buildList');if(!L.querySelectorAll)return;   // Node-tests
+  for(const bt of L.querySelectorAll('.bb')){const ty=bt.dataset.type,a=bt.querySelector('.aantal');if(!a)continue;
+    a.textContent=n[ty]||'';a.title=n[ty]?t('bouw.aantal',{klaar:n[ty]-(s[ty]||0),bouw:s[ty]||0}):''}
+}
+if(typeof setInterval==='function')setInterval(refreshBuildCounts,1000);   // niet in de Node-tests
 function setBuildMode(mode,type=null){
   BUILD.mode=mode;BUILD.type=type;BUILD.why='';BUILD.hover=-1;
   for(const b of $('buildList').children)b.classList.toggle('on',mode==='place'&&b.dataset.type===type);
