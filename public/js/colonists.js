@@ -55,7 +55,7 @@ function spawn(total,eco){
     }
   }
   if(eco)initTransport();
-  $('nset').textContent=n.toLocaleString('nl-NL');
+  $('nset').textContent=n.toLocaleString(LOC());
 }
 function animalOk(type,i){const t=world.ter[i];return CFG.animals[type].water?t<=T.SHALLOW:(t>=T.SAND&&t<=T.DRY&&!world.bldAt[i])}
 function spawnAnimals(){
@@ -72,7 +72,7 @@ function spawnAnimals(){
       const j=A.n++;A.x[j]=A.px[j]=A.hx[j]=A.tx[j]=x;A.y[j]=A.py[j]=A.hy[j]=A.ty[j]=y;A.type[j]=type;A.wait[j]=r()*100|0;A.dir[j]=r()<0.5?1:0;A.d8[j]=r()*8|0;break;
     }
   }
-  $('nanim').textContent=A.n.toLocaleString('nl-NL');
+  $('nanim').textContent=A.n.toLocaleString(LOC());
 }
 function tick(){
   runOrders();tickNo++;

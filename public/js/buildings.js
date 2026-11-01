@@ -63,7 +63,7 @@ function wheat(g,x0,x1,y0,rows){for(let r=0;r<rows;r++){const y=y0-r*1.5;poly(g,
   for(let x=x0+r*0.8+0.4;x<x1+r*0.8;x+=0.9)line(g,[x,y,x+0.3,y-2.2],'#b8902f',0.3)}}
 
 const BTYPES={
-  burcht:{name:'Burcht (hoofdkwartier)',fp:[-3,3,-4,0],sc:1.7,box:[60,58,28,52],pc:true,smoke:[10.6,-34],draw:(g,pc)=>{
+  burcht:{name:t('bld.burcht'),fp:[-3,3,-4,0],sc:1.7,box:[60,58,28,52],pc:true,smoke:[10.6,-34],draw:(g,pc)=>{
     ground(g,44,14);
     g.save();g.translate(1,-10);box(g,-7,7,0,20,9,'#bdb3a2');stoneTex(g,-7,7,0,20,'#bdb3a2');
     const ox=9*0.55,oy=-9*0.7;poly(g,[-8,-20,8,-20,8+ox,-20+oy,-8+ox,-20+oy],'#a69b89',OUT,0.4);
@@ -76,25 +76,25 @@ const BTYPES={
       cone(g,x0+4.5+2.2,-19-2.8,6.4,11,ROOF.slate);}
     banner(g,-8,-10,pc,4,5.5);banner(g,8,-10,pc,4,5.5);
   }},
-  woonhuis:{name:'Woonhuis',fp:[-1,1,-2,0],sc:1.7,box:[32,32,14,28],smoke:[7.9,-19.5],draw:(g)=>{
+  woonhuis:{name:t('bld.woonhuis'),fp:[-1,1,-2,0],sc:1.7,box:[32,32,14,28],smoke:[7.9,-19.5],draw:(g)=>{
     ground(g,14,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#efe4cc',roof:'tile',timber:true});chimney(g,6.3,-15,3.8);
     door(g,-3,3,5.6,'#6e4426');win(g,2.6,-5,3,2.6);
     g.fillStyle='#5a7e34';g.fillRect(0.9,-4.3,3.4,0.8);for(let k=0;k<4;k++)circ(g,1.3+k*0.85,-4.5,0.45,['#d94b4b','#f2d04a','#d94b4b','#f4f0e6'][k]);
     barrel(g,-7.6,0.8);
   }},
-  houthakker:{name:'Houthakker',fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
+  houthakker:{name:t('bld.houthakker'),fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
     ground(g,16,9);house(g,{w:12,h:8,d:9,ph:5,wall:'#9b6b3c',roof:'slate',planks:true});
     door(g,-2.4,3,5,'#5e3920');win(g,2.6,-4.6,2.4,2.2);logs(g,7.4,0.6);
     ell(g,-9.2,-0.3,1.8,0.8,'#7a5434');ell(g,-9.2,-1.2,1.8,0.7,'#d4b083');line(g,[-9.4,-1.3,-8.3,-4.3],'#7a5434',0.55);
     poly(g,[-8.7,-4.4,-7.2,-5.2,-6.9,-4.3,-8.2,-3.6],'#a9a7a0',OUT,0.3);
   }},
-  bosbouwer:{name:'Bosbouwer',fp:[-1,1,-2,0],sc:1.7,box:[34,28,18,24],draw:(g)=>{
+  bosbouwer:{name:t('bld.bosbouwer'),fp:[-1,1,-2,0],sc:1.7,box:[34,28,18,24],draw:(g)=>{
     ground(g,16,8);house(g,{w:11,h:7,d:8,ph:4.5,wall:'#ece0c4',roof:'thatch',timber:true});door(g,-2,2.8,4.6,'#4d7a3a');win(g,2.5,-4,2.2,2);
     for(const [x,y] of [[-9.5,0.2],[-12.5,1.2],[-7,1.6]]){ell(g,x,y,1.4,0.5,'#7a5a3a');line(g,[x,y,x,y-2.6],'#6b4a2b',0.4);
       circ(g,x-0.6,y-3,1.1,'#5a8a33');circ(g,x+0.6,y-3.4,1.1,'#6e9a3c');circ(g,x,y-4,0.9,'#8db04b')}
     poly(g,[6.6,0.3,8.8,0.3,8.6,-1.8,6.8,-1.8],'#8c929a',OUT,0.3);line(g,[8.7,-1.4,10,-2.6],'#8c929a',0.5);
   }},
-  zagerij:{name:'Zagerij',fp:[-1,2,-2,0],sc:1.7,box:[40,32,20,27],draw:(g)=>{
+  zagerij:{name:t('bld.zagerij'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,20,27],draw:(g)=>{
     ground(g,22,10);const ox=5,oy=-6.3;
     line(g,[-15,0,-15,-6],'#6b4a2b',0.7);line(g,[-15+ox,oy,-15+ox,oy-6],'#6b4a2b',0.7);
     poly(g,[-16.2,-5.6,-6,-8.4,-6+ox,-8.4+oy,-16.2+ox,-5.6+oy],ROOF.wood,OUT,0.4);
@@ -103,19 +103,19 @@ const BTYPES={
     house(g,{w:12,h:8,d:9,ph:5,wall:'#e6d6b4',roof:'slate',timber:true});door(g,1.8,3,5,'#6b4024');win(g,-2.8,-4.6,2.4,2.2);
     for(let k=0;k<4;k++)poly(g,[8,-k*0.9,14,-k*0.9,14+1.6,-k*0.9-1.2,8+1.6,-k*0.9-1.2],k%2?'#c79a5f':'#d7ab6f',OUT,0.3);
   }},
-  steenhouwer:{name:'Steenhouwer',fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
+  steenhouwer:{name:t('bld.steenhouwer'),fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
     ground(g,16,9);house(g,{w:12,h:8,d:9,ph:5,wall:'#bfb6a5',roof:'slate',stone:true});
     door(g,-2.4,3,5,'#5e3920');win(g,2.6,-4.6,2.4,2.2);
     box(g,7,9.6,0.8,2.4,2.6,'#d3ccbe');box(g,10,12.4,1,2.2,2.4,'#cbc4b5');box(g,8.2,10.6,-1.6,2.2,2.4,'#dad4c7');
     line(g,[-8,0.6,-9,-3],'#6b4a2b',0.5);poly(g,[-9.6,-3.4,-8.2,-3.6,-8.4,-2.6],'#9c9a94');
   }},
-  pakhuis:{name:'Pakhuis',fp:[-2,2,-2,0],sc:1.7,box:[44,38,22,33],draw:(g)=>{
+  pakhuis:{name:t('bld.pakhuis'),fp:[-2,2,-2,0],sc:1.7,box:[44,38,22,33],draw:(g)=>{
     ground(g,26,13);house(g,{w:24,h:11,d:13,ph:7,wall:'#a4743f',roof:'slate',planks:true});
     door(g,0,9,8.5,'#3b2b1f');crate(g,-3.4,-0.2,2.2);crate(g,1,-0.2,2);sack(g,-0.6,-2.6);
     win(g,-8,-6,2.6,2.4);win(g,8,-6,2.6,2.4);
     barrel(g,-13.6,0.8);barrel(g,-11,1.3);sack(g,-15.8,1.4);crate(g,12.6,1,2.4);crate(g,13.2,-1.4,1.8);
   }},
-  kazerne:{name:'Krachthal',fp:[-2,2,-2,0],sc:1.7,box:[46,38,23,33],pc:true,smoke:[10.3,-23],draw:(g,pc)=>{
+  kazerne:{name:t('bld.kazerne'),fp:[-2,2,-2,0],sc:1.7,box:[46,38,23,33],pc:true,smoke:[10.3,-23],draw:(g,pc)=>{
     ground(g,26,12);house(g,{w:24,h:10,d:12,ph:6,wall:'#c2b8a6',roof:'slate',stone:true});chimney(g,8.6,-18,4);
     door(g,0,3.6,6,'#4a2f1d');win(g,-7,-5.4,2.4,2.4);win(g,7,-5.4,2.4,2.4);
     for(const x of [-4,4]){g.strokeStyle='#e8d6a0';g.lineWidth=0.4;g.beginPath();g.moveTo(x-1.4,-9.4);g.lineTo(x+1.4,-9.4);g.lineTo(x+1.4,-7.6);
@@ -124,13 +124,13 @@ const BTYPES={
     for(let k=0;k<3;k++)line(g,[-17+k*0.9,0.4,-16.6+k*0.9,-5.2],'#c8c8c4',0.4);
     line(g,[14.6,0.5,14.6,-17],'#5a3b22',0.6);circ(g,14.6,-17.4,0.6,'#e5c56c');banner(g,14.6,-15.8,pc,4,5.4);
   }},
-  kruidenhuis:{off:1,name:'Kruidenhuis (heler)',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],smoke:[6.4,-17],draw:(g)=>{
+  kruidenhuis:{off:1,name:t('bld.kruidenhuis'),fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],smoke:[6.4,-17],draw:(g)=>{
     ground(g,18,10);house(g,{w:12,h:8,d:9,ph:5,wall:'#ede2c9',roof:'thatch',timber:true});chimney(g,5,-13.4,3.2);
     door(g,-2.4,2.8,5,'#557a3e');win(g,2.6,-4.6,2.4,2.2);
     for(let r=0;r<3;r++)for(let k=0;k<4;k++){const x=8+k*1.6+r*0.8,y=1.2-r*1.4;ell(g,x,y,0.9,0.4,'#6f5236');circ(g,x,y-0.8,0.8,['#5a9a3e','#7fae4a','#9c6ac0'][r])}
     for(let k=0;k<3;k++){poly(g,[-11+k*1.8,0.8,-10+k*1.8,0.8,-9.8+k*1.8,-0.8,-11.2+k*1.8,-0.8],'#b86a3e',OUT,0.3);circ(g,-10.5+k*1.8,-1.4,0.8,'#5a9a3e')}
   }},
-  wachttoren:{name:'Wachttoren',fp:[-1,1,-1,0],sc:1.7,box:[26,52,10,46],pc:true,draw:(g,pc)=>{
+  wachttoren:{name:t('bld.wachttoren'),fp:[-1,1,-1,0],sc:1.7,box:[26,52,10,46],pc:true,draw:(g,pc)=>{
     ground(g,12,8);box(g,-5,5,0,24,8,'#bdb4a3');stoneTex(g,-5,5,0,24,'#bdb4a3');door(g,0,2.8,4.4,'#4a2f1d');
     poly(g,[-0.5,-10,0.5,-10,0.5,-13,-0.5,-13],'#2f241b');poly(g,[-0.5,-17,0.5,-17,0.5,-20,-0.5,-20],'#2f241b');
     box(g,-6.5,6.5,-24,1.6,10,'#7d5a38');for(let x=-6;x<=6.5;x+=2.1)line(g,[x,-25.6,x,-27.8],'#5e4128',0.5);line(g,[-6.5,-27.6,6.5,-27.6],'#5e4128',0.5);
@@ -138,7 +138,7 @@ const BTYPES={
     poly(g,[6.8,-28,6.8+ox,-28+oy,ap[0],ap[1]],sh(ROOF.slate,0.78),OUT,0.4);poly(g,[-6.8,-28,6.8,-28,ap[0],ap[1]],ROOF.slate,OUT,0.4);
     for(let t=0.25;t<1;t+=0.25)line(g,[-6.8+13.6*t,-28,ap[0],ap[1]],sh(ROOF.slate,0.7),0.3);flag(g,ap[0],ap[1],pc,8);
   }},
-  bakkerij:{name:'Bakkerij',fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[-11.6,-12],glow:[-12.2,-2.4],draw:(g)=>{
+  bakkerij:{name:t('bld.bakkerij'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[-11.6,-12],glow:[-12.2,-2.4],draw:(g)=>{
     ground(g,22,10);
     g.strokeStyle=OUT;g.lineWidth=0.4;g.beginPath();g.moveTo(-17,0);g.quadraticCurveTo(-17,-7.5,-12,-7.5);g.quadraticCurveTo(-7,-7.5,-7,0);g.closePath();g.fillStyle='#b8664a';g.fill();g.stroke();
     for(let k=1;k<4;k++)line(g,[-16.6+k*0.3,-k*1.8,-7.4-k*0.3,-k*1.8],'#93503a',0.3);
@@ -148,14 +148,14 @@ const BTYPES={
     poly(g,[7.6,-2.4,14,-2.4,14.8,-3.4,8.4,-3.4],'#a87b48',OUT,0.3);line(g,[8,-2.4,8,0.4],'#7a5228',0.5);line(g,[13.6,-2.4,13.6,0.4],'#7a5228',0.5);
     for(let k=0;k<4;k++)ell(g,9.2+k*1.4,-3.9,0.75,0.5,'#d79a4a');
   }},
-  smidse:{name:'Smidse',fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[6.6,-21],glow:[-2.6,-3],draw:(g)=>{
+  smidse:{name:t('bld.smidse'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[6.6,-21],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#b3a996',roof:'slate',stone:true});chimney(g,5.4,-16,5);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);box(g,-5,-0.4,-0.2,1.8,2,'#7c7268');
     win(g,4,-5,2.4,2.2);
     poly(g,[8.6,-1.6,12.4,-1.6,12,-2.6,9,-2.6],'#4a4c52',OUT,0.3);poly(g,[9.8,0.4,11.2,0.4,11,-1.6,10,-1.6],'#3b3d42');poly(g,[12.4,-2.6,14,-2.3,12.4,-2],'#4a4c52');
     barrel(g,15.4,0.8);for(let k=0;k<3;k++)line(g,[-9.4+k*0.8,0.6,-9.6+k*0.8,-4.4],'#8d8f94',0.45);
   }},
-  molen:{name:'Molen',fp:[-1,1,-2,0],sc:1.7,box:[42,58,21,52],hub:[0.9,-27.8],draw:(g)=>{
+  molen:{name:t('bld.molen'),fp:[-1,1,-2,0],sc:1.7,box:[42,58,21,52],hub:[0.9,-27.8],draw:(g)=>{
     ground(g,16,9);
     poly(g,[-6,0,6,0,4.4,-24,-4.4,-24],'#ece4d2',OUT,0.4);poly(g,[1,0,6,0,4.4,-24,1,-24],'rgba(0,0,0,.1)');
     poly(g,[6,0,8.6,-2.6,7,-25.6,4.4,-24],'#c9c0ad',OUT,0.4);
@@ -165,25 +165,25 @@ const BTYPES={
     door(g,0,2.8,4.8,'#5e3920');win(g,0,-12,1.8,2.4);
     for(let k=0;k<3;k++)sack(g,-8+k*1.8,1.2);
   }},
-  kolenmijn:{name:'Kolenmijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:1,draw:(g)=>{
+  kolenmijn:{name:t('bld.kolenmijn'),fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:1,draw:(g)=>{
     ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
     for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][1-1])}},
-  ijzermijn:{name:'IJzermijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:2,draw:(g)=>{
+  ijzermijn:{name:t('bld.ijzermijn'),fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:2,draw:(g)=>{
     ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
     for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][2-1])}},
-  goudmijn:{name:'Goudmijn',fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:3,draw:(g)=>{
+  goudmijn:{name:t('bld.goudmijn'),fp:[-1,1,-2,0],sc:1.7,box:[36,30,16,26],ore:3,draw:(g)=>{
     ground(g,16,9);box(g,-9,9,0,9,9,'#8f8778');stoneTex(g,-9,9,0,9,'#8f8778');door(g,0,5,6,'#2a1d15');
     for(let k=0;k<4;k++)ell(g,6+k*1.4,0.2,0.9,0.7,['#222','#b8622f','#e6b422'][3-1])}},
-  ijzersmelterij:{name:'IJzersmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
+  ijzersmelterij:{name:t('bld.ijzersmelterij'),fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#c9bfae',roof:'slate',stone:true});chimney(g,5.4,-16,6);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<3;k++)box(g,8+k*2.2,10+k*2.2,0.6,1,1.4,'#8d8f94')}},
-  goudsmelterij:{name:'Goudsmelterij',fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
+  goudsmelterij:{name:t('bld.goudsmelterij'),fp:[-1,2,-2,0],sc:1.7,box:[40,34,18,29],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#c9bfae',roof:'slate',stone:true});chimney(g,5.4,-16,6);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<3;k++)box(g,8+k*2.2,10+k*2.2,0.6,1,1.4,'#e6b422')}},
-  wapensmid:{name:'Uitrustingsmaker',fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[-2.6,-3],draw:(g)=>{
+  wapensmid:{name:t('bld.wapensmid'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],glow:[-2.6,-3],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#e6d6b4',roof:'slate',timber:true});chimney(g,5.4,-16,5);
     poly(g,[-6,0,1,0,1,-6.4,-6,-6.4],'#2a1d15',OUT,0.4);for(let k=0;k<4;k++)line(g,[9+k*1.3,0.4,9.4+k*1.3,-6],'#c8c8c4',0.5)}},
-  boerderij:{name:'Boerderij',fp:[-2,2,-2,0],sc:1.7,box:[52,34,30,29],smoke:[6.2,-18],draw:(g)=>{
+  boerderij:{name:t('bld.boerderij'),fp:[-2,2,-2,0],sc:1.7,box:[52,34,30,29],smoke:[6.2,-18],draw:(g)=>{
     ground(g,22,11);wheat(g,-27,-12,1.6,5);
     line(g,[-22,-2.5,-22,-8.6],'#6b4a2b',0.5);line(g,[-23.6,-7,-20.4,-7],'#6b4a2b',0.5);circ(g,-22,-9.4,0.9,'#d9b06a');poly(g,[-23.4,-9.6,-20.6,-9.6,-22,-10.8],'#8a5a34');
     poly(g,[-21.6,-7.2,-20.2,-7.2,-20.6,-4,-22,-4],'#7d4b3a');
@@ -192,24 +192,24 @@ const BTYPES={
     for(let x=9;x<16;x+=1.8)line(g,[x,0.8,x,-2.4],'#7a5434',0.45);line(g,[8.6,-1.8,16,-1.8],'#7a5434',0.4);line(g,[8.6,-0.4,16,-0.4],'#7a5434',0.4);
   }},
   /* voedsel (mijlpaal 5b) */
-  bonenakker:{name:'Bonenakker',fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
+  bonenakker:{name:t('bld.bonenakker'),fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
     ground(g,16,9);house(g,{w:11,h:7,d:8,ph:4.5,wall:'#e8dcc0',roof:'thatch',timber:true});door(g,-2,2.8,4.6,'#6e4426');win(g,2.6,-4,2.2,2);
     for(const x of [-12.5,-10.5,-8.5])for(const y of [1.2,-0.6]){line(g,[x+y*0.5,y,x+y*0.5+0.3,y-5.4],'#7a5434',0.4);
       for(let k=0;k<4;k++)ell(g,x+y*0.5+(k%2?0.6:-0.5),y-1.4-k*1.1,0.7,0.45,k%2?'#5f8a35':'#6fa040')}
     ell(g,8.6,-0.2,1.6,0.7,'#9a7a4a');for(const [x,c] of [[8,'#7a4a2a'],[8.8,'#a8763c'],[9.4,'#5f7a35']])ell(g,x,-0.6,0.4,0.3,c);
   }},
-  moestuin:{name:'Moestuin',fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
+  moestuin:{name:t('bld.moestuin'),fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
     ground(g,16,9);house(g,{w:10,h:6.5,d:8,ph:4,wall:'#d9c7a0',roof:'wood',planks:true});door(g,-1.8,2.6,4.4,'#4d7a3a');
     for(let r=0;r<2;r++){const y=1.4-r*1.8,x0=-14+r*0.9;poly(g,[x0,y,x0+6,y,x0+6.8,y-1.2,x0+0.8,y-1.2],'#7a5a3a');
       for(let k=0;k<3;k++){circ(g,x0+1.4+k*2,y-1,0.85,'#6fa84a');circ(g,x0+1.4+k*2,y-1.1,0.5,'#8cc260')}}
     poly(g,[7,0.4,8.6,0.6,8.4,-0.4],'#e07a26');poly(g,[8.2,0.8,9.8,1,9.6,0],'#e07a26');line(g,[8.6,0.2,9.4,-1.2],'#4f8a35',0.35);
   }},
-  plukkershut:{name:'Plukkershut',fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
+  plukkershut:{name:t('bld.plukkershut'),fp:[-1,1,-2,0],sc:1.7,box:[34,30,16,26],draw:(g)=>{
     ground(g,16,9);house(g,{w:11,h:7,d:8,ph:4.5,wall:'#efe4cc',roof:'thatch',timber:true});door(g,-2,2.8,4.6,'#7d4b3a');win(g,2.6,-4,2.2,2);
     for(const [x,f] of [[-9.6,'#c8382e'],[-6.8,'#9a6a3a'],[7.6,'#d9a32a']]){ell(g,x,0,1.6,0.8,'#a8763c');poly(g,[x-1.6,0,x+1.6,0,x+1.3,-1.6,x-1.3,-1.6],'#b98a55',OUT,0.3);
       for(const dx of [-0.7,0,0.7])circ(g,x+dx,-1.8,0.55,f)}
   }},
-  waterput:{name:'Waterput',fp:[0,0,0,0],sc:1.7,box:[20,24,10,20],draw:(g)=>{
+  waterput:{name:t('bld.waterput'),fp:[0,0,0,0],sc:1.7,box:[20,24,10,20],draw:(g)=>{
     ell(g,0.8,0.3,6.5,2.2,'rgba(40,35,10,.25)');
     ell(g,0,-0.4,4.2,1.8,'#8f8678');poly(g,[-4.2,-0.4,4.2,-0.4,4.2,-3.2,-4.2,-3.2],'#a9a39a',OUT,0.35);stoneTex(g,-4.2,4.2,-0.4,2.8,'#a9a39a');
     ell(g,0,-3.2,4.2,1.8,'#bdb3a2');ell(g,0,-3.2,3.2,1.2,'#2c4a6a');ell(g,-0.6,-3.4,1.2,0.4,'rgba(160,200,230,.5)');
@@ -217,13 +217,13 @@ const BTYPES={
     poly(g,[-5.4,-10.2,0,-13.6,5.4,-10.2,4.6,-9.6,0,-12.6,-4.6,-9.6],ROOF.wood,OUT,0.35);
     line(g,[0,-9.4,0,-6.6],'#4a3a2a',0.2);barrel(g,0,-4.4);
   }},
-  gaarkeuken:{name:'Gaarkeuken',fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[5.4,-19],glow:[10.6,-1.2],draw:(g)=>{
+  gaarkeuken:{name:t('bld.gaarkeuken'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,18,27],smoke:[5.4,-19],glow:[10.6,-1.2],draw:(g)=>{
     ground(g,22,10);house(g,{w:14,h:9,d:10,ph:5.5,wall:'#efe4cc',roof:'tile',timber:true});chimney(g,4.4,-15,4.2);
     door(g,-3,3,5.2,'#6e4426');win(g,3,-5,2.6,2.4);
     for(const [x0,y0,x1,y1] of [[8.6,0.6,10.6,-4.4],[12.6,0.6,10.6,-4.4]])line(g,[x0,y0,x1,y1],'#5a3b22',0.45);
     ell(g,10.6,-1.6,2.2,1.4,'#3a3a3c');ell(g,10.6,-2.6,2,0.55,'#b8742e');circ(g,10,-2.7,0.25,'#5f8a35');sack(g,-10,0.8);
   }},
-  droogschuur:{name:'Droogschuur',fp:[-1,2,-2,0],sc:1.7,box:[40,32,20,27],draw:(g)=>{
+  droogschuur:{name:t('bld.droogschuur'),fp:[-1,2,-2,0],sc:1.7,box:[40,32,20,27],draw:(g)=>{
     ground(g,22,10);const ox=5.5,oy=-7;
     for(const [x,y] of [[-12,0],[6,0],[-12+ox,oy],[6+ox,oy]])line(g,[x,y,x,y-8],'#6b4a2b',0.7);
     for(let r=0;r<3;r++){const y=-1.6-r*2.2;line(g,[-12,y,6,y],'#8a5a34',0.35);

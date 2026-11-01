@@ -65,7 +65,7 @@ function buildStockPanel(){
   for(let p=0;p<P;p++){const o=document.createElement('option');o.value=p;o.textContent='Speler '+(p+1);sel.appendChild(o)}
   const box=$('stockList');box.innerHTML='';stockCells=[];let gr='';
   GOODS.forEach((d,gd)=>{
-    if(d.gr!==gr){gr=d.gr;const h=document.createElement('h3');h.textContent=gr;box.appendChild(h)}
+    if(d.gr!==gr){gr=d.gr;const h=document.createElement('h3');h.textContent=d.grn;box.appendChild(h)}
     const row=document.createElement('div');row.className='srow';
     row.appendChild(thumb(goodSprite(gd,1),24,18,2.6));
     const n=document.createElement('span');n.textContent=d.n;row.appendChild(n);
@@ -77,6 +77,6 @@ function buildStockPanel(){
 function refreshStock(){
   if(!stockCells||!world.stk)return;const p=+$('stockPl').value||0,key=stockVer*16+p;if(key===stockShown)return;stockShown=key;
   const t=stockTotals(p);$('stockPl').style.borderColor=PCOL[p];
-  stockCells.forEach(([row,v],gd)=>{v.textContent=t[gd].toLocaleString('nl-NL');row.classList.toggle('zero',!t[gd])});
+  stockCells.forEach(([row,v],gd)=>{v.textContent=t[gd].toLocaleString(LOC());row.classList.toggle('zero',!t[gd])});
 }
 $('stockPl').onchange=refreshStock;

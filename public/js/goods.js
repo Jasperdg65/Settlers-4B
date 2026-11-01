@@ -1,16 +1,17 @@
 "use strict";
 /* ---------- Goederen: soorten en getekende sprites (eigen ontwerp) ---------- */
 const GOODS=[
-  {k:'boomstam',n:'Boomstam',gr:'Bouwmaterialen'},{k:'plank',n:'Plank',gr:'Bouwmaterialen'},{k:'steen',n:'Steen',gr:'Bouwmaterialen'},
-  {k:'graan',n:'Graan',gr:'Voedsel'},{k:'meel',n:'Meel',gr:'Voedsel'},{k:'brood',n:'Brood',gr:'Voedsel'},{k:'water',n:'Water',gr:'Voedsel'},
-  {k:'peulvruchten',n:'Peulvruchten',gr:'Voedsel'},{k:'groente',n:'Groente',gr:'Voedsel'},{k:'fruit',n:'Fruit',gr:'Voedsel'},{k:'noten',n:'Noten',gr:'Voedsel'},
-  {k:'stoofpot',n:'Stoofpot',gr:'Voedsel'},{k:'notenmix',n:'Fruit-notenmix',gr:'Voedsel'},
-  {k:'kolen',n:'Kolen',gr:'Grondstoffen'},{k:'ijzererts',n:'IJzererts',gr:'Grondstoffen'},{k:'gouderts',n:'Gouderts',gr:'Grondstoffen'},
-  {k:'ijzer',n:'IJzer',gr:'Metalen'},{k:'goud',n:'Goud',gr:'Metalen'},
-  {k:'bijl',n:'Bijl',gr:'Gereedschap'},{k:'zaag',n:'Zaag',gr:'Gereedschap'},{k:'houweel',n:'Houweel',gr:'Gereedschap'},{k:'hamer',n:'Hamer',gr:'Gereedschap'},
-  {k:'schop',n:'Schop',gr:'Gereedschap'},{k:'zeis',n:'Zeis',gr:'Gereedschap'},
-  {k:'helm',n:'Helm',gr:'Uitrusting'},{k:'schild',n:'Schild',gr:'Uitrusting'},{k:'polsband',n:'Polsband',gr:'Uitrusting'}];
-const GI={};GOODS.forEach((d,i)=>GI[d.k]=i);
+  {k:'boomstam',gr:'bouw'},{k:'plank',gr:'bouw'},{k:'steen',gr:'bouw'},
+  {k:'graan',gr:'voedsel'},{k:'meel',gr:'voedsel'},{k:'brood',gr:'voedsel'},{k:'water',gr:'voedsel'},
+  {k:'peulvruchten',gr:'voedsel'},{k:'groente',gr:'voedsel'},{k:'fruit',gr:'voedsel'},{k:'noten',gr:'voedsel'},
+  {k:'stoofpot',gr:'voedsel'},{k:'notenmix',gr:'voedsel'},
+  {k:'kolen',gr:'grondstof'},{k:'ijzererts',gr:'grondstof'},{k:'gouderts',gr:'grondstof'},
+  {k:'ijzer',gr:'metaal'},{k:'goud',gr:'metaal'},
+  {k:'bijl',gr:'gereedschap'},{k:'zaag',gr:'gereedschap'},{k:'houweel',gr:'gereedschap'},{k:'hamer',gr:'gereedschap'},
+  {k:'schop',gr:'gereedschap'},{k:'zeis',gr:'gereedschap'},
+  {k:'helm',gr:'uitrusting'},{k:'schild',gr:'uitrusting'},{k:'polsband',gr:'uitrusting'}];
+/* naam (n) en groepsnaam (grn) uit het taalbestand (i18n.js) */
+const GI={};GOODS.forEach((d,i)=>{GI[d.k]=i;d.n=t('goed.'+d.k);d.grn=t('groep.'+d.gr)});
 /* één exemplaar rond (0,0), ongeveer 4,4 breed en 2 hoog */
 const bag=(g,col,mark)=>{ell(g,0,-0.3,1.5,1.3,col);poly(g,[-0.5,-1.4,0.5,-1.4,0.3,-2,-0.3,-2],sh(col,0.85));line(g,[-0.5,-1.6,0.5,-1.6],'#7a6340',0.3);
   if(mark)for(const dx of [-0.6,0,0.6])line(g,[dx,0.2,dx*1.3,-0.6],mark,0.3)};

@@ -22,12 +22,12 @@ const smooth=(a,b,v)=>{const t=Math.min(1,Math.max(0,(v-a)/(b-a)));return t*t*(3
 
 /* ---------- Terrein ---------- */
 const T={DEEP:0,SHALLOW:1,SAND:2,GRASS:3,LUSH:4,DRY:5,ROCKY:6,MOUNTAIN:7,SNOW:8};
-const TNAME=['Diep water','Ondiep water','Strand','Gras','Weelderig gras','Droog gras','Rotsgrond','Gebergte','Sneeuw'];
+const TNAME=[0,1,2,3,4,5,6,7,8].map(i=>t('ter.'+i));
 const TCOL=[[42,88,128],[70,132,160],[224,202,146],[134,170,70],[100,148,58],[186,174,98],[156,142,118],[128,118,106],[238,240,242]];
-const ORE=['geen','kolen','ijzer','goud','zwavel'];
+const ORE=[0,1,2,3,4].map(i=>t('erts.'+i));
 const ORECOL=['','#222','#b8622f','#f2c230','#e8e05a'];
 const PCOL=['#d33b3b','#2f6fd6','#e6b422','#3aa457','#9b4fc9','#e07a26','#22b0ad','#e05aa0'];
-const TREE_NAMES=['eik','berk','den','beuk','appelboom'];
+const TREE_NAMES=[0,1,2,3,4].map(i=>t('boom.'+i));
 const TW=16,TH=8,HP=96,CH=32;
 const VILLAGE=['ijzersmelterij','goudsmelterij','wapensmid','pakhuis','woonhuis','houthakker','bakkerij','molen','boerderij','waterput','smidse','woonhuis','zagerij','houthakker','bosbouwer','steenhouwer','kazerne','woonhuis','wachttoren','wachttoren'];
 

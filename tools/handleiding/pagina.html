@@ -1,41 +1,42 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="{{LANG}}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kolonie – handleiding</title>
-<meta name="description" content="Handleiding van Kolonie: een vreedzaam bouwspel over samenwerking, zorg en harmonie.">
-<!-- gemaakt door tools/handleiding/maak.js uit tools/handleiding/bron.html; niet met de hand bewerken -->
+<title>{{T.titel}}</title>
+<meta name="description" content="{{T.beschrijving}}">
+<!-- gemaakt door tools/handleiding/maak.js uit tools/handleiding/<taal>/bron.html; niet met de hand bewerken -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,500;0,700;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="handleiding.css?v={{VCSS}}">
 </head>
-<body>
+<body data-niets="{{T.niets}}" data-voet="{{T.voet}}">
 <header class="kop">
-  <a class="merk" href="#welkom"><img src="../favicon.svg" alt="Kolonie" width="28" height="28"><span>Kolonie</span><small>handleiding</small></a>
+  <a class="merk" href="#"><img src="../favicon.svg" alt="Kolonie" width="28" height="28"><span>Kolonie</span><small>{{T.sub}}</small></a>
   <div class="zoek" role="search">
-    <input id="zoek" type="search" placeholder="Zoeken in de handleiding…  ( / )" autocomplete="off" aria-label="Zoeken in de handleiding">
+    <input id="zoek" type="search" placeholder="{{T.zoek}}" autocomplete="off" aria-label="{{T.zoekLabel}}">
     <ol id="treffers" class="treffers" hidden></ol>
   </div>
-  <a class="knop" href="kolonie-handleiding.pdf" download>PDF</a>
-  <a class="knop" href="../">Naar het spel</a>
+  {{TALEN}}
+  <a class="knop" href="kolonie-handleiding.pdf" download>{{T.pdf}}</a>
+  <a class="knop" href="../">{{T.spel}}</a>
 </header>
 
 <div class="opzet">
-  <nav class="inhoud" aria-label="Inhoudsopgave">
-    <details open><summary>Inhoud</summary>{{TOC}}</details>
+  <nav class="inhoud" aria-label="{{T.inhoudLabel}}">
+    <details open><summary>{{T.inhoud}}</summary>{{TOC}}</details>
   </nav>
 
   <main id="tekst">
     <section class="voorblad">
-      <img class="voorblad-beeld" src="../assets/buildings/burcht.webp" alt="De burcht">
+      <img class="voorblad-beeld" src="../assets/buildings/burcht.webp" alt="{{T.burcht}}">
       <h1>Kolonie</h1>
-      <p class="ondertitel">Handleiding voor vreedzame bouwers</p>
-      <p class="versie">Bijgewerkt op {{DATUM}}</p>
+      <p class="ondertitel">{{T.ondertitel}}</p>
+      <p class="versie">{{T.bijgewerkt}}</p>
     </section>
-    <section class="drukinhoud"><h2 class="geen-toc">Inhoud</h2>{{TOC}}</section>
+    <section class="drukinhoud"><h2>{{T.inhoud}}</h2>{{TOC}}</section>
 {{INHOUD}}
   </main>
 </div>

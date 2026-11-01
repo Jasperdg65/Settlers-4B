@@ -1,11 +1,13 @@
 /* Schermafbeeldingen voor de handleiding uit het echte spel, in vaste scènes (vaste seed, vaste ticks, vaste camera),
-   zodat ze na elke wijziging opnieuw te maken zijn:  node tools/handleiding/schermen.js [scène ...]
-   Schrijft public/handleiding/img/<scène>.jpg en de goederen-icoontjes public/handleiding/img/goed/<goed>.png. */
+   zodat ze na elke wijziging opnieuw te maken zijn:  node tools/handleiding/schermen.js [--taal=nl] [scène ...]
+   Het spel draait in de gekozen taal (?lang=), dus tooltips en panelen staan in die taal.
+   Schrijft public/handleiding/img/<taal>/<scène>.jpg en de goederen-icoontjes public/handleiding/img/goed/<goed>.png. */
 const fs=require('fs'),path=require('path');
 const {startChrome,sleep}=require('./chrome.js');
 const {PUB}=require('./spel.js');
 const URL_=process.env.KOLONIE_URL||'https://doc.dgol.eu/settlers4b/';
-const OUT=path.join(PUB,'handleiding/img');
+const ARG=process.argv.slice(2),TAAL=(ARG.find(a=>a.startsWith('--taal='))||'--taal=nl').slice(7);
+const OUT=path.join(PUB,'handleiding/img'),SHOT=path.join(OUT,TAAL);
 const SEED='vathorst';
 
 /* hulpjes die in de pagina draaien */
@@ -31,17 +33,17 @@ window.HB={
 };1`;
 
 async function main(){
-  const kies=process.argv.slice(2);fs.mkdirSync(path.join(OUT,'goed'),{recursive:true});
+  const kies=ARG.filter(a=>!a.startsWith('--'));fs.mkdirSync(path.join(OUT,'goed'),{recursive:true});fs.mkdirSync(SHOT,{recursive:true});
   const B=await startChrome({port:9391,w:1400,h:900,scale:2});const {cmd,ev}=B;
   try{
-    await cmd('Page.navigate',{url:URL_+'?handleiding='+Date.now()});await sleep(4000);
+    await cmd('Page.navigate',{url:URL_+'?lang='+TAAL+'&handleiding='+Date.now()});await sleep(4000);
     await ev(PAGINA);
     for(let k=0;k<60&&!(await ev('HB.geladen()'));k++)await sleep(500);
     const muis=async(x,y)=>{await cmd('Input.dispatchMouseEvent',{type:'mouseMoved',x,y});await sleep(400)};
     const weg=async()=>{await muis(5,890);await ev('hoverTile=null;showTip("");1')};
     const foto=async(naam,clip)=>{if(kies.length&&!kies.includes(naam))return;await sleep(900);
       const r=await cmd('Page.captureScreenshot',{format:'jpeg',quality:82,clip:{x:clip[0],y:clip[1],width:clip[2],height:clip[3],scale:1}});
-      fs.writeFileSync(path.join(OUT,naam+'.jpg'),Buffer.from(r.result.data,'base64'));console.log('  ',naam)};
+      fs.writeFileSync(path.join(SHOT,naam+'.jpg'),Buffer.from(r.result.data,'base64'));console.log('  ',naam)};
     /* kaartuitsnede: het middelste deel van het speelveld */
     const kaart=async(w=980,h=600)=>{const [l,t,W,H]=await ev('HB.canvas()');return [Math.round(l+(W-w)/2),Math.round(t+(H-h)/2),w,h]};
     const zij=async(sel,h=880)=>ev(`(()=>{let e=document.querySelector('${sel}');e=e.closest('section')||e;if(e.tagName==='ASIDE')e.scrollTop=0;else e.scrollIntoView({block:'start'});

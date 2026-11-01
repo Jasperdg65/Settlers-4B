@@ -1,6 +1,7 @@
 "use strict";
 /* ---------- Bediening ---------- */
-const fmt={players:v=>v,water:v=>Math.round(v*100)+'%',mount:v=>Math.round(v*100)+'%',trees:v=>Math.round(v*100)+'%',count:v=>(+v).toLocaleString('nl-NL')};
+if(document.documentElement)document.documentElement.lang=TALEN[TAAL]?TAAL:'nl';   // taal van de pagina (i18n.js)
+const fmt={players:v=>v,water:v=>Math.round(v*100)+'%',mount:v=>Math.round(v*100)+'%',trees:v=>Math.round(v*100)+'%',count:v=>(+v).toLocaleString(LOC())};
 for(const k in fmt){const el=$(k),out=$(k+'V');const u=()=>out.textContent=fmt[k](el.value);el.addEventListener('input',u);u()}
 $('dice').onclick=()=>{const w=['eik','duin','veen','berk','klei','heide','fjord','kreek','polder','mergel'];$('seed').value=w[Math.random()*w.length|0]+'-'+(Math.random()*9000+1000|0)};
 $('ores').onchange=ev=>showOres=ev.target.checked;

@@ -8,7 +8,7 @@
    De selectie zelf is alleen weergave en hoort niet bij de simulatie. */
 const AS={IDLE:0,PATH:1,WALK:2,SEAT:3,DUEL:4,OUT:5};
 const AIM={IDLE:0,SEAT:1,HEAL:2};
-const LVLNAME=['','junior','medior','senior'],INSTR=['','fluit','harp','doedelzak'];
+const LVLNAME=['',t('niveau.1'),t('niveau.2'),t('niveau.3')],INSTR=['',t('instrument.1'),t('instrument.2'),t('instrument.3')];
 const ARMY={p:0,sel:[],groups:[],last:'',won:[],tap:{k:-1,t:0},ping:null};
 const SEL={box:null};
 let drand=mulberry32(1);   // eigen toeval voor duels, los van de dieren (die gebruiken srand)    // sleeprechthoek in schermpixels [x0, y0, x1, y1]

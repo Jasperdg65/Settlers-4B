@@ -6,6 +6,8 @@ const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&qu
 
 /* tekst van een knoop met spaties tussen alle stukjes (anders plakken tabelcellen aan elkaar) */
 const tekst=n=>{if(n.nodeType===3)return n.data;if(n.nodeType!==1)return '';const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT);let t='';for(let x;(x=w.nextNode());)t+=' '+x.data;return t};
+/* koptekst zonder het label 'Komt eraan' */
+const kaal=h=>{const c=h.cloneNode(true);c.querySelectorAll('.komt').forEach(x=>x.remove());return c.textContent.trim()};
 /* op een smal scherm begint de inhoudsopgave dicht */
 if(matchMedia('(max-width:900px)').matches)document.querySelector('.inhoud details')?.removeAttribute('open');
 /* index: elke h2/h3 met de tekst tot de volgende kop */
@@ -14,7 +16,7 @@ const index=koppen.map((h,i)=>{
   let t='',n=h.nextSibling;const stop=koppen[i+1];
   while(n&&n!==stop&&!(n.nodeType===1&&n.contains(stop))){t+=' '+tekst(n);n=n.nextSibling}
   const hs=h.closest('.hoofdstuk').querySelector('h2');
-  return {id:h.id,titel:h.textContent.replace(/komt eraan/i,'').trim(),hoofdstuk:hs===h?'':hs.textContent.replace(/komt eraan/i,'').trim(),
+  return {id:h.id,titel:kaal(h),hoofdstuk:hs===h?'':kaal(hs),
     tekst:t.replace(/\s+/g,' ').trim(),plat:plat(h.textContent+' '+t)}});
 
 const veld=$('#zoek'),lijst=$('#treffers');let keus=0,treffers=[];
@@ -25,7 +27,7 @@ function zoek(){
     .filter(Boolean).sort((a,b)=>b[0]-a[0]).slice(0,12).map(v=>v[1]);
   keus=0;lijst.hidden=false;
   lijst.innerHTML=treffers.length?treffers.map((s,i)=>`<li><a href="#${s.id}" class="${i?'':'actief'}"><b>${esc(s.titel)}</b>`+
-    `<small>${s.hoofdstuk?esc(s.hoofdstuk)+' · ':''}${fragment(s.tekst,w)}</small></a></li>`).join(''):'<li class="niets">Niets gevonden. Probeer een ander woord.</li>';
+    `<small>${s.hoofdstuk?esc(s.hoofdstuk)+' · ':''}${fragment(s.tekst,w)}</small></a></li>`).join(''):`<li class="niets">${esc(document.body.dataset.niets||'')}</li>`;
   markeer(w);
 }
 /* stukje tekst rond de eerste treffer, met de zoekwoorden gemarkeerd */

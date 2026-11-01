@@ -2,12 +2,12 @@
 /* ---------- Inwoners (middeleeuws, eigen ontwerp) ----------
    varianten: 0 = man met baard, 1 = man zonder baard, 2 = vrouw          */
 const ROLES=[
-  {name:'Drager',bld:['pakhuis','houthakker','zagerij','steenhouwer','bakkerij','molen','boerderij','burcht','kolenmijn','ijzermijn','goudmijn','ijzersmelterij','goudsmelterij'],share:0.6,vars:3},
-  {name:'Bouwer',bld:['woonhuis','pakhuis','zagerij','smidse','wapensmid','bosbouwer','houthakker','kazerne'],share:0.14,vars:2},
-  {name:'Krachtpatser',bld:['kazerne','wachttoren','burcht'],share:0.12,vars:1}, // 3D-sprite per niveau (units3d.js)
-  {name:'Boogschutter',bld:['wachttoren','kazerne'],share:0.08,vars:1},
-  {name:'Heler',bld:['kruidenhuis','burcht','woonhuis'],share:0.06,vars:3},   // 3D-sprite per niveau
-  {name:'Muzikant',bld:[],share:0,vars:1}];                                    // alleen 3D (fluit, harp, doedelzak); niet in de stresstest
+  {name:t('rol.drager'),bld:['pakhuis','houthakker','zagerij','steenhouwer','bakkerij','molen','boerderij','burcht','kolenmijn','ijzermijn','goudmijn','ijzersmelterij','goudsmelterij'],share:0.6,vars:3},
+  {name:t('rol.bouwer'),bld:['woonhuis','pakhuis','zagerij','smidse','wapensmid','bosbouwer','houthakker','kazerne'],share:0.14,vars:2},
+  {name:t('rol.krachtpatser'),bld:['kazerne','wachttoren','burcht'],share:0.12,vars:1}, // 3D-sprite per niveau (units3d.js)
+  {name:t('rol.boogschutter'),bld:['wachttoren','kazerne'],share:0.08,vars:1},
+  {name:t('rol.heler'),bld:['kruidenhuis','burcht','woonhuis'],share:0.06,vars:3},   // 3D-sprite per niveau
+  {name:t('rol.muzikant'),bld:[],share:0,vars:1}];                                    // alleen 3D (fluit, harp, doedelzak); niet in de stresstest
 const SKIN='#f0c9a0',HAIRS=['#4a2e1a','#6b3f22','#2f2118','#8a5a2e'];
 /* pose (alleen economie): 1 = vrije drager met lege handen, 2 = drager met beide handen vooruit (het goed tekent loop.js erop) */
 function drawUnit(g,role,v,pc,f,hairCol,pose,look){

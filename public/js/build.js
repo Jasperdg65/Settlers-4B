@@ -243,7 +243,7 @@ function landLoss(bi){
   const own=world.own,t=computeLand(bi,new Uint8Array(own.length)),me=b.p+1;let n=0;
   for(let i=0;i<own.length;i++)if(own[i]===me&&t[i]!==me)n++;if(!n)return ' · kost geen gebied';
   const out=world.blds.filter((o,oi)=>oi!==bi&&o.p===b.p&&!o.dead&&t[o.y*world.W+o.x]!==me);
-  return ` · LET OP: je verliest ${n.toLocaleString('nl-NL')} tegels gebied`+(out.length?`; buiten de grens komen: ${out.map(o=>BTYPES[o.type].name+(o.st?' (bouwplaats)':'')).join(', ')}`:'');
+  return ` · LET OP: je verliest ${n.toLocaleString(LOC())} tegels gebied`+(out.length?`; buiten de grens komen: ${out.map(o=>BTYPES[o.type].name+(o.st?' (bouwplaats)':'')).join(', ')}`:'');
 }
 /* klik in bouwmodus: als opdracht (orders.js), net zoals een computerbuur bouwt */
 function buildClick(){

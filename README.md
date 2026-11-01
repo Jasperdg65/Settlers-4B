@@ -332,6 +332,7 @@ en tellen mee in de harmonie. Alle getallen staan in `js/config.js`.
 | 11 | Diplomatie: relatieniveau en geheugen per buur, geschenken, afspraken, samen mediteren, feesten en feesttoernooien, vrede met vaste grenzen | later |
 | 12 | Hoofddoel: Tuin van verbondenheid op neutraal terrein (bouwfasen, bijdrage per speler, gezamenlijke winst; modus "vrij spel" zonder tuin) en natuurgebeurtenissen: droogte, strenge winter, overstroming | later |
 | 13 | Opslaan en laden van de hele wereld (automatisch en handmatig, ook als bestand), pas als het spel bijna klaar is; tot die tijd vraagt de browser om bevestiging bij herladen of sluiten | later |
+| 14 | Talen: alle teksten van het spel via `t()`, vertalingen Engels, Frans, Duits en Spaans (spel en handleiding), taalkeuze in het spel | later |
 
 Bouwvolgorde na de economie (mijlpaal 5–7): eerst computerburen, dan handel, dan diplomatie, dan
 de Tuin van verbondenheid met de natuurgebeurtenissen.
@@ -714,14 +715,37 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
 - **Vraag**: alleen werkplaatsen en mijnen vragen goederen (hun invoer, `CFG.prod`); het tijdelijke
   verbruik (`CFG.temp`) is in mijlpaal 5c vervallen.
 
+## Talen
+
+Kolonie wordt meertalig: Nederlands (brontaal), Engels, Frans, Duits en Spaans.
+
+- **Taalbestanden**: `public/lang/<taal>.js` vult `TALEN.<taal>` met vaste sleutels (`bld.houthakker`, `goed.plank`,
+  `job.boer`, `ter.3`, …). `js/i18n.js` kiest de taal (`?lang=xx`, anders de vorige keuze, anders de browsertaal,
+  anders nl) en geeft `t('sleutel', {waarden})`; `{naam}` in een tekst wordt ingevuld. Ontbreekt een sleutel, dan valt
+  `t()` terug op het Nederlands. Getallen met `getal(n)` of `toLocaleString(LOC())`.
+- **Wat al via `t()` gaat**: alle namen (gebouwen, goederen en hun groepen, beroepen, terrein, erts, bomen, struiken,
+  gewassen, rollen, niveaus, instrumenten). De handleiding haalt dezelfde namen uit het spel, dus de woorden zijn overal gelijk.
+- **Nog Nederlands in de code** (mijlpaal 14): de zijbalk in `index.html` (ongeveer 60 teksten), statusmeldingen en
+  tooltips in `production.js`, `build.js`, `transport.js`, `input.js`, `army.js`, `duel.js`, de panelen in `ui.js`,
+  `stock.js`, `custom.js` en meldingen in `loop.js` (samen ongeveer 120). Statusmeldingen (`b.ps`) worden dan een code
+  met waarden, zodat de tekst pas bij het tonen in de juiste taal wordt gemaakt.
+- **Regel vanaf nu**: nieuwe tekst die een speler ziet, gaat via `t()` met een sleutel in `lang/nl.js`; geen nieuwe
+  Nederlandse tekst in de code.
+- **Een taal toevoegen**: `public/lang/xx.js` (alle sleutels van nl.js; `node tools/talen.js` meldt wat ontbreekt) en een
+  `<script>` in `index.html`; voor de handleiding `tools/handleiding/xx/bron.html` en `xx/teksten.js` (zelfde velden als
+  `nl/teksten.js`). De handleiding komt dan op `/handleiding/xx/`, met een taalkeuze bovenaan, en `schermen.js --taal=xx`
+  maakt de schermafbeeldingen in die taal.
+- **Woordenlijst**: eigen begrippen (krachtpatser, krachthal, heler, hunnebed, Tuin van Verbondenheid, lievelingskost)
+  krijgen per taal één vaste vertaling, vast te leggen in de taalbestanden voordat de handleiding wordt vertaald.
+
 ## Handleiding
 
 `public/handleiding/` is een losse pagina (in het spel: knop *Handleiding* of F1) met een printbare pdf.
-De tekst staat in `tools/handleiding/bron.html`; tabellen, ketenschema's en getallen worden uit de
-config en het manifest gemaakt. Na elke wijziging aan spel of tekst:
+De tekst staat per taal in `tools/handleiding/<taal>/bron.html` (met `teksten.js` voor wat de generator
+zelf schrijft); tabellen, ketenschema's, namen en getallen komen uit het spel (config, manifest, `lang/`). Na elke wijziging aan spel of tekst:
 
 ```
-node tools/handleiding/schermen.js    # schermafbeeldingen uit vaste scènes (seed vathorst), headless Chrome
+node tools/handleiding/schermen.js    # schermafbeeldingen uit vaste scènes (seed vathorst), headless Chrome (--taal=xx)
 node tools/handleiding/maak.js        # index.html uit bron.html + config + manifest
 node tools/handleiding/pdf.js         # kolonie-handleiding.pdf (print-CSS), headless Chrome
 ```
