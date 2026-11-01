@@ -59,7 +59,7 @@ function functie(t){
   if(pc.gather==='plant')return `Plant boompjes binnen ${pc.area} tegels; na ${sec(CFG.nature.grow)} zijn het volwassen bomen.`;
   if(pc.gather==='farm')return `Zaait en oogst ${CROP[pc.crop]} op akkers binnen ${pc.area} tegels (rijp na ${sec(CFG.nature.crop[pc.crop])}).`;
   if(pc.gather==='pick')return `Plukt ${goed(pc.out).toLowerCase()} en ${goed(pc.out2).toLowerCase()} van bomen en struiken binnen ${pc.area} tegels.`;
-  if(pc.mine)return `Haalt ${lijst(Object.keys(pc.out).map(k=>goed(k).toLowerCase()))} uit de berg (binnen ${pc.area} tegels); de mijnwerker eet er ${goed(CFG.mineFood[t]).toLowerCase()} bij.`;
+  if(pc.mine)return `Haalt ${lijst(Object.keys(pc.out).map(k=>goed(k).toLowerCase()))} uit de berg (binnen ${pc.area} tegels). De mijnwerker eet elke maaltijd, maar met zijn lievelingskost, ${goed(CFG.mineFood[t]).toLowerCase()}, werkt hij ${CFG.prod.mineFav} keer zo lang door.`;
   if(pc.recipes)return `Maakt ${lijst(Object.keys(pc.recipes).map(k=>goed(k).toLowerCase()))}, telkens in ${sec(pc.ticks)}.`;
   const io=x=>lijst(Object.entries(x).map(([k,n])=>`${n>1?n+' × ':''}${goed(k).toLowerCase()}`));
   return Object.keys(pc.in).length?`Maakt van ${io(pc.in)} ${io(pc.out)}, in ${sec(pc.ticks)}.`:`Maakt ${io(pc.out)}, elke ${sec(pc.ticks)}.`;
@@ -97,8 +97,9 @@ const GEN={
     const maak={},nodig={};const add=(m,k,v)=>{(m[k]=m[k]||new Set()).add(v)};
     for(const t in CFG.prod){const pc=CFG.prod[t];if(typeof pc!=='object')continue;
       for(const k of [pc.out,pc.out2].filter(x=>typeof x==='string'))add(maak,k,naam(t));
-      for(const r of recipes(t)){for(const k in r.out)add(maak,k,naam(t));for(const k in r.in)add(nodig,k,naam(t))}}
+      for(const r of recipes(t)){for(const k in r.out)add(maak,k,naam(t));if(!pc.mine)for(const k in r.in)add(nodig,k,naam(t))}}
     for(const k of CFG.pop.food)add(nodig,k,'Woonhuis');
+    for(const t in CFG.mineFood)if(BTYPES[t])for(const k of CFG.prod.mineMeals)add(nodig,k,naam(t)+(CFG.mineFood[t]===k?' (lievelingskost)':''));
     add(nodig,'plank','bouwen');add(nodig,'steen','bouwen');
     for(const j of CFG.jobs)if(j.tool)add(nodig,j.tool,'gereedschap van de '+j.n.toLowerCase());
     for(const k of Object.keys(CFG.prod.wapensmid.recipes))add(nodig,k,'krachtpatsers [[komt:Uitrusting (helm, schild, polsband) voor krachtpatsers]]');

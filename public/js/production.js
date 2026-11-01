@@ -22,7 +22,7 @@ function initProduction(){
     else if(obj[i]===5)NAT.stump.push([hash2(i,9)%c.stump,i]);
   }
   NAT.sap.sort((a,b)=>a[0]-b[0]);NAT.stump.sort((a,b)=>a[0]-b[0]);
-  for(const b of world.blds){b.pt=0;b.run=0;b.ps='';b.pend=null;b.alt=0;b.make='auto';b.rec=null;b.born=0}
+  for(const b of world.blds){b.meals=0;b.pt=0;b.run=0;b.ps='';b.pend=null;b.alt=0;b.make='auto';b.rec=null;b.born=0}
 }
 /* natuur: elke CFG.nature.every ticks */
 function tickNature(){
@@ -45,14 +45,16 @@ function setWant(b){
   b.want.fill(0);const pc=CFG.prod[b.type];
   if(b.type==='woonhuis'&&(b.born||0)<CFG.pop.house)for(const k of CFG.pop.food)b.want[GI[k]]=CFG.pop.stock;
   if(pc&&!pc.gather)for(const k of allIn(b.type))b.want[GI[k]]=pc.stock;
+  if(pc&&pc.mine)for(const k of CFG.prod.mineMeals)if(k!==CFG.mineFood[b.type])b.want[GI[k]]=CFG.prod.mineOtherStock;
 }
-/* recepten van een werkplaats: [{k, in, out}]. Een mijn eet zijn lievelingskost; smidse en uitrustingsmaker hebben er meer */
+/* recepten van een werkplaats: [{k, in, out}]. Smidse en uitrustingsmaker hebben er meer. Een mijn heeft geen vaste invoer:
+   zijn maaltijd regelt tryRecipe (mealFor), maar de maaltijden tellen wel als invoer (allIn) voor vraag en stapelplekken */
 const RECIPES={};
 function recipes(type){
   if(RECIPES[type])return RECIPES[type];const pc=CFG.prod[type];
-  return RECIPES[type]=pc.recipes?Object.keys(pc.recipes).map(k=>({k,in:pc.recipes[k],out:{[k]:1}})):[{k:'',in:pc.mine?{[CFG.mineFood[type]]:1}:pc.in,out:pc.out}];
+  return RECIPES[type]=pc.recipes?Object.keys(pc.recipes).map(k=>({k,in:pc.recipes[k],out:{[k]:1}})):[{k:'',in:pc.mine?{}:pc.in,out:pc.out}];
 }
-const allIn=type=>[...new Set(recipes(type).flatMap(r=>Object.keys(r.in)))];
+const allIn=type=>[...new Set([...recipes(type).flatMap(r=>Object.keys(r.in)),...(CFG.prod[type].mine?CFG.prod.mineMeals:[])])];
 const outCount=type=>Math.max(...recipes(type).map(r=>Object.keys(r.out).length));
 const made=(b,gd,n)=>{world.made[b.p][gd]+=n};
 /* voorraad per speler, hoogstens één keer per tick uitgerekend (voor de grens CFG.prod.enough) */
@@ -92,13 +94,21 @@ function startBatch(b,bi,pc){
 }
 function tryRecipe(b,bi,pc,r){
   const full=enough(b,Object.keys(r.out));if(full)return full;
-  let ore=-1;if(pc.mine){ore=findOre(b,pc);if(ore<0)return 'geen '+ORE[pc.mine]+' meer in de buurt'}
+  let ore=-1,meal=null;if(pc.mine){ore=findOre(b,pc);if(ore<0)return 'geen '+ORE[pc.mine]+' meer in de buurt';
+    if(!(b.meals>0)){meal=mealFor(b,bi);if(!meal)return 'wacht op een maaltijd (het liefst '+GOODS[GI[CFG.mineFood[b.type]]].n.toLowerCase()+')'}}
   const src=[];
   for(const k in r.in)for(let n=0;n<r.in[k];n++){const s=freeUnitAt(bi,GI[k]);if(s<0||src.includes(s)&&G.cnt[s]-G.res[s]<=src.filter(x=>x===s).length)return 'wacht op '+GOODS[GI[k]].n.toLowerCase();src.push(s)}
   for(const k in r.out)if(!roomFor(bi,GI[k]))return 'opslag bij de deur vol';
   for(const s of src)takeOne(s);TR.used+=src.length;
+  if(meal){takeOne(meal[0]);TR.used++;b.meals=meal[1]}if(pc.mine)b.meals--;
   b.rec=r;b.ore=ore;b.pt=pc.ticks;b.run=1;b.ps=r.k&&recipes(b.type).length>1?'maakt '+GOODS[GI[r.k]].n.toLowerCase():'werkt';
   return '';
+}
+/* maaltijd voor de mijnwerker: eerst zijn lievelingskost (CFG.prod.mineFav rondes), anders een andere maaltijd (1 ronde) */
+function mealFor(b,bi){
+  const fav=CFG.mineFood[b.type];
+  for(const k of [fav,...CFG.prod.mineMeals.filter(x=>x!==fav)]){const s=freeUnitAt(bi,GI[k]);if(s>=0)return [s,k===fav?CFG.prod.mineFav:1]}
+  return null;
 }
 function finishBatch(b,bi,pc){
   b.run=0;const r=b.rec;if(!r)return;

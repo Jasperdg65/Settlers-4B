@@ -58,7 +58,8 @@ const CFG={
     {k:'smid',n:'Smid',bld:['smidse','wapensmid']},
     {k:'wachter',n:'Wachter',bld:['wachttoren']},   // TIJDELIJK tot mijlpaal 6c: daarna bemannen krachtpatsers de toren
   ],
-  /* lievelingskost van mijnwerkers (de wereld is veganistisch); mijnen gebruiken dit vanaf mijlpaal 5 */
+  /* lievelingskost van mijnwerkers (de wereld is veganistisch). Een mijnwerker eet elke maaltijd uit prod.mineMeals, maar zijn
+     lievelingskost is goed voor prod.mineFav rondes werk, een andere maaltijd voor één ronde (production.js, tryRecipe) */
   mineFood:{kolenmijn:'brood',steenmijn:'brood',ijzermijn:'stoofpot',zwavelmijn:'stoofpot',goudmijn:'notenmix'},
   /* bouwen: kosten [planken, steen]; de burcht kan niet gebouwd worden */
   build:{
@@ -108,6 +109,9 @@ const CFG={
        elke ertstegel bevat mineUnits stuks. Smidse en uitrustingsmaker hebben recepten (product: invoer); automatisch maken
        ze het product waarvan de speler het minst heeft, of wat de speler kiest (opdracht 'make'). */
     mineUnits:20,
+    mineMeals:['brood','stoofpot','notenmix'],   // wat een mijnwerker eet
+    mineFav:2,                     // rondes werk per stuk lievelingskost (andere maaltijd: 1)
+    mineOtherStock:1,              // zoveel van elke andere maaltijd wil een mijn bij de deur (van de lievelingskost: stock)
     kolenmijn:{mine:1,area:3,out:{kolen:1},ticks:200,stock:4},
     ijzermijn:{mine:2,area:3,out:{ijzererts:1},ticks:220,stock:4},
     goudmijn:{mine:3,area:3,out:{gouderts:1},ticks:260,stock:4},

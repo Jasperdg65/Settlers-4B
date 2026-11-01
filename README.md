@@ -465,8 +465,11 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 
 **Mijnen en metaal (mijlpaal 5c)**
 
-- Mijn: eet per ronde één stuk lievelingskost (`CFG.mineFood`: kolenmijn brood, ijzermijn stoofpot,
-  goudmijn fruit-notenmix) en haalt één stuk erts uit de dichtstbijzijnde ertstegel van zijn soort
+- Mijn: de mijnwerker eet elke maaltijd (`CFG.prod.mineMeals`), maar zijn lievelingskost (`CFG.mineFood`:
+  kolenmijn brood, ijzermijn stoofpot, goudmijn fruit-notenmix) is goed voor `mineFav` (2) rondes, een
+  andere maaltijd voor één. Hij vraagt `stock` van zijn lievelingskost en `mineOtherStock` (1) van de
+  rest. Zo loopt het startdorp (alleen brood) niet vast, en loont een gaarkeuken of droogschuur toch
+  (Node, startdorp, 30 min: 29 ijzer en 17 goud, eerst 0). Per ronde haalt hij één stuk erts uit de dichtstbijzijnde ertstegel van zijn soort
   binnen `area` tegels; elke ertstegel bevat `CFG.prod.mineUnits` (20) stuks (`world.oreRes`, ook in
   de tegelinfo). Zonder erts: "geen ijzer meer in de buurt".
 - Smelterijen: erts + kolen → ijzer of goud. Kolen is de knelpunt-grondstof (beide smelterijen).
