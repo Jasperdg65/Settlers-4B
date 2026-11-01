@@ -763,7 +763,6 @@ Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.
 - Opslaan en laden van de hele wereld
 - Krachtpatsers selecteren en sturen in het eigen dorp
 - Eén vaste speler; de andere kleuren worden computerburen
-- Paadjes die vanzelf ontstaan waar veel gelopen wordt
 - Bewoners die doorlopend eten
 - Uitrusting (helm, schild, polsband) voor krachtpatsers
 - Voederbakken en dierenverzorger
