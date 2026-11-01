@@ -14,18 +14,20 @@ function initBuild(){
     const c=nearestIdle(b.p,doorTile(b),0);if(c<0)return;S.job[c]=BJOB[b.type];S.dst[c]=bi;b.wkr=c+1;enterBuilding(c)});
   computeLand();
 }
-/* Gebied (mijlpaal 6b, CFG.territory): elke tegel hoort bij het oudste bemande gebouw dat hem in zijn straal heeft.
+/* Gebied (mijlpaal 6b, CFG.territory): elke tegel binnen de straal van een bemand gebouw hoort bij het oudste daarvan.
    De burcht is altijd bemand en gaat voor, daarna de torens op volgorde van bemannen (b.mt, dan index).
-   Een nieuwe toren neemt dus nooit land van een buur af; een toren zonder bemanning (afgebroken) geeft zijn land vrij.
+   Een nieuwe toren neemt dus nooit gedekt land van een buur af. Land dat geen toren meer dekt (de toren is afgebroken),
+   blijft van zijn eigenaar, maar is onbeschermd: komt het binnen de straal van een bemande toren van een ander, dan is het van die.
    Gebouwen op land dat zo verloren gaat, blijven staan en werken door; er kan daar alleen niet meer gebouwd worden. */
 function computeLand(skip=-1,own=world.own){
-  const {W,H}=world;own.fill(0);
+  const {W,H}=world,prev=world.own.slice();own.fill(0);
   const L=[];world.blds.forEach((b,bi)=>{if(bi!==skip&&CFG.territory[b.type]&&!b.dead&&!b.st&&(b.type==='burcht'||b.occ))L.push(bi)});
   const key=bi=>{const b=world.blds[bi];return b.type==='burcht'?-1:b.mt||0};
   L.sort((a,c)=>key(a)-key(c)||a-c);
   for(const bi of L){const b=world.blds[bi],r=CFG.territory[b.type];
     for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
       if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1}
+  for(let i=0;i<own.length;i++)if(!own[i])own[i]=prev[i];   // onbeschermd land blijft van wie het had
   if(own!==world.own)return own;
   world.landVer=(world.landVer||0)+1;if(typeof buildMini==='function'&&miniBase)buildMini();
 }
@@ -237,13 +239,13 @@ function buildHover(x,y){
   BUILD.hover=bi;const c=CFG.build.cost[b.type]||[0,0],u=b.st?b.used:c,r=CFG.build.refund;
   return `${BTYPES[b.type].name} afbreken · geeft ${Math.floor(u[0]*r)} plank, ${Math.floor(u[1]*r)} steen terug`+landLoss(bi);
 }
-/* waarschuwing bij afbreken van een bemande toren: hoeveel gebied gaat verloren en welke eigen gebouwen komen erbuiten */
+/* bij afbreken van een bemande toren: het land blijft, behalve wat binnen de straal van een toren van een ander valt */
 function landLoss(bi){
   const b=world.blds[bi];if(!CFG.territory[b.type]||b.st||!b.occ)return '';
-  const own=world.own,t=computeLand(bi,new Uint8Array(own.length)),me=b.p+1;let n=0;
-  for(let i=0;i<own.length;i++)if(own[i]===me&&t[i]!==me)n++;if(!n)return ' · kost geen gebied';
-  const out=world.blds.filter((o,oi)=>oi!==bi&&o.p===b.p&&!o.dead&&t[o.y*world.W+o.x]!==me);
-  return ` · LET OP: je verliest ${n.toLocaleString(LOC())} tegels gebied`+(out.length?`; buiten de grens komen: ${out.map(o=>BTYPES[o.type].name+(o.st?' (bouwplaats)':'')).join(', ')}`:'');
+  const own=world.own,na=computeLand(bi,new Uint8Array(own.length)),me=b.p+1;let n=0;
+  for(let i=0;i<own.length;i++)if(own[i]===me&&na[i]!==me)n++;if(!n)return t('gebied.blijft');
+  const out=world.blds.filter((o,oi)=>oi!==bi&&o.p===b.p&&!o.dead&&na[o.y*world.W+o.x]!==me);
+  return t('gebied.verlies',{n:getal(n)})+(out.length?t('gebied.buiten',{lijst:out.map(o=>BTYPES[o.type].name+(o.st?t('gebied.bouwplaats'):'')).join(', ')}):'');
 }
 /* klik in bouwmodus: als opdracht (orders.js), net zoals een computerbuur bouwt */
 function buildClick(){

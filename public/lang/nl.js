@@ -1,8 +1,12 @@
 "use strict";
 /* Nederlands: de brontaal. Elke sleutel hier moet ook in de andere talen staan (tools/talen.js controleert dat).
-   Sleutels: bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier. */
+   Sleutels: gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier. */
 TALEN.nl={
   "taal.naam":"Nederlands",
+  "gebied.blijft":" · je gebied blijft van jou",
+  "gebied.verlies":" · LET OP: {n} tegels gaan naar een buur, want hun toren staat dichtbij",
+  "gebied.buiten":"; buiten je grens komen: {lijst}",
+  "gebied.bouwplaats":" (bouwplaats)",
   "bld.burcht":"Burcht (hoofdkwartier)",
   "bld.woonhuis":"Woonhuis",
   "bld.houthakker":"Houthakker",

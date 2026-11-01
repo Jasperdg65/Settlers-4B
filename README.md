@@ -504,7 +504,9 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
   bewoner. `computeLand` (js/build.js) rekent `world.own` opnieuw uit zodra een toren bemand raakt of
   verdwijnt: elke tegel hoort bij het oudste bemande gebouw dat hem in zijn straal heeft (burcht
   eerst, dan torens op volgorde van bemannen, `b.mt`). Een nieuwe toren neemt dus nooit land van een
-  buur af; afbreken geeft het land vrij.
+  buur af. Land dat geen bemand gebouw meer dekt (de toren is afgebroken), blijft van zijn eigenaar
+  maar is onbeschermd: valt het binnen de straal van een bemande toren van een ander, dan is het
+  van die (ook bij een toren die later bemand raakt).
 - **Tijdelijk tot 6c**: een wachttoren wordt bemand door een *wachter* (beroep zonder gereedschap,
   gewone vrije drager). In 6c nemen krachtpatsers dat over. De torens van het startdorp zijn
   meteen bemand.
@@ -513,8 +515,8 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 - Gebouwen op land dat verloren gaat blijven staan en werken door; er kan daar alleen niet meer
   gebouwd worden. Ook een bouwplaats wordt afgebouwd: een toren die zo buiten de grens klaarkomt,
   geeft na bemanning het gebied terug.
-- Afbreken van een bemande toren: de tooltip zegt vooraf hoeveel tegels gebied verloren gaan en
-  welke eigen gebouwen of bouwplaatsen dan buiten de grens komen (`landLoss`).
+- Afbreken van een bemande toren: de tooltip zegt vooraf of het gebied blijft, of hoeveel tegels naar
+  een buur gaan en welke eigen gebouwen of bouwplaatsen dan buiten de grens komen (`landLoss`).
 - De grens is altijd zichtbaar: een lijn in spelerkleur op de grond (onder bomen en gebouwen),
   iets naar binnen, zodat twee buren elk hun eigen lijn houden; ook op het minikaartje. Tooltip
   van een toren: bemand of onbemand; paneel Productie: "Wachttoren ×3 · 2 bemand · gebied 2.722 tegels".
