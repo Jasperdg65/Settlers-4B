@@ -62,6 +62,12 @@ function drawPennant(x,y,pole,col,seed){
   for(let k=bot.length-2;k>=0;k-=2)ctx.lineTo(bot[k],bot[k+1]);ctx.closePath();
   ctx.fillStyle=col;ctx.fill();ctx.strokeStyle='rgba(40,20,10,.45)';ctx.lineWidth=0.35;ctx.stroke();
   ctx.fillStyle='rgba(255,255,255,.18)';ctx.beginPath();ctx.moveTo(top[0],top[1]);for(let k=2;k<top.length;k+=2)ctx.lineTo(top[k],top[k+1]+0.9);ctx.lineTo(x,y+1.2);ctx.closePath();ctx.fill()}
+/* stookt gebouw b nu? (CFG.smoke) Zonder economie roken alle schoorstenen. */
+function smoking(b){
+  if(!S.eco)return true;if(!b.occ)return false;const pc=CFG.prod[b.type];
+  if(pc&&!pc.gather)return !!b.run;   // werkplaats: alleen tijdens een batch
+  const h=CFG.smoke.home;return (tNow+b.seed*h[0])%h[0]<h[1];   // woning of hut: af en toe
+}
 function draw(){
   ctx.setTransform(1,0,0,1,0,0);
   ctx.fillStyle='#24476f';ctx.fillRect(0,0,cv.width,cv.height);
@@ -153,9 +159,10 @@ function draw(){
           if(s.flag){fx=bx-s.ax+s.flag[0]*s.w;fy=by-s.ay+s.flag[1]*s.h}
           else if(cust||b.type!=='burcht'&&b.type!=='kazerne'&&b.type!=='wachttoren'){fx=bx-s.ax+s.w*0.14;fy=by-s.ay+s.h*0.8;pole=15}
           if(fx!==undefined)drawPennant(fx,fy,pole,PCOL[b.p],b.seed)}
-        const sm=cust?null:bt.smoke;if(sm&&detail){
-          for(let k=0;k<3;k++){const ph=((tNow/2800)+k/3+b.seed)%1;ctx.globalAlpha=(1-ph)*0.5*Math.min(1,ph*6);
-            ctx.fillStyle='#ecebe6';ctx.beginPath();ctx.arc(bx+sm[0]*sc+ph*5+Math.sin(ph*6+b.seed*9)*1.2,by+sm[1]*sc-ph*16,1.3+ph*3,0,6.283);ctx.fill()}
+        const sm=cust?s.smoke:bt.smoke;if(sm&&detail&&smoking(b)){const C=CFG.smoke,sx=cust?bx-s.ax+sm[0]*s.w:bx+sm[0]*sc,sy=cust?by-s.ay+sm[1]*s.h:by+sm[1]*sc;
+          const z=cust?s.w/C.refW:1;   // geschilderde gebouwen zijn groter: wolkjes schalen mee
+          for(let k=0;k<C.puffs;k++){const ph=((tNow/C.period)+k/C.puffs+b.seed)%1;ctx.globalAlpha=(1-ph)*C.alpha*Math.min(1,ph*6);
+            ctx.fillStyle='#ecebe6';ctx.beginPath();ctx.arc(sx+(ph*5+Math.sin(ph*6+b.seed*9)*1.2)*z,sy-ph*C.rise*z,(1.3+ph*3)*z,0,6.283);ctx.fill()}
           ctx.globalAlpha=1}
         if(PROF)pt('gebouwen',tg);
         continue}

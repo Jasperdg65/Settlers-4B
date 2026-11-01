@@ -6,6 +6,10 @@
             "w": 70,
             "ax": 0.5,
             "ay": 0.9,
+            "smoke": [
+                0.621,
+                0.03
+            ],
             "src": "Wapensmidse.png",
             "px": 420,
             "v": "db247bff"
@@ -15,6 +19,10 @@
             "w": 76,
             "ax": 0.52,
             "ay": 0.9,
+            "smoke": [
+                0.654,
+                0.02
+            ],
             "src": "Staalsmelterij.png",
             "px": 420,
             "v": "54e734c3"
@@ -24,6 +32,10 @@
             "w": 70,
             "ax": 0.5,
             "ay": 0.9,
+            "smoke": [
+                0.664,
+                0.02
+            ],
             "src": "Goudsmelterij.png",
             "px": 420,
             "v": "91f84429"
@@ -60,6 +72,10 @@
             "w": 68,
             "ax": 0.5,
             "ay": 0.9,
+            "smoke": [
+                0.636,
+                0.03
+            ],
             "src": "Bakkerij.png",
             "px": 420,
             "v": "ffbed90d"
@@ -83,6 +99,10 @@
             "w": 50,
             "ax": 0.47,
             "ay": 0.9,
+            "smoke": [
+                0.66,
+                0.03
+            ],
             "src": "Woonhuis.png",
             "px": 320,
             "v": "4f68097c"
@@ -160,6 +180,10 @@
             "w": 66,
             "ax": 0.5,
             "ay": 0.9,
+            "smoke": [
+                0.682,
+                0.03
+            ],
             "src": "Smidse.png",
             "px": 420,
             "v": "ad230957"
@@ -200,6 +224,66 @@
             "src": "Boerderij.png",
             "px": 440,
             "v": "96371f7c"
+        },
+        "gaarkeuken": {
+            "file": "buildings/gaarkeuken.webp",
+            "w": 68,
+            "ax": 0.5,
+            "ay": 0.9,
+            "smoke": [
+                0.689,
+                0.03
+            ],
+            "src": "Gaarkeuken.png",
+            "px": 420
+        },
+        "droogschuur": {
+            "file": "buildings/droogschuur.webp",
+            "w": 74,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Droogrekken.png",
+            "px": 420
+        },
+        "waterput": {
+            "file": "buildings/waterput.webp",
+            "w": 28,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Waterput.png",
+            "px": 240
+        },
+        "moestuin": {
+            "file": "buildings/moestuin.webp",
+            "w": 62,
+            "ax": 0.5,
+            "ay": 0.9,
+            "src": "Moestuin.png",
+            "px": 400
+        },
+        "bonenakker": {
+            "file": "buildings/bonenakker.webp",
+            "w": 62,
+            "ax": 0.5,
+            "ay": 0.9,
+            "smoke": [
+                0.679,
+                0.035
+            ],
+            "src": "Bonenakker.png",
+            "px": 400
+        },
+        "plukkershut": {
+            "file": "buildings/plukkershut.webp",
+            "w": 62,
+            "ax": 0.5,
+            "ay": 0.9,
+            "smoke": [
+                0.66,
+                0.03
+            ],
+            "src": "Plukkershut.png",
+            "px": 400
         }
     },
     "nature": {

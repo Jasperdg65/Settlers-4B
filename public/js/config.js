@@ -172,5 +172,9 @@ const CFG={
   /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
   territory:{burcht:20,wachttoren:20},
   /* zichtbare grens: lijn in spelerkleur, inset = afstand tot de tegelrand (in tegels), breedte in beeldpunten op het scherm */
+  /* rook uit de schoorsteen (alleen beeld): werkplaatsen roken zolang ze een batch maken (b.run), woningen en hutten
+     af en toe: elke 'home'[0] ms een poosje van 'home'[1] ms. 'period' = levensduur van een wolkje, 'rise' = stijghoogte;
+     geschilderde gebouwen schalen de wolkjes met hun breedte / refW */
+  smoke:{puffs:3,period:2800,rise:16,alpha:0.6,refW:40,home:[9000,3200]},
   border:{inset:0.14,width:2.2,minWidth:0.6,alpha:0.9},
 };

@@ -255,6 +255,6 @@ function tintVariants(bmp){
   return out}
 function customSpr(type){const cu=CUSTOM[type];if(!cu||!cu.bmp)return;
   const m=DEFAULT_IMGS[type]||{};const w=cu.w,h=w*cu.bmp.height/cu.bmp.width;
-  const mk=c=>({c,w,h,ax:w*cu.ax,ay:h*cu.ay,custom:true,flag:m.flag,hub:m.hub,sail:m.sail});
+  const mk=c=>({c,w,h,ax:w*cu.ax,ay:h*cu.ay,custom:true,flag:m.flag,hub:m.hub,sail:m.sail,smoke:m.smoke});
   cu.spr=mk(cu.bmp);
   if(BTYPES[type].pc){if(!cu.tint||cu.tintSrc!==cu.bmp){cu.tint=tintVariants(cu.bmp);cu.tintSrc=cu.bmp}cu.sprP=cu.tint?cu.tint.map(mk):null}else cu.sprP=null}
