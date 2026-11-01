@@ -504,7 +504,10 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
   gewone vrije drager). In 6c nemen krachtpatsers dat over. De torens van het startdorp zijn
   meteen bemand.
 - Gebouwen op land dat verloren gaat blijven staan en werken door; er kan daar alleen niet meer
-  gebouwd worden.
+  gebouwd worden. Ook een bouwplaats wordt afgebouwd: een toren die zo buiten de grens klaarkomt,
+  geeft na bemanning het gebied terug.
+- Afbreken van een bemande toren: de tooltip zegt vooraf hoeveel tegels gebied verloren gaan en
+  welke eigen gebouwen of bouwplaatsen dan buiten de grens komen (`landLoss`).
 - De grens is altijd zichtbaar: een lijn in spelerkleur op de grond (onder bomen en gebouwen),
   iets naar binnen, zodat twee buren elk hun eigen lijn houden; ook op het minikaartje. Tooltip
   van een toren: bemand of onbemand; paneel Productie: "Wachttoren ×3 · 2 bemand · gebied 2.722 tegels".

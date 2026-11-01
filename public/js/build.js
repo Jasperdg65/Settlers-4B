@@ -18,14 +18,15 @@ function initBuild(){
    De burcht is altijd bemand en gaat voor, daarna de torens op volgorde van bemannen (b.mt, dan index).
    Een nieuwe toren neemt dus nooit land van een buur af; een toren zonder bemanning (afgebroken) geeft zijn land vrij.
    Gebouwen op land dat zo verloren gaat, blijven staan en werken door; er kan daar alleen niet meer gebouwd worden. */
-function computeLand(){
-  const {W,H,own}=world;own.fill(0);
-  const L=[];world.blds.forEach((b,bi)=>{if(CFG.territory[b.type]&&!b.dead&&!b.st&&(b.type==='burcht'||b.occ))L.push(bi)});
+function computeLand(skip=-1,own=world.own){
+  const {W,H}=world;own.fill(0);
+  const L=[];world.blds.forEach((b,bi)=>{if(bi!==skip&&CFG.territory[b.type]&&!b.dead&&!b.st&&(b.type==='burcht'||b.occ))L.push(bi)});
   const key=bi=>{const b=world.blds[bi];return b.type==='burcht'?-1:b.mt||0};
   L.sort((a,c)=>key(a)-key(c)||a-c);
   for(const bi of L){const b=world.blds[bi],r=CFG.territory[b.type];
     for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
       if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1}
+  if(own!==world.own)return own;
   world.landVer=(world.landVer||0)+1;if(typeof buildMini==='function'&&miniBase)buildMini();
 }
 /* tegels van de bouwplaats die geëgaliseerd worden (hoekpunten rond de voetafdruk, zoals de mapgenerator doet) */
@@ -193,7 +194,7 @@ function drawBorders(yMin,yMax,xr){
 const BUILD={mode:null,type:null,ax:0,ay:0,why:'',hover:-1};
 const buildPl=()=>+$('bldPl').value||0;
 function drawBuildOverlay(v,blit){
-  if(!BUILD.mode)return;const {W}=world,p=buildPl();
+  if(!BUILD.mode)return;const {W,H}=world,p=buildPl();
   if(BUILD.mode==='place'&&BUILD.type){
     const fp=BTYPES[BUILD.type].fp,ok=!BUILD.why,{ax,ay}=BUILD;if(ax+fp[0]<0||ay+fp[2]<0||ax+fp[1]>=W-1||ay+fp[3]+1>=H-1)return;
     for(let dy=fp[2];dy<=fp[3];dy++)for(let dx=fp[0];dx<=fp[1];dx++)tileQuad(ax+dx,ay+dy,ok?'rgba(70,200,90,.45)':'rgba(220,60,50,.45)',ok?'#3ec25a':'#e0463c');
@@ -234,7 +235,15 @@ function buildHover(x,y){
   const bi=world.bldAt[y*world.W+x]-1,b=bi>=0?world.blds[bi]:null;BUILD.hover=-1;
   if(!b)return 'Geen gebouw';if(b.p!==p)return 'Van een andere speler';if(b.type==='burcht')return 'De burcht kan niet worden afgebroken';
   BUILD.hover=bi;const c=CFG.build.cost[b.type]||[0,0],u=b.st?b.used:c,r=CFG.build.refund;
-  return `${BTYPES[b.type].name} afbreken · geeft ${Math.floor(u[0]*r)} plank, ${Math.floor(u[1]*r)} steen terug`;
+  return `${BTYPES[b.type].name} afbreken · geeft ${Math.floor(u[0]*r)} plank, ${Math.floor(u[1]*r)} steen terug`+landLoss(bi);
+}
+/* waarschuwing bij afbreken van een bemande toren: hoeveel gebied gaat verloren en welke eigen gebouwen komen erbuiten */
+function landLoss(bi){
+  const b=world.blds[bi];if(!CFG.territory[b.type]||b.st||!b.occ)return '';
+  const own=world.own,t=computeLand(bi,new Uint8Array(own.length)),me=b.p+1;let n=0;
+  for(let i=0;i<own.length;i++)if(own[i]===me&&t[i]!==me)n++;if(!n)return ' · kost geen gebied';
+  const out=world.blds.filter((o,oi)=>oi!==bi&&o.p===b.p&&!o.dead&&t[o.y*world.W+o.x]!==me);
+  return ` · LET OP: je verliest ${n.toLocaleString('nl-NL')} tegels gebied`+(out.length?`; buiten de grens komen: ${out.map(o=>BTYPES[o.type].name+(o.st?' (bouwplaats)':'')).join(', ')}`:'');
 }
 /* klik in bouwmodus: als opdracht (orders.js), net zoals een computerbuur bouwt */
 function buildClick(){
