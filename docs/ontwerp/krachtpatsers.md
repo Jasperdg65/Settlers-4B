@@ -46,6 +46,9 @@ en (later) torens uitdagen en overnemen. Waarom zo: zie [../beslissingen.md](../
 - `b.crew` (wie binnen is), `b.otw` (onderweg), `b.trn` (wie traint). Nog niet: eten voor
   krachtpatsers, helers en muzikanten in het dorp, krachtpatsers zelf sturen, betere bemanning
   naar de rand verplaatsen.
+- Grensduel (mijlpaal 8b, [grond-ruilen.md](grond-ruilen.md)): de sterkste krachtpatser uit de dichtstbijzijnde toren
+  loopt naar buiten (`ST.FIELD`, `fieldOut` in crew.js) maar blijft in `b.crew`, zodat de toren bemand blijft; na het
+  duel gaat hij terug naar binnen (`fieldHome`).
 - De krachthal staat als eerste in de lijst van het startdorp: hij is groot (5 × 3) en vond
   achteraan vaak geen vlakke plek meer.
 

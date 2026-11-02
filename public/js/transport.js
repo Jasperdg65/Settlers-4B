@@ -8,7 +8,7 @@
    bouwplaatsen (build.js), de andere vakmensen gaan hun gebouw in (jobs.js).
    Elke 'wacht op route'-toestand (PATH_*) is oneven en gaat bij een gevonden route naar de volgende (lopen). */
 const ST={IDLE:0,PATH_SRC:1,TO_SRC:2,PATH_DST:3,TO_DST:4,PATH_TOOL:5,TO_TOOL:6,PATH_WORK:7,TO_WORK:8,WORK:9,INSIDE:10,PATH_IN:11,TO_IN:12,
-  P_OUT:13,TO_OUT:14,P_HOME:15,TO_HOME:16,GATHER:18};   // buitenwerkers (production.js): naar het doel, terug, werken
+  P_OUT:13,TO_OUT:14,P_HOME:15,TO_HOME:16,GATHER:18,FIELD:20};   // FIELD: krachtpatser buiten voor een grensduel (crew.js)   // buitenwerkers (production.js): naar het doel, terug, werken
 const TR={rr:0,done:0,used:0};
 const doorTile=b=>(b.y+1)*world.W+b.x;
 const isStore=b=>(b.type==='burcht'||b.type==='pakhuis')&&!b.dead&&!b.st;
@@ -17,6 +17,10 @@ function initTransport(){
   S.eco=1;S.st=new Uint8Array(n);S.carry=new Uint8Array(n);S.gd=new Uint8Array(n);S.src=new Int32Array(n);S.sb=new Int16Array(n);S.dst=new Int16Array(n);S.cm=new Uint8Array(n);
   S.job=new Uint8Array(n);S.jb=new Uint8Array(n);S.pi=new Uint16Array(n);S.path=new Array(n).fill(null);
   for(const b of world.blds){b.want=new Uint8Array(GOODS.length);b.coming=new Uint8Array(GOODS.length);b.cool=0;b.wkr=0;setWant(b)}
+  /* grensduels (mijlpaal 8b): de rijen van army.js, en de duels met hun eigen toeval */
+  for(const k of ['ast','aim','ko'])S[k]=new Uint8Array(n);S.fed=new Uint8Array(n).fill(1);S.fat=new Float32Array(n);
+  S.out=new Uint16Array(n);S.du=new Int16Array(n);S.seq=new Uint16Array(n);
+  DUELS.length=0;ARMY.sel=[];drand=mulberry32(hashStr(world.seed+'#duel'));
   TR.rr=0;TR.done=0;TR.used=0;tickNo=0;pathInit();initProduction();
 }
 /* mag gebouw b goed gd halen bij gebouw o? Niet bij een gebouw dat het zelf vraagt, behalve een opslag voor een niet-opslag */
@@ -125,6 +129,7 @@ function tickCarriers(){
     const s=st[i];if(s===ST.INSIDE)continue;
     px[i]=x[i];py[i]=y[i];
     if(wait[i]>0){wait[i]--;continue}
+    if(s===ST.FIELD){fieldStep(i);continue}
     if(s===ST.WORK){siteWork(i);continue}
     if(s===ST.GATHER){gatherDone(i);continue}
     if(s&1)continue; // wacht op een route (PATH_*)
@@ -148,6 +153,8 @@ function tickCarriers(){
     if(d>1e-4){x[i]+=dx/d*m;y[i]+=dy/d*m}
     if(d-m<0.05){if(k+1<p.length)S.pi[i]=k+1;else arrived(i)}
   }
+  if(DUELS.length)tickDuels();
+  tickRequests();
 }
 /* tooltip-tekst voor een gebouw: bouwstand, wat het vraagt en wat er onderweg is */
 function wantLabel(bi){

@@ -49,7 +49,7 @@ function frame(now){
       $('npath').textContent=`${pathQueued()} · ${PF.cache.size}, ${Math.round(100*PF.hits/Math.max(1,PF.hits+PF.miss))}% hit`}
     if(S.army){$('nsel').textContent=ARMY.sel.length;$('nduel').textContent=DUELS.filter(Boolean).length;
       $('nwon').textContent=ARMY.won.slice(0,2).join(' – ');$('duelMsg').textContent=ARMY.last}
-    drawMini();refreshStock();if(S.eco)refreshProduction();refreshHover();
+    drawMini();refreshStock();if(S.eco){refreshProduction();if(world.reqs){reqUI(buildPl());if(DUELS.some(Boolean))dealUI()}}refreshHover();
   }
 }
 let rowU=new Int32Array(1),rowA=new Int32Array(1);
@@ -197,9 +197,9 @@ function draw(){
       blit(ANIM[type][f*2+A.dir[k]],ax,ay);
     }
     if(PROF){pt('dieren',tr);tr=performance.now()}
-    if(S.army&&DUELS.length&&drawDuelsRow(y,zd))q='';
+    if(S.ast&&DUELS.length&&drawDuelsRow(y,zd))q='';
     if(detail&&!(PROF&&PX.k))for(let k=rowU[y];k>=0;k=S.next[k]){
-      if(S.army){if(S.ast[k]===AS.DUEL)continue;ctx.globalAlpha=S.ko[k]?0.6:1} // duelleerders zitten in de duel-sprite; uitgeschakeld = doorschijnend
+      if(S.ast){if(S.ast[k]===AS.DUEL)continue;ctx.globalAlpha=S.ko[k]?0.6:1} // duelleerders zitten in de duel-sprite; uitgeschakeld = doorschijnend
       const Y=S.py[k]+(S.y[k]-S.py[k])*al,X=S.px[k]+(S.x[k]-S.px[k])*al;
       const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]||S.st&&(S.st[k]===ST.WORK||S.st[k]===ST.GATHER));
       const f=moving?(animF+k)&3:0;
@@ -235,7 +235,7 @@ function draw(){
   if(PROF)pt('stippen',tp);
 
   if(world.own){drawSiteBars(v,blit);drawBuildOverlay(v,blit);drawDealOverlay();drawWorkAreas()}
-  if(S.army)drawArmyTop(al);
+  if(S.army||S.ast&&DUELS.length)drawArmyTop(al);
   if(hoverTile){
     const {x,y}=hoverTile;if(x<W-1&&y<H-1){const a=y*W+x;
       ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=1/cam.z;ctx.beginPath();

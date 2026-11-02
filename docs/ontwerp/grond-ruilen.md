@@ -1,7 +1,7 @@
 # Grond ruilen
 
-Mijlpaal 8a (gebouwd, `js/deals.js`, `CFG.deal`). Waarom zo: zie [../beslissingen.md](../beslissingen.md) (2026-11-02:
-geen torenovername). Mijlpaal 8b staat onderaan.
+Mijlpaal 8a en 8b (gebouwd, `js/deals.js`, `CFG.deal`). Waarom zo: zie [../beslissingen.md](../beslissingen.md) (2026-11-02:
+geen torenovername; grensduel en verzoeken). Mijlpaal 8b staat onderaan.
 
 ## Uitgangspunt
 
@@ -49,7 +49,47 @@ geen torenovername). Mijlpaal 8b staat onderaan.
 - Relatie: beide kanten `relDeal` punten erbij (`world.rel`, P × P, −100..100, start 0). Niveaus uit `CFG.deal.rel`:
   gespannen, onbekend, kennis, vriend, bondgenoot.
 
-## Mijlpaal 8b (nog niet bouwen)
+## Mijlpaal 8b (gebouwd)
+
+### Buren vragen zelf (`tickRequests`, `reqPlan`, `CFG.deal.req`)
+
+- Vanaf `first` ticks kijkt elke `every` ticks elke buur die van een erts minder dan `oreScarce` tegels heeft, of dat erts
+  binnen `reach` tegels van zijn grens op het gebied van speler `to` ligt (breedte-eerst over die grond, vanaf de grens).
+- Hij vraagt de weg van zijn grens naar het erts, het erts met 2 tegels eromheen en een tegel breder langs de weg,
+  hoogstens `tiles` tegels, alleen tegels die in een ruil mogen.
+- Hij biedt goederen ter waarde van `offer` × wat de strook de speler waard is (dezelfde `tilesValue`), uit wat hij het
+  meest vrij heeft, van elk goed hoogstens de helft. Lukt dat niet, dan vraagt hij niets.
+- `world.reqs {id, q, p, tiles, goods, ore, st, t, more, end}`. Antwoord: opdracht `answer {id, a}` met `ja`, `meer`
+  (één keer: `more` × de goederen, als de strook het hem zelf waard is) of `nee`. Na `ttl` ticks verloopt het; daarna,
+  of na een antwoord, vraagt die buur `cool` ticks niets.
+- Milo meldt een verzoek (regel `verzoek`), de strook knippert op de kaart en het paneel toont het bod.
+- **Tijdelijk**: tot mijlpaal 9 vragen ze alleen speler `to` (1). In de Ruil-test vragen ze om elk erts en al na
+  `first`/4 ticks, omdat daar niemand erts mist.
+
+### Grensduel (`grensChallenge`, `grensEnd`, `CFG.deal.duel`)
+
+- Na `afgewezen` (of een afgewezen tegenbod, `gesloten`) kan de vrager één keer uitdagen: opdracht `grens {id}`.
+- Van beide kanten de sterkste krachtpatser uit de toren die het dichtst bij de strook staat (anders uit de reserve van
+  een krachthal). Zonder krachtpatser aan een van beide kanten gaat het niet door.
+- Tafel: bij de tegel van de strook die aan de vrager grenst, het dichtst bij het midden, op een open plek zonder bomen
+  ervoor (`tableSpot(…, open)`), zodat het duel te zien is.
+- De krachtpatsers lopen als eenheden uit `army.js` (`S.st = ST.FIELD`, `fieldOut`, `fieldStep`, `fieldHome` in
+  `crew.js`) maar blijven in `b.crew`: de toren blijft bemand, de grens verspringt niet. Het duel zelf is `duel.js`
+  (zelfde kracht, eigen toeval `drand`).
+- Wint de vrager, dan wordt de strook (wat er dan nog mag) een afspraak in `world.deals` met `duel: 1`, zonder goederen.
+  Een uitdaging kost beide `relCost` relatiepunten. De winnaar gaat terug zijn toren in, de verliezer eerst naar zijn
+  burcht (`outTicks`); thuis zijn ze uitgerust.
+
+## Mijlpaal 8c (nog niet bouwen)
+
+- Krachtpatsers selecteren en sturen in het eigen dorp, met de besturing uit de Duel-test.
+
+## Besloten bij 8b
+
+- Grond na een ruil of duel ligt vast; een afspraak terugdraaien kan niet.
+- Grond schenken, voor relatie, komt bij diplomatie (mijlpaal 11).
+
+## Oorspronkelijk plan voor 8b
 
 - **Buren vragen zelf** om jouw grond, eerst met een eenvoudige regel: een buur die een erts mist (minder dan
   `oreScarce` tegels) en het net over zijn grens bij jou ziet liggen, vraagt dat stuk en biedt er grond of goederen
@@ -58,8 +98,3 @@ geen torenovername). Mijlpaal 8b staat onderaan.
   uit de dichtstbijzijnde toren van de ander komt naar buiten; de winnaar krijgt de strook (als afspraak in
   `world.deals`). Een uitdaging kost relatie, een eerlijke ruil levert relatie op.
 - Krachtpatsers selecteren en sturen in het eigen dorp (nu alleen in de Duel-test).
-
-## Open vragen
-
-- Moet een buur een afspraak later kunnen terugdraaien, of ligt grond na een ruil voor altijd vast?
-- Mag je ook grond **geven** zonder iets terug te vragen (een geschenk), voor relatie?

@@ -6,7 +6,7 @@
    bruikbaar voor een savegame of herhaling). Elke opdracht wordt gecontroleerd alsof hij van een onbekende komt:
    speler p moet eigenaar zijn en de regels gelden voor iedereen gelijk, zonder gratis goederen.
    Soorten nu: place {type, x, y}, demolish {b}, make {b, make} (wat een smidse maakt), keep {b, n} (reserve van een krachthal), area {b, x, y} (midden van het werkgebied, x null = terug bij de deur), move {ids, x, y}, duel {ids, j},
-   propose {q, ask, give, goods} (grond ruilen, deals.js), accept {id} en reject {id} (antwoord op een tegenbod). Later: handel, geschenk (docs/ontwerp/buren-en-diplomatie.md). */
+   propose {q, ask, give, goods} (grond ruilen, deals.js), accept {id} en reject {id} (antwoord op een tegenbod), grens {id} (grensduel na een afwijzing), answer {id, a: ja | meer | nee} (antwoord op een verzoek van een buur). Later: handel, geschenk (docs/ontwerp/buren-en-diplomatie.md). */
 const ORDERS=[];
 function order(c){ORDERS.push(c)}
 function runOrders(){for(let k=0;k<ORDERS.length;k++)runOrder(ORDERS[k]);ORDERS.length=0}
@@ -19,4 +19,6 @@ function runOrder(c){
   else if((c.t==='move'||c.t==='duel')&&S.army)runCmd(c);
   else if(c.t==='propose'&&world.offers)dealPropose(c);
   else if((c.t==='accept'||c.t==='reject')&&world.offers)dealAnswer(c,c.t==='accept');
+  else if(c.t==='grens'&&world.offers&&S.ast)grensChallenge(c);
+  else if(c.t==='answer'&&world.reqs)reqAnswer(c);
 }

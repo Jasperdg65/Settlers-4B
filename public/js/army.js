@@ -7,7 +7,7 @@
    tickgrens uitgevoerd, zodat alles alleen van ticks en opdrachten afhangt (deterministisch).
    De selectie zelf is alleen weergave en hoort niet bij de simulatie. */
 const AS={IDLE:0,PATH:1,WALK:2,SEAT:3,DUEL:4,OUT:5};
-const AIM={IDLE:0,SEAT:1,HEAL:2};
+const AIM={IDLE:0,SEAT:1,HEAL:2,HOME:3};   // HOME: terug de toren in na een grensduel (crew.js)
 const LVLNAME=['',t('niveau.1'),t('niveau.2'),t('niveau.3')],INSTR=['',t('instrument.1'),t('instrument.2'),t('instrument.3')];
 const ARMY={p:0,sel:[],groups:[],last:'',won:[],tap:{k:-1,t:0},ping:null};
 const SEL={box:null};
@@ -68,6 +68,7 @@ function arriveArmy(i){
   S.path[i]=null;const a=S.aim[i];
   if(a===AIM.SEAT){S.ast[i]=AS.SEAT;const d=DUELS[S.du[i]-1];if(d)S.d8[i]=d.a===i?0:4}
   else if(a===AIM.HEAL){S.ast[i]=AS.OUT;S.out[i]=CFG.duel.outTicks}
+  else if(a===AIM.HOME)fieldHome(i);
   else S.ast[i]=AS.IDLE;
 }
 /* route volgen: tegelmiddens, het laatste stuk recht naar het doel */

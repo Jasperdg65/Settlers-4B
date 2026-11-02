@@ -1,6 +1,6 @@
 "use strict";
 /* Nederlands: de brontaal. Elke sleutel hier moet ook in de andere talen staan (tools/talen.js controleert dat).
-   Sleutels: adv. adviseur, hal. krachthal, toren. bemanning, gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier., ruil. grond ruilen, werk. werkgebied verzetten, rel. relatieniveau. */
+   Sleutels: adv. adviseur, hal. krachthal, toren. bemanning, gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier., ruil. grond ruilen, verzoek. verzoeken van buren, grens. grensduel, werk. werkgebied verzetten, rel. relatieniveau. */
 TALEN.nl={
   "taal.naam":"Nederlands",
   "spel.naam":"Terrana",   // de naam van het spel: in elke taal gelijk, niet vertalen
@@ -61,6 +61,7 @@ TALEN.nl={
   "adv.vakman":"{gebouw} staat al {sec} seconden leeg. Er is gereedschap genoeg, maar geen vrije drager die er vakman kan worden. Een woonhuis met eten geeft nieuwe bewoners.",
   "adv.dragers":"Al je {n} dragers zijn aan het sjouwen en er blijft werk liggen. Een woonhuis met eten geeft nieuwe handen.",
   "adv.torenLeeg":"{gebouw} staat leeg en geeft nog geen gebied. Een krachthal met reserve stuurt er vanzelf een krachtpatser heen.",
+  "adv.verzoek":"Speler {n} vraagt om een stuk van jouw grond, voor het {erts} dat erop ligt. Kijk bij Buren: grond ruilen wat hij ervoor biedt.",
   "adv.houtketen":"Je eerste planken zijn gezaagd. De houtketen draait, mooi werk!",
   "adv.brood":"Het eerste brood komt uit de oven. Dat ruikt goed!",
   "adv.toren":"Je nieuwe toren is bemand en je gebied is gegroeid. Goed gedaan!",
@@ -215,6 +216,27 @@ TALEN.nl={
   "werk.hier":"Werkgebied van de {gebouw} hierheen verzetten",
   "werk.terug":"Werkgebied terug rond het gebouw",
   "werk.teVer":"Te ver van het gebouw (hooguit {n} tegels)",
+  "verzoek.toon":"Bekijken",
+  "verzoek.meer":"Meer vragen",
+  "verzoek.tekst":"Speler {n} vraagt {tegels} tegels van jouw grond, met {nErts} tegels {erts}. Hij biedt {goederen}.",
+  "verzoek.meerJa":"Speler {n} legt er wat bij.",
+  "verzoek.meerNee":"Meer wil speler {n} er niet voor geven.",
+  "verzoek.tijd":"Nog {s} s.",
+  "verzoek.aangenomen":"Je hebt het verzoek van speler {n} aangenomen. De goederen liggen in je burcht.",
+  "verzoek.afgewezen":"Je hebt het verzoek van speler {n} afgewezen.",
+  "verzoek.verlopen":"Het verzoek van speler {n} is verlopen.",
+  "verzoek.ongeldig":"Het verzoek van speler {n} kon niet meer doorgaan: de grond of de goederen zijn er niet meer.",
+  "grens.knop":"Uitdagen tot een grensduel",
+  "grens.uitleg":"Van beide kanten komt een krachtpatser uit de dichtstbijzijnde toren. Wint de jouwe, dan krijg je het stuk zonder iets te betalen. Een uitdaging kost jullie relatie {kost} punten.",
+  "grens.bezig":"Grensduel met speler {n}: de krachtpatsers lopen naar de tafel op de grens.",
+  "grens.live":"Grensduel met speler {n}: ze zijn aan het armdrukken!",
+  "grens.gewonnen":"Je krachtpatser heeft het grensduel gewonnen: {tegels} tegels zijn nu van jou.",
+  "grens.verloren":"Je krachtpatser heeft het grensduel verloren. De grond blijft van speler {n}.",
+  "grens.mislukt":"Het grensduel ging niet door: de tafel op de grens was niet te bereiken.",
+  "grens.geenEigen":"Je hebt geen krachtpatser in een toren of krachthal om uit te dagen.",
+  "grens.geenBuur":"Speler {n} heeft geen krachtpatser om het duel aan te nemen.",
+  "grens.geenPlek":"Op de grens is geen plek voor een duel-tafel.",
+  "grens.ongeldig":"Op die grond staat nu iets wat niet in een ruil kan.",
   "ruil.test":"Ruil-test",
   "ruil.titel":"Buren: grond ruilen",
   "ruil.knopVraag":"Grond vragen",

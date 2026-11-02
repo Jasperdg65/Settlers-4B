@@ -12,7 +12,7 @@
    Voorstellen staan in world.offers {id, p, q, ask, give, goods, extra, st, why, t}; st: aangenomen, tegenbod, afgewezen, gesloten.
    Alles loopt via order() en hangt alleen af van de wereld, dus deterministisch. */
 function dealInit(){
-  const P=world.starts.length;world.deals=[];world.offers=[];world.rel=new Float32Array(P*P);
+  const P=world.starts.length;world.deals=[];world.offers=[];world.rel=new Float32Array(P*P);world.reqs=[];world.reqCool=new Uint32Array(P);
 }
 const relOf=(p,q)=>world.rel?world.rel[p*world.starts.length+q]:0;
 function relAdd(p,q,v){const P=world.starts.length,r=Math.max(-100,Math.min(100,relOf(p,q)+v));world.rel[p*P+q]=world.rel[q*P+p]=r}
@@ -131,6 +131,101 @@ function dealDo(o){
 /* in computeLand: afspraken gaan boven het gebied uit torens, in volgorde van sluiten */
 function applyDeals(own){if(world.deals)for(const d of world.deals)for(let k=0;k<d.tiles.length;k+=2)own[d.tiles[k]]=d.tiles[k+1]}
 
+/* ---------- Buren vragen zelf (mijlpaal 8b, CFG.deal.req) ----------
+   world.reqs {id, q (vraagt), p (aan wie), tiles, goods, ore, st, t, more, end}; st: open, aangenomen, afgewezen, verlopen,
+   ongeldig. In de Ruil-test (world.landTest) vragen ze om elk erts, ook als ze het zelf hebben, en al na first/4 ticks. more: 0 nog niet, 1 legt er wat bij, −1 wil niet meer geven. Alles gebeurt in de tick en zonder toeval, dus
+   deterministisch; jouw antwoord is de opdracht answer {id, a: ja | meer | nee}. */
+function tickRequests(){
+  const R=CFG.deal.req;if(!world.reqs||tickNo<(world.landTest?R.first/4:R.first)||tickNo%R.every)return;
+  for(const r of world.reqs)if(r.st==="open"&&tickNo-r.t>=R.ttl){r.st='verlopen';r.end=tickNo;dealUI()}
+  const p=R.to,P=world.starts.length;if(p>=P||!homeOf(p))return;
+  for(let q=0;q<P;q++){
+    if(q===p||!homeOf(q)||world.reqCool[q]>tickNo||world.reqs.some(r=>r.q===q&&r.st==='open'))continue;
+    const r=reqPlan(q,p);if(!r)continue;
+    world.reqs.push({id:world.reqs.length,q,p,...r,st:'open',t:tickNo,more:0,end:0});world.reqCool[q]=tickNo+R.cool;dealUI();
+  }
+}
+/* een strook grond van p vanaf de grens van q tot het dichtstbijzijnde erts dat q mist, en de goederen die q ervoor biedt; of null */
+function reqPlan(q,p){
+  const C=CFG.deal,R=C.req,{W,own,ore,oreRes}=world,N=own.length,ores=oreCounts(q),miss=[1,2,3].filter(k=>world.landTest||ores[k]<C.val.oreScarce);   // Ruil-test: elk erts
+  if(!miss.length)return null;
+  /* breedte-eerst over de grond van p, vanaf de tegels die aan q grenzen, hoogstens reach tegels diep */
+  const dist=new Int16Array(N).fill(-1),from=new Int32Array(N).fill(-1),Q=[],mine=i=>own[i]===p+1&&!dealTileWhy(i,p);
+  for(let i=W;i<N-W;i++)if(mine(i)){const x=i%W;if(x>0&&own[i-1]===q+1||x<W-1&&own[i+1]===q+1||own[i-W]===q+1||own[i+W]===q+1){dist[i]=0;Q.push(i)}}
+  let hit=-1;
+  for(let k=0;k<Q.length;k++){const i=Q[k];if(ore[i]&&oreRes[i]&&miss.includes(ore[i])){hit=i;break}if(dist[i]>=R.reach)continue;
+    const x=i%W;for(const j of [x>0?i-1:-1,x<W-1?i+1:-1,i-W,i+W])if(j>=W&&j<N-W&&dist[j]<0&&mine(j)){dist[j]=dist[i]+1;from[j]=i;Q.push(j)}}
+  if(hit<0)return null;
+  /* de weg van het erts naar de grens, dan het erts eromheen, dan een tegel breder langs de weg */
+  const path=[];for(let i=hit;i>=0;i=from[i])path.push(i);
+  const L=[...path];
+  for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)L.push(hit+dy*W+dx);
+  for(const i of path)for(const j of [i-1,i+1,i-W,i+W])L.push(j);
+  const tiles=connectedTo([...new Set(L)].filter(i=>i>=W&&i<N-W&&mine(i)).slice(0,R.tiles),q);
+  if(!tiles.includes(hit))return null;
+  /* bieden: wat de strook jou waard is × offer, in de goederen die hij het meest vrij heeft (van elk hoogstens de helft) */
+  let rest=tilesValue(tiles,p).v*R.offer;const free=freeGoods(q),goods={};
+  for(const k of Object.keys(C.goods).sort((a,b)=>free[GI[b]]-free[GI[a]]||(a<b?-1:1))){if(rest<=0)break;
+    const per=goodsValue({[k]:1},p),n=Math.min(free[GI[k]]>>1,Math.ceil(rest/per));if(n>0){goods[k]=n;rest-=n*per}}
+  return rest>0?null:{tiles,goods,ore:ore[hit]};
+}
+function reqAnswer(c){
+  const r=world.reqs&&world.reqs[c.id|0];if(!r||r.p!==c.p||r.st!=='open')return;
+  if(c.a==='nee'){r.st='afgewezen';r.end=tickNo;dealUI();return}
+  if(c.a==='meer'){if(r.more)return;
+    const goods={};for(const k in r.goods)goods[k]=Math.ceil(r.goods[k]*CFG.deal.req.more);
+    const free=freeGoods(r.q),ok=Object.keys(goods).every(k=>free[GI[k]]>=goods[k])&&goodsValue(goods,r.q)<=tilesValue(r.tiles,r.q).v;
+    if(ok)r.goods=goods;r.more=ok?1:-1;dealUI();return}
+  if(c.a!=='ja')return;
+  const o={p:r.q,q:r.p,ask:r.tiles,give:[],goods:r.goods,extra:null};r.end=tickNo;
+  if(dealCheck(o)){r.st='ongeldig';dealUI();return}
+  r.st='aangenomen';dealDo(o);dealUI();
+}
+const openReq=p=>world.reqs?world.reqs.findLast(r=>r.p===p&&r.st==='open'):null;
+
+/* ---------- Grensduel (mijlpaal 8b, CFG.deal.duel) ----------
+   Na een afgewezen voorstel (of een afgewezen tegenbod) kan de vrager uitdagen. Van beide kanten komt de sterkste krachtpatser
+   uit de toren die het dichtst bij de strook staat (zonder toren: uit de reserve van een krachthal); ze armdrukken aan een tafel
+   op de grens (duel.js). Wint de vrager, dan wordt de strook een afspraak in world.deals, zonder goederen. Een uitdaging kost
+   beide relatie. Een toren blijft bemand zolang zijn krachtpatser buiten is (crew.js: fieldOut, fieldHome).
+   o.duel: bezig, gewonnen, verloren, mislukt, of waarom het niet kon (geenEigen, geenBuur, geenPlek, ongeldig). */
+function grensFighter(s,X,Y){
+  let best=-1,bd=Infinity,bs=-1;
+  for(const b of world.blds){if(b.p!==s||b.dead||b.st||!b.crew||!isCrewB(b))continue;
+    const d=Math.hypot(b.x-X,b.y-Y)+(isHall(b)?1e4:0);   // torens eerst
+    for(const c of b.crew){if(!S.lvl[c]||!S.ins[c]||b.trn===c)continue;const k=strength(c);
+      if(d<bd||d===bd&&k>bs){bd=d;bs=k;best=c}}}
+  return best;
+}
+function grensChallenge(c){
+  const o=world.offers[c.id|0];if(!o||o.p!==c.p||o.duel||!(o.st==='afgewezen'||o.st==='gesloten'))return;
+  const W=world.W,tiles=connectedTo(o.ask.filter(i=>world.own[i]===o.q+1&&!dealTileWhy(i,o.q)),o.p);
+  if(!tiles.length){o.duel='ongeldig';dealUI();return}
+  /* de tafel staat op de tegel van de strook die aan de vrager grenst, het dichtst bij het midden van de strook */
+  let cx=0,cy=0;for(const i of tiles){cx+=i%W;cy+=i/W|0}cx/=tiles.length;cy/=tiles.length;
+  const dm=i=>Math.hypot(i%W-cx,(i/W|0)-cy),edge=tiles.filter(i=>[i-1,i+1,i-W,i+W].some(j=>world.own[j]===o.p+1)).sort((a,b)=>dm(a)-dm(b)||a-b)[0];
+  const ex=edge%W+0.5,ey=(edge/W|0)+0.5,fa=grensFighter(o.p,ex,ey),fb=grensFighter(o.q,ex,ey);
+  if(fa<0){o.duel='geenEigen';dealUI();return}if(fb<0){o.duel='geenBuur';dealUI();return}
+  const sp=tableSpot(ex,ey,true,12);if(!sp){o.duel='geenPlek';dealUI();return}
+  fieldOut(fa);fieldOut(fb);
+  const [a,b]=S.x[fa]-S.y[fa]/2<=S.x[fb]-S.y[fb]/2?[fa,fb]:[fb,fa];   // wie links staat, gaat links zitten
+  const d={a,b,x:sp[0],y:sp[1],s:0,v:0,t:0,live:0,wait:0,meet:CFG.deal.duel.meetTicks,grens:o.id};
+  let k=DUELS.indexOf(null);if(k<0)k=DUELS.push(null)-1;DUELS[k]=d;S.du[a]=S.du[b]=k+1;
+  armyGo(a,d.x-CFG.duel.seat,d.y,AIM.SEAT);armyGo(b,d.x+CFG.duel.seat,d.y,AIM.SEAT);
+  o.duel='bezig';o.tiles=tiles;relAdd(o.p,o.q,-CFG.deal.duel.relCost);dealUI();
+}
+/* afloop (duel.js: endDuel, cancelDuel); win = winnaar, of −1 als het duel niet doorging */
+function grensEnd(d,win){
+  const o=world.offers[d.grens];if(!o)return;
+  if(win<0)o.duel='mislukt';
+  else if(S.pl[win]===o.p){
+    const tiles=connectedTo(o.tiles.filter(i=>world.own[i]===o.q+1&&!dealTileWhy(i,o.q)),o.p);
+    if(tiles.length){const L=[];for(const i of tiles)L.push(i,o.p+1);world.deals.push({p:o.p,q:o.q,t:tickNo,tiles:L,duel:1});computeLand();invalidateTiles(tiles)}
+    o.duel='gewonnen';o.won=tiles.length;
+  }else o.duel='verloren';
+  dealUI();
+}
+
 /* ---------- Paneel 'Buren' en het aantekenen op de kaart ----------
    Knop 'Grond vragen' of 'Grond bieden': twee klikken op de kaart = de hoeken van een rechthoek; de tegels daarin die mogen,
    komen erbij (zijn ze er allemaal al, dan gaan ze eraf). Loopt via BUILD.mode 'deal', zodat muis, aanraken, Esc en
@@ -204,11 +299,31 @@ function dealUI(msg){
       else if(o.st==='ongeldig')m.textContent=t('ruil.kanNiet')+' '+o.why;
       else if(o.st==='gesloten')m.textContent=t('ruil.dicht',{n})}}
   $('dealAnswer').hidden=!ans;
+  /* grensduel: na een afwijzing kun je uitdagen; daarna de stand van het duel */
+  const o=world.offers&&world.offers[DEAL.last];let duel=false;
+  if(o&&o.p===p&&!DEAL.mode&&msg===undefined){const n=o.q+1;
+    if(!o.duel&&(o.st==='afgewezen'||o.st==='gesloten')){duel=true;$('dealDuel').title=t('grens.uitleg',{n,kost:CFG.deal.duel.relCost})}
+    else if(o.duel){const d=DUELS.find(d=>d&&d.grens===o.id);
+      m.textContent=t('grens.'+(o.duel==='bezig'&&d&&d.live?'live':o.duel),{n,tegels:o.won||0})}}
+  $('dealDuelBox').hidden=!duel;
+  reqUI(p);
+}
+/* verzoek van een buur: het nieuwste dat nog open is, of kort na afloop hoe het afliep */
+function reqUI(p){
+  const L=world.reqs||[],r=openReq(p)||L.findLast(r=>r.p===p&&r.end&&tickNo-r.end<CFG.deal.req.ttl/2),box=$('reqBox');
+  box.hidden=!r;if(!r)return;const n=r.q+1;
+  if(r.st!=='open'){$('reqText').textContent=t('verzoek.'+r.st,{n});$('reqBtns').hidden=true;return}
+  const w=tilesValue(r.tiles,p).what,gs=Object.keys(r.goods).map(k=>r.goods[k]+' '+GOODS[GI[k]].n).join(', ');
+  $('reqText').textContent=t('verzoek.tekst',{n,tegels:r.tiles.length,erts:ORE[r.ore],nErts:w.erts,goederen:gs})+
+    (r.more>0?' '+t('verzoek.meerJa',{n}):r.more<0?' '+t('verzoek.meerNee',{n}):'')+' '+t('verzoek.tijd',{s:Math.max(0,Math.ceil((CFG.deal.req.ttl-(tickNo-r.t))/CFG.ticksPerSec))});
+  $('reqBtns').hidden=false;$('reqMore').disabled=!!r.more;
 }
 /* aangetekende tegels: gevraagd in de kleur van de buur, geboden in de eigen kleur; de rechthoek in wording als lijn */
 function drawDealOverlay(){
-  if(!world.own||!DEAL.ask.length&&!DEAL.give.length&&!DEAL.mode)return;const W=world.W,p=buildPl();
+  const r=world.own&&openReq(buildPl());
+  if(!world.own||!r&&!DEAL.ask.length&&!DEAL.give.length&&!DEAL.mode)return;const W=world.W,p=buildPl();
   const rgba=(c,a)=>{const n=parseInt(c.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`};
+  if(r)for(const i of r.tiles)tileQuad(i%W,i/W|0,rgba(PCOL[r.q],0.3+0.15*Math.sin(tNow/300)),'rgba(255,200,90,.95)');   // verzoek van een buur: knippert zacht
   if(DEAL.q>=0)for(const i of DEAL.ask)tileQuad(i%W,i/W|0,rgba(PCOL[DEAL.q],0.45),'rgba(255,240,190,.9)');
   for(const i of DEAL.give)tileQuad(i%W,i/W|0,rgba(PCOL[p],0.45),'rgba(190,230,255,.9)');
   if(DEAL.mode&&DEAL.corner>=0&&DEAL.at>=0){const a=DEAL.corner,b=DEAL.at;
@@ -220,3 +335,8 @@ $('dealClear').onclick=dealClear;
 $('dealSend').onclick=dealSend;
 $('dealYes').onclick=()=>order({p:buildPl(),t:'accept',id:DEAL.last});
 $('dealNo').onclick=()=>order({p:buildPl(),t:'reject',id:DEAL.last});
+$('dealDuel').onclick=()=>order({p:buildPl(),t:'grens',id:DEAL.last});
+const reqOrder=a=>{const r=openReq(buildPl());if(r)order({p:buildPl(),t:'answer',id:r.id,a})};
+$('reqYes').onclick=()=>reqOrder('ja');$('reqMore').onclick=()=>reqOrder('meer');$('reqNo').onclick=()=>reqOrder('nee');
+$('reqShow').onclick=()=>{const r=openReq(buildPl());if(!r)return;const W=world.W;let x=0,y=0;for(const i of r.tiles){x+=i%W;y+=i/W|0}
+  centerOn(x/r.tiles.length+0.5,y/r.tiles.length+0.5);if(cam.z<1.5)cam.z=1.5;clampCam()};

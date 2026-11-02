@@ -58,7 +58,8 @@ function crewFail(c,b){b.otw=Math.max(0,b.otw-1);if(!S.lvl[c])S.job[c]=0}
 /* gebouw b wordt afgebroken: iedereen naar buiten; een rekruut verliest zijn opleiding en is weer drager */
 function releaseCrew(b){
   if(!b.crew)return;
-  for(const c of b.crew){S.ins[c]=0;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;toIdle(c);if(!S.lvl[c])S.job[c]=0}
+  for(const c of b.crew){if(S.st[c]===ST.FIELD)continue;   // buiten voor een grensduel: ziet het bij thuiskomst (fieldHome)
+    S.ins[c]=0;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;toIdle(c);if(!S.lvl[c])S.job[c]=0}
   b.crew=[];b.trn=-1;b.run=0;
 }
 /* krachthal, elke tick: opleiden en trainen, een tegelijk */
@@ -67,7 +68,7 @@ function tickHall(b,bi){
   if(b.trn>=0){if(--b.pt>0)return;const c=b.trn;b.trn=-1;b.run=0;if(b.crew.includes(c))S.lvl[c]++}
   for(const c of b.crew)if(!S.lvl[c]){b.trn=c;b.pt=A.train;break}
   if(b.trn<0)for(const c of b.crew){
-    const need=A.up[S.lvl[c]+1];if(!need)continue;
+    const need=A.up[S.lvl[c]+1];if(!need||!S.ins[c])continue;
     const ss=Object.keys(need).map(k=>freeUnitAt(bi,GI[k]));if(ss.some(s=>s<0))continue;
     for(const s of ss){takeOne(s);TR.used++}b.trn=c;b.pt=A.upTicks;break;
   }
@@ -77,6 +78,28 @@ function tickHall(b,bi){
   for(const c of b.crew){const need=A.up[S.lvl[c]+1];if(need&&c!==b.trn)for(const k in need)b.want[GI[k]]=Math.min(A.hall.stock,b.want[GI[k]]+need[k])}
   const tr=b.trn<0?'':S.lvl[b.trn]?t('hal.traint',{niveau:LVLNAME[S.lvl[b.trn]+1].toLowerCase()}):t('hal.leidtOp');
   b.ps=[t('hal.reserve',{n:b.crew.length,max:b.keep}),tr||(b.crew.length||b.otw?'':t('hal.wacht'))].filter(Boolean).join(' · ');
+}
+/* ---------- Buiten voor een grensduel (mijlpaal 8b, deals.js) ----------
+   De krachtpatser loopt als eenheid uit army.js (S.ast, armyGo, walkArmy; S.st = ST.FIELD), maar blijft in b.crew staan: zijn
+   toren blijft bemand, dus de grens verschuift niet terwijl hij weg is. Na het duel loopt hij terug (de verliezer eerst naar
+   de burcht om bij te komen) en gaat weer naar binnen, uitgerust. Is zijn toren intussen afgebroken, dan is hij gewoon vrij. */
+function fieldOut(c){
+  const b=world.blds[S.dst[c]];S.ins[c]=0;S.st[c]=ST.FIELD;S.path[c]=null;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5;
+  S.ast[c]=AS.IDLE;S.ko[c]=0;S.du[c]=0;S.fed[c]=1;S.wait[c]=0;
+}
+function fieldGoHome(c){const b=world.blds[S.dst[c]];armyGo(c,b.x+0.5,b.y+1.5,AIM.HOME)}
+function fieldHome(c){
+  const b=world.blds[S.dst[c]];S.ast[c]=AS.IDLE;S.fat[c]=0;S.ko[c]=0;
+  if(b&&!b.dead&&b.crew&&b.crew.includes(c)){S.ins[c]=1;S.st[c]=ST.INSIDE;S.path[c]=null;S.x[c]=S.px[c]=b.x+0.5;S.y[c]=S.py[c]=b.y+1.5}
+  else toIdle(c);
+}
+/* elke tick vanuit tickCarriers, zoals tickArmy per eenheid */
+function fieldStep(c){
+  const D=CFG.duel,st=S.ast[c];
+  if(st===AS.WALK)walkArmy(c);
+  else if(st===AS.OUT){if(S.out[c]>0){S.out[c]--;S.fat[c]=D.afterOut+(1-D.afterOut)*S.out[c]/D.outTicks}else{S.ko[c]=0;fieldGoHome(c)}}
+  else if(st===AS.IDLE&&!S.du[c])fieldGoHome(c);
+  if(st!==AS.DUEL&&!S.ko[c]&&S.fat[c]>0)S.fat[c]=Math.max(0,S.fat[c]-D.rest);
 }
 /* tooltip van een toren */
 function crewLabel(b){

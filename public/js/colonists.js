@@ -39,7 +39,7 @@ function growUnits(){
 }
 function spawn(total,eco){
   ORDERS.length=0;
-  const P=world.starts.length;S.eco=0;S.army=0;S.carry=null;if(!P){S.n=0;return}
+  const P=world.starts.length;S.eco=0;S.army=0;S.carry=null;S.ast=null;DUELS.length=0;if(!P){S.n=0;return}
   const per=Math.floor(total/P),n=per*P,{W,walk}=world;
   srand=mulberry32(hashStr(world.seed+'#settlers'));
   allocUnits(n);for(const b of world.blds)b.occ=b.type==='burcht'?1:0;

@@ -195,13 +195,22 @@ const CFG={
      Hij neemt aan als wat hij krijgt minstens margin − relMargin × relatie/100 keer zoveel waard is als wat hij afgeeft; vanaf
      counterAt van dat bedrag doet hij een tegenbod in goederen (uit goods, van wat de vrager het meest heeft), geldig counterTicks.
      Een ruil geeft beide relDeal relatiepunten (relatie −100..100, start 0); rel = ondergrens per relatieniveau.
-     maxTiles = hoogstens zoveel tegels per kant van een voorstel. */
+     maxTiles = hoogstens zoveel tegels per kant van een voorstel.
+     Buren vragen zelf (mijlpaal 8b, req): vanaf first ticks, elke every ticks, kijkt een buur die van een erts minder dan oreScarce
+     tegels heeft of het binnen reach tegels van zijn grens op het gebied van speler to ligt. Dan vraagt hij een strook tot dat erts
+     (hoogstens tiles tegels) en biedt goederen ter waarde van offer × wat de strook jou waard is (van elk goed hoogstens de helft van
+     wat hij vrij heeft). Een verzoek geldt ttl ticks; daarna, of na je antwoord, vraagt die buur cool ticks niets. Meer vragen (één
+     keer): more × de goederen, als de strook hem zelf zoveel waard is. to: tot mijlpaal 9 (één vaste speler) vragen ze alleen speler 1.
+     Grensduel (duel): na een afwijzing kan de vrager uitdagen; dat kost beide relCost relatiepunten. meetTicks: zo lang mogen
+     beide krachtpatsers over de weg naar de tafel op de grens doen. */
   deal:{maxTiles:150,
     val:{ter:[0.1,0.15,0.3,0.5,0.6,0.4,0.3,0.25,0.1],tree:1,sapling:0.5,bush:0.3,field:1.5,stone:1,ore:4,oreNeed:2.5,oreScarce:6,home:2,homeR:16},
     goods:{boomstam:0.6,plank:1,steen:1,brood:1.4,stoofpot:1.6,notenmix:1.6,kolen:1.5,ijzer:3,goud:5},
     short:10,shortMul:1.5,
     margin:1.25,relMargin:0.2,counterAt:0.6,counterTicks:1200,
-    relDeal:10,rel:{gespannen:-100,onbekend:0,kennis:15,vriend:45,bondgenoot:75}},
+    relDeal:10,rel:{gespannen:-100,onbekend:0,kennis:15,vriend:45,bondgenoot:75},
+    req:{to:0,first:2400,every:600,cool:6000,reach:8,tiles:30,offer:1.1,more:1.3,ttl:2400},
+    duel:{relCost:15,meetTicks:2400}},
   /* harmonie (mijlpaal 7, harmony.js), in punten 0–100. Doel = start + bronnen; elke every ticks schuift de meter step punten.
      voer: een voederplaats met dierenverzorger vult de bak met 1 food (graan) voor ticks ticks en vult bij als er minder dan
        refill over is; gevuld geeft full punten (de beste max tellen), leeg langer dan grace ticks kost empty punten.
@@ -236,6 +245,7 @@ const CFG={
       torenLeeg:{soort:'tip',cool:240,wait:60},
       voerLeeg:{soort:'waarschuwing',cool:300,wait:60},
       harmonieLaag:{soort:'waarschuwing',cool:600},
+      verzoek:{soort:'belangrijk',cool:60},
       houtketen:{soort:'compliment'},brood:{soort:'compliment'},toren:{soort:'compliment'},harmonie:{soort:'compliment'},
     }},
   /* zichtbare grens: lijn in spelerkleur, inset = afstand tot de tegelrand (in tegels), breedte in beeldpunten op het scherm */

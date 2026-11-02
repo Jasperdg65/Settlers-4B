@@ -30,9 +30,16 @@ function duelStep(d){
   if(d.t>=c.maxTicks)return d.s<=0?-1:1;
   return 0;
 }
-/* tafelplek bij (X, Y): de tafel en beide stoelen beloopbaar, niet op een andere tafel */
-function tableSpot(X,Y){
-  const {W,H,walk}=world,c=CFG.duel.seat,ok=(x,y)=>x>1&&y>1&&x<W-2&&y<H-2&&walk[(y|0)*W+(x|0)];
+/* tafelplek bij (X, Y): de tafel en beide stoelen beloopbaar, niet op een andere tafel. open: ook geen boom of steen op de
+   tafel en de stoelen en geen boom in de vijf rijen ervoor (bomen zijn hoog), zodat het duel te zien is (grensduel, deals.js); lukt dat niet
+   binnen R tegels, dan toch de eerste beloopbare plek. */
+function tableSpot(X,Y,open=false,R=6){
+  const {W,H,walk,obj}=world,c=CFG.duel.seat,ok=(x,y)=>x>1&&y>1&&x<W-2&&y<H-2&&walk[(y|0)*W+(x|0)];
+  const clear=(x,y)=>{for(let dx=-1;dx<=1;dx++)if(obj[(y|0)*W+(x+dx|0)])return false;
+    for(let dy=1;dy<=5;dy++)for(let dx=-2-(dy>>1);dx<=2+(dy>>1);dx++)if(obj[((y|0)+dy)*W+(x+dx|0)]===1)return false;return true};
+  if(open)for(let r=0;r<R;r++)for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){
+    if(Math.max(Math.abs(dx),Math.abs(dy))!==r)continue;const x=(X|0)+dx+0.5,y=(Y|0)+dy+0.5;
+    if(y>H-7||x<4||x>W-5||!ok(x,y)||!ok(x-c,y)||!ok(x+c,y)||!clear(x,y)||DUELS.some(d=>d&&Math.hypot(d.x-x,d.y-y)<1.5))continue;return [x,y]}
   for(let r=0;r<6;r++)for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){
     if(Math.max(Math.abs(dx),Math.abs(dy))!==r)continue;
     const x=(X|0)+dx+0.5,y=(Y|0)+dy+0.5;
@@ -57,6 +64,7 @@ function challenge(i,j){
 /* gaat niet door (geen route, te lang onderweg): beide blijven staan waar ze zijn */
 function cancelDuel(k){
   const d=DUELS[k];if(!d)return;DUELS[k]=null;
+  if(d.grens!==undefined){for(const i of [d.a,d.b]){S.du[i]=0;fieldGoHome(i)}grensEnd(d,-1);return}   // grensduel (deals.js)
   for(const i of [d.a,d.b]){S.du[i]=0;armyStop(i)}
   ARMY.last='Duel gaat niet door: de tafel is niet te bereiken.';
 }
@@ -67,7 +75,7 @@ function tickDuels(){
       if(S.ast[d.a]===AS.SEAT&&S.ast[d.b]===AS.SEAT){
         d.live=1;S.ast[d.a]=S.ast[d.b]=AS.DUEL;
         S.x[d.a]=d.x-CFG.duel.seat;S.x[d.b]=d.x+CFG.duel.seat;S.y[d.a]=S.y[d.b]=d.y;
-      }else if(++d.wait>CFG.duel.meetTicks)cancelDuel(k);
+      }else if(++d.wait>(d.meet||CFG.duel.meetTicks))cancelDuel(k);
       continue;
     }
     const w=duelStep(d);if(w)endDuel(k,w);
@@ -75,12 +83,13 @@ function tickDuels(){
 }
 function endDuel(k,w){
   const d=DUELS[k];DUELS[k]=null;
-  const [win,lose]=w<0?[d.a,d.b]:[d.b,d.a],r=d.ret[w<0?0:1];
+  const [win,lose]=w<0?[d.a,d.b]:[d.b,d.a];
   ARMY.last=`${duelName(win)} wint van ${duelName(lose)} na ${(d.t/CFG.ticksPerSec).toFixed(1).replace('.',',')} s`;   // kracht aan het eind van het duel
   S.du[win]=S.du[lose]=0;
-  armyGo(win,r[0],r[1],AIM.IDLE);S.fat[win]=Math.min(1,S.fat[win]+CFG.duel.winTire);
-  S.ko[lose]=1;S.fat[lose]=1;
+  S.fat[win]=Math.min(1,S.fat[win]+CFG.duel.winTire);S.ko[lose]=1;S.fat[lose]=1;
   const h=healerSpot(lose);armyGo(lose,h[0],h[1],AIM.HEAL);
+  if(d.grens!==undefined){fieldGoHome(win);grensEnd(d,win);return}   // grensduel (deals.js): de winnaar gaat terug naar zijn toren
+  const r=d.ret[w<0?0:1];armyGo(win,r[0],r[1],AIM.IDLE);
   ARMY.won[S.pl[win]]++;
 }
 /* 'speler 1 senior (kracht 2,10, muziek, 25% moe)' voor de meldingen */

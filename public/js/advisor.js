@@ -57,6 +57,9 @@ const ADV_CHECK={
   /* de harmonie zakt onder CFG.harmony.low */
   harmonieLaag(p){const n=harmPct(p);return world.harm&&n<CFG.harmony.low?{bi:advBurcht(p),v:{n},ch:'harmonie'}:null},
   /* complimenten bij mijlpalen: één keer per wereld */
+  /* een buur vraagt om een stuk van jouw grond (deals.js) */
+  verzoek(p){const r=openReq(p);if(!r)return null;const W=world.W,i=r.tiles[r.tiles.length>>1];
+    return {x:i%W+0.5,y:(i/W|0)+0.5,v:{n:r.q+1,erts:ORE[r.ore]},ch:'grond-ruilen'}},
   harmonie(p){const n=harmPct(p);return world.harm&&n>=CFG.harmony.high?{bi:advBurcht(p),v:{n},ch:'wat-hij-oplevert'}:null},
   houtketen(p){return world.made[p][GI.plank]>0?{bi:advFirst(p,'zagerij'),v:{},ch:'je-eerste-houtketen'}:null},
   brood(p){return world.made[p][GI.brood]>0?{bi:advFirst(p,'bakkerij'),v:{},ch:'een-plantaardige-keuken'}:null},

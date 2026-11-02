@@ -71,12 +71,11 @@ Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.
 - Computerburen met een eigen karakter (mijlpaal 9)
 - Natuurgebeurtenissen: droogte, winter, overstroming
 - Opslaan en laden van de hele wereld
-- Krachtpatsers selecteren en sturen in het eigen dorp
+- Krachtpatsers selecteren en sturen in het eigen dorp (mijlpaal 8c)
 - Eén vaste speler; de andere kleuren worden computerburen
 - Bewoners die doorlopend eten
 - School (opleiding instellen) en hunnebed (samen mediteren met dieren)
 - Helers en muzikanten in het dorp
-- Buren die zelf om grond vragen, en een grensduel als een ruil is afgewezen (mijlpaal 8b)
 - Computerburen met een eigen dorp (mijlpaal 9)
 - Handel via een marktplaats en handelaar (mijlpaal 10)
 - Diplomatie: relaties, geschenken, feesten en vrede (mijlpaal 11)

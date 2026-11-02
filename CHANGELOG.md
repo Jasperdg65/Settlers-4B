@@ -5,6 +5,14 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 
 ## 2026-11-02
 
+### Toegevoegd (mijlpaal 8b)
+- **Buren vragen zelf om grond.** Mist een buur een erts dat net over de grens op jouw grond ligt, dan vraagt hij een
+  strook tot dat erts en biedt er goederen voor. Milo meldt het, de strook knippert op de kaart; in het paneel kies je
+  Bekijken, Aannemen, één keer Meer vragen, of Afwijzen.
+- **Grensduel.** Na een afgewezen voorstel kun je uitdagen: van beide kanten komt de sterkste krachtpatser uit de
+  dichtstbijzijnde toren, ze drukken armpje aan een tafel op de grens, en wint de jouwe, dan is de strook van jou.
+  Een uitdaging kost relatie. Torens blijven bemand zolang hun krachtpatser buiten is.
+
 ### Gewijzigd
 - Grond ruilen: hoogstens 150 tegels per kant (was 60). Teken je meer aan, dan blijven de tegels het dichtst bij
   de grens, in plaats van de laatst aangetekende.
