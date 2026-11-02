@@ -1,6 +1,6 @@
 "use strict";
 /* Nederlands: de brontaal. Elke sleutel hier moet ook in de andere talen staan (tools/talen.js controleert dat).
-   Sleutels: adv. adviseur, hal. krachthal, toren. bemanning, gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier., ruil. grond ruilen, rel. relatieniveau. */
+   Sleutels: adv. adviseur, hal. krachthal, toren. bemanning, gebied. tooltip bij afbreken, bld. gebouw, goed. goed, groep. goederengroep, job. beroep, ter. terrein, erts., boom., struik., gewas., rol., niveau., instrument., dier., ruil. grond ruilen, werk. werkgebied verzetten, rel. relatieniveau. */
 TALEN.nl={
   "taal.naam":"Nederlands",
   "spel.naam":"Terrana",   // de naam van het spel: in elke taal gelijk, niet vertalen
@@ -206,6 +206,15 @@ TALEN.nl={
   "instrument.2":"harp",
   "instrument.3":"doedelzak",
   /* grond ruilen (mijlpaal 8a, deals.js) en relaties */
+  "werk.knop":"Werkgebied",
+  "werk.uitleg":"Klik op een eigen houthakker, steenhouwer, bosbouwer, plukker, boerderij, akker of moestuin om zijn werkgebied te verzetten. Esc of rechtermuisknop stopt.",
+  "werk.uitleg2":"{gebouw}: klik op het nieuwe midden van het werkgebied, of op het gebouw zelf om het terug te zetten.",
+  "werk.kies":"{gebouw}: klik om het werkgebied te verzetten",
+  "werk.kiesGebouw":"Kies een eigen buitenwerker",
+  "werk.geenWerker":"Dit gebouw heeft geen werkgebied",
+  "werk.hier":"Werkgebied van de {gebouw} hierheen verzetten",
+  "werk.terug":"Werkgebied terug rond het gebouw",
+  "werk.teVer":"Te ver van het gebouw (hooguit {n} tegels)",
   "ruil.titel":"Buren: grond ruilen",
   "ruil.knopVraag":"Grond vragen",
   "ruil.knopBied":"Grond bieden",

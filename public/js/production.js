@@ -149,7 +149,7 @@ function findTarget(b,pc){
   return scanArea(b,pc,g==='tree'?i=>obj[i]===1&&!pc.spare.includes(world.tree[i]/3|0):g==='stone'?i=>obj[i]===2&&world.res[i]>0:canPlant);
 }
 function scanArea(b,pc,ok){
-  const {W,H,own,rsv,walk}=world,X=b.x,Y=b.y+1,R=pc.area,me=b.p+1;
+  const {W,H,own,rsv,walk}=world,[X,Y]=areaMid(b),R=pc.area,me=b.p+1;
   for(let r=0;r<=R;r++)for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){
     if(Math.max(Math.abs(dx),Math.abs(dy))!==r||dx*dx+dy*dy>R*R)continue;
     const x=X+dx,y=Y+dy;if(x<2||y<2||x>=W-2||y>=H-2)continue;const i=y*W+x;
@@ -225,18 +225,67 @@ function bornAt(b){
   S.dir[i]=srand()<0.5?1:0;S.sp[i]=0.07+srand()*0.05;S.wait[i]=20;S.ins[i]=0;S.st[i]=ST.IDLE;S.job[i]=0;S.carry[i]=0;S.path[i]=null;S.d8[i]=2;
 }
 
+/* ---------- Werkgebied verzetten (knop Werkgebied, opdracht area) ----------
+   b.wa = [x, y]: het midden van het werkgebied, anders de deur. Het midden mag tot CFG.prod.areaMove × area tegels
+   van de deur liggen; de vakman werkt daar nog steeds alleen op eigen grond. */
+const areaMid=b=>b.wa||[b.x,b.y+1];
+const areaMax=b=>CFG.prod.areaMove*CFG.prod[b.type].area;
+const canArea=(b,p)=>b&&!b.dead&&b.p===p&&!!(CFG.prod[b.type]||{}).gather;
+function areaTooFar(b,x,y){const dx=x-b.x,dy=y-b.y-1;return dx*dx+dy*dy>areaMax(b)**2}
+function setArea(c){
+  const b=world.blds[c.b];if(!canArea(b,c.p))return;
+  if(c.x==null){b.wa=null;return}
+  const {W,H}=world;if(!(c.x>=2&&c.y>=2&&c.x<W-2&&c.y<H-2)||areaTooFar(b,c.x,c.y))return;
+  b.wa=c.x===b.x&&c.y===b.y+1?null:[c.x|0,c.y|0];
+}
+/* in de modus area: eerst een eigen buitenwerker kiezen (BUILD.hover), dan het nieuwe midden (BUILD.ax, BUILD.ay) */
+function areaHover(x,y){
+  const p=buildPl(),bi=world.bldAt[y*world.W+x]-1,b=bi>=0?world.blds[bi]:null;
+  if(BUILD.sel<0){BUILD.hover=canArea(b,p)?bi:-1;
+    return BUILD.hover>=0?t('werk.kies',{gebouw:BTYPES[b.type].name}):b?t('werk.geenWerker'):t('werk.kiesGebouw')}
+  const s=world.blds[BUILD.sel];BUILD.ax=x;BUILD.ay=y;
+  if(bi===BUILD.sel)return t('werk.terug');
+  BUILD.why=areaTooFar(s,x,y)?t('werk.teVer',{n:areaMax(s)}):'';
+  return BUILD.why||t('werk.hier',{gebouw:BTYPES[s.type].name});
+}
+function areaClick(){
+  const p=buildPl();
+  if(BUILD.sel<0){if(BUILD.hover>=0){BUILD.sel=BUILD.hover;BUILD.hover=-1;areaMsg()}return}
+  const s=world.blds[BUILD.sel],bi=world.bldAt[BUILD.ay*world.W+BUILD.ax]-1;
+  if(bi===BUILD.sel)order({p,t:'area',b:BUILD.sel,x:null,y:null});
+  else if(!BUILD.why)order({p,t:'area',b:BUILD.sel,x:BUILD.ax,y:BUILD.ay});else return;
+  BUILD.sel=-1;areaMsg();
+}
+function areaMsg(){if(BUILD.mode==='area')$('buildMsg').textContent=BUILD.sel<0?t('werk.uitleg'):t('werk.uitleg2',{gebouw:BTYPES[world.blds[BUILD.sel].type].name})}
+$('workArea').onclick=()=>setBuildMode(BUILD.mode==='area'?null:'area');
+
 /* ---------- Werkgebied tekenen: bij het plaatsen en als de muis boven zo'n gebouw staat ---------- */
-function drawWorkArea(X,Y,R,col){
-  const {W,H}=world;ctx.setLineDash([1.5,1.5]);ctx.lineWidth=0.7;ctx.strokeStyle=col;ctx.beginPath();
+function drawWorkArea(X,Y,R,col,lw=0.7){
+  const {W,H}=world;ctx.setLineDash([2*lw+0.1,2*lw+0.1]);ctx.lineWidth=lw;ctx.strokeStyle=col;ctx.beginPath();
   for(let k=0;k<=64;k++){const a=k/64*6.2832,x=Math.min(W-2,Math.max(0,X+Math.cos(a)*R)),y=Math.min(H-2,Math.max(0,Y+Math.sin(a)*R));
     const sx=SX(x,y),sy=y*TH-hAt(x,y);k?ctx.lineTo(sx,sy):ctx.moveTo(sx,sy)}
   ctx.stroke();ctx.setLineDash([]);
 }
+/* een verzet werkgebied krijgt een lijntje naar de deur, zodat je ziet bij welk gebouw het hoort */
+function drawBldArea(b,col,lw){
+  const pc=CFG.prod[b.type];if(!pc||!pc.area)return;const [mx,my]=areaMid(b);drawWorkArea(mx+0.5,my+0.5,pc.area,col,lw);
+  if(b.wa)drawAreaLink(b.x+0.5,b.y+1.5,mx+0.5,my+0.5,col,lw);
+}
+function drawAreaLink(x0,y0,x1,y1,col,lw=0.7){
+  ctx.setLineDash([lw,2*lw]);ctx.lineWidth=lw;ctx.strokeStyle=col;ctx.beginPath();
+  ctx.moveTo(SX(x0,y0),y0*TH-hAt(x0,y0));ctx.lineTo(SX(x1,y1),y1*TH-hAt(x1,y1));ctx.stroke();ctx.setLineDash([]);
+}
 function drawWorkAreas(){
-  if(!world.own)return;let type=null,X=0,Y=0;
-  if(BUILD.mode==='place'&&BUILD.type){type=BUILD.type;X=BUILD.ax+0.5;Y=BUILD.ay+1.5}
-  else if(hoverTile){const bi=world.bldAt[hoverTile.y*world.W+hoverTile.x]-1;if(bi>=0){const b=world.blds[bi];type=b.type;X=b.x+0.5;Y=b.y+1.5}}
-  const pc=type&&CFG.prod[type];if(pc&&pc.area)drawWorkArea(X,Y,pc.area,'rgba(255,236,170,.85)');
+  if(!world.own)return;const COL='rgba(255,236,170,.85)';
+  if(BUILD.mode==='area'){const p=buildPl();
+    if(BUILD.sel<0){for(const b of world.blds)if(canArea(b,p)&&!b.st)drawBldArea(b,'rgba(255,236,170,.35)');
+      if(BUILD.hover>=0)drawBldArea(world.blds[BUILD.hover],COL,1.4);return}
+    const s=world.blds[BUILD.sel];drawBldArea(s,'rgba(255,236,170,.35)');
+    if(world.bldAt[BUILD.ay*world.W+BUILD.ax]-1===BUILD.sel){drawWorkArea(s.x+0.5,s.y+1.5,CFG.prod[s.type].area,COL,1.4);return}
+    const col=BUILD.why?'rgba(240,80,60,1)':'rgba(110,240,110,1)';
+    drawWorkArea(BUILD.ax+0.5,BUILD.ay+0.5,CFG.prod[s.type].area,col,1.4);drawAreaLink(s.x+0.5,s.y+1.5,BUILD.ax+0.5,BUILD.ay+0.5,col,1.4);return}
+  if(BUILD.mode==='place'&&BUILD.type){const pc=CFG.prod[BUILD.type];if(pc&&pc.area)drawWorkArea(BUILD.ax+0.5,BUILD.ay+1.5,pc.area,COL);return}
+  if(hoverTile){const bi=world.bldAt[hoverTile.y*world.W+hoverTile.x]-1;if(bi>=0)drawBldArea(world.blds[bi],COL)}
 }
 
 /* ---------- Paneel 'Productie' (speler uit de keuze bij Voorraad) ---------- */

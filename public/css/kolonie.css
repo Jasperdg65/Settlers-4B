@@ -88,7 +88,7 @@ button.wide{width:100%;margin:0 0 10px}
 .bb .aantal{position:absolute;top:3px;right:5px;font:700 14px/1 "Source Sans 3",system-ui,sans-serif;color:#a3a9a6}
 .bb.on .aantal{color:inherit;opacity:.8}
 .bb span{text-align:center}.bb small{font-weight:400;color:var(--muted);font-size:11px}
-.bb.on,#demolish.on,#dealAsk.on,#dealGive.on{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent);color:var(--accent-ink)}
+.bb.on,#demolish.on,#workArea.on,#dealAsk.on,#dealGive.on{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent);color:var(--accent-ink)}
 .bb.on small{color:inherit}
 #njobs{grid-column:1/-1;text-align:left;font-size:13px;line-height:1.35}
 .pv3d{margin-top:6px}.pv3d canvas{display:block;border-radius:6px;max-width:100%}

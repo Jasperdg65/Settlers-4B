@@ -6,6 +6,9 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 ## 2026-11-02
 
 ### Toegevoegd
+- **Werkgebied verzetten.** Knop *Werkgebied* onder het bouwpaneel: klik op een houthakker, steenhouwer, bosbouwer,
+  plukker, boerderij, bonenakker of moestuin en dan op het nieuwe midden. De cirkel blijft even groot en mag tot 2×
+  zijn straal van het gebouw liggen; een stippellijn wijst naar het gebouw. Klik op het gebouw zelf zet hem terug.
 - **Mijlpaal 8a: grond ruilen.** Paneel *Buren: grond ruilen*: teken op de kaart een stuk grond van een buur aan,
   bied eigen grond en/of goederen, en doe een voorstel. Je buur rekent uit wat de grond hem waard is (erts, bos,
   akkers, nabijheid van zijn burcht) en neemt aan, wijst af met een reden, of doet een tegenbod. Een afspraak gaat
@@ -17,6 +20,8 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
   (zie docs/beslissingen.md).
 
 ### Opgelost
+- De tegelregel onderin en de tooltips in bouwmodus vielen weg boven struiken en akkers (een variabele heette
+  hetzelfde als de vertaalfunctie `t`).
 - Duel-test: sinds mijlpaal 6c liepen krachtpatsers niet meer (hun positie werd ongeldig) en was het maximum voor
   selecteren weg, omdat `CFG.army` twee keer in de config stond.
 

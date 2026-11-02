@@ -89,7 +89,9 @@ const CFG={
      spare: boomsoorten die de houthakker laat staan (4 = appelboom, voor de plukker in 5b).
      Werkplaatsen verwerken in ticks ticks de invoer 'in' tot 'out'; stock = hoeveel van elk invoergoed ze bij de deur willen. */
   prod:{
-    enough:24,                     // een werkgebouw stopt zolang de speler minstens zoveel van zijn product heeft (scheelt dragers)
+    enough:24,
+    areaMove:2,                    // werkgebied verzetten: het midden mag tot areaMove × area tegels van de deur liggen
+                     // een werkgebouw stopt zolang de speler minstens zoveel van zijn product heeft (scheelt dragers)
     houthakker:{gather:'tree',area:10,work:80,rest:60,out:'boomstam',spare:[4]},
     steenhouwer:{gather:'stone',area:10,work:100,rest:60,out:'steen'},
     bosbouwer:{gather:'plant',area:7,work:50,rest:80},

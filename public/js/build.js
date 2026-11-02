@@ -194,7 +194,7 @@ function drawBorders(yMin,yMax,xr){
     ctx.strokeStyle=PCOL[o-1];ctx.lineWidth=w;ctx.stroke(P[o])}
   ctx.globalAlpha=1;ctx.lineCap='butt';
 }
-const BUILD={mode:null,type:null,ax:0,ay:0,why:'',hover:-1};
+const BUILD={mode:null,type:null,ax:0,ay:0,why:'',hover:-1,sel:-1};   // sel: gekozen gebouw in de modus area (production.js)
 const buildPl=()=>+$('bldPl').value||0;
 function drawBuildOverlay(v,blit){
   if(!BUILD.mode)return;const {W,H}=world,p=buildPl();
@@ -234,19 +234,20 @@ function refreshBuildCounts(){
 }
 if(typeof setInterval==='function')setInterval(refreshBuildCounts,1000);   // niet in de Node-tests
 function setBuildMode(mode,type=null){
-  BUILD.mode=mode;BUILD.type=type;BUILD.why='';BUILD.hover=-1;
+  BUILD.mode=mode;BUILD.type=type;BUILD.why='';BUILD.hover=-1;BUILD.sel=-1;
   if(mode!=='deal'&&DEAL.mode){DEAL.mode=null;DEAL.corner=-1;dealUI()}   // grond aantekenen (deals.js) stopt
   for(const b of $('buildList').children)b.classList.toggle('on',mode==='place'&&b.dataset.type===type);
-  $('demolish').classList.toggle('on',mode==='demolish');
-  $('buildMsg').textContent=mode==='deal'?'':mode==='place'?`${BTYPES[type].name}: klik op de kaart om te plaatsen. Esc of rechtermuisknop stopt.`
+  $('demolish').classList.toggle('on',mode==='demolish');$('workArea').classList.toggle('on',mode==='area');
+  $('buildMsg').textContent=mode==='deal'||mode==='area'?'':mode==='place'?`${BTYPES[type].name}: klik op de kaart om te plaatsen. Esc of rechtermuisknop stopt.`
     :mode==='demolish'?'Klik op een gebouw of bouwplaats van deze speler om af te breken. Esc of rechtermuisknop stopt.'
     :'Kies een gebouw. Gravers egaliseren eerst, dragers brengen planken en steen, bouwers maken het af.';
-  cv.style.cursor=mode?'crosshair':'';
+  cv.style.cursor=mode?'crosshair':'';areaMsg();
 }
 /* muis boven tegel (x,y) in bouwmodus: anker en reden bijwerken; geeft de tooltip-tekst */
 function buildHover(x,y){
   const p=buildPl();
   if(BUILD.mode==='deal')return dealHover(x,y);
+  if(BUILD.mode==='area')return areaHover(x,y);
   if(BUILD.mode==='place'){BUILD.ax=x;BUILD.ay=y+1;BUILD.why=canPlace(BUILD.type,BUILD.ax,BUILD.ay,p);
     const c=CFG.build.cost[BUILD.type];return BUILD.why?'Kan niet: '+BUILD.why:`${BTYPES[BUILD.type].name} bouwen · ${c[0]} plank, ${c[1]} steen`}
   const bi=world.bldAt[y*world.W+x]-1,b=bi>=0?world.blds[bi]:null;BUILD.hover=-1;
@@ -265,6 +266,7 @@ function landLoss(bi){
 /* klik in bouwmodus: als opdracht (orders.js), net zoals een computerbuur bouwt */
 function buildClick(){
   if(BUILD.mode==='deal'){dealClick();return}
+  if(BUILD.mode==='area'){areaClick();return}
   if(BUILD.mode==='place'&&!BUILD.why){order({p:buildPl(),t:'place',type:BUILD.type,x:BUILD.ax,y:BUILD.ay});BUILD.why='wordt geplaatst'}
   else if(BUILD.mode==='demolish'&&BUILD.hover>=0){order({p:buildPl(),t:'demolish',b:BUILD.hover});BUILD.hover=-1}
 }
