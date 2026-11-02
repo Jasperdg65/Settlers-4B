@@ -186,6 +186,8 @@ const CFG={
   },
   /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
   territory:{burcht:20,wachttoren:13},
+  /* Ruil-test (knop onder Modus): elke tegel binnen deze straal hoort meteen bij de dichtstbijzijnde burcht (512 = de hele kaart) */
+  landTest:{r:512},
   /* grond ruilen (mijlpaal 8a, deals.js). Een buur rekent per tegel een waarde: ter[terreinsoort] + wat erop staat (tree, sapling,
      bush, field, stone × wat er nog in zit) + ore × wat er nog in zit (× oreNeed als hij van dat erts minder dan oreScarce tegels op
      zijn eigen gebied heeft); dichtbij zijn burcht telt zwaarder: × (1 + home × (1 − afstand/homeR)).

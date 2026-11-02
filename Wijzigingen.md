@@ -2,6 +2,9 @@
 
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
+## 2026-11-02 16:30 CET
+- Testmodus *Ruil-test*, op verzoek, omdat de buren nog niet bouwen en de grenzen in een normaal spel ver uit elkaar liggen: knop in [public/index.html](public/index.html), vlag `LANDTEST` in [public/js/ui.js](public/js/ui.js) (gaat uit bij *Genereer wereld* of een andere modus), en `landTestFill` in [public/js/build.js](public/js/build.js), die elke tegel binnen `CFG.landTest.r` ([public/js/config.js](public/js/config.js)) aan de dichtstbijzijnde burcht geeft. Torens en ruilafspraken werken er gewoon bovenop. Getest op 128/4, 192/6 en 256/3: alle buren grenzen aan elkaar, een ruil wordt aangenomen, geen paginafouten. Tip in de handleiding bij Grond ruilen.
+
 ## 2026-11-02 16:15 CET
 - Werkgebied verzetten voor alle buitenwerkers, op verzoek: knop *Werkgebied*, klik op het gebouw en dan op het nieuwe midden (tot `CFG.prod.areaMove` × de straal van de deur; klik op het gebouw zet hem terug). Nieuwe opdracht `area` in [public/js/orders.js](public/js/orders.js); zoeken en tekenen in [public/js/production.js](public/js/production.js) (`b.wa`, `scanArea`, `drawWorkAreas`); modus in [public/js/build.js](public/js/build.js); knop in [public/index.html](public/index.html), teksten `werk.*` in [public/lang/nl.js](public/lang/nl.js). Getest in headless Chrome: te ver en andermans gebouw worden geweigerd, de houthakker kapt 17 bomen in het verzette gebied, kiezen, verzetten, terugzetten en Esc werken met de muis, geen paginafouten. Handleiding bijgewerkt.
 - Fix in [public/js/input.js](public/js/input.js): in `updateHover` overschaduwde een lokale `t` de vertaalfunctie, waardoor de tegelregel en de tooltips in bouwmodus boven struiken en akkers een fout gaven.

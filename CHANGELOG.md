@@ -6,6 +6,8 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 ## 2026-11-02
 
 ### Toegevoegd
+- **Ruil-test.** Knop onder *Modus*: een economie waarin de hele kaart meteen over de burchten verdeeld is,
+  zodat je zonder torens te bouwen aan je buren grenst en grond ruilen kunt proberen.
 - **Werkgebied verzetten.** Knop *Werkgebied* onder het bouwpaneel: klik op een houthakker, steenhouwer, bosbouwer,
   plukker, boerderij, bonenakker of moestuin en dan op het nieuwe midden. De cirkel blijft even groot en mag tot 2×
   zijn straal van het gebouw liggen; een stippellijn wijst naar het gebouw. Klik op het gebouw zelf zet hem terug.

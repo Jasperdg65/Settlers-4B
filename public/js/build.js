@@ -24,13 +24,20 @@ function computeLand(skip=-1,own=world.own){
   const L=[];world.blds.forEach((b,bi)=>{if(bi!==skip&&CFG.territory[b.type]&&!b.dead&&!b.st&&(b.type==='burcht'||b.occ))L.push(bi)});
   const key=bi=>{const b=world.blds[bi];return b.type==='burcht'?-1:b.mt||0};
   L.sort((a,c)=>key(a)-key(c)||a-c);
-  for(const bi of L){const b=world.blds[bi],r=CFG.territory[b.type];
+  if(world.landTest)landTestFill(own,L);
+  for(const bi of L){const b=world.blds[bi],r=CFG.territory[b.type];if(world.landTest&&b.type==='burcht')continue;
     for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
       if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1}
   applyDeals(own);
   for(let i=0;i<own.length;i++)if(!own[i])own[i]=prev[i];   // onbeschermd land blijft van wie het had
   if(own!==world.own)return own;
   world.landVer=(world.landVer||0)+1;if(typeof buildMini==='function'&&miniBase)buildMini();
+}
+/* Ruil-test (ui.js): elke tegel binnen CFG.landTest.r tegels gaat naar de dichtstbijzijnde burcht, zodat de gebieden meteen grenzen */
+function landTestFill(own,L){
+  const {W,H}=world,R=CFG.landTest.r,C=L.map(bi=>world.blds[bi]).filter(b=>b.type==='burcht');
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){let best=0,bd=R*R;
+    for(const b of C){const d=(x-b.x)**2+(y-b.y)**2;if(d<=bd){bd=d;best=b.p+1}}if(best)own[y*W+x]=best}
 }
 /* tegels van de bouwplaats die geëgaliseerd worden (hoekpunten rond de voetafdruk, zoals de mapgenerator doet) */
 function siteRegion(fp,ax,ay,fn){for(let dy=fp[2]-1;dy<=fp[3]+1;dy++)for(let dx=fp[0]-1;dx<=fp[1]+1;dx++)fn(ax+dx,ay+dy,dx>=fp[0]&&dx<=fp[1]&&dy>=fp[2]&&dy<=fp[3])}

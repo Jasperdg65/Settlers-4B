@@ -215,6 +215,7 @@ TALEN.nl={
   "werk.hier":"Werkgebied van de {gebouw} hierheen verzetten",
   "werk.terug":"Werkgebied terug rond het gebouw",
   "werk.teVer":"Te ver van het gebouw (hooguit {n} tegels)",
+  "ruil.test":"Ruil-test",
   "ruil.titel":"Buren: grond ruilen",
   "ruil.knopVraag":"Grond vragen",
   "ruil.knopBied":"Grond bieden",
