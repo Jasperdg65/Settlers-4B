@@ -3,6 +3,7 @@
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
 ## 2026-11-02 16:30 CET
+- Grond ruilen, na feedback uit de Ruil-test: hoogstens 150 tegels per kant (was 60, `CFG.deal.maxTiles` in [public/js/config.js](public/js/config.js)). Een te groot stuk wordt nu ingekort tot de tegels die het dichtst bij de grens liggen: `connectedTo` in [public/js/deals.js](public/js/deals.js) geeft de tegels in volgorde vanaf de grens, met een eigen melding `ruil.ingekort` in [public/lang/nl.js](public/lang/nl.js). Getest: een rechthoek van 31×21 geeft vanaf beide hoeken dezelfde 150 tegels aan de grenskant.
 - Testmodus *Ruil-test*, op verzoek, omdat de buren nog niet bouwen en de grenzen in een normaal spel ver uit elkaar liggen: knop in [public/index.html](public/index.html), vlag `LANDTEST` in [public/js/ui.js](public/js/ui.js) (gaat uit bij *Genereer wereld* of een andere modus), en `landTestFill` in [public/js/build.js](public/js/build.js), die elke tegel binnen `CFG.landTest.r` ([public/js/config.js](public/js/config.js)) aan de dichtstbijzijnde burcht geeft. Torens en ruilafspraken werken er gewoon bovenop. Getest op 128/4, 192/6 en 256/3: alle buren grenzen aan elkaar, een ruil wordt aangenomen, geen paginafouten. Tip in de handleiding bij Grond ruilen.
 
 ## 2026-11-02 16:15 CET

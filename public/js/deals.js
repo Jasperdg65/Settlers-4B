@@ -30,14 +30,15 @@ function dealTileWhy(i,o){
   for(const b of world.blds)if(!b.dead&&b.y+1<world.H&&i===(b.y+1)*W+b.x)return t('ruil.nietGebouw');   // ingang
   return '';
 }
-/* alleen de tegels die (via elkaar) aan het gebied van speler naar grenzen; de rest valt weg, zodat er geen losse eilandjes ontstaan */
+/* alleen de tegels die (via elkaar) aan het gebied van speler naar grenzen; de rest valt weg, zodat er geen losse eilandjes ontstaan.
+   De volgorde is vanaf de grens (eerst de rand, dan de rij daarachter), zodat een te groot stuk aan de grenskant wordt ingekort. */
 function connectedTo(tiles,naar){
   const {W,H,own}=world,set=new Set(tiles),ok=new Set(),q=[];
   for(const i of tiles){const x=i%W,y=i/W|0;
     if(x>0&&own[i-1]===naar+1||x<W-1&&own[i+1]===naar+1||y>0&&own[i-W]===naar+1||y<H-1&&own[i+W]===naar+1){ok.add(i);q.push(i)}}
-  while(q.length){const i=q.pop(),x=i%W,y=i/W|0;
+  for(let k=0;k<q.length;k++){const i=q[k],x=i%W,y=i/W|0;
     for(const j of [x>0?i-1:-1,x<W-1?i+1:-1,y>0?i-W:-1,y<H-1?i+W:-1])if(j>=0&&set.has(j)&&!ok.has(j)){ok.add(j);q.push(j)}}
-  return tiles.filter(i=>ok.has(i));
+  return q;
 }
 
 /* ---------- Waarde (vanuit speler p, die de grond heeft of krijgt) ---------- */
@@ -157,7 +158,7 @@ function dealClick(){
   const all=rect.every(i=>L.includes(i));let next=all?L.filter(i=>!rect.includes(i)):[...new Set([...L,...rect])];
   const before=next.length;next=connectedTo(next,ask?p:DEAL.q<0?-1:DEAL.q);
   let msg=next.length<before?t('ruil.losWeg',{n:before-next.length}):'';
-  if(next.length>CFG.deal.maxTiles){next=next.slice(0,CFG.deal.maxTiles);msg=t('ruil.teVeel',{max:CFG.deal.maxTiles})}
+  if(next.length>CFG.deal.maxTiles){next=next.slice(0,CFG.deal.maxTiles);msg=t('ruil.ingekort',{max:CFG.deal.maxTiles})}
   if(ask){DEAL.ask=next;if(!next.length){DEAL.q=-1;DEAL.give=[]}}else DEAL.give=next;
   dealUI(msg||undefined);
 }

@@ -5,6 +5,10 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 
 ## 2026-11-02
 
+### Gewijzigd
+- Grond ruilen: hoogstens 150 tegels per kant (was 60). Teken je meer aan, dan blijven de tegels het dichtst bij
+  de grens, in plaats van de laatst aangetekende.
+
 ### Toegevoegd
 - **Ruil-test.** Knop onder *Modus*: een economie waarin de hele kaart meteen over de burchten verdeeld is,
   zodat je zonder torens te bouwen aan je buren grenst en grond ruilen kunt proberen.

@@ -248,6 +248,7 @@ TALEN.nl={
   "ruil.niets":"In die rechthoek ligt geen grond die in een ruil kan.",
   "ruil.losWeg":"{n} tegels vielen weg: een stuk moet aan het gebied ernaast grenzen.",
   "ruil.teVeel":"Hoogstens {max} tegels per kant.",
+  "ruil.ingekort":"Hoogstens {max} tegels per kant: de {max} die het dichtst bij de grens liggen zijn gehouden.",
   "ruil.vraagt":"Je vraagt {n} tegels van speler {buur}",
   "ruil.metErts":"{n} met erts",
   "ruil.metBomen":"{n} met bomen",

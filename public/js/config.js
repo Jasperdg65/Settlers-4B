@@ -196,7 +196,7 @@ const CFG={
      counterAt van dat bedrag doet hij een tegenbod in goederen (uit goods, van wat de vrager het meest heeft), geldig counterTicks.
      Een ruil geeft beide relDeal relatiepunten (relatie −100..100, start 0); rel = ondergrens per relatieniveau.
      maxTiles = hoogstens zoveel tegels per kant van een voorstel. */
-  deal:{maxTiles:60,
+  deal:{maxTiles:150,
     val:{ter:[0.1,0.15,0.3,0.5,0.6,0.4,0.3,0.25,0.1],tree:1,sapling:0.5,bush:0.3,field:1.5,stone:1,ore:4,oreNeed:2.5,oreScarce:6,home:2,homeR:16},
     goods:{boomstam:0.6,plank:1,steen:1,brood:1.4,stoofpot:1.6,notenmix:1.6,kolen:1.5,ijzer:3,goud:5},
     short:10,shortMul:1.5,

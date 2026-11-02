@@ -18,7 +18,7 @@ geen torenovername). Mijlpaal 8b staat onderaan.
   grond. Loopt via `BUILD.mode = 'deal'`, zodat muis, aanraken (twee keer tikken), Esc en de rechtermuisknop werken
   zoals bij bouwen.
 - Gevraagde tegels moeten (via elkaar) aan het eigen gebied grenzen, geboden tegels aan het gebied van de buur
-  (`connectedTo`): er ontstaan geen losse eilandjes. Hoogstens `maxTiles` per kant.
+  (`connectedTo`): er ontstaan geen losse eilandjes. Hoogstens `maxTiles` per kant; is een aangetekend stuk groter, dan blijven de tegels het dichtst bij de grens (`connectedTo` geeft ze in volgorde vanaf de grens).
 - Goederen erbij bieden: de goederen uit `CFG.deal.goods`, tot wat er vrij ligt (`freeGoods`: niet gereserveerd
   door een drager).
 - Opdracht `propose {p, q, ask, give, goods}`; het antwoord staat in `world.offers[id]` met `st`:
