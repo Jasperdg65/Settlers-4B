@@ -7,7 +7,7 @@ $('dice').onclick=()=>{const w=['eik','duin','veen','berk','klei','heide','fjord
 $('ores').onchange=ev=>showOres=ev.target.checked;
 const mode=()=>$('mode').value;
 const startColonists=()=>{if(mode()==='duel'){spawnDuelTest();world.stk=null;world.own=null;world.sites=null;G.n=0;$('nset').textContent=S.n;return}
-  spawn(colonistTarget(),mode()==='eco');if(mode()==='eco'){initGoods();initBuild();buildStockPanel();buildBuildPanel()}else{world.stk=null;world.own=null;world.sites=null;G.n=0}};
+  spawn(colonistTarget(),mode()==='eco');if(mode()==='eco'){initGoods();initBuild();buildStockPanel();buildBuildPanel();buildDealPanel()}else{world.stk=null;world.own=null;world.sites=null;G.n=0}};
 const colonistTarget=()=>mode()==='eco'?world.starts.length*CFG.eco.colonistsPerPlayer:+$('count').value;
 function regenerate(){
   document.body.dataset.mode=mode();

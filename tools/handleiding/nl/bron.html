@@ -38,6 +38,7 @@
       <li>armpje drukken in de Duel-test</li>
       <li>krachthal en krachtpatsers in het dorp</li>
       <li>harmonie, met voederplaatsen, dierenweides en bloemenweides</li>
+      <li>grond ruilen met je buren</li>
     </ul></div>
   <div class="kader straks"><span class="titel">In aanbouw</span>
     <ul>
@@ -407,7 +408,8 @@
   <li>Gebouwen buiten je grens blijven staan en werken door. Je kunt daar alleen niets nieuws bouwen. Ook een bouwplaats wordt gewoon afgemaakt; is dat een toren, dan krijg je het land terug zodra hij bemand is.</li>
 </ul>
 <div class="kader straks"><span class="titel">Nu nog</span>
-<p>Een wachttoren heeft plaats voor {{CFG.army.crew.wachttoren}} krachtpatsers. Is hij af, dan komt de dichtstbijzijnde krachtpatser er vanzelf in wonen: een die buiten rondloopt, of een uit de reserve van een krachthal. Zonder krachthal blijft een nieuwe toren dus leeg. De torens van je startdorp hebben meteen elk {{CFG.army.startCrew}} junior. Breek je een toren af, dan lopen zijn krachtpatsers naar een krachthal met plek, of naar de volgende toren die er een nodig heeft. Straks kan een buur je toren uitdagen; wie hem met armpje drukken wint, neemt hem over. [[komt:Torens uitdagen en overnemen (mijlpaal 8)]]</p>
+<p>Een wachttoren heeft plaats voor {{CFG.army.crew.wachttoren}} krachtpatsers. Is hij af, dan komt de dichtstbijzijnde krachtpatser er vanzelf in wonen: een die buiten rondloopt, of een uit de reserve van een krachthal. Zonder krachthal blijft een nieuwe toren dus leeg. De torens van je startdorp hebben meteen elk {{CFG.army.startCrew}} junior. Breek je een toren af, dan lopen zijn krachtpatsers naar een krachthal met plek, of naar de volgende toren die er een nodig heeft.</p>
+<p>Een toren wordt nooit veroverd. Wil een buur een stuk van jouw grond, of jij van de zijne, dan maken jullie een afspraak (hoofdstuk Buren).</p>
 </div>
 
 <h3>Groepen</h3>
@@ -416,11 +418,28 @@
 
 
 <section class="hoofdstuk" id="buren">
-<h2>Buren [[komt:Computerburen, handel en diplomatie (mijlpaal 9 tot 11)]]</h2>
+<h2>Buren</h2>
 
-<p class="intro">Je bent niet alleen. Rondom wonen andere volken, elk met een eigen karakter. Je speelt {{tekst('spel.naam')}} alleen, tegen de computer, maar je buren voelen allesbehalve als machines. Dit hoofdstuk beschrijft het ontwerp.</p>
+<p class="intro">Je bent niet alleen. Rondom wonen andere volken, elk met een eigen karakter. Je speelt {{tekst('spel.naam')}} alleen, tegen de computer, maar je buren voelen allesbehalve als machines. Grond ruilen kan al; de rest van dit hoofdstuk beschrijft het ontwerp.</p>
 
-<h3>Computerburen</h3>
+<h3>Grond ruilen</h3>
+<p>Ligt er net over de grens een stuk grond dat je goed kunt gebruiken, een ertsader of een mooi bos? Dan kun je het je buur vragen. Afpakken kan niet: in {{tekst('spel.naam')}} wisselt grond alleen van eigenaar als jullie het eens worden.</p>
+<ol>
+  <li>Kies in het paneel <b>Buren: grond ruilen</b> de knop <b>Grond vragen</b> en klik op de kaart twee hoeken aan. De tegels van je buur in die rechthoek komen erbij; klik je dezelfde rechthoek nog eens, dan gaan ze er weer af. Het stuk moet aan je eigen gebied grenzen.</li>
+  <li>Bied er iets voor: met <b>Grond bieden</b> een stuk van je eigen grond dat aan het gebied van je buur grenst, en onder <b>Goederen erbij bieden</b> bijvoorbeeld planken, brood of ijzer.</li>
+  <li>Klik op <b>Voorstel doen</b>. Je buur neemt het aan, wijst het af, of doet een tegenbod: hij wil er dan nog iets bij. Dat kun je aannemen of afwijzen.</li>
+</ol>
+<p>Je buur kijkt naar wat de grond <b>hem</b> waard is. Bos, akkers en steen tellen mee, erts telt zwaar, en erts dat hij zelf nauwelijks heeft nog zwaarder. Grond dicht bij zijn burcht geeft hij niet graag weg. Bij een afwijzing zegt hij waarom. Hoe beter jullie elkaar kennen, hoe minder hij erbovenop vraagt: elke ruil maakt jullie band {{CFG.deal.relDeal}} punten sterker.</p>
+<ul>
+  <li>Grond met een gebouw, een bouwplaats, een ingang of goederen kan niet in een ruil. Er gaat dus nooit iets verloren.</li>
+  <li>Hoogstens {{CFG.deal.maxTiles}} tegels per kant.</li>
+  <li>Een afspraak blijft gelden, ook als er later torens bijkomen of verdwijnen.</li>
+</ul>
+<div class="kader straks"><span class="titel">Nu nog</span>
+<p>Goederen gaan meteen van jouw opslag naar de burcht van je buur. Straks brengt de handelaar ze met zijn handkar. Je buren vragen nog niet zelf om jouw grond, en een afgewezen verzoek kun je nog niet met armpje drukken beslechten. [[komt:Buren die zelf om grond vragen, en een grensduel als een ruil is afgewezen (mijlpaal 8b)]]</p>
+</div>
+
+<h3>Computerburen [[komt:Computerburen met een eigen dorp (mijlpaal 9)]]</h3>
 <ul>
   <li>Ze spelen met precies dezelfde regels als jij en krijgen niets cadeau.</li>
   <li>Elk heeft een <b>karakter</b>: gul, zuinig, trots, voorzichtig… Dat merk je aan hoe ze handelen en hoe snel ze je vertrouwen.</li>
@@ -430,10 +449,10 @@
   <li>Met de <b>moeilijkheidsgraad</b> stel je in hoe zelfstandig ze zijn en hoe snel ze vertrouwen geven.</li>
 </ul>
 
-<h3>Handel</h3>
+<h3>Handel [[komt:Handel via een marktplaats en handelaar (mijlpaal 10)]]</h3>
 <p>Op de marktplaats woont een handelaar die met een handkar over land of met een bootje over het water naar je buren gaat. In het ruilvenster zet je je aanbod tegenover je vraag. Wat schaars is, is meer waard. Met de kaartinstelling <i>onderlinge afhankelijkheid</i> heeft niet iedere speler alles: de een zit op steen, de ander op ijzer of vruchtbare grond. Dan is handelen geen keuze maar een noodzaak, en dat is precies de bedoeling.</p>
 
-<h3>Diplomatie</h3>
+<h3>Diplomatie [[komt:Diplomatie: relaties, geschenken, feesten en vrede (mijlpaal 11)]]</h3>
 <p>Je band met een buur groeit van <i>onbekend</i> via <i>kennis</i> en <i>vriend</i> naar <i>bondgenoot</i>. Dat gaat door te handelen, geschenken te geven, samen te mediteren bij het hunnebed en samen feest te vieren, met een vriendschappelijk toernooi armpje drukken. Sluit je vrede, dan liggen de grenzen vast. Een slechte band betekent een slechtere ruil, of helemaal geen.</p>
 </section>
 

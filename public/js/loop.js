@@ -234,7 +234,7 @@ function draw(){
       const sy=Y*TH-hAt(X,Y);if(sy<v.t||sy>v.b+10)continue;if(pl[i]!==lp){lp=pl[i];ctx.fillStyle=PCOL[lp]}ctx.fillRect(sx-1.5,sy-3,3,3)}}
   if(PROF)pt('stippen',tp);
 
-  if(world.own){drawSiteBars(v,blit);drawBuildOverlay(v,blit);drawWorkAreas()}
+  if(world.own){drawSiteBars(v,blit);drawBuildOverlay(v,blit);drawDealOverlay();drawWorkAreas()}
   if(S.army)drawArmyTop(al);
   if(hoverTile){
     const {x,y}=hoverTile;if(x<W-1&&y<H-1){const a=y*W+x;

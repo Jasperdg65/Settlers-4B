@@ -76,8 +76,10 @@ Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.
 - Bewoners die doorlopend eten
 - School (opleiding instellen) en hunnebed (samen mediteren met dieren)
 - Helers en muzikanten in het dorp
-- Torens uitdagen en overnemen (mijlpaal 8)
-- Computerburen, handel en diplomatie (mijlpaal 9 tot 11)
+- Buren die zelf om grond vragen, en een grensduel als een ruil is afgewezen (mijlpaal 8b)
+- Computerburen met een eigen dorp (mijlpaal 9)
+- Handel via een marktplaats en handelaar (mijlpaal 10)
+- Diplomatie: relaties, geschenken, feesten en vrede (mijlpaal 11)
 - Kaartinstelling onderlinge afhankelijkheid
 - Kaarteditor
 <!-- komt:end -->

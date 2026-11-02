@@ -10,13 +10,15 @@ function initBuild(){
   const {W,H}=world;world.own=new Uint8Array(W*H);world.sites=[];
   for(const b of world.blds){b.wk=0;b.prog=1}
   seatStartCrew();   // de torens van het startdorp zijn meteen bemand (crew.js)
+  dealInit();        // afspraken over grond en relaties (deals.js)
   computeLand();harmInit();
 }
 /* Gebied (mijlpaal 6b, CFG.territory): elke tegel binnen de straal van een bemand gebouw hoort bij het oudste daarvan.
    De burcht is altijd bemand en gaat voor, daarna de torens op volgorde van bemannen (b.mt, dan index).
    Een nieuwe toren neemt dus nooit gedekt land van een buur af. Land dat geen toren meer dekt (de toren is afgebroken),
    blijft van zijn eigenaar, maar is onbeschermd: komt het binnen de straal van een bemande toren van een ander, dan is het van die.
-   Gebouwen op land dat zo verloren gaat, blijven staan en werken door; er kan daar alleen niet meer gebouwd worden. */
+   Gebouwen op land dat zo verloren gaat, blijven staan en werken door; er kan daar alleen niet meer gebouwd worden.
+   Daarna gaan de afspraken over grond (world.deals, mijlpaal 8a) boven het gebied uit torens. */
 function computeLand(skip=-1,own=world.own){
   const {W,H}=world,prev=world.own.slice();own.fill(0);
   const L=[];world.blds.forEach((b,bi)=>{if(bi!==skip&&CFG.territory[b.type]&&!b.dead&&!b.st&&(b.type==='burcht'||b.occ))L.push(bi)});
@@ -25,6 +27,7 @@ function computeLand(skip=-1,own=world.own){
   for(const bi of L){const b=world.blds[bi],r=CFG.territory[b.type];
     for(let y=Math.max(0,b.y-r);y<=Math.min(H-1,b.y+r);y++)for(let x=Math.max(0,b.x-r);x<=Math.min(W-1,b.x+r);x++)
       if(!own[y*W+x]&&Math.hypot(x-b.x,y-b.y)<=r)own[y*W+x]=b.p+1}
+  applyDeals(own);
   for(let i=0;i<own.length;i++)if(!own[i])own[i]=prev[i];   // onbeschermd land blijft van wie het had
   if(own!==world.own)return own;
   world.landVer=(world.landVer||0)+1;if(typeof buildMini==='function'&&miniBase)buildMini();
@@ -232,9 +235,10 @@ function refreshBuildCounts(){
 if(typeof setInterval==='function')setInterval(refreshBuildCounts,1000);   // niet in de Node-tests
 function setBuildMode(mode,type=null){
   BUILD.mode=mode;BUILD.type=type;BUILD.why='';BUILD.hover=-1;
+  if(mode!=='deal'&&DEAL.mode){DEAL.mode=null;DEAL.corner=-1;dealUI()}   // grond aantekenen (deals.js) stopt
   for(const b of $('buildList').children)b.classList.toggle('on',mode==='place'&&b.dataset.type===type);
   $('demolish').classList.toggle('on',mode==='demolish');
-  $('buildMsg').textContent=mode==='place'?`${BTYPES[type].name}: klik op de kaart om te plaatsen. Esc of rechtermuisknop stopt.`
+  $('buildMsg').textContent=mode==='deal'?'':mode==='place'?`${BTYPES[type].name}: klik op de kaart om te plaatsen. Esc of rechtermuisknop stopt.`
     :mode==='demolish'?'Klik op een gebouw of bouwplaats van deze speler om af te breken. Esc of rechtermuisknop stopt.'
     :'Kies een gebouw. Gravers egaliseren eerst, dragers brengen planken en steen, bouwers maken het af.';
   cv.style.cursor=mode?'crosshair':'';
@@ -242,6 +246,7 @@ function setBuildMode(mode,type=null){
 /* muis boven tegel (x,y) in bouwmodus: anker en reden bijwerken; geeft de tooltip-tekst */
 function buildHover(x,y){
   const p=buildPl();
+  if(BUILD.mode==='deal')return dealHover(x,y);
   if(BUILD.mode==='place'){BUILD.ax=x;BUILD.ay=y+1;BUILD.why=canPlace(BUILD.type,BUILD.ax,BUILD.ay,p);
     const c=CFG.build.cost[BUILD.type];return BUILD.why?'Kan niet: '+BUILD.why:`${BTYPES[BUILD.type].name} bouwen · ${c[0]} plank, ${c[1]} steen`}
   const bi=world.bldAt[y*world.W+x]-1,b=bi>=0?world.blds[bi]:null;BUILD.hover=-1;
@@ -259,8 +264,9 @@ function landLoss(bi){
 }
 /* klik in bouwmodus: als opdracht (orders.js), net zoals een computerbuur bouwt */
 function buildClick(){
+  if(BUILD.mode==='deal'){dealClick();return}
   if(BUILD.mode==='place'&&!BUILD.why){order({p:buildPl(),t:'place',type:BUILD.type,x:BUILD.ax,y:BUILD.ay});BUILD.why='wordt geplaatst'}
   else if(BUILD.mode==='demolish'&&BUILD.hover>=0){order({p:buildPl(),t:'demolish',b:BUILD.hover});BUILD.hover=-1}
 }
-$('bldPl').onchange=buildBuildPanel;
+$('bldPl').onchange=()=>{buildBuildPanel();dealClear()};
 $('demolish').onclick=()=>setBuildMode(BUILD.mode==='demolish'?null:'demolish');

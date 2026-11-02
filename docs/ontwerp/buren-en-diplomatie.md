@@ -22,8 +22,8 @@ Solo tegen computerburen, handel en diplomatie (mijlpaal 9 tot 11). Nog niet geb
 - **Eén opdrachtenwachtrij** (`js/orders.js`, al gebouwd): `order({p, t, ...})` is de enige weg waarlangs
   een speler de simulatie verandert, voor mens en computer gelijk. Opdrachten worden op een
   tickgrens uitgevoerd en gecontroleerd alsof ze van een onbekende komen (eigenaar, gebied,
-  materiaal). Nu: `place`, `demolish`, `move`, `duel`. Later: handel, geschenk, afspraak, en de
-  instellingen per gebouw (productiekeuze, school).
+  materiaal). Nu: `place`, `demolish`, `make`, `keep`, `move`, `duel`, en voor grond ruilen `propose`, `accept`,
+  `reject` (mijlpaal 8a, [grond-ruilen.md](grond-ruilen.md)). Later: handel, geschenk, en de instellingen per gebouw (school).
 - De mens is speler 0 (`world.human`); elke andere speler is een computerbuur met een eigen
   karakter (`world.ai[p]`). Wat in panelen nu "speler kiezen" heet (voorraad, bouwen, Spelen als),
   is een testhulp en verdwijnt dan.
@@ -44,7 +44,7 @@ Solo tegen computerburen, handel en diplomatie (mijlpaal 9 tot 11). Nog niet geb
 - **Diplomatie**: relatieniveau per buur (onbekend, kennis, vriend, bondgenoot). Het stijgt door
   handel, geschenken, samen mediteren (hunnebed) en feesten. Vrede sluiten legt de grenzen vast.
   Een slechte band geeft een slechtere ruil of een weigering.
-- Relaties als matrix `world.rel[p][q]` (getal met drempels voor de niveaus uit de config), met
+- Relaties als matrix `world.rel[p][q]` (eerste versie gebouwd in 8a: `world.rel`, alleen de bron 'ruil') (getal met drempels voor de niveaus uit de config), met
   bijdragen per bron (handel, geschenk, meditatie, feest, toernooi, geschil), net als de
   harmonie, zodat nieuwe bronnen er los bij kunnen.
 - Handel, geschenken, vrede sluiten en uitdagingen lopen als opdrachten via `order()`, zodat ze

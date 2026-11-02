@@ -184,6 +184,20 @@ const CFG={
   },
   /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
   territory:{burcht:20,wachttoren:13},
+  /* grond ruilen (mijlpaal 8a, deals.js). Een buur rekent per tegel een waarde: ter[terreinsoort] + wat erop staat (tree, sapling,
+     bush, field, stone × wat er nog in zit) + ore × wat er nog in zit (× oreNeed als hij van dat erts minder dan oreScarce tegels op
+     zijn eigen gebied heeft); dichtbij zijn burcht telt zwaarder: × (1 + home × (1 − afstand/homeR)).
+     Goederen: waarde per stuk (goods), × shortMul als hij er minder dan short van heeft.
+     Hij neemt aan als wat hij krijgt minstens margin − relMargin × relatie/100 keer zoveel waard is als wat hij afgeeft; vanaf
+     counterAt van dat bedrag doet hij een tegenbod in goederen (uit goods, van wat de vrager het meest heeft), geldig counterTicks.
+     Een ruil geeft beide relDeal relatiepunten (relatie −100..100, start 0); rel = ondergrens per relatieniveau.
+     maxTiles = hoogstens zoveel tegels per kant van een voorstel. */
+  deal:{maxTiles:60,
+    val:{ter:[0.1,0.15,0.3,0.5,0.6,0.4,0.3,0.25,0.1],tree:1,sapling:0.5,bush:0.3,field:1.5,stone:1,ore:4,oreNeed:2.5,oreScarce:6,home:2,homeR:16},
+    goods:{boomstam:0.6,plank:1,steen:1,brood:1.4,stoofpot:1.6,notenmix:1.6,kolen:1.5,ijzer:3,goud:5},
+    short:10,shortMul:1.5,
+    margin:1.25,relMargin:0.2,counterAt:0.6,counterTicks:1200,
+    relDeal:10,rel:{gespannen:-100,onbekend:0,kennis:15,vriend:45,bondgenoot:75}},
   /* harmonie (mijlpaal 7, harmony.js), in punten 0–100. Doel = start + bronnen; elke every ticks schuift de meter step punten.
      voer: een voederplaats met dierenverzorger vult de bak met 1 food (graan) voor ticks ticks en vult bij als er minder dan
        refill over is; gevuld geeft full punten (de beste max tellen), leeg langer dan grace ticks kost empty punten.

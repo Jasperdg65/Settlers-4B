@@ -38,7 +38,7 @@ button{font:600 14px/1 "Source Sans 3",system-ui,sans-serif;border-radius:6px;cu
   padding:9px 12px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
 button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);width:100%;margin-top:4px}
 button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.btns{display:flex;gap:6px}.btns button{flex:1}
+.btns{display:flex;gap:6px}.btns[hidden]{display:none}.btns button{flex:1}
 .check{display:flex;gap:8px;align-items:center;margin-top:10px}
 dl{display:grid;grid-template-columns:1fr auto;gap:3px 10px;margin:0;font-size:14px}
 dt{color:var(--muted)}dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
@@ -88,7 +88,7 @@ button.wide{width:100%;margin:0 0 10px}
 .bb .aantal{position:absolute;top:3px;right:5px;font:700 14px/1 "Source Sans 3",system-ui,sans-serif;color:#a3a9a6}
 .bb.on .aantal{color:inherit;opacity:.8}
 .bb span{text-align:center}.bb small{font-weight:400;color:var(--muted);font-size:11px}
-.bb.on,#demolish.on{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent);color:var(--accent-ink)}
+.bb.on,#demolish.on,#dealAsk.on,#dealGive.on{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent);color:var(--accent-ink)}
 .bb.on small{color:inherit}
 #njobs{grid-column:1/-1;text-align:left;font-size:13px;line-height:1.35}
 .pv3d{margin-top:6px}.pv3d canvas{display:block;border-radius:6px;max-width:100%}
@@ -132,3 +132,6 @@ a.handleiding:hover{border-color:var(--accent)}
 .hbar{position:relative;display:block;height:8px;margin:4px 0 3px;border-radius:4px;background:linear-gradient(90deg,#b5533c,#d9b44a 50%,#5f9a4a)}
 .hbar i{position:absolute;inset:0 auto 0 0;border-right:2px solid var(--ink);background:none}
 .hbar u{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--muted);text-decoration:none}
+/* paneel Buren: goederen bieden (deals.js) */
+.dgoods{margin:4px 0 8px}.dgoods summary{cursor:pointer;font-size:13px;color:var(--muted)}
+.dgood{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:13px}.dgood span{flex:1}.dgood input{width:64px}

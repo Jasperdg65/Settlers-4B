@@ -95,7 +95,12 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
   op. Een geselecteerde muzikant toont zijn bereik als stippellijn; de tooltip van een krachtpatser
   zegt 'muziek' als hij steun krijgt.
 
-## Volgende stap: torens veroveren en gebied bij verovering (nog niet bouwen)
+## Vervallen: torens veroveren en gebied bij verovering
+
+**Besloten op 2026-11-02: torens worden niet overgenomen.** Grond wisselt alleen via een afspraak of een grensduel,
+zie [grond-ruilen.md](grond-ruilen.md) en [../beslissingen.md](../beslissingen.md). Het oorspronkelijke ontwerp staat
+hieronder ter naslag; de bemanning (eerste punt) en de opdrachtenwachtrij (laatste punt) gelden nog wel.
+
 
 - Bemanning: een toren (en burcht/krachthal) houdt een lijst bewoners bij (krachtpatsers en een
   heler), met een maximum per gebouwtype in de config; bewoners zitten binnen (`S.ins`) en hebben
@@ -137,8 +142,8 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
 
 ## Uit het hoofddoel: grensgeschillen en toernooien
 
-- **Krachtpatsers**: grensgeschillen en feesttoernooien worden met armpje drukken beslecht, via de
-  bestaande duelmodule. Een toernooi verbetert de relatie.
+- **Krachtpatsers**: grensgeschillen (als een ruil is afgewezen, mijlpaal 8b) en feesttoernooien worden met armpje
+  drukken beslecht, via de bestaande duelmodule. Een toernooi verbetert de relatie.
 - Duelmodule: een duel krijgt een soort (`veld`, `grens`, `toernooi`). `endDuel` geeft de afloop
   door aan wie het duel aanvroeg, en de gevolgen per soort staan in de config: in het veld
   uitgeschakeld bij de heler, in een toernooi alleen wat vermoeidheid en een relatiebonus, bij
@@ -147,6 +152,8 @@ krachtpatsers (`CFG.duel.test.levels`), één heler en een muzikant (rood: doede
 ## Open vragen
 
 - Eten krachtpatsers (in torens en krachthal), en zo ja wat? Nu zijn ze altijd gevoed.
-- Moeten de beste krachtpatsers naar de torens aan de grens, of blijft het "dichtstbijzijnde eerst"?
+- ~~Moeten de beste krachtpatsers naar de torens aan de grens?~~ Besloten 2026-11-02: dichtstbijzijnde eerst blijft;
+  zelf sturen komt in mijlpaal 8b.
 - Wanneer komen helers en muzikanten in het dorp, en waar wonen ze?
-- Wat gebeurt er met bouwplaatsen en stapels op land dat bij een overname verloren gaat?
+- ~~Wat gebeurt er met bouwplaatsen en stapels op land dat bij een overname verloren gaat?~~ Vervallen: er is geen
+  overname, en grond met gebouwen, bouwplaatsen of stapels kan niet in een ruil.

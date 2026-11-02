@@ -90,6 +90,18 @@
   </section>
 
   <section class="eco-only">
+    <h2 data-t="ruil.titel"></h2>
+    <p class="note" id="dealRel"></p>
+    <div class="btns"><button id="dealAsk" data-t="ruil.knopVraag"></button><button id="dealGive" data-t="ruil.knopBied"></button></div>
+    <p class="note" id="dealSum"></p>
+    <details class="dgoods"><summary data-t="ruil.goederen"></summary><div id="dealGoods"></div></details>
+    <div class="btns"><button id="dealSend" class="primary" data-t="ruil.stuur"></button></div>
+    <p class="note" id="dealMsg"></p>
+    <div class="btns" id="dealAnswer" hidden><button id="dealYes" data-t="ruil.aannemen"></button><button id="dealNo" data-t="ruil.afwijzen"></button></div>
+    <div class="btns"><button id="dealClear" data-t="ruil.wis"></button></div>
+  </section>
+
+  <section class="eco-only">
     <h2 data-t="adv.titel"></h2>
     <label><span data-t="adv.stand"></span><select id="advMode"><option value="alles" data-t="adv.alles"></option><option value="belangrijk" data-t="adv.belangrijk"></option><option value="uit" data-t="adv.uit"></option></select></label>
     <p class="note" id="advMuted"></p>
@@ -156,6 +168,7 @@
 <script src="js/path.js"></script>
 <script src="js/transport.js"></script>
 <script src="js/build.js"></script>
+<script src="js/deals.js"></script>
 <script src="js/jobs.js"></script>
 <script src="js/crew.js"></script>
 <script src="js/harmony.js"></script>
