@@ -68,7 +68,7 @@ cv.addEventListener('pointermove',ev=>{
 });
 function refreshHover(){if(mouseAt&&world)updateHover()}
 function updateHover(){
-  const [mx,my]=mouseAt,t=screenToTile(mx,my),x=Math.floor(t.x),y=Math.floor(t.y);
+  const [mx,my]=mouseAt,tp=screenToTile(mx,my),x=Math.floor(tp.x),y=Math.floor(tp.y);
   if(x>=0&&y>=0&&x<world.W&&y<world.H){
     hoverTile={x,y};const i=y*world.W+x,o=world.obj[i],b=world.bldAt[i];
     $('hover').textContent=`Tegel ${x}, ${y} · ${TNAME[world.ter[i]]} · hoogte ${world.hp[i].toFixed(0)}`+
