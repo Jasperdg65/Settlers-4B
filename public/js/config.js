@@ -138,13 +138,20 @@ const CFG={
     {k:'vos',   per:1800,max:90, keep:22,speed:0.07, range:12,wait:[40,240],rest:0.4, restWait:[200,600],rate:1.2},
     {k:'vogel', per:900, max:200,keep:10,speed:0.05, range:3, wait:[20,120],rest:0.3, restWait:[100,300],rate:2},
   ],
-  /* krachtpatsers in het veld (nu alleen in de duel-testmodus) */
+  /* krachtpatsers: in het veld (lopen, selecteren; nu alleen in de duel-testmodus) en in krachthal en torens */
   army:{
     speed:0.075,                   // tegels per tick lopen
     hurtSpeed:0.6,                 // uitgeschakeld lopen gaat langzamer (factor)
     maxSelect:100,                 // max geselecteerd tegelijk
     spacing:0.8,                   // afstand in de opstelling bij een loopopdracht (tegels)
     groupTap:350,                  // ms: twee keer dezelfde groeptoets binnen deze tijd centreert de camera
+    /* krachthal en bemanning (mijlpaal 6c, crew.js). crew = plaatsen per toren (bemand vanaf één); startCrew = krachtpatsers
+       (niveau 1) per toren van het startdorp. Krachthal: houdt standaard hall.keep krachtpatsers in reserve (keuze uit hall.keeps
+       in het paneel Productie), leidt een rekruut in train ticks op tot niveau 1 en traint in upTicks een niveau hoger met de
+       uitrusting uit up (wordt gedragen, dus verbruikt); ze vraagt hoogstens hall.stock van elk stuk tegelijk. Rekruten zijn
+       vrije dragers (carry.keepFree blijven over). */
+    crew:{wachttoren:2},startCrew:1,train:800,upTicks:1200,up:{2:{helm:1},3:{schild:1,polsband:1}},
+    hall:{keep:2,keeps:[0,2,4,8],stock:2},
   },
   /* aanraakbediening (input.js): ms vasthouden voor een selectierechthoek, pixels bewegen voordat het slepen is,
      extra marge in pixels rond een figuur voor een vinger, ms dat de tooltip na een tik blijft staan */
@@ -177,12 +184,6 @@ const CFG={
   },
   /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
   territory:{burcht:20,wachttoren:13},
-  /* krachtpatsers (mijlpaal 6c, crew.js). crew = plaatsen per toren (bemand vanaf één); startCrew = krachtpatsers (niveau 1) per toren
-     van het startdorp. Krachthal: houdt standaard hall.keep krachtpatsers in reserve (keuze uit hall.keeps in het paneel Productie),
-     leidt een rekruut in train ticks op tot niveau 1 en traint in upTicks een niveau hoger met de uitrusting uit up (wordt gedragen,
-     dus verbruikt); ze vraagt hoogstens hall.stock van elk stuk tegelijk. Rekruten zijn vrije dragers (carry.keepFree blijven over). */
-  army:{crew:{wachttoren:2},startCrew:1,train:800,upTicks:1200,up:{2:{helm:1},3:{schild:1,polsband:1}},
-    hall:{keep:2,keeps:[0,2,4,8],stock:2}},
   /* harmonie (mijlpaal 7, harmony.js), in punten 0–100. Doel = start + bronnen; elke every ticks schuift de meter step punten.
      voer: een voederplaats met dierenverzorger vult de bak met 1 food (graan) voor ticks ticks en vult bij als er minder dan
        refill over is; gevuld geeft full punten (de beste max tellen), leeg langer dan grace ticks kost empty punten.
