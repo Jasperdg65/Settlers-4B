@@ -74,7 +74,7 @@ body:not([data-mode="duel"]) .duel-only{display:none}
 button.wide{width:100%;margin:0 0 10px}
 .prod{margin-bottom:6px}
 .prow{display:flex;flex-direction:column;font-size:13px;padding:3px 0;border-bottom:1px solid var(--line)}
-.prow b{font-weight:600;font-size:14px}.prow .pmake{margin:3px 0 0;font-size:13px}.prow select{margin-top:2px;font-size:13px}.prow .pmade{color:var(--muted)}
+.prow b{font-weight:600;font-size:14px}.prow b{display:flex;align-items:center}.prow .pfocus{margin-left:auto;padding:0 6px;font-size:12px;line-height:18px;font-weight:400;min-width:0}.prow .pmake{margin:3px 0 0;font-size:13px}.prow select{margin-top:2px;font-size:13px}.prow .pmade{color:var(--muted)}
 .stock h3,section>h3{font:600 12px/1.2 "Source Sans 3",system-ui,sans-serif;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 4px}
 .srow{display:grid;grid-template-columns:24px 1fr auto;gap:8px;align-items:center;font-size:14px;padding:1px 0}
 .srow canvas{display:block}

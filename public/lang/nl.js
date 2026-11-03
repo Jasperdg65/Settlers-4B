@@ -37,6 +37,7 @@ TALEN.nl={
   "kp.niet.traint":"Hij traint nu",
   "kp.niet.vol":"Vol, en niemand daar is zwakker om mee te ruilen",
   "kp.niet.laatste":"Dan staat de toren leeg; stuur eerst een ander erheen",
+  "prod.focus":"Toon het volgende gebouw van deze soort ({gebouw}), met zijn tooltip",
   "toren.bemanning":"{n}/{max} krachtpatsers",
   "toren.onderweg":"{n} onderweg",
   "toren.gebied":"bemand: geeft gebied",

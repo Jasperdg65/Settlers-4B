@@ -290,22 +290,32 @@ function drawWorkAreas(){
 
 /* ---------- Paneel 'Productie' (speler uit de keuze bij Voorraad) ---------- */
 let prodShown='';
+/* knopje per regel: de camera gaat telkens naar het volgende gebouw van die soort, en de muispositie komt op dat gebouw te
+   staan, zodat zijn tooltip meteen te zien is (tot de muis weer over de kaart beweegt) */
+const PFOC={};
+const pfoc=(type,n)=>`<button class="pfocus" data-f="${type}" title="${t('prod.focus',{gebouw:BTYPES[type].name.toLowerCase()})}">◎${n>1&&PFOC[type]?' '+((PFOC[type]-1)%n+1)+'/'+n:''}</button>`;
+function prodFocus(type){
+  const p=+$('stockPl').value||0,list=world.blds.filter(b=>b.type===type&&b.p===p&&!b.dead&&!b.st);if(!list.length)return;
+  const k=(PFOC[type]||0)%list.length,b=list[k];PFOC[type]=k+1;
+  centerOn(b.x+0.5,b.y+0.5);clampCam();mouseAt=[vw/2,vh/2];updateHover();prodShown='';refreshProduction();
+}
+$('prodList').addEventListener('click',ev=>{const f=ev.target.closest&&ev.target.closest('.pfocus');if(f)prodFocus(f.dataset.f)});
 function refreshProduction(){
   if(!world.made||document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#prodList'))return;   // niet verversen terwijl een keuzelijst open is
   const p=+$('stockPl').value||0,rows=[];
   const houses=world.blds.filter(b=>b.type==='woonhuis'&&b.p===p&&!b.dead&&!b.st);
   if(houses.length){const n=houses.reduce((a,b)=>a+(b.born||0),0),hungry=houses.filter(b=>(b.born||0)<CFG.pop.house&&/voedsel/.test(b.ps)).length;
-    rows.push(`<div class="prow"><b>Woonhuis ×${houses.length}</b><span>${n} van ${houses.length*CFG.pop.house} nieuwe bewoners`+(hungry?` · ${hungry} wacht op voedsel`:'')+'</span></div>')}
+    rows.push(`<div class="prow"><b>Woonhuis ×${houses.length}${pfoc('woonhuis',houses.length)}</b><span>${n} van ${houses.length*CFG.pop.house} nieuwe bewoners`+(hungry?` · ${hungry} wacht op voedsel`:'')+'</span></div>')}
   if(world.harm){const n=harmPct(p),src=world.harmSrc[p]||{},parts=Object.entries(src).filter(([k,v])=>v).map(([k,v])=>`${t('harm.bron.'+k)} ${v>0?'+':''}${v}`);
     rows.unshift(`<div class="prow"><b>${t('harm.titel')} ${n}</b><span class="hbar" title="${t('harm.doel',{n:world.harmT[p]})}"><i style="width:${n}%"></i><u style="left:${world.harmT[p]}%"></u></span><span>${t('harm.doel',{n:world.harmT[p]})} · ${parts.join(' · ')||t('harm.geen')}</span></div>`)}
   const lvTxt=list=>[1,2,3].map(l=>[l,list.filter(c=>S.lvl[c]===l).length]).filter(x=>x[1]).map(([l,n])=>n+'× '+LVLNAME[l].toLowerCase()).join(', ')||'–';
   const halls=world.blds.filter(b=>b.type==='kazerne'&&b.p===p&&!b.dead&&!b.st).map(cr);
   if(halls.length){const all=halls.flatMap(b=>b.crew),tr=all.filter(c=>!S.lvl[c]).length+halls.filter(b=>b.trn>=0&&S.lvl[b.trn]).length;
     const band=halls.flatMap(b=>b.band).filter(c=>S.lvl[c]).length;   // reserve en muzikanten instellen: paneel Krachtpatsers (crew.js)
-    rows.push(`<div class="prow"><b>${BTYPES.kazerne.name} ×${halls.length}</b><span>${t('hal.paneel',{n:all.filter(c=>S.lvl[c]).length,niveaus:lvTxt(all)})}`+(band?' · '+t('hal.bandPaneel',{n:band}):'')+(tr?' · '+t('hal.opleiding',{n:tr}):'')+`</span></div>`)}
+    rows.push(`<div class="prow"><b>${BTYPES.kazerne.name} ×${halls.length}${pfoc('kazerne',halls.length)}</b><span>${t('hal.paneel',{n:all.filter(c=>S.lvl[c]).length,niveaus:lvTxt(all)})}`+(band?' · '+t('hal.bandPaneel',{n:band}):'')+(tr?' · '+t('hal.opleiding',{n:tr}):'')+`</span></div>`)}
   const towers=world.blds.filter(b=>CFG.army.crew[b.type]&&b.p===p&&!b.dead&&!b.st).map(cr);
   if(towers.length){const m=towers.filter(b=>b.occ).length,all=towers.flatMap(b=>b.crew),own=world.own;let n=0;if(own)for(let i=0;i<own.length;i++)if(own[i]===p+1)n++;
-    rows.push(`<div class="prow"><b>${BTYPES.wachttoren.name} ×${towers.length}</b><span>${t('toren.paneel',{m,n:all.length,niveaus:lvTxt(all)})}`+(m<towers.length?' · '+t('toren.wacht',{n:towers.length-m}):'')+' · '+t('toren.gebiedPaneel',{n:getal(n)})+'</span></div>')}
+    rows.push(`<div class="prow"><b>${BTYPES.wachttoren.name} ×${towers.length}${pfoc('wachttoren',towers.length)}</b><span>${t('toren.paneel',{m,n:all.length,niveaus:lvTxt(all)})}`+(m<towers.length?' · '+t('toren.wacht',{n:towers.length-m}):'')+' · '+t('toren.gebiedPaneel',{n:getal(n)})+'</span></div>')}
   for(const type in CFG.prod){
     const list=world.blds.filter(b=>b.type===type&&b.p===p&&!b.dead&&!b.st);if(!list.length)continue;
     const st={};for(const b of list){const s=b.occ?b.ps||'werkt':'wacht op een vakman';st[s]=(st[s]||0)+1}
@@ -314,7 +324,7 @@ function refreshProduction(){
     /* smidse en uitrustingsmaker: keuze wat ze maken (geldt voor al die gebouwen van deze speler, als opdracht) */
     const sel=pc.recipes?`<label class="pmake">maakt <select data-type="${type}"><option value="auto">automatisch (wat het minst is)</option>`+
       Object.keys(pc.recipes).map(k=>`<option value="${k}"${list[0].make===k?' selected':''}>${GOODS[GI[k]].n.toLowerCase()}</option>`).join('')+'</select></label>':'';
-    rows.push(`<div class="prow"><b>${BTYPES[type].name} ×${list.length}</b><span>${Object.entries(st).map(([s,n])=>(list.length>1?n+' ':'')+s).join(' · ')}</span>`+
+    rows.push(`<div class="prow"><b>${BTYPES[type].name} ×${list.length}${pfoc(type,list.length)}</b><span>${Object.entries(st).map(([s,n])=>(list.length>1?n+' ':'')+s).join(' · ')}</span>`+
       (mk?`<span class="pmade">gemaakt: ${mk}</span>`:'')+sel+'</div>');
   }
   const html=rows.join('')||'<p class="note">Nog geen voltooide werkgebouwen.</p>';
