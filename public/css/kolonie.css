@@ -137,6 +137,6 @@ a.handleiding:hover{border-color:var(--accent)}
 .reqbox{margin:8px 0;padding:6px 8px;border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}.reqbox .btns[hidden]{display:none}.reqbox .btns{flex-wrap:wrap}.reqbox .btns button{flex:1 1 40%}
 .dgood{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:13px}.dgood span{flex:1}.dgood input{width:64px}
 /* paneel Krachtpatsers (mijlpaal 8c, crew.js) */
-.kphall .btns{flex-wrap:wrap}.kphall .btns button{flex:1 1 40%}.kphall[hidden]{display:none}
+.kpbtns{flex-wrap:wrap}.kpbtns button{flex:1 1 40%}.kphall[hidden]{display:none}.kpband{margin-top:10px;padding-top:8px;border-top:1px solid var(--line,rgba(0,0,0,.12))}
 .kplist .kprow{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:12px}.kplist .kprow span{flex:1}
 .kplist .kpx{padding:0 6px;line-height:18px}.kplist .kpt{padding:1px 6px;font-size:11px}

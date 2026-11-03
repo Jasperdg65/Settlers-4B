@@ -182,7 +182,7 @@ function kpUI(){
   if(!$('kpList').classList)return;   // Node-tests
   const p=kpPl(),halls=world.blds.filter(b=>isHall(b)&&b.p===p&&!b.dead&&!b.st).map(cr);
   $('kpMode').classList.toggle('on',BUILD.mode==='kp');
-  $('kpHall').hidden=!halls.length;
+  for(const e of document.querySelectorAll('.kphall'))e.hidden=!halls.length;
   if(halls.length){const h=halls[0];$('kpKeep').value=String(h.keep);$('kpBand').value=String(h.bandK);
     $('kpHire').disabled=h.keep>=CFG.army.hall.keeps[CFG.army.hall.keeps.length-1]}
   KP.sel=KP.sel.filter(c=>S.ins[c]&&S.pl[c]===p&&S.job[c]===JI.krachtpatser);
