@@ -2,6 +2,9 @@
 
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
+## 2026-11-03 18:00 CET
+- Alle 27 geschilderde goederen verwerkt: regels in `goods` van [public/assets/manifest.json](public/assets/manifest.json), webp's in [public/assets/goods/](public/assets/goods/) via [tools/build-images.php](tools/build-images.php). Getest in headless Chrome: alle 27 geladen zonder fouten, los, als stapel van 8 en bij dragers. Handleiding-icoontjes ([public/handleiding/img/goed/](public/handleiding/img/goed/)) en pdf opnieuw gemaakt; [docs/artwork/herkomst.csv](docs/artwork/herkomst.csv), [docs/artwork/goederen-opdracht.md](docs/artwork/goederen-opdracht.md) en [CHANGELOG.md](CHANGELOG.md) bijgewerkt.
+
 ## 2026-11-03 17:45 CET
 - Geschilderde goederen: groep `goods` in [public/assets/manifest.json](public/assets/manifest.json) en [tools/build-images.php](tools/build-images.php) (bron in `bron/goederen/`, niet in git via [.gitignore](.gitignore)); [public/js/goods.js](public/js/goods.js) laadt ze (`loadGoods`, gestart vanuit [public/js/assets.js](public/js/assets.js)) en tekent ze in plaats van de tekening via `GDRAW`, dus ook op stapels, bij dragers, in Voorraad en in de handleiding. Eerste drie: boomstam, water, bijl ([public/assets/goods/](public/assets/goods/)). Getest in headless Chrome: geladen zonder fouten, stapels van 1, 4 en 8. Handleiding-icoontjes en pdf opnieuw gemaakt. Docs: [docs/techniek/renderstraat.md](docs/techniek/renderstraat.md), [docs/artwork/herkomst.csv](docs/artwork/herkomst.csv), [docs/artwork/goederen-opdracht.md](docs/artwork/goederen-opdracht.md), [CHANGELOG.md](CHANGELOG.md).
 

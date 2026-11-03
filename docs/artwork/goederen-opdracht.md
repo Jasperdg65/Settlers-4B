@@ -93,5 +93,5 @@ De kolom *idee* is een suggestie. Een andere vorm mag, zolang het goed herkenbaa
 
 ## Werkwijze
 
-De drie proefstukken (boomstam, water en bijl) staan al in het spel en zijn het voorbeeld voor de stijl en de
-maat. De overige 24 volgen in dezelfde stijl.
+Afgerond op 2026-11-03: alle 27 goederen staan geschilderd in het spel (eerst de proefstukken boomstam, water en bijl,
+daarna de rest in dezelfde stijl).

@@ -754,15 +754,135 @@
             "file": "goods/boomstam.webp",
             "v": "1cfd6b86"
         },
+        "plank": {
+            "src": "goederen/plank.png",
+            "file": "goods/plank.webp",
+            "v": "e9639f72"
+        },
+        "steen": {
+            "src": "goederen/steen.png",
+            "file": "goods/steen.webp",
+            "v": "79ec0d5d"
+        },
+        "graan": {
+            "src": "goederen/graan.png",
+            "file": "goods/graan.webp",
+            "v": "c844c46b"
+        },
+        "meel": {
+            "src": "goederen/meel.png",
+            "file": "goods/meel.webp",
+            "v": "176977ce"
+        },
+        "brood": {
+            "src": "goederen/brood.png",
+            "file": "goods/brood.webp",
+            "v": "b95ea894"
+        },
         "water": {
             "src": "goederen/water.png",
             "file": "goods/water.webp",
             "v": "6631e47f"
         },
+        "peulvruchten": {
+            "src": "goederen/peulvruchten.png",
+            "file": "goods/peulvruchten.webp",
+            "v": "a8589b2a"
+        },
+        "groente": {
+            "src": "goederen/groente.png",
+            "file": "goods/groente.webp",
+            "v": "03eb4213"
+        },
+        "fruit": {
+            "src": "goederen/fruit.png",
+            "file": "goods/fruit.webp",
+            "v": "746a8d5f"
+        },
+        "noten": {
+            "src": "goederen/noten.png",
+            "file": "goods/noten.webp",
+            "v": "bb2cf7a7"
+        },
+        "stoofpot": {
+            "src": "goederen/stoofpot.png",
+            "file": "goods/stoofpot.webp",
+            "v": "10a0af8b"
+        },
+        "notenmix": {
+            "src": "goederen/notenmix.png",
+            "file": "goods/notenmix.webp",
+            "v": "8b66f1c9"
+        },
+        "kolen": {
+            "src": "goederen/kolen.png",
+            "file": "goods/kolen.webp",
+            "v": "a4f60157"
+        },
+        "ijzererts": {
+            "src": "goederen/ijzererts.png",
+            "file": "goods/ijzererts.webp",
+            "v": "eed0c704"
+        },
+        "gouderts": {
+            "src": "goederen/gouderts.png",
+            "file": "goods/gouderts.webp",
+            "v": "84c355a9"
+        },
+        "ijzer": {
+            "src": "goederen/ijzer.png",
+            "file": "goods/ijzer.webp",
+            "v": "3166a876"
+        },
+        "goud": {
+            "src": "goederen/goud.png",
+            "file": "goods/goud.webp",
+            "v": "499fe202"
+        },
         "bijl": {
             "src": "goederen/bijl.png",
             "file": "goods/bijl.webp",
             "v": "7963fba6"
+        },
+        "zaag": {
+            "src": "goederen/zaag.png",
+            "file": "goods/zaag.webp",
+            "v": "a86930c2"
+        },
+        "houweel": {
+            "src": "goederen/houweel.png",
+            "file": "goods/houweel.webp",
+            "v": "1c1d0a3c"
+        },
+        "hamer": {
+            "src": "goederen/hamer.png",
+            "file": "goods/hamer.webp",
+            "v": "7615f421"
+        },
+        "schop": {
+            "src": "goederen/schop.png",
+            "file": "goods/schop.webp",
+            "v": "b23b3287"
+        },
+        "zeis": {
+            "src": "goederen/zeis.png",
+            "file": "goods/zeis.webp",
+            "v": "ef776063"
+        },
+        "helm": {
+            "src": "goederen/helm.png",
+            "file": "goods/helm.webp",
+            "v": "8d730359"
+        },
+        "schild": {
+            "src": "goederen/schild.png",
+            "file": "goods/schild.webp",
+            "v": "c9d662ca"
+        },
+        "polsband": {
+            "src": "goederen/polsband.png",
+            "file": "goods/polsband.webp",
+            "v": "320596e6"
         }
     }
 }
