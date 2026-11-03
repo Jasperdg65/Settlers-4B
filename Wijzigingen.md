@@ -3,6 +3,7 @@
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
 ## 2026-11-03 06:30 CET
+- Molenwieken opnieuw gerenderd met de as in de richting van de deur (schuin naar linksonder, `yaw` −45 in [tools/sprites.json](tools/sprites.json)); +20 en −20 klopten allebei niet. Geen nieuwe 3D-art nodig. Gecontroleerd op een close-up.
 - Rook nog fijner afgesteld, op aanwijzing van de speler: iets naar links en iets lager (`CFG.smoke.fx` 0,25 en nieuw `fy` 0,97 in [public/js/config.js](public/js/config.js), [public/js/loop.js](public/js/loop.js)), zodat het wolkje de achterkant van de schoorsteen bedekt en er echt uit lijkt te komen. Gecontroleerd bij zoom 3 op smelterij en bakkerij.
 - Rook nog iets naar rechts (`CFG.smoke.fx` 0,22 in [public/js/config.js](public/js/config.js)): ook de eerste beelden van de pluim beginnen nu op de schoorsteen.
 - Molenwieken: opnieuw gerenderd met de draaiing de andere kant op (`yaw` 20 in plaats van −20 in [tools/sprites.json](tools/sprites.json), [tools/render_wieken.py](tools/render_wieken.py)), en de naaf op dezelfde hoogte naar links, recht boven de deur (`hub` 0,313 in [public/assets/manifest.json](public/assets/manifest.json)). Gecontroleerd op een close-up.
