@@ -259,7 +259,7 @@ const CFG={
      elke every ms een nieuw pufje, frameMs per beeld, een volledig beeld w wereldpixels breed bij een getekend gebouw (geschilderde
      gebouwen: × breedte/refW). Zonder spriteblad: puffs cirkels per period ms. */
   smoke:{frameMs:90,every:480,w:28,alpha:0.95,puffs:3,period:2800,rise:16,circleAlpha:0.6,refW:40,
-    fx:0.22},   // anker in het beeld (0..1 van de breedte): de voet van de pluim (0,27–0,30) komt zo net rechts van het rookpunt, recht op de schoorsteen; met het anker van het spriteblad (0,35) begon de rook links ervan
+    fx:0.25,fy:0.97},   // anker in het beeld (0..1): de voet van de pluim (x 0,27–0,30) valt zo op het rookpunt en iets lager, zodat het wolkje de achterkant van de schoorsteen bedekt en er echt uit lijkt te komen (spriteblad zelf: 0,35 / 1,01)
   /* molenwieken (loop.js): arm = lengte van een wiek in wereldpixels bij schaal 1 (× sc of sail), turn = draaisnelheid in
      radialen per ms (0.0011 = een omwenteling in ruim 5,7 s). Geschilderde wieken: assets/effects/molenwieken_*.webp. */
   mill:{arm:15,turn:0.0011},
