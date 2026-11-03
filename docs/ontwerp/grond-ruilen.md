@@ -88,8 +88,10 @@ geen torenovername; grensduel en verzoeken). Mijlpaal 8b staat onderaan.
     hogere bovengrens.
   - Trainen: nu automatisch zodra er uitrusting ligt. In 8c kies je zelf wie er traint en wie voorgaat.
   - Aanmoedigen: muzikanten (nu alleen in de Duel-test) ook in het dorp, opgeleid in de krachthal; een eigen
-    muzikant bij de tafel maakt je krachtpatser in een grensduel sterker (`duel.music`). Nog te kiezen: of je zelf
-    tijdens het duel kunt aanmoedigen (klikken voor een korte steun).
+    muzikant bij de tafel maakt je krachtpatser in een grensduel sterker (`duel.music`). De dichtstbijzijnde vrije
+    muzikant loopt mee naar de tafel; het duel begint pas als hij er ook is, hoogstens tot de wachttijd (`meetTicks`)
+    om is, zodat een verre muzikant het duel niet ophoudt.
+  - Geen aanmoedigen met muis of toetsenbord: Terrana wordt geen actiespel (besloten 3 november 2026).
 
 ## Besloten bij 8b
 
