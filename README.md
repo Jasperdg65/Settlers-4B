@@ -19,6 +19,7 @@ Ontwerp, beslissingen en planning staan in [`docs/`](docs/) (niet via het web be
 | [docs/techniek/renderstraat.md](docs/techniek/renderstraat.md) | geschilderde afbeeldingen en de 3D-renderstraat |
 | [docs/techniek/deploy.md](docs/techniek/deploy.md) | installeren, bijwerken, webserver, back-up |
 | [docs/artwork/herkomst.csv](docs/artwork/herkomst.csv) | herkomst van alle beelden en modellen |
+| [docs/artwork/goederen-opdracht.md](docs/artwork/goederen-opdracht.md) | opdracht voor de illustrator: schilderingen van de goederen |
 
 ## In het kort
 

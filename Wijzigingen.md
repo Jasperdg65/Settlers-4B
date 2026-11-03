@@ -2,6 +2,9 @@
 
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
+## 2026-11-03 17:30 CET
+- Opdracht voor de illustrator van de goederen: 27 schilderingen als losse PNG, met eisen voor stijl, gezichtspunt, grootte, stapelen en leesbaarheid op 16 px ([docs/artwork/goederen-opdracht.md](docs/artwork/goederen-opdracht.md)); vermeld in [README.md](README.md).
+
 ## 2026-11-03 06:45 CET
 - Mijlpaal 9a: computerburen bouwen hun dorp. Jij speelt vast rood (`world.human` in [public/js/build.js](public/js/build.js); *Bouwen als* verborgen in [public/index.html](public/index.html)). Brein [public/js/ai.js](public/js/ai.js) in de Web Worker [public/js/ai-worker.js](public/js/ai-worker.js); samenvatting, plek zoeken (`aiSpot`, met exacte telling van het werkgebied), opdrachten en het plan in Productie in [public/js/neighbours.js](public/js/neighbours.js); aangeroepen vanuit `tickCarriers` ([public/js/transport.js](public/js/transport.js)). Getallen in `CFG.ai` ([public/js/config.js](public/js/config.js)), teksten `ai.*` ([public/lang/nl.js](public/lang/nl.js)), vinkje *Buren bouwen zelf*. Verzoeken om grond gaan naar `world.human` ([public/js/deals.js](public/js/deals.js)). Getest in headless Chrome over 20 minuten spel (192, 4 spelers): twee buren groeien naar ruim 40 gebouwen en tot het dubbele land, met steen weer op voorraad; een ingesloten buur zonder gereedschap blijft steken (bekende grens). Ook met de Worker in echte tijd; regressie (Duel-test, stresstest, economie) zonder paginafouten. Docs: [docs/roadmap.md](docs/roadmap.md) (9 gesplitst in 9a en 9b), [docs/ontwerp/buren-en-diplomatie.md](docs/ontwerp/buren-en-diplomatie.md), [docs/ontwerp/grond-ruilen.md](docs/ontwerp/grond-ruilen.md), [docs/beslissingen.md](docs/beslissingen.md), [docs/techniek/architectuur.md](docs/techniek/architectuur.md), [CHANGELOG.md](CHANGELOG.md), handleiding ([tools/handleiding/nl/bron.html](tools/handleiding/nl/bron.html)).
 
