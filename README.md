@@ -68,14 +68,12 @@ Of alles tegelijk: `tools/handleiding/alles.sh`. Zie `tools/handleiding/LEESMIJ.
 
 <!-- komt:begin -->
 - De Tuin van Verbondenheid als gezamenlijk einddoel (mijlpaal 12)
-- Computerburen met een eigen karakter (mijlpaal 9)
+- Computerburen met een eigen karakter en moeilijkheidsgraad (mijlpaal 9b)
 - Natuurgebeurtenissen: droogte, winter, overstroming
 - Opslaan en laden van de hele wereld
-- Eén vaste speler; de andere kleuren worden computerburen
 - Bewoners die doorlopend eten
 - School (opleiding instellen) en hunnebed (samen mediteren met dieren)
 - Helers in het dorp, en muzikanten van een hoger niveau
-- Computerburen met een eigen dorp (mijlpaal 9)
 - Handel via een marktplaats en handelaar (mijlpaal 10)
 - Diplomatie: relaties, geschenken, feesten en vrede (mijlpaal 11)
 - Kaartinstelling onderlinge afhankelijkheid

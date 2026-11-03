@@ -186,6 +186,18 @@ const CFG={
        op een open veld bij burcht 1; gap = afstand tussen de twee groepen in tegels */
     test:{levels:[1,2,3,1,2,3],gap:7,healers:[1,2],musicians:[[3],[1]]},
   },
+  /* computerburen (mijlpaal 9a, ai.js + neighbours.js): vanaf first ticks, elke every ticks één beslissing per buur. Hij bouwt pas
+     als hij minder dan maxSites bouwplaatsen heeft en er na het gebouw nog keepPlank/keepStone per bouwplaats over is.
+     Regels (ai.js): houthakkers als er minTrees bomen op zijn grond staan (tot maxWood bij minder dan lowPlank planken),
+     steenhouwer bij minStones steenblokken (een tweede onder richStone steen, als er minStones × 3 blokken zijn), woonhuis bij minder dan minFree vrije dragers (tot
+     maxHouses), mijnen op eigen erts, eten voor mijnwerkers, een toren aan de grens als er erts, bos of steen ontbreekt of als hij
+     meer dan één gebouw per landPer tegels heeft (tot maxTowers, alleen met een krachtpatser in de reserve), voederplaats en
+     bloemenweides onder harmonie lowHarm, een pakhuis per perStore gebouwen. Plek (aiSpot): de beste cand kandidaten worden
+     gecontroleerd; een toren wil minNew tegels niemandsland, ontbrekend erts telt oreBonus keer. Geen plek: dat gebouw skipTicks
+     overslaan. Een buitenwerker komt alleen waar minAround[doel] bomen, steenblokken of vrije grond in zijn werkgebied liggen.
+     Mijnwerkers: onder lowFood maaltijden een tweede boerderij en bakkerij. Met richPlank planken en richStone steen groeit hij door: woonhuizen en torens. */
+  ai:{on:1,first:600,every:200,maxSites:2,keepPlank:2,keepStone:2,minTrees:15,minStones:3,lowPlank:8,maxWood:4,
+    minFree:4,maxHouses:8,landPer:60,maxTowers:8,lowHarm:0.45,maxFlowers:3,perStore:18,cand:2000,minNew:40,oreBonus:20,skipTicks:2400,lowFood:6,minAround:{bos:8,steen:2,akker:12},richPlank:16,richStone:12},   // rich onder prod.enough (24): daarboven stopt de productie
   /* gebied (mijlpaal 6b): straal rond de burcht (altijd bemand) en elke bemande wachttoren */
   territory:{burcht:20,wachttoren:13},
   /* Ruil-test (knop onder Modus): elke tegel binnen deze straal hoort meteen bij de dichtstbijzijnde burcht (512 = de hele kaart) */
@@ -202,7 +214,7 @@ const CFG={
      tegels heeft of het binnen reach tegels van zijn grens op het gebied van speler to ligt. Dan vraagt hij een strook tot dat erts
      (hoogstens tiles tegels) en biedt goederen ter waarde van offer × wat de strook jou waard is (van elk goed hoogstens de helft van
      wat hij vrij heeft). Een verzoek geldt ttl ticks; daarna, of na je antwoord, vraagt die buur cool ticks niets. Meer vragen (één
-     keer): more × de goederen, als de strook hem zelf zoveel waard is. to: tot mijlpaal 9 (één vaste speler) vragen ze alleen speler 1.
+     keer): more × de goederen, als de strook hem zelf zoveel waard is. Ze vragen de speler (world.human).
      Grensduel (duel): na een afwijzing kan de vrager uitdagen; dat kost beide relCost relatiepunten. meetTicks: zo lang mogen
      beide krachtpatsers over de weg naar de tafel op de grens doen. Van beide kanten loopt de dichtstbijzijnde muzikant uit een
      krachthal mee (mijlpaal 8c) en staat band = [opzij, naar voren] tegels van de stoel (vóór de tafel staan geen bomen: tableSpot); het duel begint als hij er is, of als
@@ -213,7 +225,7 @@ const CFG={
     short:10,shortMul:1.5,
     margin:1.25,relMargin:0.2,counterAt:0.6,counterTicks:1200,
     relDeal:10,rel:{gespannen:-100,onbekend:0,kennis:15,vriend:45,bondgenoot:75},
-    req:{to:0,first:2400,every:600,cool:6000,reach:8,tiles:30,offer:1.1,more:1.3,ttl:2400},
+    req:{first:2400,every:600,cool:6000,reach:8,tiles:30,offer:1.1,more:1.3,ttl:2400},
     duel:{relCost:15,meetTicks:2400,band:[1.3,0.9]}},
   /* harmonie (mijlpaal 7, harmony.js), in punten 0–100. Doel = start + bronnen; elke every ticks schuift de meter step punten.
      voer: een voederplaats met dierenverzorger vult de bak met 1 food (graan) voor ticks ticks en vult bij als er minder dan

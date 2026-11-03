@@ -24,6 +24,9 @@ public/                 webroot (Apache-alias /settlers4b)
     transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
     build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
     harmony.js          harmonie: meter, bronnen, voederplaats, dieren fokken en bij ertsaders (mijlpaal 7)
+    ai.js               brein van een computerbuur: wat hij bouwt en waarom (mijlpaal 9a), ook in ai-worker.js
+    ai-worker.js        Web Worker die ai.js draait
+    neighbours.js       computerburen: samenvatting per buur, plek zoeken (aiSpot), opdrachten, plan in Productie (9a)
     crew.js             krachthal en bemanning van torens (mijlpaal 6c); muzikanten in de hal, verplaatsen, voorrang bij trainen en paneel Krachtpatsers (8c)
     deals.js            grond ruilen: voorstel, waardefunctie van de buur, afspraken in het gebied, relaties, paneel Buren (mijlpaal 8a); verzoeken van buren en grensduel (8b)
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in

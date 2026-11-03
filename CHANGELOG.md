@@ -5,6 +5,15 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 
 ## 2026-11-03
 
+### Toegevoegd (mijlpaal 9a)
+- **Computerburen bouwen hun dorp.** Jij speelt rood; de andere kleuren bouwen zelf, met dezelfde regels: eerst hout en
+  steen, dan woonhuizen, eten, mijnen en torens naar erts, bos of steen. Hun plan staat in het paneel Productie als je
+  hun kleur kiest. Vinkje *Buren bouwen zelf* om het uit te zetten.
+- Paneel Productie: een oog per regel brengt je langs de gebouwen van die soort, met hun tooltip.
+
+### Verbeterd
+- Rook komt recht uit de schoorsteen; molenwieken staan boven de deur, met de as in de richting van de deur.
+
 ### Toegevoegd (mijlpaal 8c)
 - **Paneel Krachtpatsers.** Reserve van de krachthal (0 tot 12) en een knop *Neem er een aan*; het aantal muzikanten.
 - **Verplaatsen.** Klik een toren of krachthal en dan een ander eigen gebouw: de krachtpatsers lopen erheen. Een volle

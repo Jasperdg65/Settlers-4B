@@ -307,6 +307,7 @@ function refreshProduction(){
   const houses=world.blds.filter(b=>b.type==='woonhuis'&&b.p===p&&!b.dead&&!b.st);
   if(houses.length){const n=houses.reduce((a,b)=>a+(b.born||0),0),hungry=houses.filter(b=>(b.born||0)<CFG.pop.house&&/voedsel/.test(b.ps)).length;
     rows.push(`<div class="prow"><b>Woonhuis ×${houses.length}${pfoc('woonhuis',houses.length)}</b><span>${n} van ${houses.length*CFG.pop.house} nieuwe bewoners`+(hungry?` · ${hungry} wacht op voedsel`:'')+'</span></div>')}
+  if(isAI(p))rows.push(`<div class="prow"><b>${t('ai.titel')}</b><span>${aiText(p)}</span></div>`);   // computerbuur: wat hij van plan is (neighbours.js)
   if(world.harm){const n=harmPct(p),src=world.harmSrc[p]||{},parts=Object.entries(src).filter(([k,v])=>v).map(([k,v])=>`${t('harm.bron.'+k)} ${v>0?'+':''}${v}`);
     rows.unshift(`<div class="prow"><b>${t('harm.titel')} ${n}</b><span class="hbar" title="${t('harm.doel',{n:world.harmT[p]})}"><i style="width:${n}%"></i><u style="left:${world.harmT[p]}%"></u></span><span>${t('harm.doel',{n:world.harmT[p]})} · ${parts.join(' · ')||t('harm.geen')}</span></div>`)}
   const lvTxt=list=>[1,2,3].map(l=>[l,list.filter(c=>S.lvl[c]===l).length]).filter(x=>x[1]).map(([l,n])=>n+'× '+LVLNAME[l].toLowerCase()).join(', ')||'–';

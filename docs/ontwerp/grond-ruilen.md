@@ -63,7 +63,7 @@ geen torenovername; grensduel en verzoeken). Mijlpaal 8b staat onderaan.
   (één keer: `more` × de goederen, als de strook het hem zelf waard is) of `nee`. Na `ttl` ticks verloopt het; daarna,
   of na een antwoord, vraagt die buur `cool` ticks niets.
 - Milo meldt een verzoek (regel `verzoek`), de strook knippert op de kaart en het paneel toont het bod.
-- **Tijdelijk**: tot mijlpaal 9 vragen ze alleen speler `to` (1). In de Ruil-test vragen ze om elk erts en al na
+- Ze vragen de speler (`world.human`, sinds 9a vast speler 1). In de Ruil-test vragen ze om elk erts en al na
   `first`/4 ticks, omdat daar niemand erts mist.
 
 ### Grensduel (`grensChallenge`, `grensEnd`, `CFG.deal.duel`)

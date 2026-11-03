@@ -35,6 +35,7 @@
   </label>
   <button id="duelTest" class="wide" title="Twee spelers met krachtpatsers van verschillende niveaus om duels mee te proberen">Duel-test</button>
   <button id="landTest" class="wide" data-t="ruil.test" title="Economie waarin elke burcht meteen land heeft tot aan de grens met de buren, om grond ruilen te proberen">Ruil-test</button>
+  <label class="eco-only check"><input type="checkbox" id="aiOn" checked> <span data-t="ai.aan"></span></label>
   <label class="eco-only">Startvoorraad in de burcht
     <select id="stock"><option value="weinig">Weinig</option><option value="normaal" selected>Normaal</option><option value="veel">Veel</option></select>
   </label>
@@ -84,7 +85,7 @@
 
   <section class="eco-only">
     <h2>Bouwen</h2>
-    <label>Bouwen als<select id="bldPl"></select></label>
+    <label hidden>Bouwen als<select id="bldPl"></select></label>   <!-- je speelt vast speler 1 (world.human); de keuze blijft voor tests -->
     <div id="buildList" class="bgrid"></div>
     <div class="btns" style="margin-top:6px"><button id="demolish">Afbreken</button><button id="workArea" data-t="werk.knop">Werkgebied</button></div>
     <p class="note" id="buildMsg"></p>
@@ -191,6 +192,8 @@
 <script src="js/army.js"></script>
 <script src="js/duel.js"></script>
 <script src="js/orders.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/neighbours.js"></script>
 <script src="js/loop.js"></script>
 <script src="js/input.js"></script>
 <script src="js/assets.js"></script>

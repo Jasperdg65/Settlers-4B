@@ -155,6 +155,7 @@ function tickCarriers(){
   }
   if(DUELS.length)tickDuels();
   tickRequests();
+  aiTick();   // computerburen (neighbours.js)
 }
 /* tooltip-tekst voor een gebouw: bouwstand, wat het vraagt en wat er onderweg is */
 function wantLabel(bi){

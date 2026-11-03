@@ -138,7 +138,7 @@ function applyDeals(own){if(world.deals)for(const d of world.deals)for(let k=0;k
 function tickRequests(){
   const R=CFG.deal.req;if(!world.reqs||tickNo<(world.landTest?R.first/4:R.first)||tickNo%R.every)return;
   for(const r of world.reqs)if(r.st==="open"&&tickNo-r.t>=R.ttl){r.st='verlopen';r.end=tickNo;dealUI()}
-  const p=R.to,P=world.starts.length;if(p>=P||!homeOf(p))return;
+  const p=world.human,P=world.starts.length;   // buren vragen de speler (mijlpaal 9a: vast speler 1)if(p>=P||!homeOf(p))return;
   for(let q=0;q<P;q++){
     if(q===p||!homeOf(q)||world.reqCool[q]>tickNo||world.reqs.some(r=>r.q===q&&r.st==='open'))continue;
     const r=reqPlan(q,p);if(!r)continue;

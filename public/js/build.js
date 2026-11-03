@@ -7,7 +7,7 @@
    wat er nog ligt, brengen dragers naar de opslag. */
 const canBuild=t=>t!=='burcht'&&!BTYPES[t].off&&!!CFG.build.cost[t];
 function initBuild(){
-  const {W,H}=world;world.own=new Uint8Array(W*H);world.sites=[];
+  const {W,H}=world;world.own=new Uint8Array(W*H);world.sites=[];world.human=0;AI.gen++;AI.last=[];AI.skip=[];   // je speelt vast speler 1 (mijlpaal 9a)
   for(const b of world.blds){b.wk=0;b.prog=1}
   seatStartCrew();   // de torens van het startdorp zijn meteen bemand (crew.js)
   dealInit();        // afspraken over grond en relaties (deals.js)

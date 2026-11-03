@@ -17,6 +17,22 @@ Solo tegen computerburen, handel en diplomatie (mijlpaal 9 tot 11). Nog niet geb
 - De startrelaties verschillen; sommige buren moeten gewonnen worden.
 - **Moeilijkheidsgraad**: hoe zelfstandig de buren zijn en hoe snel ze vertrouwen geven.
 
+## Mijlpaal 9a: buren bouwen hun dorp (gebouwd 3 november 2026)
+
+- `world.human` = 0 (rood); elke andere kleur is een computerbuur. *Bouwen als* is verborgen (blijft voor tests).
+- **Brein** (`js/ai.js`, `aiThink`): puur rekenwerk op een samenvatting van alleen het eigen dorp (`aiSummary` in
+  `js/neighbours.js`: voorraad, gebouwen per soort, eigen grond met bomen en steenblokken, erts, vrije dragers,
+  krachtpatsers in reserve, harmonie, gereedschap). Draait in een Web Worker (`js/ai-worker.js`), elke `CFG.ai.every`
+  ticks; zonder Worker of met `AI.sync` (tests) direct. Geeft `{bouw: {type, doel, reden}}` of `{wacht: …}`, plus zo nodig
+  `maak` (wat de smidse moet maken).
+- **Handen** (`aiSpot`, hoofdthread): zoekt op eigen grond de beste plek per doel (bos, steen, akker, erts, grens, dorp),
+  met een exacte telling van het werkgebied, en geeft een gewone opdracht `place` (en `make` voor de smidse).
+- Regels in volgorde: hout en steen (met bouwmateriaal apart zolang die ontbreken), woonhuizen bij weinig vrije dragers,
+  brood, mijnen op eigen erts met eten voor mijnwerkers, torens naar ontbrekend erts, bos of steen of als het land vol
+  raakt, harmonie, opslag, en doorgroeien met genoeg planken en steen. Geen plek: dat gebouw `skipTicks` overslaan.
+- Bekende grens: een buur die ingesloten is en geen gereedschap meer heeft, komt pas verder als zijn smidse ijzer krijgt
+  (mijnen, eten, smelterij). Een verstandige ruil met de speler kan dat later oplossen (9b, 10).
+
 ## Wat de computerburen vragen van de opbouw
 
 - **Eén opdrachtenwachtrij** (`js/orders.js`, al gebouwd): `order({p, t, ...})` is de enige weg waarlangs
