@@ -93,5 +93,5 @@ De kolom *idee* is een suggestie. Een andere vorm mag, zolang het goed herkenbaa
 
 ## Werkwijze
 
-Stuur eerst **drie proefstukken**, bijvoorbeeld boomstam, water en bijl. Die zetten we in het spel en bekijken we op
-ware grootte. Daarna volgt de rest in dezelfde stijl.
+De drie proefstukken (boomstam, water en bijl) staan al in het spel en zijn het voorbeeld voor de stijl en de
+maat. De overige 24 volgen in dezelfde stijl.

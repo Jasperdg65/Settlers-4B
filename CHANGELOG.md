@@ -9,6 +9,8 @@ Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpale
 - **Computerburen bouwen hun dorp.** Jij speelt rood; de andere kleuren bouwen zelf, met dezelfde regels: eerst hout en
   steen, dan woonhuizen, eten, mijnen en torens naar erts, bos of steen. Hun plan staat in het paneel Productie als je
   hun kleur kiest. Vinkje *Buren bouwen zelf* om het uit te zetten.
+- **Geschilderde goederen**: boomstam, water en bijl zijn nu geschilderd, op stapels, in de handen van dragers, in de
+  panelen en in de handleiding. De andere goederen volgen (opdracht: [docs/artwork/goederen-opdracht.md](docs/artwork/goederen-opdracht.md)).
 - Paneel Productie: een oog per regel brengt je langs de gebouwen van die soort, met hun tooltip.
 
 ### Verbeterd

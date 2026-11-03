@@ -64,6 +64,18 @@ gebruikt `loadNature()` in `js/custom.js` vaste sleutels (eik0/1, berk0/1,
 den0/1, beuk0/1, appel0/1, bes, hazel, varen, bloesem, rots0–3, kiem, jong,
 stronk).
 
+### Goederen
+
+Geschilderde goederen staan als `bron/goederen/<sleutel>.png` (sleutel uit `GOODS` in `js/goods.js`; eisen in
+[../artwork/goederen-opdracht.md](../artwork/goederen-opdracht.md)) en in het manifest onder `goods` met alleen
+`src` en `file`. Het script snijdt bij en schaalt naar `px` breed (standaard 128). In het spel vervangt het beeld de
+tekening in `GDRAW` (`loadGoods` in `js/goods.js`): het past in een vak van 4,6 × 3,4 (onderkant op y = 1), zodat
+stapels, dragers, pictogrammen en de handleiding het allemaal meteen gebruiken. Goederen zonder beeld blijven getekend.
+
+```
+php tools/build-images.php boomstam water bijl
+```
+
 ### Een afbeelding vervangen of toevoegen
 
 1. Zet de PNG (transparante achtergrond) in `bron/`.

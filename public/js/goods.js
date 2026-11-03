@@ -54,6 +54,16 @@ const GDRAW={
     g.strokeStyle='#8d949c';g.lineWidth=0.3;g.beginPath();g.ellipse(0,0,2,1.3,0,0,6.283);g.stroke()},
   polsband:g=>{for(const x of [-1,1]){ell(g,x,0,1,0.75,'#6b4a2c');ell(g,x,0,0.6,0.42,'#3a2a1c');line(g,[x-0.9,-0.15,x+0.9,-0.15],'#b08a3a',0.25);circ(g,x,-0.55,0.18,'#c9a54a')}},
 };
+/* geschilderde goederen (manifest.goods, assets.js): het beeld komt in het vak van de tekening, onderkant op y=1, hoogstens
+   GFIT breed en hoog; zonder beeld blijft de tekening */
+const GPAINT={},GFIT=[4.6,3.4];
+for(const k in GDRAW){const draw=GDRAW[k];GDRAW[k]=g=>{const im=GPAINT[k];if(!im)return draw(g);
+  const s=Math.min(GFIT[0]/im.width,GFIT[1]/im.height),w=im.width*s,h=im.height*s;g.drawImage(im,-w/2,1-h,w,h)}}
+async function loadGoods(){
+  await Promise.all(Object.keys(GOOD_IMGS).filter(k=>GDRAW[k]).map(async k=>{
+    try{GPAINT[k]=await createImageBitmap(await assetBlob(GOOD_IMGS[k]))}catch(e){console.warn('goed '+k+' niet geladen, tekening blijft',e)}}));
+  GSPR.length=0;GCAR.length=0;
+  if(stockCells){const v=$('stockPl').value;buildStockPanel();$('stockPl').value=v;stockShown=-1;refreshStock()}}   // pictogrammen in Voorraad
 const GSC=1.5; // schaal van stapels op de kaart t.o.v. de tekening
 /* stapel van n stuks (1..8): onderste laag 4 plekken van achter naar voren, daarboven nog 4 */
 const GSLOT=[[-2.3,-0.8],[2.3,-0.8],[-2.3,0.9],[2.3,0.9]];

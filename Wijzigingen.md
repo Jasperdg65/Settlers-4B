@@ -2,6 +2,9 @@
 
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
+## 2026-11-03 17:45 CET
+- Geschilderde goederen: groep `goods` in [public/assets/manifest.json](public/assets/manifest.json) en [tools/build-images.php](tools/build-images.php) (bron in `bron/goederen/`, niet in git via [.gitignore](.gitignore)); [public/js/goods.js](public/js/goods.js) laadt ze (`loadGoods`, gestart vanuit [public/js/assets.js](public/js/assets.js)) en tekent ze in plaats van de tekening via `GDRAW`, dus ook op stapels, bij dragers, in Voorraad en in de handleiding. Eerste drie: boomstam, water, bijl ([public/assets/goods/](public/assets/goods/)). Getest in headless Chrome: geladen zonder fouten, stapels van 1, 4 en 8. Handleiding-icoontjes en pdf opnieuw gemaakt. Docs: [docs/techniek/renderstraat.md](docs/techniek/renderstraat.md), [docs/artwork/herkomst.csv](docs/artwork/herkomst.csv), [docs/artwork/goederen-opdracht.md](docs/artwork/goederen-opdracht.md), [CHANGELOG.md](CHANGELOG.md).
+
 ## 2026-11-03 17:30 CET
 - Opdracht voor de illustrator van de goederen: 27 schilderingen als losse PNG, met eisen voor stijl, gezichtspunt, grootte, stapelen en leesbaarheid op 16 px ([docs/artwork/goederen-opdracht.md](docs/artwork/goederen-opdracht.md)); vermeld in [README.md](README.md).
 

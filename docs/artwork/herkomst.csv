@@ -681,3 +681,6 @@ public/assets/units/werk_tuinier_verzorgen_48.webp,spriteatlas (figuur),Blender 
 public/assets/units/werk_tuinier_verzorgen_48_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
 public/assets/units/werk_tuinier_verzorgen_96.webp,spriteatlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
 public/assets/units/werk_tuinier_verzorgen_96_mask.webp,maskeratlas (figuur),Blender 4.5 (tools/render_sprites.py),,,"vaste werkhouding met gereedschap uit bron/modellen/, 2× gerenderd en verkleind",model: werk_tuinier_verzorgen
+bron/goederen/boomstam.png,goed (2D),,2026-11-03,,,staat alleen op de server (.gitignore); transparante achtergrond; proefstuk opdracht goederen
+bron/goederen/water.png,goed (2D),,2026-11-03,,,staat alleen op de server (.gitignore); transparante achtergrond; proefstuk opdracht goederen
+bron/goederen/bijl.png,goed (2D),,2026-11-03,,,staat alleen op de server (.gitignore); transparante achtergrond; proefstuk opdracht goederen

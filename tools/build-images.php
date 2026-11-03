@@ -4,7 +4,7 @@
 //   src  bron-PNG in bron/
 //   file doelbestand onder public/assets/
 //   px   doelmaat in pixels: breedte voor gebouwen (standaard 420),
-//        hoogte voor natuur (standaard 4× h)
+//        hoogte voor natuur (standaard 4× h), breedte voor goederen (standaard 128)
 //   keep handmatig bewerkte webp (bv. wimpel eruit geknipt): wordt overgeslagen
 // Effecten (effects, bv. rook): src is een spriteblad (cols × rows cellen van cell px) in bron/<map>/.
 // Alle cellen worden op hetzelfde kader bijgesneden (de vereniging van wat zichtbaar is), zodat het
@@ -15,7 +15,9 @@
 // <file>_1x.webp (px breed) en <file>_2x.webp (2 × px). Regels met dezelfde 'kader' krijgen hetzelfde
 // bijsnijkader (de vereniging van wat zichtbaar is), zodat ze bij het wisselen niet verspringen.
 // In het manifest komen w, h (maat van 1x) en v.
-// Gebouwen en natuur worden bijgesneden op de zichtbare inhoud (alfa boven
+// Goederen (goods): src in bron/goederen/, één exemplaar per goed; het spel past het beeld in het vak van de
+// getekende versie (goods.js), dus alleen bijsnijden en verkleinen.
+// Gebouwen, natuur en goederen worden bijgesneden op de zichtbare inhoud (alfa boven
 // de drempel). Texturen (naadloos) worden vierkant geschaald naar px×px
 // zonder bijsnijden, met behoud van de naadloze randen.
 // Na afloop wordt v (inhoudshash) in het manifest bijgewerkt.
@@ -48,7 +50,7 @@ $manifest = json_decode(file_get_contents($manifestFile), true) ?? exit("manifes
 $done = 0;
 $skipped = 0;
 $errors = 0;
-foreach (['buildings', 'nature', 'textures'] as $group) {
+foreach (['buildings', 'nature', 'textures', 'goods'] as $group) {
     $manifest[$group] ??= [];   // ?? [] in de foreach zelf zou een kopie geven: dan komt v nooit in het manifest
     foreach ($manifest[$group] as $key => &$d) {
         if ($only && !in_array($key, $only, true)) continue;
@@ -57,13 +59,13 @@ foreach (['buildings', 'nature', 'textures'] as $group) {
             $skipped++;
             continue;
         }
-        $src = "$root/bron/" . basename($d['src'] ?? '');
+        $src = "$root/bron/" . ($group === 'goods' ? ($d['src'] ?? '') : basename($d['src'] ?? ''));
         if (empty($d['src']) || !is_file($src)) {
             echo "$key: bron ontbreekt ($src)\n";
             $errors++;
             continue;
         }
-        $px = (int) ($d['px'] ?? match ($group) { 'buildings' => 420, 'nature' => 4 * ($d['h'] ?? 10), 'textures' => 512 });
+        $px = (int) ($d['px'] ?? match ($group) { 'buildings' => 420, 'goods' => 128, 'nature' => 4 * ($d['h'] ?? 10), 'textures' => 512 });
         $quality = max(0, min(100, (int) ($opt['quality'] ?? ($group === 'textures' ? 78 : 80))));
 
         $img = new Imagick($src);
@@ -96,7 +98,7 @@ foreach (['buildings', 'nature', 'textures'] as $group) {
             $img->cropImage($cw, $ch, $g['x'], $g['y']);
             $img->setImagePage(0, 0, 0, 0);
 
-            if ($group === 'buildings') $img->resizeImage($px, 0, Imagick::FILTER_LANCZOS, 1);
+            if ($group === 'buildings' || $group === 'goods') $img->resizeImage($px, 0, Imagick::FILTER_LANCZOS, 1);
             else $img->resizeImage(0, $px, Imagick::FILTER_LANCZOS, 1);
         }
 
