@@ -166,7 +166,7 @@ function draw(){
           if(R){const n=R.cols*R.rows,live=Math.ceil(n*C.frameMs/C.every),t0=(tNow+b.seed*C.every*7)%C.every,dw=C.w*z*R.sw,dh=dw*R.fh/R.fw;
             ctx.globalAlpha=C.alpha;
             for(let k=0;k<live;k++){const f=Math.floor((t0+k*C.every)/C.frameMs);if(f>=n)continue;
-              ctx.drawImage(R.c,(f%R.cols)*R.fw,Math.floor(f/R.cols)*R.fh,R.fw,R.fh,sx-R.fx*dw,sy-R.fy*dh,dw,dh)}}
+              ctx.drawImage(R.c,(f%R.cols)*R.fw,Math.floor(f/R.cols)*R.fh,R.fw,R.fh,sx-(C.fx??R.fx)*dw,sy-R.fy*dh,dw,dh)}}
           else for(let k=0;k<C.puffs;k++){const ph=((tNow/C.period)+k/C.puffs+b.seed)%1;ctx.globalAlpha=(1-ph)*C.circleAlpha*Math.min(1,ph*6);
             ctx.fillStyle='#ecebe6';ctx.beginPath();ctx.arc(sx+(ph*5+Math.sin(ph*6+b.seed*9)*1.2)*z,sy-ph*C.rise*z,(1.3+ph*3)*z,0,6.283);ctx.fill()}
           ctx.globalAlpha=1}

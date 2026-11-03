@@ -31,7 +31,7 @@
     "armdrukken": {"glb": "bron/modellen/duels/armpje_drukken_L{l}_R{r}.glb", "out": "units/armdrukken", "levels": [1, 2, 3], "standen": 9, "rotate": 90}
   },
   "spinners": {
-    "molenwieken": {"glb": "bron/molen wieken/molen_wieken.glb", "rotator": "WIEKEN_ROTATOR", "out": "effects/molenwieken", "yaw": -20, "view": 6.2, "radius": 2.875, "symmetry": 4, "frames": 24, "cols": 6, "sizes": [64, 128, 256]}
+    "molenwieken": {"glb": "bron/molen wieken/molen_wieken.glb", "rotator": "WIEKEN_ROTATOR", "out": "effects/molenwieken", "yaw": 20, "view": 6.2, "radius": 2.875, "symmetry": 4, "frames": 24, "cols": 6, "sizes": [64, 128, 256]}
   },
   "animalRig": {"gait": "quad", "scale": 1.0, "legTop": 0.95, "swing": 24, "bob": 0.02, "hop": 0.12, "tilt": 10, "roll": 3},
   "animals": {

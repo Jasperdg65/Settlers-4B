@@ -3,6 +3,7 @@
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
 ## 2026-11-03 06:15 CET
+- Rook begint nu recht op de schoorsteen: het ankerpunt van het rook-spriteblad lag op 35% van de beeldbreedte, de voet van de pluim op ongeveer 29% (gemeten per beeld), waardoor elke pluim links van de schoorsteen begon. Nieuw `CFG.smoke.fx` in [public/js/config.js](public/js/config.js), gebruikt in [public/js/loop.js](public/js/loop.js). Gecontroleerd op close-ups van bakkerij en ijzersmelterij.
 - Paneel Productie: per regel een knopje met een oog dat de camera telkens naar het volgende gebouw van die soort brengt en meteen zijn tooltip toont, met een teller (bv. 2/3), zodat je snel het gebouw met een tekort vindt (`prodFocus` in [public/js/production.js](public/js/production.js), stijl in [public/css/kolonie.css](public/css/kolonie.css), tekst `prod.focus` in [public/lang/nl.js](public/lang/nl.js)). Getest: rondgaan langs twee woonhuizen, de tooltip blijft staan.
 
 ## 2026-11-03 06:00 CET
