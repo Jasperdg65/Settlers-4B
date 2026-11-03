@@ -80,8 +80,20 @@ geen torenovername; grensduel en verzoeken). Mijlpaal 8b staat onderaan.
   Een uitdaging kost beide `relCost` relatiepunten. De winnaar gaat terug zijn toren in, de verliezer eerst naar zijn
   burcht (`outTicks`); thuis zijn ze uitgerust.
 
-## Mijlpaal 8c (nog niet bouwen)
+## Mijlpaal 8c (gebouwd 3 november 2026)
 
+Gebouwd (crew.js, details in [krachtpatsers.md](krachtpatsers.md)):
+- **Verplaatsen**: paneel *Krachtpatsers*, knop *Verplaatsen* (modus `kp`): klik een eigen toren of krachthal, dan een ander
+  eigen gebouw (opdracht `post`). Een volle toren ruilt met de zwakste daar; de laatste krachtpatser van een toren kan niet weg.
+- **Aannemen**: reserve 0–12 (`hall.keeps`) en de knop *Neem er een aan*.
+- **Trainen**: *Train eerst* (opdracht `train`, `b.pri`); wie uit een toren naar de hal komt, gaat vanzelf voor.
+- **Aanmoedigen**: de krachthal leidt `hall.band` muzikanten op (niveau 1); bij een grensduel loopt van beide kanten de
+  dichtstbijzijnde mee en het duel wacht op hem, hoogstens `meetTicks`.
+
+Bewust nog niet: vrij selecteren en lopen over het veld zoals in de Duel-test (in het dorp heeft dat nog geen doel:
+torens en hal zijn de enige plekken), muzikanten van niveau 2 en 3 (dat vraagt instrumenten als goed), helers in het dorp.
+
+Plan zoals afgesproken:
 - Krachtpatsers selecteren en sturen in het eigen dorp, met de besturing uit de Duel-test.
 - Wens van de speler (3 november 2026): krachtpatsers **aanmoedigen**, **trainen** en **extra aannemen**.
   - Aannemen: nu al via de reserve van de krachthal (0/2/4/8). In 8c ook een knop *Neem er een aan* per stuk, en een

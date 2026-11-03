@@ -197,6 +197,13 @@ function grensFighter(s,X,Y){
       if(d<bd||d===bd&&k>bs){bd=d;bs=k;best=c}}}
   return best;
 }
+/* dichtstbijzijnde opgeleide muzikant van speler s in een krachthal (mijlpaal 8c), of −1 */
+function grensBand(s,X,Y){
+  let best=-1,bd=Infinity;
+  for(const b of world.blds){if(b.p!==s||b.dead||b.st||!isHall(b)||!b.band)continue;const d=Math.hypot(b.x-X,b.y-Y);
+    for(const c of b.band)if(S.lvl[c]&&S.ins[c]&&d<bd){bd=d;best=c}}
+  return best;
+}
 function grensChallenge(c){
   const o=world.offers[c.id|0];if(!o||o.p!==c.p||o.duel||!(o.st==='afgewezen'||o.st==='gesloten'))return;
   const W=world.W,tiles=connectedTo(o.ask.filter(i=>world.own[i]===o.q+1&&!dealTileWhy(i,o.q)),o.p);
@@ -209,9 +216,13 @@ function grensChallenge(c){
   const sp=tableSpot(ex,ey,true,12);if(!sp){o.duel='geenPlek';dealUI();return}
   fieldOut(fa);fieldOut(fb);
   const [a,b]=S.x[fa]-S.y[fa]/2<=S.x[fb]-S.y[fb]/2?[fa,fb]:[fb,fa];   // wie links staat, gaat links zitten
-  const d={a,b,x:sp[0],y:sp[1],s:0,v:0,t:0,live:0,wait:0,meet:CFG.deal.duel.meetTicks,grens:o.id};
+  const d={a,b,x:sp[0],y:sp[1],s:0,v:0,t:0,live:0,wait:0,meet:CFG.deal.duel.meetTicks,grens:o.id,band:[]};
   let k=DUELS.indexOf(null);if(k<0)k=DUELS.push(null)-1;DUELS[k]=d;S.du[a]=S.du[b]=k+1;
   armyGo(a,d.x-CFG.duel.seat,d.y,AIM.SEAT);armyGo(b,d.x+CFG.duel.seat,d.y,AIM.SEAT);
+  /* van beide kanten loopt de dichtstbijzijnde muzikant mee en gaat schuin voor de stoel staan, waar geen bomen hem verbergen */
+  const [bx,by]=CFG.deal.duel.band;
+  for(const [u,side] of [[a,-1],[b,1]]){const m=grensBand(S.pl[u],ex,ey);if(m<0)continue;
+    fieldOut(m);S.du[m]=k+1;d.band.push(m);const [x,y]=freeSpot(d.x+side*(CFG.duel.seat+bx),d.y+by);armyGo(m,x,y,AIM.IDLE)}
   o.duel='bezig';o.tiles=tiles;relAdd(o.p,o.q,-CFG.deal.duel.relCost);dealUI();
 }
 /* afloop (duel.js: endDuel, cancelDuel); win = winnaar, of −1 als het duel niet doorging */

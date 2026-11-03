@@ -44,8 +44,15 @@ en (later) torens uitdagen en overnemen. Waarom zo: zie [../beslissingen.md](../
 - Afbreken: wie binnen is komt naar buiten; een rekruut verliest zijn opleiding en is weer drager.
   Losse krachtpatsers gaan naar een krachthal met plek of naar een toren die er een zoekt.
 - `b.crew` (wie binnen is), `b.otw` (onderweg), `b.trn` (wie traint). Nog niet: eten voor
-  krachtpatsers, helers en muzikanten in het dorp, krachtpatsers zelf sturen, betere bemanning
-  naar de rand verplaatsen.
+  krachtpatsers, helers in het dorp, muzikanten boven niveau 1, vrij over het veld sturen.
+- Mijlpaal 8c (paneel *Krachtpatsers*, js/crew.js):
+  - Reserve `hall.keeps` (0–12), knop *Neem er een aan* (volgende stap in die lijst). Muzikanten: `b.band`, `b.bandK`
+    (`hall.band` = 1, keuze `hall.bands`), beroep `muzikant`; opgeleid zoals een rekruut (`train`), daarna niveau 1 (fluit).
+    Een muzikant telt in de economie mee voor `musicFor` als hij buiten staat.
+  - Verplaatsen (opdracht `post {ids, b}`, modus `kp`): de krachtpatser loopt als `ST.FIELD` met `AIM.POST` en `S.mv` = doel + 1,
+    en blijft tot aankomst in `b.crew` van zijn oude gebouw. Doel vol: ruilen met de zwakste (lager niveau, `swapOf`), die
+    terugloopt. Weigeren (`postWhy`): `laatste` als de toren leeg zou raken, `vol`, `traint`, `al`, `doel`, `wie`.
+  - Voorrang bij trainen: `b.pri` (opdracht `train {id}`); wie uit een toren naar de hal komt en een niveau hoger kan, krijgt het.
 - Grensduel (mijlpaal 8b, [grond-ruilen.md](grond-ruilen.md)): de sterkste krachtpatser uit de dichtstbijzijnde toren
   loopt naar buiten (`ST.FIELD`, `fieldOut` in crew.js) maar blijft in `b.crew`, zodat de toren bemand blijft; na het
   duel gaat hij terug naar binnen (`fieldHome`).

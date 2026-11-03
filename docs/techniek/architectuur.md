@@ -24,7 +24,7 @@ public/                 webroot (Apache-alias /settlers4b)
     transport.js        planner vraag/aanbod, dragers en de toestanden van werkers
     build.js            bouwen: plaatsen, egaliseren, bouwen, afbreken, paneel Bouwen
     harmony.js          harmonie: meter, bronnen, voederplaats, dieren fokken en bij ertsaders (mijlpaal 7)
-    crew.js             krachthal en bemanning van torens (mijlpaal 6c)
+    crew.js             krachthal en bemanning van torens (mijlpaal 6c); muzikanten in de hal, verplaatsen, voorrang bij trainen en paneel Krachtpatsers (8c)
     deals.js            grond ruilen: voorstel, waardefunctie van de buur, afspraken in het gebied, relaties, paneel Buren (mijlpaal 8a); verzoeken van buren en grensduel (8b)
     jobs.js             beroepen: vakmensen zoeken, gereedschap halen, gebouw in
     army.js             krachtpatsers: lopen, opdrachten uitvoeren, selecteren, groepen, markering (Duel-test)

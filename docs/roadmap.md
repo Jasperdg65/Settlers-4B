@@ -17,7 +17,7 @@ Werkwijze: in mijlpalen, elk één commit, met een stop voor beoordeling na elke
 | 7 | Harmonie (0–100 per speler): voederbakken met dierenverzorger, dierenweide, aangeplant bos en bloemenweides verhogen; lege voederbakken en kaalslag verlagen. Dieren vermenigvuldigen bij gevulde voederbakken. Effecten op moed en kracht van soldaten, groei van akkers en bomen, nieuwe kolonisten, en bij hoge harmonie blijven dieren staan bij ertsaders. Meter in het paneel | klaar |
 | 8a | Grond ruilen: een stuk grond van een buur aantekenen, eigen grond en goederen bieden; de buur beslist met een waardefunctie (erts, bomen, akkers, nabijheid van zijn burcht) en een marge per relatie, of doet een tegenbod. Afspraken in `world.deals` gaan boven het gebied uit torens. Eerste versie van de relatie (`world.rel`). Geen torenovername (zie beslissingen, [ontwerp/grond-ruilen.md](ontwerp/grond-ruilen.md)) | klaar |
 | 8b | Buren vragen zelf om jouw grond als ze een erts missen dat net over de grens ligt (aannemen, één keer meer vragen, afwijzen); grensduel met armpje drukken na een afgewezen voorstel: de sterkste krachtpatser uit de dichtstbijzijnde toren van beide kanten, de winnaar krijgt de strook, een uitdaging kost relatie. Torens blijven bemand tijdens het duel | klaar |
-| 8c | Krachtpatsers selecteren en sturen in het eigen dorp (de besturing uit de Duel-test in de economie); aanmoedigen (muzikanten in het dorp en bij het grensduel), zelf kiezen wie traint, extra krachtpatsers aannemen | later |
+| 8c | Krachtpatsers in het eigen dorp: verplaatsen tussen torens en krachthal (ruilen met de zwakste als een toren vol is), extra aannemen, zelf kiezen wie voorgaat bij trainen; muzikanten uit de krachthal lopen mee naar een grensduel en het duel wacht op ze. Geen aanmoedigen met muis of toetsenbord | klaar |
 | 9 | Computerburen met een eigen dorp: zelfde regels en economie als de speler, in een Web Worker, met karakter | later |
 | 10 | Handel: marktplaats, handelaar met handkar of bootje, ruilvenster, ruilverhouding volgens schaarste | later |
 | 11 | Diplomatie: relatieniveau en geheugen per buur, geschenken, afspraken, samen mediteren, feesten en feesttoernooien, vrede met vaste grenzen | later |
@@ -35,7 +35,7 @@ de Tuin van verbondenheid met de natuurgebeurtenissen.
 - Vakmensen in 3D (klaar: 17 loopmodellen uit `bron/ambachten/` en 11 werkhoudingen voor 8 beroepen uit `bron/modellen/`).
   Nog: werkanimatie (de houdingen staan stil), een model voor de dierenverzorger, en wat een vakman draagt op een
   vast punt in de hand.
-- Krachtpatsers selecteren en sturen in het eigen dorp (nu alleen in de Duel-test).
-- Helers en muzikanten in het dorp.
+- Krachtpatsers vrij over het veld sturen in het eigen dorp (nu alleen in de Duel-test; verplaatsen tussen gebouwen kan sinds 8c).
+- Helers in het dorp, en muzikanten van niveau 2 en 3 (instrumenten als goed).
 - Sprite-atlas voor kolonisten en dieren (prestaties, zie [techniek/architectuur.md](techniek/architectuur.md)).
 - Alle "Komt eraan"-punten uit de handleiding staan in de README (automatisch bijgehouden).

@@ -49,7 +49,7 @@ function frame(now){
       $('npath').textContent=`${pathQueued()} · ${PF.cache.size}, ${Math.round(100*PF.hits/Math.max(1,PF.hits+PF.miss))}% hit`}
     if(S.army){$('nsel').textContent=ARMY.sel.length;$('nduel').textContent=DUELS.filter(Boolean).length;
       $('nwon').textContent=ARMY.won.slice(0,2).join(' – ');$('duelMsg').textContent=ARMY.last}
-    drawMini();refreshStock();if(S.eco){refreshProduction();if(world.reqs){reqUI(buildPl());if(DUELS.some(Boolean))dealUI()}}refreshHover();
+    drawMini();refreshStock();if(S.eco){refreshProduction();kpUI();if(world.reqs){reqUI(buildPl());if(DUELS.some(Boolean))dealUI()}}refreshHover();
   }
 }
 let rowU=new Int32Array(1),rowA=new Int32Array(1);
@@ -204,9 +204,9 @@ function draw(){
       const moving=running&&(S.x[k]!==S.px[k]||S.y[k]!==S.py[k]||S.st&&(S.st[k]===ST.WORK||S.st[k]===ST.GATHER));
       const f=moving?(animF+k)&3:0;
       const ux=X*TW-Y*TW/2+off,uy=Y*TH-hAt(X,Y),fr=f*2+S.dir[k];
-      if(S.carry){const c=S.carry[k],j=S.job[k],kp=j===JI.krachtpatser;
-        /* krachtpatser: 3D-model van zijn niveau; een rekruut (niveau 0) loopt nog als drager */
-        if(kp&&S.lvl[k]){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);if(drawUnit3D(ROLE3D[2][S.lvl[k]-1],moving?'walk':'idle',S.d8[k],animF+k,S.pl[k],ux,uy,zd)){q='';continue}}
+      if(S.carry){const c=S.carry[k],j=S.job[k],mu=j===JI.muzikant,kp=j===JI.krachtpatser||mu;
+        /* krachtpatser of muzikant: 3D-model van zijn niveau; een rekruut (niveau 0) loopt nog als drager */
+        if(kp&&S.lvl[k]){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);if(drawUnit3D(ROLE3D[mu?5:2][S.lvl[k]-1],moving?'walk':'idle',S.d8[k],animF+k,S.pl[k],ux,uy,zd)){q='';continue}}
         /* drager als 3D-poppetje: zonder of met kist; het goed ligt in de kist op punt 'hold' (recht van achteren niet zichtbaar) */
         if(!j||kp&&!S.lvl[k]){if(moving)S.d8[k]=dir8(S.x[k]-S.px[k],S.y[k]-S.py[k]);const d=S.d8[k];
           const r=drawUnit3D(c?CARRY3D.carry:CARRY3D.free,moving?'walk':'idle',d,animF+k,S.pl[k],ux,uy,zd);

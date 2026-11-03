@@ -19,7 +19,7 @@ function initTransport(){
   for(const b of world.blds){b.want=new Uint8Array(GOODS.length);b.coming=new Uint8Array(GOODS.length);b.cool=0;b.wkr=0;setWant(b)}
   /* grensduels (mijlpaal 8b): de rijen van army.js, en de duels met hun eigen toeval */
   for(const k of ['ast','aim','ko'])S[k]=new Uint8Array(n);S.fed=new Uint8Array(n).fill(1);S.fat=new Float32Array(n);
-  S.out=new Uint16Array(n);S.du=new Int16Array(n);S.seq=new Uint16Array(n);
+  S.out=new Uint16Array(n);S.du=new Int16Array(n);S.seq=new Uint16Array(n);S.mv=new Int16Array(n);   // mv: doelgebouw + 1 bij verplaatsen (crew.js)
   DUELS.length=0;ARMY.sel=[];drand=mulberry32(hashStr(world.seed+'#duel'));
   TR.rr=0;TR.done=0;TR.used=0;tickNo=0;pathInit();initProduction();
 }
@@ -83,7 +83,7 @@ function gotPath(c,p){
   else if(st===ST.PATH_DST){addGoods(S.sb[c],gd,1);S.carry[c]=0} // terugleggen bij de bron
   else if(st===ST.PATH_WORK)b.wk--;
   if(b.wkr===c+1)b.wkr=0; // was op weg om hier vakman te worden
-  if(st===ST.PATH_IN&&S.job[c]===JI.krachtpatser)crewFail(c,b);
+  if(st===ST.PATH_IN&&isFolk(c))crewFail(c,b);
   if(S.cm[c])b.coming[gd]--;S.cm[c]=0;toIdle(c);
 }
 function arrived(c){

@@ -58,6 +58,7 @@ const CFG={
     {k:'smid',n:t('job.smid'),bld:['smidse','wapensmid']},
     {k:'dierenverzorger',n:t('job.dierenverzorger'),bld:['voederplaats']},
     {k:'krachtpatser',n:t('job.krachtpatser')},   // opgeleid in de krachthal, bemant torens (crew.js, CFG.army)
+    {k:'muzikant',n:t('job.muzikant')},           // opgeleid in de krachthal, loopt mee naar een grensduel (mijlpaal 8c)
   ],
   /* lievelingskost van mijnwerkers (de wereld is veganistisch). Een mijnwerker eet elke maaltijd uit prod.mineMeals, maar zijn
      lievelingskost is goed voor prod.mineFav rondes werk, een andere maaltijd voor één ronde (production.js, tryRecipe) */
@@ -140,7 +141,7 @@ const CFG={
     {k:'vos',   per:1800,max:90, keep:22,speed:0.07, range:12,wait:[40,240],rest:0.4, restWait:[200,600],rate:1.2},
     {k:'vogel', per:900, max:200,keep:10,speed:0.05, range:3, wait:[20,120],rest:0.3, restWait:[100,300],rate:2},
   ],
-  /* krachtpatsers: in het veld (lopen, selecteren; nu alleen in de duel-testmodus) en in krachthal en torens */
+  /* krachtpatsers: in het veld (lopen, selecteren in de duel-testmodus) en in krachthal en torens (verplaatsen in het dorp: crew.js) */
   army:{
     speed:0.075,                   // tegels per tick lopen
     hurtSpeed:0.6,                 // uitgeschakeld lopen gaat langzamer (factor)
@@ -151,9 +152,10 @@ const CFG={
        (niveau 1) per toren van het startdorp. Krachthal: houdt standaard hall.keep krachtpatsers in reserve (keuze uit hall.keeps
        in het paneel Productie), leidt een rekruut in train ticks op tot niveau 1 en traint in upTicks een niveau hoger met de
        uitrusting uit up (wordt gedragen, dus verbruikt); ze vraagt hoogstens hall.stock van elk stuk tegelijk. Rekruten zijn
-       vrije dragers (carry.keepFree blijven over). */
+       vrije dragers (carry.keepFree blijven over). Mijlpaal 8c: de hal houdt ook hall.band muzikanten (keuze uit hall.bands); ze
+       worden in train ticks opgeleid en blijven niveau 1 (fluit). */
     crew:{wachttoren:2},startCrew:1,train:800,upTicks:1200,up:{2:{helm:1},3:{schild:1,polsband:1}},
-    hall:{keep:2,keeps:[0,2,4,8],stock:2},
+    hall:{keep:2,keeps:[0,1,2,3,4,6,8,12],band:1,bands:[0,1,2],stock:2},
   },
   /* aanraakbediening (input.js): ms vasthouden voor een selectierechthoek, pixels bewegen voordat het slepen is,
      extra marge in pixels rond een figuur voor een vinger, ms dat de tooltip na een tik blijft staan */
@@ -202,7 +204,9 @@ const CFG={
      wat hij vrij heeft). Een verzoek geldt ttl ticks; daarna, of na je antwoord, vraagt die buur cool ticks niets. Meer vragen (één
      keer): more × de goederen, als de strook hem zelf zoveel waard is. to: tot mijlpaal 9 (één vaste speler) vragen ze alleen speler 1.
      Grensduel (duel): na een afwijzing kan de vrager uitdagen; dat kost beide relCost relatiepunten. meetTicks: zo lang mogen
-     beide krachtpatsers over de weg naar de tafel op de grens doen. */
+     beide krachtpatsers over de weg naar de tafel op de grens doen. Van beide kanten loopt de dichtstbijzijnde muzikant uit een
+     krachthal mee (mijlpaal 8c) en staat band = [opzij, naar voren] tegels van de stoel (vóór de tafel staan geen bomen: tableSpot); het duel begint als hij er is, of als
+     meetTicks om is. */
   deal:{maxTiles:150,
     val:{ter:[0.1,0.15,0.3,0.5,0.6,0.4,0.3,0.25,0.1],tree:1,sapling:0.5,bush:0.3,field:1.5,stone:1,ore:4,oreNeed:2.5,oreScarce:6,home:2,homeR:16},
     goods:{boomstam:0.6,plank:1,steen:1,brood:1.4,stoofpot:1.6,notenmix:1.6,kolen:1.5,ijzer:3,goud:5},
@@ -210,7 +214,7 @@ const CFG={
     margin:1.25,relMargin:0.2,counterAt:0.6,counterTicks:1200,
     relDeal:10,rel:{gespannen:-100,onbekend:0,kennis:15,vriend:45,bondgenoot:75},
     req:{to:0,first:2400,every:600,cool:6000,reach:8,tiles:30,offer:1.1,more:1.3,ttl:2400},
-    duel:{relCost:15,meetTicks:2400}},
+    duel:{relCost:15,meetTicks:2400,band:[1.3,0.9]}},
   /* harmonie (mijlpaal 7, harmony.js), in punten 0–100. Doel = start + bronnen; elke every ticks schuift de meter step punten.
      voer: een voederplaats met dierenverzorger vult de bak met 1 food (graan) voor ticks ticks en vult bij als er minder dan
        refill over is; gevuld geeft full punten (de beste max tellen), leeg langer dan grace ticks kost empty punten.

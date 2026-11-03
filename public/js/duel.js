@@ -12,10 +12,10 @@ function strength(i){
   const c=CFG.duel;
   return c.level[S.lvl[i]]*(S.fed[i]?1:c.hungry)*(1+c.harmony*(2*world.harm[S.pl[i]]-1))*(1-c.fatigue*S.fat[i])*(musicFor(i)>=0?1+c.music.bonus:1);
 }
-/* eigen muzikant binnen zijn bereik (tegels) van eenheid i, of −1 */
+/* eigen muzikant binnen zijn bereik (tegels) van eenheid i, of −1. In de economie: een opgeleide muzikant die buiten staat (crew.js) */
 function musicFor(i){
-  const R=CFG.duel.music.range;
-  for(let j=0;j<S.n;j++)if(S.role[j]===5&&S.pl[j]===S.pl[i]&&Math.hypot(S.x[j]-S.x[i],S.y[j]-S.y[i])<=R[S.lvl[j]])return j;
+  const R=CFG.duel.music.range,eco=S.eco&&S.job;
+  for(let j=0;j<S.n;j++)if((eco?S.job[j]===JI.muzikant&&S.lvl[j]&&!S.ins[j]:S.role[j]===5)&&S.pl[j]===S.pl[i]&&Math.hypot(S.x[j]-S.x[i],S.y[j]-S.y[i])<=R[S.lvl[j]])return j;
   return -1;
 }
 /* één tick van een lopend duel: kracht vergelijken, met wat toeval, en de stand bijwerken.
@@ -64,7 +64,7 @@ function challenge(i,j){
 /* gaat niet door (geen route, te lang onderweg): beide blijven staan waar ze zijn */
 function cancelDuel(k){
   const d=DUELS[k];if(!d)return;DUELS[k]=null;
-  if(d.grens!==undefined){for(const i of [d.a,d.b]){S.du[i]=0;fieldGoHome(i)}grensEnd(d,-1);return}   // grensduel (deals.js)
+  if(d.grens!==undefined){for(const i of [d.a,d.b,...d.band]){S.du[i]=0;fieldGoHome(i)}grensEnd(d,-1);return}   // grensduel (deals.js)
   for(const i of [d.a,d.b]){S.du[i]=0;armyStop(i)}
   ARMY.last='Duel gaat niet door: de tafel is niet te bereiken.';
 }
@@ -72,10 +72,12 @@ function tickDuels(){
   for(let k=0;k<DUELS.length;k++){
     const d=DUELS[k];if(!d)continue;
     if(!d.live){
-      if(S.ast[d.a]===AS.SEAT&&S.ast[d.b]===AS.SEAT){
+      /* grensduel: ook wachten op de muzikanten die meelopen (d.band), tot de wachttijd om is */
+      const band=!d.band||d.band.every(m=>S.ast[m]!==AS.PATH&&S.ast[m]!==AS.WALK)||d.wait>=d.meet;
+      if(S.ast[d.a]===AS.SEAT&&S.ast[d.b]===AS.SEAT&&band){
         d.live=1;S.ast[d.a]=S.ast[d.b]=AS.DUEL;
         S.x[d.a]=d.x-CFG.duel.seat;S.x[d.b]=d.x+CFG.duel.seat;S.y[d.a]=S.y[d.b]=d.y;
-      }else if(++d.wait>(d.meet||CFG.duel.meetTicks))cancelDuel(k);
+      }else if(++d.wait>(d.meet||CFG.duel.meetTicks)&&!(S.ast[d.a]===AS.SEAT&&S.ast[d.b]===AS.SEAT))cancelDuel(k);
       continue;
     }
     const w=duelStep(d);if(w)endDuel(k,w);
@@ -88,7 +90,7 @@ function endDuel(k,w){
   S.du[win]=S.du[lose]=0;
   S.fat[win]=Math.min(1,S.fat[win]+CFG.duel.winTire);S.ko[lose]=1;S.fat[lose]=1;
   const h=healerSpot(lose);armyGo(lose,h[0],h[1],AIM.HEAL);
-  if(d.grens!==undefined){fieldGoHome(win);grensEnd(d,win);return}   // grensduel (deals.js): de winnaar gaat terug naar zijn toren
+  if(d.grens!==undefined){fieldGoHome(win);for(const m of d.band){S.du[m]=0;fieldGoHome(m)}grensEnd(d,win);return}   // grensduel (deals.js): de winnaar gaat terug naar zijn toren
   const r=d.ret[w<0?0:1];armyGo(win,r[0],r[1],AIM.IDLE);
   ARMY.won[S.pl[win]]++;
 }

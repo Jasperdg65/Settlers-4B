@@ -3,6 +3,19 @@
 Wat er per dag is veranderd, voor spelers en makers. Nieuwste bovenaan. Mijlpalen: zie
 [docs/roadmap.md](docs/roadmap.md); de redenen achter keuzes: [docs/beslissingen.md](docs/beslissingen.md).
 
+## 2026-11-03
+
+### Toegevoegd (mijlpaal 8c)
+- **Paneel Krachtpatsers.** Reserve van de krachthal (0 tot 12) en een knop *Neem er een aan*; het aantal muzikanten.
+- **Verplaatsen.** Klik een toren of krachthal en dan een ander eigen gebouw: de krachtpatsers lopen erheen. Een volle
+  toren ruilt met de zwakste daar; de laatste van een toren kan niet weg. Onderweg blijft de oude toren bemand.
+- **Train eerst.** Kies wie in de krachthal voorgaat; wie uit een toren naar de hal komt, gaat vanzelf voor.
+- **Muzikanten in het dorp.** De krachthal leidt ze op. Bij een grensduel loopt van beide kanten een muzikant mee en het
+  duel begint pas als hij er is (hoogstens 2 minuten wachten); hij maakt zijn krachtpatser 15% sterker.
+
+### Gewijzigd
+- De keuze voor de reserve staat niet meer in het paneel Productie, maar in het nieuwe paneel Krachtpatsers.
+
 ## 2026-11-02
 
 ### Toegevoegd (mijlpaal 8b)

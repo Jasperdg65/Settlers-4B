@@ -62,7 +62,7 @@ function maakTaal(taal){
     },
     beroepen(){
       return `<table class="tabel"><thead><tr><th>${K.beroep}</th><th>${K.gereedschap}</th><th>${K.werktIn}</th></tr></thead><tbody>`+
-        CFG.jobs.slice(1).map(j=>`<tr><td><b>${j.n}</b></td><td>${j.tool?ikoon(j.tool)+goed(j.tool):`<span class="zacht">${TX.geen}</span>`}</td><td>${j.bld?lijst(j.bld.map(naam)):j.k==='krachtpatser'?lijst(['kazerne',...Object.keys(CFG.army.crew)].map(naam)):(j.k==='graver'?TX.graverIn:TX.bouwerIn)}</td></tr>`).join('')+'</tbody></table>';
+        CFG.jobs.slice(1).map(j=>`<tr><td><b>${j.n}</b></td><td>${j.tool?ikoon(j.tool)+goed(j.tool):`<span class="zacht">${TX.geen}</span>`}</td><td>${j.bld?lijst(j.bld.map(naam)):j.k==='krachtpatser'?lijst(['kazerne',...Object.keys(CFG.army.crew)].map(naam)):j.k==='muzikant'?naam('kazerne'):(j.k==='graver'?TX.graverIn:TX.bouwerIn)}</td></tr>`).join('')+'</tbody></table>';
     },
     dorp(){
       const n={};for(const t of VILLAGE)n[t]=(n[t]||0)+1;for(const t of ['kolenmijn','ijzermijn','goudmijn'])n[t]=1;

@@ -36,7 +36,7 @@
       <li>woonhuizen met nieuwe bewoners</li>
       <li>gebied en grens door bemande torens</li>
       <li>armpje drukken in de Duel-test</li>
-      <li>krachthal en krachtpatsers in het dorp</li>
+      <li>krachthal, krachtpatsers en muzikanten in het dorp</li>
       <li>harmonie, met voederplaatsen, dierenweides en bloemenweides</li>
       <li>grond ruilen met je buren</li>
     </ul></div>
@@ -110,7 +110,7 @@
   <!--shot:paneel-productie|Het paneel Productie: per soort gebouw wat er gemaakt is en waar het op wacht.-->
   <div>
     <p>In de zijbalk staat onder <b>Voorraad en productie</b> alles op een rij. <i>Productie</i> vertelt per soort gebouw hoeveel er gemaakt is en waar het op wacht. <i>Voorraad</i> telt alles wat je volk bezit, ook wat dragers op dat moment in hun armen hebben. Onder <b>Meting</b> zie je hoeveel kolonisten er zijn en hoeveel dragers het druk hebben.</p>
-    <p>Je bewoners hoef je niet één voor één aan te sturen: ze zoeken zelf werk. Selecteren en sturen doe je alleen met krachtpatsers. Dat kan nu nog alleen in de Duel-test (zie hoofdstuk 8). [[komt:Krachtpatsers selecteren en sturen in het eigen dorp (mijlpaal 8c)]]</p>
+    <p>Je bewoners hoef je niet één voor één aan te sturen: ze zoeken zelf werk. Alleen je krachtpatsers kun je zelf ergens heen sturen: in je dorp van toren naar toren of naar de krachthal (zie hoofdstuk 8), en in de Duel-test ook vrij over het veld.</p>
   </div>
 </div>
 
@@ -369,9 +369,10 @@
 <p class="intro">Ook in een vreedzame wereld zijn er weleens meningsverschillen: over een grens, of gewoon over wie de sterkste is op het feest. Die worden beslecht met armpje drukken. Wie verliest, rust even uit en doet daarna weer mee. Er valt niemand.</p>
 
 <h3>De krachthal</h3>
-<p>Krachtpatsers komen uit de <b>krachthal</b>. Die haalt zelf vrije dragers binnen en leidt ze op: na {{sec(CFG.army.train)}} is een rekruut een junior. De hal houdt een <b>reserve</b> aan van {{CFG.army.hall.keep}} krachtpatsers; dat aantal kies je in het paneel <i>Productie</i> ({{lijst(CFG.army.hall.keeps.map(getal),'of')}}). Er blijven altijd {{CFG.carry.keepFree}} vrije dragers over voor het sjouwen.</p>
-<p>Met uitrusting trainen ze een niveau hoger, telkens in {{sec(CFG.army.upTicks)}}. Een junior wordt medior met een <b>helm</b>, een medior wordt senior met een <b>schild</b> en een <b>polsband</b>. Dragers brengen die van de uitrustingsmaker naar de hal, en de krachtpatser houdt ze daarna. De hal traint één krachtpatser tegelijk.</p>
-<p>Helers en muzikanten kun je nu alleen nog proberen in de modus <i>Duel-test</i> (knop in de zijbalk), net als het armpje drukken zelf. [[komt:Helers en muzikanten in het dorp]]</p>
+<p>Krachtpatsers komen uit de <b>krachthal</b>. Die haalt zelf vrije dragers binnen en leidt ze op: na {{sec(CFG.army.train)}} is een rekruut een junior. De hal houdt een <b>reserve</b> aan van {{CFG.army.hall.keep}} krachtpatsers. Dat aantal kies je in het paneel <i>Krachtpatsers</i> ({{lijst(CFG.army.hall.keeps.map(getal),'of')}}); met <i>Neem er een aan</i> komt er telkens een bij. Er blijven altijd {{CFG.carry.keepFree}} vrije dragers over voor het sjouwen.</p>
+<p>Met uitrusting trainen ze een niveau hoger, telkens in {{sec(CFG.army.upTicks)}}. Een junior wordt medior met een <b>helm</b>, een medior wordt senior met een <b>schild</b> en een <b>polsband</b>. Dragers brengen die van de uitrustingsmaker naar de hal, en de krachtpatser houdt ze daarna. De hal traint één krachtpatser tegelijk. Wil je dat een bepaalde krachtpatser voorgaat, kies hem dan met <i>Verplaatsen</i> (zie hieronder) en klik in de lijst op <b>Train eerst</b>. Stuur je een krachtpatser uit een toren naar de krachthal, dan gaat hij vanzelf voor.</p>
+<p>De krachthal leidt ook <b>muzikanten</b> op, net zo snel als een rekruut: standaard {{CFG.army.hall.band}}, in te stellen in het paneel <i>Krachtpatsers</i> ({{lijst(CFG.army.hall.bands.map(getal),'of')}}). In het dorp spelen ze nog op de fluit. Ze lopen mee naar een grensduel (hoofdstuk Buren). Helers en hogere muzikanten kun je nu alleen nog proberen in de modus <i>Duel-test</i> (knop in de zijbalk). [[komt:Helers in het dorp, en muzikanten van een hoger niveau]]</p>
+<p>Zelf aanmoedigen met muis of toetsenbord kan niet: {{tekst('spel.naam')}} is geen actiespel. Dat doen de muzikanten.</p>
 
 <h3>Niveaus</h3>
 <table class="tabel">
@@ -416,6 +417,19 @@
 <p>Een toren wordt nooit veroverd. Wil een buur een stuk van jouw grond, of jij van de zijne, dan maken jullie een afspraak (hoofdstuk Buren).</p>
 </div>
 
+<h3>Krachtpatsers verplaatsen</h3>
+<p>Met de knop <i>Verplaatsen</i> in het paneel <i>Krachtpatsers</i> zet je je beste krachtpatsers waar je ze wilt hebben, bijvoorbeeld een senior in een toren aan de grens:</p>
+<ol>
+  <li>Klik een eigen toren of krachthal. Zijn krachtpatsers staan nu in de lijst in het paneel, met niveau en kracht. Met × haal je er een uit de keuze.</li>
+  <li>Klik een andere toren of krachthal. Groen betekent dat het kan; rood zegt waarom niet.</li>
+</ol>
+<ul>
+  <li>Onderweg hoort hij nog bij zijn oude toren. Die blijft dus bemand tot hij aankomt.</li>
+  <li>Is de toren vol, dan ruilt hij met de zwakste daar: die loopt terug naar waar de nieuwe vandaan kwam. Dat lukt alleen als er iemand van een lager niveau zit.</li>
+  <li>De laatste krachtpatser van een toren kan niet weg, want dan staat de toren leeg. Stuur er eerst een ander heen.</li>
+</ul>
+<p><kbd>Esc</kbd> of de rechtermuisknop stopt het verplaatsen.</p>
+
 <h3>Groepen</h3>
 <p>In de Duel-test sla je een selectie op met <kbd>Ctrl</kbd>+<kbd>1</kbd> tot <kbd>9</kbd> (of <kbd>Alt</kbd>, omdat sommige browsers <kbd>Ctrl</kbd>+cijfer voor tabbladen gebruiken). Met <kbd>1</kbd> tot <kbd>9</kbd> kies je de groep weer; twee keer snel achter elkaar en de camera gaat erheen.</p>
 </section>
@@ -454,6 +468,7 @@
 
 <h4>Grensduel</h4>
 <p>Heeft een buur jouw voorstel afgewezen, dan kun je hem uitdagen tot een <b>grensduel</b>. Van beide kanten komt de sterkste krachtpatser uit de toren die het dichtst bij de strook staat. Ze lopen naar een tafel op de grens en drukken armpje. Wint de jouwe, dan krijg je de strook zonder iets te betalen; verliest hij, dan blijft alles zoals het was. Daarna gaan ze allebei terug hun toren in. De verliezer komt eerst bij in zijn burcht.</p>
+<p>Van beide kanten loopt ook de dichtstbijzijnde <b>muzikant</b> uit een krachthal mee. Hij gaat schuin voor de tafel staan en maakt zijn krachtpatser {{Math.round(CFG.duel.music.bonus*100)}}% sterker. Het duel begint pas als de muzikanten er zijn, maar wacht niet langer dan {{sec(CFG.deal.duel.meetTicks)}}.</p>
 <ul>
   <li>Een uitdaging kost jullie relatie {{CFG.deal.duel.relCost}} punten, of je nu wint of verliest. Een eerlijke ruil is dus meestal beter.</li>
   <li>Een toren blijft bemand zolang zijn krachtpatser buiten is, dus je grens verschuift niet tijdens het duel.</li>

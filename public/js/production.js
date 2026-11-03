@@ -301,8 +301,8 @@ function refreshProduction(){
   const lvTxt=list=>[1,2,3].map(l=>[l,list.filter(c=>S.lvl[c]===l).length]).filter(x=>x[1]).map(([l,n])=>n+'× '+LVLNAME[l].toLowerCase()).join(', ')||'–';
   const halls=world.blds.filter(b=>b.type==='kazerne'&&b.p===p&&!b.dead&&!b.st).map(cr);
   if(halls.length){const all=halls.flatMap(b=>b.crew),tr=all.filter(c=>!S.lvl[c]).length+halls.filter(b=>b.trn>=0&&S.lvl[b.trn]).length;
-    const sel=`<label class="pmake">${t('hal.houdt')} <select data-keep="1">`+CFG.army.hall.keeps.map(n=>`<option value="${n}"${halls[0].keep===n?' selected':''}>${n}</option>`).join('')+'</select></label>';
-    rows.push(`<div class="prow"><b>${BTYPES.kazerne.name} ×${halls.length}</b><span>${t('hal.paneel',{n:all.filter(c=>S.lvl[c]).length,niveaus:lvTxt(all)})}`+(tr?' · '+t('hal.opleiding',{n:tr}):'')+`</span>${sel}</div>`)}
+    const band=halls.flatMap(b=>b.band).filter(c=>S.lvl[c]).length;   // reserve en muzikanten instellen: paneel Krachtpatsers (crew.js)
+    rows.push(`<div class="prow"><b>${BTYPES.kazerne.name} ×${halls.length}</b><span>${t('hal.paneel',{n:all.filter(c=>S.lvl[c]).length,niveaus:lvTxt(all)})}`+(band?' · '+t('hal.bandPaneel',{n:band}):'')+(tr?' · '+t('hal.opleiding',{n:tr}):'')+`</span></div>`)}
   const towers=world.blds.filter(b=>CFG.army.crew[b.type]&&b.p===p&&!b.dead&&!b.st).map(cr);
   if(towers.length){const m=towers.filter(b=>b.occ).length,all=towers.flatMap(b=>b.crew),own=world.own;let n=0;if(own)for(let i=0;i<own.length;i++)if(own[i]===p+1)n++;
     rows.push(`<div class="prow"><b>${BTYPES.wachttoren.name} ×${towers.length}</b><span>${t('toren.paneel',{m,n:all.length,niveaus:lvTxt(all)})}`+(m<towers.length?' · '+t('toren.wacht',{n:towers.length-m}):'')+' · '+t('toren.gebiedPaneel',{n:getal(n)})+'</span></div>')}
@@ -321,6 +321,5 @@ function refreshProduction(){
   if(html!==prodShown){prodShown=html;$('prodList').innerHTML=html}
 }
 $('prodList').addEventListener('change',ev=>{const p=+$('stockPl').value||0;
-  if(ev.target.dataset.keep){world.blds.forEach((b,bi)=>{if(b.type==='kazerne'&&b.p===p&&!b.dead)order({p,t:'keep',b:bi,n:+ev.target.value})});return}
   const t=ev.target.dataset.type;if(!t)return;
   world.blds.forEach((b,bi)=>{if(b.type===t&&b.p===p&&!b.dead)order({p,t:'make',b:bi,make:ev.target.value})})});

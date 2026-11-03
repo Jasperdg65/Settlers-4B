@@ -212,6 +212,9 @@ function drawBuildOverlay(v,blit){
     ctx.globalAlpha=0.55;blit(bldSprite(BUILD.type,p,PCOL),SX(ax,ay),ay*TH-world.hp[ay*W+ax]);ctx.globalAlpha=1;
   }
   if(BUILD.mode==='demolish'&&BUILD.hover>=0){const b=world.blds[BUILD.hover];fpTiles(b,i=>tileQuad(i%W,i/W|0,'rgba(220,60,50,.5)','#e0463c'))}
+  if(BUILD.mode==='kp'){   // krachtpatsers verplaatsen (crew.js): gekozen gebouw geel, doel groen of rood
+    if(KP.from>=0&&KP.sel.length)fpTiles(world.blds[KP.from],i=>tileQuad(i%W,i/W|0,'rgba(255,214,90,.4)','#ffd65a'));
+    if(BUILD.hover>=0&&BUILD.hover!==KP.from){const ok=!KP.sel.length||!BUILD.why;fpTiles(world.blds[BUILD.hover],i=>tileQuad(i%W,i/W|0,ok?'rgba(70,200,90,.45)':'rgba(220,60,50,.45)',ok?'#3ec25a':'#e0463c'))}}
 }
 
 /* ---------- Paneel 'Bouwen' ---------- */
@@ -243,9 +246,10 @@ if(typeof setInterval==='function')setInterval(refreshBuildCounts,1000);   // ni
 function setBuildMode(mode,type=null){
   BUILD.mode=mode;BUILD.type=type;BUILD.why='';BUILD.hover=-1;BUILD.sel=-1;
   if(mode!=='deal'&&DEAL.mode){DEAL.mode=null;DEAL.corner=-1;dealUI()}   // grond aantekenen (deals.js) stopt
+  if(mode!=='kp'&&(KP.sel.length||KP.from>=0)){KP.sel=[];KP.from=-1}if($('kpMode').classList)$('kpMode').classList.toggle('on',mode==='kp');
   for(const b of $('buildList').children)b.classList.toggle('on',mode==='place'&&b.dataset.type===type);
   $('demolish').classList.toggle('on',mode==='demolish');$('workArea').classList.toggle('on',mode==='area');
-  $('buildMsg').textContent=mode==='deal'||mode==='area'?'':mode==='place'?`${BTYPES[type].name}: klik op de kaart om te plaatsen. Esc of rechtermuisknop stopt.`
+  $('buildMsg').textContent=mode==='deal'||mode==='area'||mode==='kp'?'':mode==='place'?`${BTYPES[type].name}: klik op de kaart om te plaatsen. Esc of rechtermuisknop stopt.`
     :mode==='demolish'?'Klik op een gebouw of bouwplaats van deze speler om af te breken. Esc of rechtermuisknop stopt.'
     :'Kies een gebouw. Gravers egaliseren eerst, dragers brengen planken en steen, bouwers maken het af.';
   cv.style.cursor=mode?'crosshair':'';areaMsg();
@@ -255,6 +259,7 @@ function buildHover(x,y){
   const p=buildPl();
   if(BUILD.mode==='deal')return dealHover(x,y);
   if(BUILD.mode==='area')return areaHover(x,y);
+  if(BUILD.mode==='kp')return kpHover(x,y);
   if(BUILD.mode==='place'){BUILD.ax=x;BUILD.ay=y+1;BUILD.why=canPlace(BUILD.type,BUILD.ax,BUILD.ay,p);
     const c=CFG.build.cost[BUILD.type];return BUILD.why?'Kan niet: '+BUILD.why:`${BTYPES[BUILD.type].name} bouwen · ${c[0]} plank, ${c[1]} steen`}
   const bi=world.bldAt[y*world.W+x]-1,b=bi>=0?world.blds[bi]:null;BUILD.hover=-1;
@@ -274,6 +279,7 @@ function landLoss(bi){
 function buildClick(){
   if(BUILD.mode==='deal'){dealClick();return}
   if(BUILD.mode==='area'){areaClick();return}
+  if(BUILD.mode==='kp'){kpClick();return}
   if(BUILD.mode==='place'&&!BUILD.why){order({p:buildPl(),t:'place',type:BUILD.type,x:BUILD.ax,y:BUILD.ay});BUILD.why='wordt geplaatst'}
   else if(BUILD.mode==='demolish'&&BUILD.hover>=0){order({p:buildPl(),t:'demolish',b:BUILD.hover});BUILD.hover=-1}
 }
