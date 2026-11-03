@@ -83,6 +83,13 @@ geen torenovername; grensduel en verzoeken). Mijlpaal 8b staat onderaan.
 ## Mijlpaal 8c (nog niet bouwen)
 
 - Krachtpatsers selecteren en sturen in het eigen dorp, met de besturing uit de Duel-test.
+- Wens van de speler (3 november 2026): krachtpatsers **aanmoedigen**, **trainen** en **extra aannemen**.
+  - Aannemen: nu al via de reserve van de krachthal (0/2/4/8). In 8c ook een knop *Neem er een aan* per stuk, en een
+    hogere bovengrens.
+  - Trainen: nu automatisch zodra er uitrusting ligt. In 8c kies je zelf wie er traint en wie voorgaat.
+  - Aanmoedigen: muzikanten (nu alleen in de Duel-test) ook in het dorp, opgeleid in de krachthal; een eigen
+    muzikant bij de tafel maakt je krachtpatser in een grensduel sterker (`duel.music`). Nog te kiezen: of je zelf
+    tijdens het duel kunt aanmoedigen (klikken voor een korte steun).
 
 ## Besloten bij 8b
 
