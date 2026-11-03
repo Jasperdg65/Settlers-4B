@@ -293,7 +293,8 @@ let prodShown='';
 /* knopje per regel: de camera gaat telkens naar het volgende gebouw van die soort, en de muispositie komt op dat gebouw te
    staan, zodat zijn tooltip meteen te zien is (tot de muis weer over de kaart beweegt) */
 const PFOC={};
-const pfoc=(type,n)=>`<button class="pfocus" data-f="${type}" title="${t('prod.focus',{gebouw:BTYPES[type].name.toLowerCase()})}">◎${n>1&&PFOC[type]?' '+((PFOC[type]-1)%n+1)+'/'+n:''}</button>`;
+const EYE='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M1.5 12S5.5 4.5 12 4.5 22.5 12 22.5 12 18.5 19.5 12 19.5 1.5 12 1.5 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.6" fill="currentColor"/><circle cx="13.3" cy="10.7" r="1.1" fill="var(--panel)"/></svg>';
+const pfoc=(type,n)=>`<button class="pfocus" data-f="${type}" title="${t('prod.focus',{gebouw:BTYPES[type].name.toLowerCase()})}">${EYE}${n>1&&PFOC[type]?' '+((PFOC[type]-1)%n+1)+'/'+n:''}</button>`;
 function prodFocus(type){
   const p=+$('stockPl').value||0,list=world.blds.filter(b=>b.type===type&&b.p===p&&!b.dead&&!b.st);if(!list.length)return;
   const k=(PFOC[type]||0)%list.length,b=list[k];PFOC[type]=k+1;

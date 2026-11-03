@@ -3,7 +3,7 @@
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
 ## 2026-11-03 06:15 CET
-- Paneel Productie: per regel een knopje ◎ dat de camera telkens naar het volgende gebouw van die soort brengt en meteen zijn tooltip toont, met een teller (bv. 2/3), zodat je snel het gebouw met een tekort vindt (`prodFocus` in [public/js/production.js](public/js/production.js), stijl in [public/css/kolonie.css](public/css/kolonie.css), tekst `prod.focus` in [public/lang/nl.js](public/lang/nl.js)). Getest: rondgaan langs twee woonhuizen, de tooltip blijft staan.
+- Paneel Productie: per regel een knopje met een oog dat de camera telkens naar het volgende gebouw van die soort brengt en meteen zijn tooltip toont, met een teller (bv. 2/3), zodat je snel het gebouw met een tekort vindt (`prodFocus` in [public/js/production.js](public/js/production.js), stijl in [public/css/kolonie.css](public/css/kolonie.css), tekst `prod.focus` in [public/lang/nl.js](public/lang/nl.js)). Getest: rondgaan langs twee woonhuizen, de tooltip blijft staan.
 
 ## 2026-11-03 06:00 CET
 - Paneel Krachtpatsers anders ingedeeld, op verzoek: *Neem er een aan* en *Verplaatsen* staan direct onder de reserve, omdat ze over de krachtpatsers gaan; de keuze voor muzikanten staat apart onderaan ([public/index.html](public/index.html), [public/css/kolonie.css](public/css/kolonie.css), [public/js/crew.js](public/js/crew.js)).
