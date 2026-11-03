@@ -2,6 +2,10 @@
 
 Korte DCS-log per kwartier; de volledige geschiedenis per dag staat in [CHANGELOG.md](CHANGELOG.md).
 
+## 2026-11-03 06:30 CET
+- Rook nog iets naar rechts (`CFG.smoke.fx` 0,22 in [public/js/config.js](public/js/config.js)): ook de eerste beelden van de pluim beginnen nu op de schoorsteen.
+- Molenwieken: opnieuw gerenderd met de draaiing de andere kant op (`yaw` 20 in plaats van −20 in [tools/sprites.json](tools/sprites.json), [tools/render_wieken.py](tools/render_wieken.py)), en de naaf op dezelfde hoogte naar links, recht boven de deur (`hub` 0,313 in [public/assets/manifest.json](public/assets/manifest.json)). Gecontroleerd op een close-up.
+
 ## 2026-11-03 06:15 CET
 - Rook begint nu recht op de schoorsteen: het ankerpunt van het rook-spriteblad lag op 35% van de beeldbreedte, de voet van de pluim op ongeveer 29% (gemeten per beeld), waardoor elke pluim links van de schoorsteen begon. Nieuw `CFG.smoke.fx` in [public/js/config.js](public/js/config.js), gebruikt in [public/js/loop.js](public/js/loop.js). Gecontroleerd op close-ups van bakkerij en ijzersmelterij.
 - Paneel Productie: per regel een knopje met een oog dat de camera telkens naar het volgende gebouw van die soort brengt en meteen zijn tooltip toont, met een teller (bv. 2/3), zodat je snel het gebouw met een tekort vindt; het oog staat los (zonder knoprand) en verticaal gecentreerd rechts in de regel (`prodFocus` in [public/js/production.js](public/js/production.js), stijl in [public/css/kolonie.css](public/css/kolonie.css), tekst `prod.focus` in [public/lang/nl.js](public/lang/nl.js)). Getest: rondgaan langs twee woonhuizen, de tooltip blijft staan.

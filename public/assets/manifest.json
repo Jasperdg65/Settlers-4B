@@ -196,7 +196,7 @@
             "ax": 0.48,
             "ay": 0.92,
             "hub": [
-                0.464,
+                0.313,
                 0.37
             ],
             "sail": 1.45,
@@ -745,7 +745,7 @@
     "spinners": {
         "molenwieken": {
             "json": "effects/molenwieken.json",
-            "v": "1d9b3d07bf"
+            "v": "6b68d531a8"
         }
     }
 }
